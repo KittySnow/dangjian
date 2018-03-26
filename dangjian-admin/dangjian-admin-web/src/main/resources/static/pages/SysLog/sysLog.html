@@ -1,0 +1,242 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li class="active"><a href="#!/SysLog/sysLog">系统日志</a></li>
+</ol>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">系统日志</h3>
+            </div>
+            <div class="box-body table-responsive">
+                <table id="SysLogTable" class="table table-bordered table-striped" data-unique-id="spaceid">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var sysList = [{
+        id:1,
+        username:'朱敏',
+        company:"DLB",
+        departmentname:'应用开发部',
+        date1:'2017/12/04 9:02',
+        date2:'2017/12/04 9:45',
+        ip:'147.168.53.25',
+        signin:'PC',
+        logout:'正常注销'
+    },{
+        id:2,
+        username:'小华',
+        company:"DLB",
+        departmentname:'业务管理部',
+        date1:'2017/12/04 9:18',
+        date2:'2017/12/04 10:23',
+        ip:'147.168.53.25',
+        signin:'PC',
+        logout:'正常注销'
+    },{
+        id:3,
+        username:'姚rongxiang',
+        company:"世博",
+        departmentname:'工程部',
+        date1:'2017/12/04 11:12',
+        date2:'2017/12/04 13:12',
+        ip:'147.166.26.34',
+        signin:'PC',
+        logout:'过期'
+    },{
+        id:4,
+        username:'许yongshun',
+        company:"世博",
+        departmentname:'管理部',
+        date1:'2017/12/05 15:45',
+        date2:'2017/12/05 16:58',
+        ip:'147.166.26.33',
+        signin:'PC',
+        logout:'正常注销'
+    },{
+        id:5,
+        username:'蔡xuchu',
+        company:"世博",
+        departmentname:'工程部',
+        date1:'2017/12/07 10:14',
+        date2:'2017/12/07 11:05',
+        ip:'147.166.26.34',
+        signin:'PC',
+        logout:'正常注销'
+    },{
+        id:6,
+        username:'吕yiwen',
+        company:"世博",
+        departmentname:'工程部',
+        date1:'2017/12/07 12:43',
+        date2:'2017/12/07 14:43',
+        ip:'147.166.26.34',
+        signin:'PC',
+        logout:'过期'
+    },{
+        id:7,
+        username:'盛xiuyan',
+        company:"世博",
+        departmentname:'管理部',
+        date1:'2017/12/07 16:13',
+        date2:'2017/12/07 16:39',
+        ip:'147.166.26.35',
+        signin:'PC',
+        logout:'过期'
+    },{
+        id:8,
+        username:'许yongshun',
+        company:"世博",
+        departmentname:'管理部',
+        date1:'2017/12/08 8:48',
+        date2:'2017/12/08 9:25',
+        ip:'147.166.26.33',
+        signin:'PC',
+        logout:'正常注销'
+    },{
+        id:9,
+        username:'许yongshun',
+        company:"世博",
+        departmentname:'管理部',
+        date1:'2017/12/12 10:23',
+        date2:'2017/12/12 12:23',
+        ip:'147.166.26.33',
+        signin:'PC',
+        logout:'过期'
+    },{
+        id:10,
+        username:'姚rongxiang',
+        company:"世博",
+        departmentname:'工程部',
+        date1:'2017/12/12 11:12',
+        date2:'2017/12/12 12:36',
+        ip:'147.166.26.34',
+        signin:'PC',
+        logout:'正常注销'
+    },{
+        id:11,
+        username:'吕yiwen',
+        company:"世博",
+        departmentname:'工程部',
+        date1:'2017/12/14 15:23',
+        date2:'2017/12/14 16:48',
+        ip:'147.166.26.34',
+        signin:'PC',
+        logout:'正常注销'
+    },{
+        id:12,
+        username:'小华',
+        company:"DLB",
+        departmentname:'业务管理部',
+        date1:'2017/12/15 13:27',
+        date2:'2017/12/15 15:27',
+        ip:'147.168.53.25',
+        signin:'PC',
+        logout:'过期'
+    },{
+        id:13,
+        username:'朱敏',
+        company:"DLB",
+        departmentname:'应用开发部',
+        date1:'2017/12/15 17:05',
+        date2:'2017/12/15 18:00',
+        ip:'147.168.53.25',
+        signin:'PC',
+        logout:'正常注销'
+    },{
+        id:14,
+        username:'小华',
+        company:"DLB",
+        departmentname:'业务管理部',
+        date1:'2017/12/18 09:16',
+        date2:'2017/12/18 11:16',
+        ip:'147.168.53.25',
+        signin:'PC',
+        logout:'正常注销'
+    },{
+        id:15,
+        username:'盛xiuyan',
+        company:"世博",
+        departmentname:'管理部',
+        date1:'2017/12/19 11:45',
+        date2:'2017/12/19 13:45',
+        ip:'147.166.26.35',
+        signin:'PC',
+        logout:'过期'
+    }];
+
+    var t= [];
+    for (var j = 0; j < 76; j++) {
+        for (var i = 0; i < sysList.length; i++) {
+            var obj = sysList[i];
+            t.push(obj);
+        }
+    }
+    $(function(){
+
+
+        $('#SysLogTable').bootstrapTable({
+            showHeader:true,
+            columns: [
+                {
+                    field: 'id',
+                    formatter:fmtIdx,
+                    title:'编号'
+                },
+                {
+                    field: 'username',
+                    title: '人员'
+                },
+                {
+                    field: 'company',
+                    title: '公司'
+                },
+                {
+                    field: 'departmentname',
+                    title: '部门'
+                },
+                {
+                    field: 'date1',
+                    title: '登录时间'
+                },
+                {
+                    field: 'date2',
+                    title: '退出时间'
+                },
+                {
+                    field: 'ip',
+                    title: 'IP地址'
+                },
+                {
+                    field: 'signin',
+                    title: '登录方式'
+                },
+                {
+                    field: 'logout',
+                    title: '退出方式'
+                }],
+            data:t,
+            sidePagination: "client", //服务端请求
+            showColumns:false,
+            pagination:true,
+            cache: false,
+            striped: true,
+            pageNumber: 1,
+            pageSize: 10,
+            pageList: [5,10,15],
+            paginationHAlign: 'right', //right, left
+            paginationVAlign: 'bottom', //bottom, top, both
+            sortable:false,
+            search: true,
+            showPaginationSwitch: false,
+            showRefresh: false,
+            clickToSelect: true
+        });
+
+
+    });
+
+</script>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dlbdata.dangjian.admin.dao.mapper.PRoleFeatureDao">
+  <resultMap id="BaseResultMap" type="cn.dlbdata.dangjian.admin.dao.model.PRoleFeature">
+    <id column="rfid" jdbcType="INTEGER" property="rfid" />
+    <result column="roleid" jdbcType="INTEGER" property="roleid" />
+    <result column="featureid" jdbcType="INTEGER" property="featureid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    rfid, roleid, featureid
+  </sql>
+
+  <delete id="deleteByRoleId"  parameterType="java.lang.Integer">
+    delete from p_role_feature
+    where roleid = #{roleid,jdbcType=INTEGER}
+  </delete>
+
+
+  <insert id="insert" parameterType="java.util.List">
+    insert into p_role_feature (roleid,featureid)
+    <trim prefix="values" suffixOverrides=",">
+      <foreach collection="list" item="item" index="index" separator="," >
+        (#{item.roleid},#{item.featureid})
+      </foreach>
+    </trim>
+  </insert>
+
+  <select id="selectByRoid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from p_role_feature
+    where roleid = #{roleid,jdbcType=INTEGER}
+  </select>
+
+</mapper>

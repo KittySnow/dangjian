@@ -1,0 +1,46 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li class="active"><a href="#!/ReportAdmin/reportAdmin">站点报告</a></li>
+</ol>
+<style>
+    #repo .form-group label{
+        margin-right: 15px;
+    }
+</style>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">站点报告</h3>
+            </div>
+            <div class="box-body table-responsive" id="repo">
+                <form role="form" class="loginForm form-horizontal ng-pristine ng-valid" action="../prole/save.do" method="post" onsubmit="return validateCallback(this)" novalidate="">
+                    <div class="box-bodyed">
+                        <div class="form-group">
+                            <label>站点状态</label>
+                            已开通
+                        </div>
+                        <div class="form-group">
+                            <label>关闭站点</label>
+                            <input type="radio" name="guanbi">是
+                            <span style="margin-right: 10px;"></span>
+                            <input type="radio" name="guanbi" checked>否
+                        </div>
+                        <div class="form-group">
+                            <label>产品版本</label>
+                            v1.0
+                        </div>
+                        <div class="form-group">
+                            <label>服务器时间检查</label>
+                            <button class="btn btn-success">正常</button>
+                        </div>
+                        <div class="form-group">
+                            <label>DNS解析函数</label>
+                            <button class="btn btn-success">可用</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
