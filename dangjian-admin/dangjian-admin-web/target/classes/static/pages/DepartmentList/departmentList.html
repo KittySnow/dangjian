@@ -1,0 +1,81 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li class="active"><a href="#!/DepartmentList/departmentList">部门列表列表</a></li>
+</ol>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">部门列表列表</h3>
+            </div>
+            <div class="box-mgr">
+                <a class="btn btn-info" href="#!/DepartmentList/addDepartment">添加部门列表</a>
+            </div>
+            <div class="box-body table-responsive">
+                <table id="DepartmentListTable" class="table table-bordered table-striped" data-unique-id="departmentid">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.actionDepartmentListEvents = {
+        'click .editDepartmentList' : function (e, value, row, index) {
+            console.log(row);
+        },
+        'click .delDepartmentList' : function (e, value, row, index) {
+            deleteAjax(row,'../pdepartment/deleteById.do','departmentid','post','DepartmentListTable');
+        }
+    };
+
+
+    function DepartmentListStausFormatter(value,row,index) {
+        return '<a class="btn btn-info btn-sm editDepartmentList" href="#!/DepartmentList/editDepartment/'+row.departmentid+'">修改</a>　<a class="btn btn-warning btn-sm delDepartmentList">删除</a>'
+    }
+
+
+    $(function(){
+
+        $('#DepartmentListTable').bootstrapTable({
+            showHeader:true,
+            columns: [
+                {
+                    field: 'departmentid',
+                    formatter:fmtIdx,
+                    title:'编号'
+                },
+                {
+                    field: 'departmentname',
+                    title: '部门名称'
+                },
+                {
+                    field: 'cost',
+                    title: '基础成本'
+                },
+                {
+                    title: '操作',
+                    width:250,
+                    formatter: DepartmentListStausFormatter,
+                    events: actionDepartmentListEvents
+                }],
+            method: 'GET',
+            url: "../pdepartment/getList.do",
+            sidePagination: "client", //服务端请求
+            showColumns:true,
+            pagination:true,
+            cache: false,
+            striped: true,
+            pageNumber: 1,
+            pageSize: 10,
+            pageList: [5,10,15],
+            paginationHAlign: 'right', //right, left
+            paginationVAlign: 'bottom', //bottom, top, both
+            sortable:false,
+            search: true,
+            showPaginationSwitch: false,
+            showRefresh: true,
+            clickToSelect: true
+        });
+    });
+
+</script>

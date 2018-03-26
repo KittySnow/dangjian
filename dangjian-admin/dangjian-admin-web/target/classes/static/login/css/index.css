@@ -1,0 +1,212 @@
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* CSS Animations */
+@keyframes "login" {
+ 0% {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    opacity: 0;
+    margin-top: -15px;
+ }
+ 100% {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity: 1;
+    margin-top: -30px;
+ }
+ 
+}
+ 
+@-moz-keyframes login {
+ 0% {
+   filter: alpha(opacity=0);
+   opacity: 0;
+   margin-top: -15px;
+ }
+ 100% {
+   filter: alpha(opacity=100);
+   opacity: 1;
+   margin-top: -30px;
+ }
+ 
+}
+ 
+@-webkit-keyframes "login" {
+ 0% {
+   filter: alpha(opacity=0);
+   opacity: 0;
+   margin-top: -15px;
+ }
+ 100% {
+   filter: alpha(opacity=100);
+   opacity: 1;
+   margin-top: -30px;
+ }
+ 
+}
+ 
+@-ms-keyframes "login" {
+ 0% {
+   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+   filter: alpha(opacity=0);
+   opacity: 0;
+   margin-top: -15px;
+ }
+ 100% {
+   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+   filter: alpha(opacity=100);
+   opacity: 1;
+   margin-top: -30px;
+ }
+ 
+}
+ 
+@-o-keyframes "login" {
+ 0% {
+   filter: alpha(opacity=0);
+   opacity: 0;
+   margin-top: -15px;
+ }
+ 100% {
+   filter: alpha(opacity=100);
+   opacity: 1;
+   margin-top: -30px;
+ }
+ 
+}
+body {
+    font-family: sans-serif;
+    background-image: url(../img/web.jpg);
+   
+}
+.square-fl{
+	width:460px;
+	height:330px;
+	background-color: #323B55;
+	position:absolute;
+	left:calc(50% - 230px);
+	top:calc(50% - 165px);
+	border-radius:3px;
+}
+#loginForm {
+    width: 380px;
+    height: 240px;
+    position: absolute;
+    left: 30px;
+    top: 48px;
+    -webkit-animation: login 1s ease-in-out;
+    -moz-animation: login 1s ease-in-out;
+    -ms-animation: login 1s ease-in-out;
+    -o-animation: login 1s ease-in-out;
+    animation: login 1s ease-in-out;
+}
+#loginForm #userName,#loginForm #passWord{
+    width: 100%;
+    height: 40px;
+    positon: relative;
+    font-size: 14px;
+    color: #444;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, .49);
+    border-radius: 6px;
+    padding-left: 20px;
+    -webkit-box-shadow: inset 0px 2px 0px #d9d9d9;
+    box-shadow: inset 0px 2px 0px #d9d9d9;
+ 
+    -webkit-transition: all .1s ease-in-out;
+    -moz-transition: all .1s ease-in-out;
+    -o-transition: all .1s ease-in-out;
+    -ms-transition: all .1s ease-in-out;
+    transition: all .1s ease-in-out;
+}
+#loginForm .yzm{
+	width: 100%;
+	height: 40px;
+	positon: relative;
+	margin-top:20px;
+	font-size: 14px;
+    color: #444;
+    outline: none;
+    border-radius: 6px;
+    padding-left: 20px;
+}
+ /*begin*/
+#loginForm #keySafe{
+    width: 50%;
+    height: 40px;
+    font-size: 14px;
+    color: #444;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, .49);
+    position:absolute;
+    left:0px;
+    padding-left: 20px;
+
+    border-radius: 6px;
+
+ 
+    -webkit-box-shadow: inset 0px 2px 0px #d9d9d9;
+    box-shadow: inset 0px 2px 0px #d9d9d9;
+ 
+    -webkit-transition: all .1s ease-in-out;
+    -moz-transition: all .1s ease-in-out;
+    -o-transition: all .1s ease-in-out;
+    -ms-transition: all .1s ease-in-out;
+    transition: all .1s ease-in-out;
+}
+/*add*/
+.yzm .phoKey{width:calc(50% - 20px); height: 40px;display:inline-block; cursor: pointer; font-size:18px;text-align:center;color:#999;
+	background: #657ADF; text-align: center; line-height: 40px; color: #fff; border-radius: 3px;position:absolute;left:calc(50% + 40px)}
+.error { clear:both;display:block;color: red;width:200px;height:20px;float: left; font-size:12px;line-height: 20px;padding-left:9px;}
+/*end*/
+#loginForm input:focus{   
+	-webkit-box-shadow: inset 0px 2px 0px #a7a7a7;
+    box-shadow: inset 0px 2px 0px #a7a7a7;
+}
+#loginForm input:first-child {
+    margin-top: 0px;
+}
+#loginForm button {
+    width:calc(100% + 20px);
+    height: 50px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 0px -1px 0px #5b6ddc;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, .49);
+    border-radius: 6px;
+ 
+    background-color: #5466da;
+
+    /*-webkit-box-shadow: inset 0px 1px 0px #9ab1ec;
+    box-shadow: inset 0px 1px 0px #9ab1ec;*/
+     
+    cursor: pointer;
+ 
+    -webkit-transition: all .1s ease-in-out;
+    -moz-transition: all .1s ease-in-out;
+    -o-transition: all .1s ease-in-out;
+    -ms-transition: all .1s ease-in-out;
+    transition: all .1s ease-in-out;
+}
+ 
+#loginForm button:hover {
+    background-color: #5f73e9;
+ 
+    /*-webkit-box-shadow: inset 0px 1px 0px #aab9f4;
+    box-shadow: inset 0px 1px 0px #aab9f4;*/
+}
+ 
+#loginForm button:active {
+    background-color: #7588e1;
+    /*-webkit-box-shadow: inset 0px 1px 0px #93a9e9;
+    box-shadow: inset 0px 1px 0px #93a9e9;*/
+}
+.errorPrompting{color:red;font-size:13px;line-height:1.5;display:inline-block;padding-left:32px;word-break:break-word;padding-right:32px;margin-top:6px;}
