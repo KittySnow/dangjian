@@ -1,0 +1,81 @@
+package ${package_name}.service.impl;
+
+
+import ${package_name}.dao2.${model}Dao;
+import ${package_name}.model2.${model};
+import ${package_name}.model2.${model}Example;
+import ${package_name}.service.${model}Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
+
+
+@Service("${model}Service")
+public class ${model}ServiceImpl implements ${model}Service {
+
+    private static Logger _log = LoggerFactory.getLogger(${model}ServiceImpl.class);
+
+    @Autowired
+    ${model}Dao ${mapper}Dao;
+
+    @Override
+    public long countByExample(${model}Example example) {
+        return ${mapper}Dao.countByExample(example);
+    }
+    
+    @Override
+    public int deleteByExample(${model}Example example) {
+        return ${mapper}Dao.deleteByExample(example);
+    }
+    
+    @Override
+    public int deleteByPrimaryKey(Integer $!last_insert_id_tables.get($!smallMapper)) {
+        return ${mapper}Dao.deleteByPrimaryKey($!last_insert_id_tables.get($!smallMapper));
+    }
+    
+    @Override
+    public int insert(${model} ${mapper}) {
+        ${mapper}Dao.insert(${mapper});
+        return ${mapper}.get${mapper}();
+    }
+    
+    @Override
+    public int insertSelective(${model} ${mapper}) {
+        ${mapper}Dao.insertSelective(${mapper});
+        return ${mapper}.get${mapper}();
+    }
+    
+    @Override
+    public List<${model}> selectByExample(${model}Example example) {
+        return ${mapper}Dao.selectByExample(example);
+    }
+
+    @Override
+    public ${model} selectByPrimaryKey(Integer $!last_insert_id_tables.get($!smallMapper)) {
+        return ${mapper}Dao.selectByPrimaryKey($!last_insert_id_tables.get($!smallMapper));
+    }
+
+    @Override
+    public int updateByExampleSelective(${model} ${mapper}, ${model}Example example) {
+        return ${mapper}Dao.updateByExampleSelective(${mapper},example);
+    }
+
+    @Override
+    public int updateByExample(${model} ${mapper}, ${model}Example example) {
+        return ${mapper}Dao.updateByExample(${mapper},example);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(${model} ${mapper}) {
+        return ${mapper}Dao.updateByPrimaryKeySelective(${mapper});
+    }
+
+    @Override
+    public int updateByPrimaryKey(${model} ${mapper}) {
+        return ${mapper}Dao.updateByPrimaryKey(${mapper});
+    }
+
+}

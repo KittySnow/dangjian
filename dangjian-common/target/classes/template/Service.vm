@@ -1,0 +1,32 @@
+package ${package_name}.service;
+
+import ${package_name}.model2.${model};
+import ${package_name}.model2.${model}Example;
+import org.apache.ibatis.annotations.Param;
+import java.util.List;
+
+public interface ${model}Service {
+
+    public long countByExample(${model}Example example);
+    
+    public int deleteByExample(${model}Example example);
+    
+    public int deleteByPrimaryKey(Integer $!last_insert_id_tables.get($!smallMapper));
+    
+    public int insert(${model} ${mapper});
+    
+    public int insertSelective(${model} ${mapper});
+    
+    public List<${model}> selectByExample(${model}Example example);
+
+    public ${model} selectByPrimaryKey(Integer $!last_insert_id_tables.get($!smallMapper));
+
+    public int updateByExampleSelective(@Param("${mapper}") ${model} ${mapper}, @Param("example") ${model}Example example);
+
+    public int updateByExample(@Param("${mapper}") ${model} ${mapper}, @Param("example") ${model}Example example);
+
+    public int updateByPrimaryKeySelective(${model} ${mapper});
+
+    public int updateByPrimaryKey(${model} ${mapper});
+    
+}

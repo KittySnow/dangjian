@@ -1,0 +1,44 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li><a href="#!/SpaceAdmin/spaceAdmin">空间管理列表</a></li>
+    <li class="active">添加空间管理</li>
+</ol>
+<!-- 添加项目html -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="box ">
+            <div class="box-header">
+                <h3 class="box-title">修改空间管理</h3>
+            </div>
+            <form role="form" class="loginForm form-horizontal" action="../pspace/updateById.do" method="post" onsubmit="return validateCallback(this)"  novalidate>
+                <div class="box-bodyed">
+                <input type="hidden" name="spaceid" value="{{pDepartment.spaceid}}">
+
+                <div class="form-group">
+                    <label><span class="red">*</span>空间名字</label>
+                    <input type="text" class="form-control" name="spacename" placeholder="请输入空间名字" required value="{{pDepartment.spacename}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>空间基础成本</label>
+                    <input type="text" class="form-control" name="spacecost" placeholder="请输入空间基础成本" required value="{{pDepartment.spacecost}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>空间面积</label>
+                    <input type="text" class="form-control" name="spacesquare" placeholder="请输入空间面积" required value="{{pDepartment.spacesquare}}"/>
+                </div>
+                <div class="form-group">
+                    <label for="userDepartment"><span class="red">*</span>用户部门</label>
+                    <select class="form-control" id="userDepartment"  name="departmentid">
+                        <option  ng-repeat="x in listDepartment" value="{{x.departmentid}}"  ng-selected="userData.departmentid==x.departmentid">{{x.departmentname}}</option>
+                    </select>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">提交</button>　
+                    <a type="btn" class="btn btn-danger" href="#!/SpaceAdmin/spaceAdmin">返回列表</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>

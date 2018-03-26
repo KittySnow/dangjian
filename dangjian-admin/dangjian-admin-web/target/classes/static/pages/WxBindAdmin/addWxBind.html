@@ -1,0 +1,63 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#!/"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li><a href="#!/UserAdmin/userAdmin">用户列表</a></li>
+    <li class="active">添加微信登陆账号</li>
+</ol>
+<!-- 添加项目html -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="box ">
+            <div class="box-header">
+                <h3 class="box-title">添加微信登陆账号</h3>
+            </div>
+            <form role="form" class="loginForm form-horizontal" action="../puser/save.do" method="post" onsubmit="return validateCallback(this)"  novalidate>
+             	<div class="box-bodyed">
+                	<div class="form-group">
+                    	<label for="wxloginEmail"><span class="red">*</span>微信登陆账号:</label>
+                        <input type="text" class="form-control" id="wxloginEmail" name="email" placeholder="请输入微信登陆账号" required  value="" />
+                	</div>
+                	<div class="form-group">
+                    	<label for="wxloginPass"><span class="red">*</span>微信登陆密码:</label>
+                        <input type="text" class="form-control" id="wxloginPass" name="tel" placeholder="请输入密码" required  value="" />
+                	</div>
+					<div class="form-group">
+						<label for="accounvalidatetname"><span class="red">*</span>账号验证人姓名:</label>
+						<input type="text" class="form-control" id="accounvalidatetname" name="accounvalidatetname" placeholder="请输入账号验证人姓名" required  value="" />
+					</div>
+					<div class="form-group">
+						<label for="accountvalidatetel"><span class="red">*</span>账号验证人联系方式:</label>
+						<input type="text" class="form-control" id="accountvalidatetel" name="accountvalidatetel" placeholder="请输入账号验证人联系方式" required  value="" />
+					</div>
+                	<div class="form-group">
+                    	<label for="APPID"><span class="red">*</span>APPID:</label>
+                        <input type="text" class="form-control" id="APPID" name="name" placeholder="请输入APPID" required  value="" />
+                	</div>
+                	<div class="form-group">
+                    	<label for="userUnit"><span class="red">*</span>秘钥:</label>
+                        <input type="text" class="form-control" id="userUnit" name="company" placeholder="请输入秘钥" required  value="" />
+                	</div>
+                	<div class="form-group">
+                    	<label><span class="red">*</span>微信号类型:</label>
+						<select class="form-control" id="userDepartment" name="wxtype">
+							<option value="1">服务号</option>
+							<option value="2">订阅号</option>
+						</select>
+                	</div>
+					<div class="form-group">
+						<label><span class="red">*</span>状态:</label>
+						<select class="form-control" name="wxstate">
+							<option value="1">可用</option>
+							<option value="2">不可用</option>
+						</select>
+					</div>
+                </div>
+               <div class="box-footer">
+                    <button type="submit" class="btn btn-primary" id="addAdminCommit">提交</button>　
+                    <a type="btn" class="btn btn-danger" id="addAdminSubmit" href="#!/UserAdmin/userAdmin">返回列表</a>
+                </div>
+            </form>
+        </div>
+
+        </div>
+    </div>
+</div>

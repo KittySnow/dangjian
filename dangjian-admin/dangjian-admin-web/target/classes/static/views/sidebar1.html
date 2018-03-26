@@ -1,0 +1,126 @@
+<!-- sidebar: style can be found in sidebar.less -->
+<section class="sidebar">
+    <!-- Sidebar user panel -->
+    <div class="user-panel">
+        <div class="image-avatar image">
+            <img src="./img/timg.png" class="img-circle" alt="User Image" />
+            <span><i class="fa fa-circle text-success"></i>
+            </span>
+        </div>
+        <div class="info">
+            <p class="text-center">
+                <span>您好，欢迎您</span>
+            </p>
+            <ul class="profile-list">
+                <li>
+                    <a href="#" data-toggle="tooltip" data-placement="top" title="用户信息">
+                        <span data-toggle="modal" data-target="#myModal"><i class="fontello-user-outline"></i>
+                        </span>
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#!" data-toggle="tooltip" data-placement="top" title="设置">
+                        <span data-toggle="modal" data-target="#setting"><i class="fontello-wrench-outline"></i>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#!" data-toggle="tooltip" data-placement="top" id="logout" title="注销">
+                        <span><i class="fontello-power-outline"></i>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SIDEBAR MENU: : style can be found in sidebar.less -->
+    <ul id="menu" class="sidebar-menu">
+        <li  ng-class="{true: 'active'}[activeSmall == 'dashboard']">
+            <a href="#!/dashboard">
+                <i class="fa fontello-desktop-1"></i>
+                <span>后台管理</span>
+            </a>
+        </li>
+        <li ng-class="{true: 'active'}[activeSmall == 'roject']">
+            <a href="#!/roject/projectList">
+                <i class="fa fontello-desktop-1"></i>
+                <span>项目管理</span>
+            </a>
+        </li>
+        <li ng-class="{true: 'active'}[activeSmall == 'UserAdmin']">
+            <a href="#!/UserAdmin/userAdmin">
+                <i class="fa fontello-desktop-1"></i>
+                <span>用户列表</span>
+            </a>
+        </li>
+
+        <li ng-class="{true: 'active'}[activeSmall == 'DepartmentList']">
+            <a href="#!/DepartmentList/departmentList">
+                <i class="fa fontello-desktop-1"></i>
+                <span>部门管理</span>
+            </a>
+        </li>
+
+        <li ng-class="{true: 'active'}[activeSmall == 'RoleList']">
+            <a href="#!/RoleList/roleList">
+                <i class="fa fontello-desktop-1"></i>
+                <span>角色列表</span>
+            </a>
+        </li>
+
+
+        <li ng-class="{true: 'active'}[activeSmall == 'FeatureList']">
+           <a href="#!/FeatureList/featureList">
+                <i class="fa fontello-desktop-1"></i>
+                <span>功能列表</span>
+            </a>
+        </li>
+
+
+        <li ng-class="{true: 'active'}[activeSmall == 'SpaceAdmin']">
+            <a href="#!/SpaceAdmin/spaceAdmin">
+                <i class="fa fontello-desktop-1"></i>
+                <span>空间管理</span>
+            </a>
+        </li>
+	</ul>
+</section>
+<!-- /.sidebar -->
+
+<script>
+/* Sidebar tree view */
+(function($) {
+    $(".sidebar .treeview").tree();
+})(jQuery);
+
+$('#menu').slicknav();
+//Activate tooltips
+$("[data-toggle='tooltip']").tooltip();
+
+function fix_sidebar() {
+    //Make sure the body tag has the .fixed class
+    if (!$("body").hasClass("fixed")) {
+        return;
+    }
+
+    //Add slimscroll
+    $(".sidebar").slimscroll({
+        height: ($(window).height() - $(".header").height()) + "px",
+        color: "rgba(0,0,0,0.3)"
+    });
+}
+$(function(){
+	$("#logout").on('click',function(){
+		 var userName= sessionStorage.getItem('userName');
+		$.ajax({
+		    url:'../ad/logout.do',
+		    type:'GET',
+		    data:{loginMail:userName}
+		}).done(function(data){
+        window.location.href="../login/index.html"
+		})
+	})
+})
+</script>

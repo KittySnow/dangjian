@@ -1,0 +1,31 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li><a href="#!/$!html_file_name.get($!smallMapper)/${fileNameLowerCaseFirstOne}">${chinaName}列表</a></li>
+    <li class="active">添加${chinaName}</li>
+</ol>
+<!-- 添加项目html -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="box ">
+            <div class="box-header">
+                <h3 class="box-title">添加${chinaName}</h3>
+            </div>
+            <form role="form" class="loginForm form-horizontal" action="../${mapperLowerCase}/save.do" method="post" onsubmit="return validateCallback(this)"  novalidate>
+                <div class="box-bodyed">
+#foreach($render in $renderList)
+                <div class="form-group">
+                    <label><span class="red">*</span>${render.alias}</label>
+                    <input type="text" class="form-control" name="${render.keys}" placeholder="请输入${render.alias}" required/>
+                </div>
+#end
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">提交</button>　
+                    <a type="btn" class="btn btn-danger" id="addAdminSubmit" href="#!/$!html_file_name.get($!smallMapper)/${fileNameLowerCaseFirstOne}">返回列表</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>

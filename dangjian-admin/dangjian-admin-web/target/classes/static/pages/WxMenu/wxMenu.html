@@ -1,0 +1,131 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#!/"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li class="active"><a href="#!/WxMenu/wxMenu">生成微信菜单</a></li>
+</ol>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">生成微信菜单</h3>
+            </div>
+            <div class="box-mgr red">
+                菜单说明：一级菜单最多三个，二级菜单最多5个，一级菜单最多4个汉字，二级菜单最多7个汉字，创建自定义菜单后，由于微信客户端缓存，需要24小时微信客户端才会展现出来。
+                建议测试时可以尝试取消关注公众账号后再次关注，则可以看到创建后的效果。
+                若不填写该行的菜单标题，则视作放弃此栏位显示权利；若不填写一级菜单的菜单标题，则视作放弃该菜单的所有子菜单显示。
+            </div>
+            <div class="box-mgr">
+                <a class="btn btn-info" href="javascript:saveMenu()">保存菜单配置</a>
+            </div>
+            <div class="box-body table-responsive">
+                <table id="wxTitleMenu" class="table table-bordered" data-unique-id="userid">
+                    <thead>
+                    <tr>
+                        <th width="25%">菜单位置</th>
+                        <th width="25%">菜单标题</th>
+                        <th width="25%">响应动作类型</th>
+                        <th width="25%">url值</th>
+                    </tr>
+                    </thead>
+                    <tbody ng-repeat="(x, y) in WxMenuData track by x">
+
+                    <tr class="menu">
+                        <td>☆{{x+1}}号一级菜单</td>
+                        <td><input type="text" name="title" maxlength="4" class="wxTitleMenu"/></td>
+                        <td>
+                            <select name="reponse" class="reponse" onchange="actMenu()">
+                                <option value="click">click点击直接触发事件</option>
+                                <option value="view">view点击后跳转链接</option>
+                                <option selected value="menu">创建子菜单</option>
+                            </select>
+                        </td>
+                        <td><input type="text" name="uk" class="uk"/></td>
+                    </tr>
+                    <tr class="subMenu{{x+1}}"  ng-repeat="child in y.children">
+                        <td style="padding-left:12px;">∷{{x+1}}号一级菜单{{child.num}}号子菜单</td>
+                        <td><input type="text" name="subTitle" maxlength="7" class="subTitle"/></td>
+                        <td>
+                            <select name="reponse">
+                                <option value="click">click点击直接触发事件</option>
+                                <option value="view">view点击后跳转链接</option>
+                            </select>
+                        </td>
+                        <td><input type="text" name="subUk" class="subUk"/></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //表单提交后的生成菜单json
+    function saveMenu(){
+        var array = [];
+        $(".wxTitleMenu").each(function(i){
+            var obj={},
+                title = $.trim($(this).val()),
+                reponse = $(".reponse").eq(i).val(),
+                uk = $.trim($(".uk").eq(i).val());
+            //如果菜单名写就处理组装json，不写就视作放弃。
+            if(title){
+                obj.name = title;
+                //如果是click或value直接处理
+                if(reponse =="click"){
+                    obj.type = reponse;
+                    obj.key = uk;
+                }else if(reponse =="view"){
+                    obj.type = reponse;
+                    obj.url = encodeURI(uk);
+                }else{
+                    obj.sub_button = [];
+                    //处理子菜单的json数据
+                    $(".subMenu"+(i+1)).each(function(){
+                        var $this = $(this),
+                            subTitle = $.trim($this.find(".subTitle").val()),
+                            subreponse = $this.find("select").val(),
+                            subUk = $.trim($this.find(".subUk").val()),
+                            subObj = {};
+                        if(subTitle){
+                            subObj.name = subTitle;
+                            subObj.type = subreponse;
+                            if(subreponse ==="click"){
+                                subObj["key"] = subUk
+                            }else{
+                                subObj["url"]= subUk;
+                            }
+                            obj.sub_button.push(subObj);
+                        }
+                    });
+                }
+                array.push(obj);
+            }
+        });
+        var jsonObj = {button:array};
+        var tr = JSON.stringify(jsonObj);
+        alert(tr);
+        $.ajax({
+            type:'POST',
+            url:'mobileRpc/saveMenuButton.do',
+            data:'menus='+tr,
+            dataType:"json",
+            cache: false,
+            success: function(json){
+            },
+        });
+
+    }
+
+    //控制一级菜单select事件
+    function actMenu(){
+        $(".reponse").each(function(index){
+            var subMenu = $(".subMenu"+(index+1));
+            var uk = $(".uk").eq(index);
+            var menuValue = $(this).val();
+            switch(menuValue){
+                case "click": case "view":subMenu.hide();uk.show();break;
+                case "menu":subMenu.show();uk.hide();break;
+            }
+        });
+    }
+    actMenu();
+</script>
