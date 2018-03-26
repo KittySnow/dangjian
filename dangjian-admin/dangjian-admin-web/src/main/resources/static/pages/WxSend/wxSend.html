@@ -51,10 +51,9 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="home">
-
-                            <div class="well">
-                                <form role="form" class="ng-pristine ng-valid" id="msgSender">
-                                    <div class="form-group emotion-editor">
+                            <div class="well textArea">
+                                <form role="form" class="ng-pristine ng-valid emotion-editor" id="msgSender">
+                                    <div class="form-group  emotion-editor-textarea">
                                         <textarea style="width:100%" placeholder="Comment" rows="5" class="form-update" id="emotion-editor-textarea"></textarea>
                                     </div>
                                     <div class="editor-toolbar"><a class="icon-emotion emotion-switch">表情</a>
@@ -63,22 +62,15 @@
                                             <ul class="emotions"></ul>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn bg-green">Submit</button>
                                 </form>
                             </div>
-
-                            <div class="textArea inner no-extra">
-                                <div class="emotion-editor">
-                                    <div class="emotion-editor-textarea">
-                                        <textarea ></textarea>
-                                    </div>
-
-                                </div>
-                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="profile">
 
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="profile">...</div>
-                        <div role="tabpanel" class="tab-pane" id="messages">...</div>
+                        <div role="tabpanel" class="tab-pane" id="messages">
+
+                        </div>
                     </div>
 
                 </div>
@@ -95,9 +87,9 @@
         //创建表情框
         if(!faceimg){
             var emotions = [{cname:"微笑"},{cname:"撇嘴"},{cname:"色"},{cname:"发呆"},{cname:"得意"},{cname:"流泪"},{cname:"害羞"},{cname:"闭嘴"},{cname:"睡"},{cname:"大哭"},{cname:"尴尬"},{cname:"发怒"},{cname:"调皮"},{cname:"呲牙"},{cname:"惊讶"},{cname:"难过"},{cname:"酷"},{cname:"冷汗"},{cname:"抓狂"},{cname:"吐"},{cname:"偷笑"},{cname:"可爱"},{cname:"白眼"},{cname:"傲慢"},{cname:"饥饿"},{cname:"困"},{cname:"惊恐"},{cname:"流汗"},{cname:"憨笑"},{cname:"大兵"},{cname:"奋斗"},{cname:"咒骂"},{cname:"疑问"},{cname:"嘘"},{cname:"晕"},{cname:"折磨"},{cname:"衰"},{cname:"骷髅"},{cname:"敲打"},{cname:"再见"},{cname:"擦汗"},{cname:"抠鼻"},{cname:"鼓掌"},{cname:"糗大了"},{cname:"坏笑"},{cname:"左哼哼"},{cname:"右哼哼"},{cname:"哈欠"},{cname:"鄙视"},{cname:"委屈"},{cname:"快哭了"},{cname:"阴险"},{cname:"亲亲"},{cname:"吓"},{cname:"可怜"},{cname:"菜刀"},{cname:"西瓜"},{cname:"啤酒"},{cname:"篮球"},{cname:"乒乓"},{cname:"咖啡"},{cname:"饭"},{cname:"猪头"},{cname:"玫瑰"},{cname:"凋谢"},{cname:"示爱"},{cname:"爱心"},{cname:"心碎"},{cname:"蛋糕"},{cname:"闪电"},{cname:"炸弹"},{cname:"刀"},{cname:"足球"},{cname:"瓢虫"},{cname:"便便"},{cname:"月亮"},{cname:"太阳"},{cname:"礼物"},{cname:"拥抱"},{cname:"强"},{cname:"弱"},{cname:"握手"},{cname:"胜利"},{cname:"抱拳"},{cname:"勾引"},{cname:"拳头"},{cname:"差劲"},{cname:"爱你"},{cname:"NO"},{cname:"OK"},{cname:"爱情"},{cname:"飞吻"},{cname:"跳跳"},{cname:"发抖"},{cname:"怄火"},{cname:"转圈"},{cname:"磕头"},{cname:"回头"},{cname:"跳绳"},{cname:"挥手"},{cname:"激动"},{cname:"街舞"},{cname:"献吻"},{cname:"左太极"},{cname:"右太极"}];
-            for(i=1;i<61;i++) faceimg+='<li><a href="javascript:void(0)"><img src="assets/images/qq/'+i+'.gif" title="'+emotions[i-1].cname+'"/></a></li>';
-            $("#msgSender .emotions").append(faceimg).find("li img").die().click(function(){
-                $("#emotion-editor-textarea").die().insertContent("["+$(this).attr("title")+"]");
+            for(i=1;i<61;i++) faceimg+='<li><a href="javascript:void(0)"><img src="img/qq/'+i+'.gif" title="'+emotions[i-1].cname+'"/></a></li>';
+            $("#msgSender .emotions").append(faceimg).find("li img").off().click(function(){
+                $("#emotion-editor-textarea").off().insertContent("["+$(this).attr("title")+"]");
             });//创建完成后先将其隐藏
         }
         $(".emotions-wrap").toggle();
@@ -135,7 +127,7 @@
 
     // 群发消息
     function sendOutGroupManage() {
-        var url = "sendOutMobileMessageRpc/",
+        var url = "mp/sendOutMobileMessageRpc/",
             msgtype = $("#msgtype").val(),
             param = "",
             isWx= $("#isWx").val(),
@@ -170,32 +162,35 @@
             data: param,
             async: true,
             dataType: "json",
-            success: function(data) {
-                var data = JSON.parse(data);
-                console.log(data);
-                if(!data.errcode){
-                    navTabAjaxDone({
-                        "statusCode":"200",
-                        "message":"群发消息成功",
-                        "callbackType":"forward",
-                        "forwardUrl":"mobileScreen/sendOutMessageModule.do",
-                        "rel":"sendOutMessageModule"
+            success: function(res){
+                if(res.success){
+                    var dialog = art.dialog({
+                        title: '提示',
+                        content: res.msg,
+                        icon: 'error',
+                        ok: function(){
+                            dialog.close()
+                        }
                     });
                 }else{
-                    navTabAjaxDone({
-                        "statusCode":"300",
-                        "message":"群发消息失败"
+                    var dialog = art.dialog({
+                        title: '提示',
+                        content: res.msg,
+                        icon: 'error',
+                        ok: function(){
+                            dialog.close()
+                        }
                     });
                 }
-
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log(XMLHttpRequest);
-                console.log(textStatus);
-                console.log(errorThrown);
-                navTabAjaxDone({
-                    "statusCode":"300",
-                    "message":"群发消息失败"
+            error:function (res) {
+                var dialog = art.dialog({
+                    title: '错误',
+                    content: res.msg || '网络连接失败',
+                    icon: 'error',
+                    ok: function(){
+                        dialog.close()
+                    }
                 });
             }
         });

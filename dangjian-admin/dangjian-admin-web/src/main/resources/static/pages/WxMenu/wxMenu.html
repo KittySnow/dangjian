@@ -102,15 +102,43 @@
         });
         var jsonObj = {button:array};
         var tr = JSON.stringify(jsonObj);
-        alert(tr);
         $.ajax({
             type:'POST',
             url:'/mp/createMenu',
-            data:{menus:jsonObj},
+            data:'json='+tr,
             dataType:"json",
             cache: false,
-            success: function(json){
+            success: function(res){
+                if(res.success){
+                    var dialog = art.dialog({
+                        title: '提示',
+                        content: res.msg,
+                        icon: 'error',
+                        ok: function(){
+                            dialog.close()
+                        }
+                    });
+                }else{
+                    var dialog = art.dialog({
+                        title: '提示',
+                        content: res.msg,
+                        icon: 'error',
+                        ok: function(){
+                            dialog.close()
+                        }
+                    });
+                }
             },
+            error:function (res) {
+                var dialog = art.dialog({
+                    title: '错误',
+                    content: res.msg || '网络连接失败',
+                    icon: 'error',
+                    ok: function(){
+                        dialog.close()
+                    }
+                });
+            }
         });
 
     }
