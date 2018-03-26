@@ -105,8 +105,8 @@
         alert(tr);
         $.ajax({
             type:'POST',
-            url:'mobileRpc/saveMenuButton.do',
-            data:'menus='+tr,
+            url:'/mp/createMenu',
+            data:{menus:jsonObj},
             dataType:"json",
             cache: false,
             success: function(json){
