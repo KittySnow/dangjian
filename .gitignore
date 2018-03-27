@@ -1,5 +1,10 @@
 .idea
 *.iml
 dangjian-admin/dangjian-admin-dao/target
+dangjian-admin/dangjian-admin-service/target
 dangjian-admin/dangjian-admin-web/target
+dangjian-cms/dangjian-cms-dao/target
+dangjian-cms/dangjian-cms-service/target
+dangjian-cms/dangjian-cms-web/target
 dangjian-thirdparty/dangjian-thirdparty-mp/dangjian-thirdparty-mp-sdk/target
+dangjian-common/target
