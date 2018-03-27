@@ -48,6 +48,7 @@ public class PUser implements Serializable {
     private Integer roleid;
 
     private String rolename;
+    private String departmentname;
 
 
     private String tel;
@@ -134,6 +135,14 @@ public class PUser implements Serializable {
 
     public void setDepartmentid(Integer departmentid) {
         this.departmentid = departmentid;
+    }
+
+    public String getDepartmentname() {
+        return departmentname;
+    }
+
+    public void setDepartmentname(String departmentname) {
+        this.departmentname = departmentname;
     }
 
     @Override

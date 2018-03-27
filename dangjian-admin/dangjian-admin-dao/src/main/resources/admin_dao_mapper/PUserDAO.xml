@@ -124,20 +124,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.dlbdata.dangjian.admin.dao.model.PUser">
-    <selectKey keyProperty="userid" resultType="int" order="BEFORE">
-      SELECT nextval('p_user_userid_seq') as userid
+    <selectKey keyProperty="userid" resultType="int" order="AFTER">
+        <!--&lt;!&ndash;SELECT nextval('p_user_userid_seq') as userid&ndash;&gt;-->
+      SELECT LAST_INSERT_ID() AS userid
     </selectKey>
     insert into p_user (userid,name, email, password,
       company, departmentid, job,
       roleid, tel)
     values (#{userid},#{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
       #{company,jdbcType=VARCHAR}, #{departmentid,jdbcType=INTEGER}, #{job,jdbcType=VARCHAR},
-      #{roleid,jdbcType=INTEGER}, #{tel,jdbcType=VARCHAR}) RETURNING userid
+      #{roleid,jdbcType=INTEGER}, #{tel,jdbcType=VARCHAR}) <!--RETURNING userid-->
   </insert>
 
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PUser" >
-    <selectKey keyProperty="userid" resultType="int" order="BEFORE">
-      SELECT nextval('p_user_userid_seq') as userid
+    <selectKey keyProperty="userid" resultType="int" order="AFTER">
+      <!--SELECT nextval('p_user_userid_seq') as userid-->
+    SELECT LAST_INSERT_ID() AS userid
     </selectKey>
   insert into p_user
     <trim prefix="(userid," suffix=")" suffixOverrides=",">
@@ -193,7 +195,7 @@
         #{tel,jdbcType=VARCHAR},
       </if>
     </trim>
-    RETURNING userid
+   <!-- RETURNING userid-->
   </insert>
   <select id="countByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PUserExample" resultType="java.lang.Long">
     select count(*) from p_user

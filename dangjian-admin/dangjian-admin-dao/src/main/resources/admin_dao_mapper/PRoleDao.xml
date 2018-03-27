@@ -97,14 +97,14 @@
   </delete>
   <insert id="insert" parameterType="cn.dlbdata.dangjian.admin.dao.model.PRole">
     <selectKey keyProperty="roleid" order="AFTER" resultType="java.lang.Integer">
-      SELECT nextval('p_role_roleId_seq') as roleId
+      SELECT LAST_INSERT_ID() AS roleid
     </selectKey>
     insert into p_role (rolename, roledesc)
     values (#{rolename,jdbcType=VARCHAR}, #{roledesc,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PRole">
     <selectKey keyProperty="roleid" order="AFTER" resultType="java.lang.Integer">
-      SELECT nextval('p_role_roleId_seq') as roleId
+      SELECT LAST_INSERT_ID() AS roleid
     </selectKey>
     insert into p_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
