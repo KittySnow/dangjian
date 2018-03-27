@@ -28,7 +28,7 @@ td.bs-checkbox.vm input {
         'click .editFeatureList' : function (e, value, row, index) {
         },
         'click .delFeatureList' : function (e, value, row, index) {
-            deleteAjax(row,'../pfeature/deleteFeatureById.do','featureid','post');
+            deleteAjax(row,'../pfeature/deleteFeatureById','featureid','post');
         }
     };
 
@@ -59,7 +59,7 @@ td.bs-checkbox.vm input {
                     title: '中文名称'
                 }],
             method: 'GET',
-            url: "../pfeature/getList.do",
+            url: "../pfeature/getList",
             sidePagination: "client", //服务端请求
             responseHandler:function(res){
                 for (var i = 0; i < res.data.length; i++) {

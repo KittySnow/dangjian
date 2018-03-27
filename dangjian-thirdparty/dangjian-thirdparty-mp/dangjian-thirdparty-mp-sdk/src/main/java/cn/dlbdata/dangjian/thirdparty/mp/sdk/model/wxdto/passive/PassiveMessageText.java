@@ -1,6 +1,7 @@
 package cn.dlbdata.dangjian.thirdparty.mp.sdk.model.wxdto.passive;
 
-import com.yimi.mobile.common.ConstantUtil.WX_MSG_TYPE;
+
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.common.ConstantUtil;
 
 public class PassiveMessageText extends PassiveBaseMessage {
 	
@@ -8,7 +9,7 @@ public class PassiveMessageText extends PassiveBaseMessage {
 	private String Content;
 
 	public PassiveMessageText() {
-		this.setMsgType(WX_MSG_TYPE.text.toString());
+		this.setMsgType(ConstantUtil.WX_MSG_TYPE.text.toString());
 	}
 	
 	public String getContent() {

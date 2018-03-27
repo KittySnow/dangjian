@@ -1,6 +1,7 @@
 package cn.dlbdata.dangjian.thirdparty.mp.sdk.model.wxdto.active;
 
-import com.yimi.mobile.common.ConstantUtil.WX_MSG_TYPE;
+
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.common.ConstantUtil;
 
 /**
  * 主动图片消息
@@ -14,7 +15,7 @@ public class ActiveImageMessage extends ActiveBaseMessage {
 	private ActiveImage image;
 
 	public ActiveImageMessage() {
-		this.setMsgtype(WX_MSG_TYPE.image.toString());
+		this.setMsgtype(ConstantUtil.WX_MSG_TYPE.image.toString());
 	}
 
 	public ActiveImage getImage() {

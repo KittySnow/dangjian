@@ -1,8 +1,9 @@
 package cn.dlbdata.dangjian.thirdparty.mp.sdk.model.wxdto.passive;
 
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.common.ConstantUtil;
+
 import java.util.List;
 
-import com.yimi.mobile.common.ConstantUtil.WX_MSG_TYPE;
 
 public class PassiveMessageNews extends PassiveBaseMessage {
 
@@ -11,7 +12,7 @@ public class PassiveMessageNews extends PassiveBaseMessage {
 	private List<PassiveArticle> Articles;
 
 	public PassiveMessageNews() {
-		this.setMsgType(WX_MSG_TYPE.news.toString());
+		this.setMsgType(ConstantUtil.WX_MSG_TYPE.news.toString());
 	}
 	
 	public int getArticleCount() {

@@ -24,7 +24,7 @@
             console.log(row);
         },
         'click .delFeatureList' : function (e, value, row, index) {
-            deleteAjax(row,'../pfeature/deleteById.do','featureid','POST','FeatureListTable');
+            deleteAjax(row,'../pfeature/deleteById','featureid','POST','FeatureListTable');
         }
     };
 
@@ -59,7 +59,7 @@
                     events: actionFeatureListEvents
                 }],
             method: 'GET',
-            url: "../pfeature/getList.do",
+            url: "../pfeature/getList",
             sidePagination: "client", //服务端请求
             dataField:'list',
             responseHandler:function(res){

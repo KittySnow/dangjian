@@ -1,3 +1,4 @@
 .idea
 *.iml
 dangjian-admin/dangjian-admin-web/target
+dangjian-thirdparty/dangjian-thirdparty-mp/dangjian-thirdparty-mp-sdk/target

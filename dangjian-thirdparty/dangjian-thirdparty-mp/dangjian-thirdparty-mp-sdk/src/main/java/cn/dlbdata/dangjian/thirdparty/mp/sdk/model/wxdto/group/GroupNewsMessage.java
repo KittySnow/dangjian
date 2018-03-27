@@ -1,6 +1,7 @@
 package cn.dlbdata.dangjian.thirdparty.mp.sdk.model.wxdto.group;
 
-import com.yimi.mobile.common.ConstantUtil.WX_MSG_TYPE;
+
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.common.ConstantUtil;
 
 /**
  * 主动文本消息
@@ -14,7 +15,7 @@ public class GroupNewsMessage extends GroupBaseMessage {
 	private GroupNews mpnews;
 
 	public GroupNewsMessage() {
-		this.setMsgtype(WX_MSG_TYPE.mpnews.toString());
+		this.setMsgtype(ConstantUtil.WX_MSG_TYPE.mpnews.toString());
 	}
 
 	public GroupNews getMpnews() {

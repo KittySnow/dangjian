@@ -27,7 +27,7 @@
         'click .editRoleList' : function (e, value, row, index) {
         },
         'click .delRoleList' : function (e, value, row, index) {
-            deleteAjax(row,'../prole/deleteById.do','roleid','POST','RoleListTable');
+            deleteAjax(row,'../prole/deleteById','roleid','POST','RoleListTable');
         }
     };
 
@@ -62,7 +62,7 @@
                     events: actionRoleListEvents
                 }],
             method: 'GET',
-            url: "../prole/list.do",
+            url: "../prole/list",
             sidePagination: "server", //服务端请求
             queryParams:function (params) {
                 return {
