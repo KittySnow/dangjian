@@ -5,42 +5,54 @@ import java.io.Serializable;
 public class PUser implements Serializable {
     private Integer userid;
 
+    /**
+     * 用户姓名
+     *
+     * @mbg.generated
+     */
     private String name;
 
+    /**
+     * 登录邮箱
+     *
+     * @mbg.generated
+     */
     private String email;
 
+    /**
+     * 密码
+     *
+     * @mbg.generated
+     */
     private String password;
 
+    /**
+     * 用户公司
+     *
+     * @mbg.generated
+     */
     private String company;
 
-    private Integer departmentid;
-
-    public String getDepartmentname() {
-        return departmentname;
-    }
-
-    public void setDepartmentname(String departmentname) {
-        this.departmentname = departmentname;
-    }
-
-    private String departmentname;
-
-    public Integer getDepartmentid() {
-        return departmentid;
-    }
-
-    public void setDepartmentid(Integer departmentid) {
-        this.departmentid = departmentid;
-    }
-
+    /**
+     * 职位职称
+     *
+     * @mbg.generated
+     */
     private String job;
 
+    /**
+     * 角色
+     *
+     * @mbg.generated
+     */
     private Integer roleid;
 
     private String rolename;
 
 
     private String tel;
+
+    private Integer departmentid;
 
     private static final long serialVersionUID = 1L;
 
@@ -84,7 +96,6 @@ public class PUser implements Serializable {
         this.company = company;
     }
 
-
     public String getJob() {
         return job;
     }
@@ -117,6 +128,14 @@ public class PUser implements Serializable {
         this.tel = tel;
     }
 
+    public Integer getDepartmentid() {
+        return departmentid;
+    }
+
+    public void setDepartmentid(Integer departmentid) {
+        this.departmentid = departmentid;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -128,10 +147,10 @@ public class PUser implements Serializable {
         sb.append(", email=").append(email);
         sb.append(", password=").append(password);
         sb.append(", company=").append(company);
-        sb.append(", departmentid=").append(departmentid);
         sb.append(", job=").append(job);
         sb.append(", roleid=").append(roleid);
         sb.append(", tel=").append(tel);
+        sb.append(", departmentid=").append(departmentid);
         sb.append("]");
         return sb.toString();
     }
@@ -153,10 +172,10 @@ public class PUser implements Serializable {
             && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
             && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
             && (this.getCompany() == null ? other.getCompany() == null : this.getCompany().equals(other.getCompany()))
-            && (this.getDepartmentid() == null ? other.getDepartmentid() == null : this.getDepartmentid().equals(other.getDepartmentid()))
             && (this.getJob() == null ? other.getJob() == null : this.getJob().equals(other.getJob()))
             && (this.getRoleid() == null ? other.getRoleid() == null : this.getRoleid().equals(other.getRoleid()))
-            && (this.getTel() == null ? other.getTel() == null : this.getTel().equals(other.getTel()));
+            && (this.getTel() == null ? other.getTel() == null : this.getTel().equals(other.getTel()))
+            && (this.getDepartmentid() == null ? other.getDepartmentid() == null : this.getDepartmentid().equals(other.getDepartmentid()));
     }
 
     @Override
@@ -168,10 +187,10 @@ public class PUser implements Serializable {
         result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
         result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
         result = prime * result + ((getCompany() == null) ? 0 : getCompany().hashCode());
-        result = prime * result + ((getDepartmentid() == null) ? 0 : getDepartmentid().hashCode());
         result = prime * result + ((getJob() == null) ? 0 : getJob().hashCode());
         result = prime * result + ((getRoleid() == null) ? 0 : getRoleid().hashCode());
         result = prime * result + ((getTel() == null) ? 0 : getTel().hashCode());
+        result = prime * result + ((getDepartmentid() == null) ? 0 : getDepartmentid().hashCode());
         return result;
     }
 }
