@@ -7,8 +7,7 @@ import cn.dlbdata.dangjian.admin.service.PFeatureService;
 import cn.dlbdata.dangjian.admin.service.PUserService;
 import cn.dlbdata.dangjian.admin.service.model.LoginAccount;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -29,7 +28,6 @@ import static cn.dlbdata.dangjian.admin.service.util.DangjianUtil.getMD5;
 @Controller
 @RequestMapping("/ad")
 public class AdController {
-	private static final Logger LOGGER = LoggerFactory.getLogger(AdController.class);
 	public final static SimpleDateFormat SDF	= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public final static String LOGGED_USER	= "loggedUserInfo";
 	public final static String SESSION_USER= "userInfo";
@@ -116,7 +114,6 @@ public class AdController {
 		} else {
 			retMsg = msg3 + "你上次登录IP地址是："+adServ.getLastLoginIp(lowercase);			
 		}
-		LOGGER.info("邮箱账号"+lowercase+"正在执行登录操作，"+retMsg);
 		result.setMsg(retMsg);
 		
 		return result.getResult();
@@ -151,8 +148,7 @@ public class AdController {
 			result.setSuccess(false);
 		}
 		result.setMsg(msg);
-		LOGGER.info("邮箱账号"+loginMail+"正在执行退出操作，"+msg);
-		
+
 		return result.getResult();
 	}
 
@@ -200,7 +196,6 @@ public class AdController {
 		} else {
 			retMsg = msg3 + "你上次登录IP地址是："+adServ.getLastLoginIp(lowercase);			
 		}
-		LOGGER.info("邮箱账号"+lowercase+"正在执行登录操作，"+retMsg);
 		result.setMsg(retMsg);
 		
 		return result.getResult();

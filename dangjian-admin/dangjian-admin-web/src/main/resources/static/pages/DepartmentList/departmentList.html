@@ -24,7 +24,7 @@
             console.log(row);
         },
         'click .delDepartmentList' : function (e, value, row, index) {
-            deleteAjax(row,'../pdepartment/deleteById','departmentid','post','DepartmentListTable');
+            deleteAjax(row,'./pdepartment/deleteById','departmentid','post','DepartmentListTable');
         }
     };
 
@@ -59,7 +59,7 @@
                     events: actionDepartmentListEvents
                 }],
             method: 'GET',
-            url: "../pdepartment/getList",
+            url: "./pdepartment/getList",
             sidePagination: "client", //服务端请求
             showColumns:true,
             pagination:true,

@@ -24,7 +24,7 @@
             console.log(row);
         },
         'click .delUserAdmin' : function (e, value, row, index) {
-            deleteAjax(row,'../puser/deleteUserById','userid','post','UserAdminTable');
+            deleteAjax(row,'./puser/deleteUserById','userid','post','UserAdminTable');
         }
     };
 
@@ -80,7 +80,7 @@
                     events: actionUserAdminEvents
                 }],
             method: 'GET',
-            url: "../puser/allList",
+            url: "./puser/allList",
             sidePagination: "server", //服务端请求
             queryParams:function (params) {
                 return {

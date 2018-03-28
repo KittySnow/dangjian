@@ -3,8 +3,6 @@ package cn.dlbdata.dangjian.admin.web.controller;
 import cn.dlbdata.dangjian.common.DangjianException;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.service.CustomMenuService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +20,6 @@ import java.util.Map;
 @Controller
 @RequestMapping("/mp")
 public class MpSdkController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MpSdkController.class);
 
     @Autowired
     private CustomMenuService customMenuService;
@@ -38,7 +35,6 @@ public class MpSdkController {
         } catch (DangjianException e) {
             result.setMsg(e.getErrorMsg());
             result.setSuccess(false);
-            LOGGER.error(e.getErrorMsg());
         }
 
         return result.getResult();
