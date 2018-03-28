@@ -3,6 +3,7 @@ package cn.dlbdata.dangjian.admin.web.controller;
 
 import cn.dlbdata.dangjian.admin.dao.model.PUser;
 import cn.dlbdata.dangjian.admin.dao.model.PUserExample;
+import cn.dlbdata.dangjian.admin.dao.model.UserToken;
 import cn.dlbdata.dangjian.admin.service.PUserService;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 import com.github.pagehelper.PageHelper;
@@ -11,12 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -24,39 +23,39 @@ import static cn.dlbdata.dangjian.admin.service.util.DangjianUtil.getMD5;
 
 @Controller
 @RequestMapping("/puser")
+@SessionAttributes("userToken")
 public class PUserController {
-	private static final Logger LOGGER = LoggerFactory.getLogger(PUserController.class);
-	private final static String DEFAULT_PASSWORD	= "12345678";//用户的默认登录密码。
-	private final static String INSERT_ERROR_MSG	= "增加新用户时发生异常，本操作失败，请联系管理员！";
-	private final static String INSERT_SUCCESS_MSG	= "增加新用户成功！";
-	
+    private static final Logger LOGGER = LoggerFactory.getLogger(PUserController.class);
+    private final static String DEFAULT_PASSWORD = "12345678";//用户的默认登录密码。
+    private final static String INSERT_ERROR_MSG = "增加新用户时发生异常，本操作失败，请联系管理员！";
+    private final static String INSERT_SUCCESS_MSG = "增加新用户成功！";
+
     @Autowired
     private PUserService puserService;
-    
 
-    @RequestMapping(value="/save",method= RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> save(PUser pUser){
+    public Map<String, Object> save(PUser pUser) {
         ResultUtil result = new ResultUtil();
         pUser.setPassword(getMD5(DEFAULT_PASSWORD));
-        int insertedUserId= 0;
-        try	{
-        	insertedUserId = puserService.insert(pUser);
+        int insertedUserId = 0;
+        try {
+            insertedUserId = puserService.insert(pUser);
             result.setData(insertedUserId);
             result.setSuccess(true);
             result.setMsg(INSERT_SUCCESS_MSG);
-        } catch (Exception ex)	{
-        	LOGGER.error(ex.getMessage());
+        } catch (Exception ex) {
+            LOGGER.error(ex.getMessage());
             result.setSuccess(false);
             result.setMsg(INSERT_ERROR_MSG);
         }
-        
+
         return result.getResult();
     }
 
-    @RequestMapping(value="/getList",method=RequestMethod.GET)
+    @RequestMapping(value = "/getList", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getList(Integer pageNum, Integer pageSize){
+    public Map<String, Object> getList(Integer pageNum, Integer pageSize) {
         ResultUtil result = new ResultUtil();
         List<PUser> puserList = puserService.selectByExample(new PUserExample());
         result.setSuccess(true);
@@ -64,42 +63,42 @@ public class PUserController {
         return result.getResult();
     }
 
-    @RequestMapping(value="/list",method=RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> list(Integer pageNum, Integer pageSize){
+    public Map<String, Object> list(Integer pageNum, Integer pageSize) {
         ResultUtil result = new ResultUtil();
-        PageHelper.startPage(pageNum, pageSize,true);
+        PageHelper.startPage(pageNum, pageSize, true);
         List<PUser> puserList = puserService.selectByExample(new PUserExample());
-        PageInfo<PUser> p=new PageInfo<PUser>(puserList);
+        PageInfo<PUser> p = new PageInfo<PUser>(puserList);
         result.setSuccess(true);
         result.setData(p);
         return result.getResult();
     }
 
-    @RequestMapping(value="/allList",method=RequestMethod.GET)
+    @RequestMapping(value = "/allList", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> allList(Integer pageNum, Integer pageSize,String searchText){
+    public Map<String, Object> allList(Integer pageNum, Integer pageSize, String searchText) {
         ResultUtil result = new ResultUtil();
-        PageHelper.startPage(pageNum, pageSize,true);
-        if(searchText == null){
-            searchText ="";
+        PageHelper.startPage(pageNum, pageSize, true);
+        if (searchText == null) {
+            searchText = "";
         }
-        List<PUser> puserList = puserService.selectAll("%"+searchText+"%");
-        PageInfo<PUser> p=new PageInfo<PUser>(puserList);
+        List<PUser> puserList = puserService.selectAll("%" + searchText + "%");
+        PageInfo<PUser> p = new PageInfo<PUser>(puserList);
         result.setSuccess(true);
         result.setData(p);
         return result.getResult();
     }
 
-    @RequestMapping(value="/deleteById",method=RequestMethod.DELETE)
+    @RequestMapping(value = "/deleteById", method = RequestMethod.DELETE)
     @ResponseBody
-    public Map<String, Object> deleteById(Integer userid){
+    public Map<String, Object> deleteById(Integer userid) {
         ResultUtil result = new ResultUtil();
         //PUserExample example = new PUserExample();
-        if(puserService.deleteByPrimaryKey(userid)>0){
+        if (puserService.deleteByPrimaryKey(userid) > 0) {
             result.setSuccess(true);
             result.setMsg("删除成功");
-        }else{
+        } else {
             result.setMsg("删除失败");
             result.setSuccess(false);
         }
@@ -107,23 +106,23 @@ public class PUserController {
     }
 
 
-    @RequestMapping(value="/updateById",method=RequestMethod.POST)
+    @RequestMapping(value = "/updateById", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> updateById(PUser pUser){
+    public Map<String, Object> updateById(PUser pUser) {
         ResultUtil result = new ResultUtil();
-        if(puserService.updateByPrimaryKeySelective(pUser)>0){
+        if (puserService.updateByPrimaryKeySelective(pUser) > 0) {
             result.setSuccess(true);
             result.setMsg("修改成功");
-        }else{
+        } else {
             result.setMsg("修改失败");
             result.setSuccess(false);
         }
         return result.getResult();
     }
 
-    @RequestMapping(value="/queryById",method=RequestMethod.GET)
+    @RequestMapping(value = "/queryById", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> queryById(Integer userid){
+    public Map<String, Object> queryById(Integer userid) {
         ResultUtil result = new ResultUtil();
         PUser puser = puserService.selectByPrimaryKey(userid);
         result.setSuccess(true);
@@ -131,4 +130,93 @@ public class PUserController {
         return result.getResult();
     }
 
+    /**root directory 直接访问*/
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String welcome(HttpServletRequest request) {
+
+        if (request.getSession().getAttribute("userToken") != null) {
+            return "/dex";
+        }
+
+        return "login";
+    }
+
+
+
+    /**userToken*/
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String toLogin(HttpServletRequest request) {
+        //获取userToken判断 if not null return dex.html else again login
+        if (request.getSession().getAttribute("userToken") != null) {
+            return "/dex";
+        }
+        return "login";
+    }
+
+
+   /*@RequestMapping(value = "/login1", method = RequestMethod.GET)
+    public String toLogin1(HttpServletRequest request) {
+
+        PUserExample pUserExample = new PUserExample();
+        PUserExample.Criteria criteria  = pUserExample.createCriteria();
+        criteria.andNameEqualTo("wangjie");
+
+        List<PUser> puserList =  puserService.selectByExample(pUserExample);
+
+        //System.out.println(pUserExample.);
+
+        return "login";
+    }*/
+
+    /**user login*/
+    @RequestMapping(value = "/tologin", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> tologin(@RequestParam(required = true, value = "name") String name, @RequestParam(required = true, value = "password") String password,
+                                       HttpServletRequest request) {
+        //创建返回结果信息工具类
+        ResultUtil result = new ResultUtil();
+        try {
+            //查询用户的账号与密码
+            PUser pUser = this.puserService.tologin(name, password);
+            //查询roleid
+            PUser pUser1 = this.puserService.findRoleid(name);
+            //判断是否为空且密码是否相同
+            if (pUser != null && pUser.getPassword().equals(password)) {
+                //创建session且获取session
+                HttpSession session = request.getSession();
+                //创建user Token
+                UserToken userToken = new UserToken(pUser.getName(),pUser.getPassword(),pUser1.getRoleid());
+                //如果roleid为1
+                if(userToken.getRoleid()==1){
+                    //set值
+                    session.setAttribute("userToken", "userToken");
+                    result.setSuccess(true);
+                    return null;
+                }
+                //如果roleid为2或3
+                if(userToken.getRoleid()==2 || userToken.getRoleid()==3) {
+                    //set值
+                    session.setAttribute("userToken", "userToken");
+                    result.setSuccess(true);
+                    return null;
+                }
+                //返回boolean类型的结果值
+
+            } //else判断
+                else {
+                result.setSuccess(false);
+                result.setMsg("name or password error");
+            }
+
+        }   //异常捕捉
+            catch (Exception e) {
+            result.setSuccess(false);
+            result.setMsg("exception error");
+        }
+        //final return值
+        return null;
+    }
+
 }
+
+

@@ -5,6 +5,7 @@ import cn.dlbdata.dangjian.admin.dao.model.PUser;
 import cn.dlbdata.dangjian.admin.dao.model.PUserExample;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -36,4 +37,10 @@ public interface PUserDao {
     int updateByPrimaryKey(PUser record);
 
     int updatePasswordByEmail(final PUser user);
+
+    @Select("select * from p_user where name=#{name} and password=#{password}")
+    PUser tologin(@Param("name")String name,@Param("password")String passowrd);
+
+    @Select("select roleid from p_user where name=#{name}")
+    public PUser findRoleid(@Param("name") String name);
 }

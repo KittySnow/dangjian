@@ -35,4 +35,8 @@ public interface PUserService {
 
     public int updateByPrimaryKey(PUser record);
 
+    PUser tologin(String name, String password);
+    public PUser findRoleid(String name);
+
+
 }

@@ -88,4 +88,11 @@ public class PUserServiceImpl implements PUserService {
 		return pUserDao.updatePasswordByEmail(user);
 	}
 
+    @Override
+    public PUser tologin(String name, String password) {return this.pUserDao.tologin(name,password);
+    }
+    @Override
+    public PUser findRoleid(String name) {return pUserDao.findRoleid(name);}
+
+
 }
