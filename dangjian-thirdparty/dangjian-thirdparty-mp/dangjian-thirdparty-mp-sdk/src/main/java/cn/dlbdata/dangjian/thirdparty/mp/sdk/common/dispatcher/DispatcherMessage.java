@@ -1,14 +1,6 @@
 package cn.dlbdata.dangjian.thirdparty.mp.sdk.common.dispatcher;
 
-import com.xiaojiu.ssm.pojo.Video;
-import com.xiaojiu.ssm.service.IVideoService;
-import com.xiaojiu.wechat.A.message.res.Article;
-import com.xiaojiu.wechat.A.message.res.NewsMessage;
-import com.xiaojiu.wechat.A.message.res.TextMessage;
-import com.xiaojiu.wechat.B.util.MessageUtil;
-import com.xiaojiu.wechat.B.util.SpiderByCUtils;
-import com.xiaojiu.wechat.C.api.message.TuLingMessage;
-import com.xiaojiu.wechat.C.api.util.TuLingApiUtils;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
@@ -23,16 +15,16 @@ import java.util.List;
 public class DispatcherMessage {
 	private static Logger logger = Logger.getLogger(DispatcherMessage.class);
 	
-	@Resource
-	private IVideoService videoService;
+	/*@Resource
+	private IVideoService videoService;*/
 	
 	private static DispatcherMessage dispatcherMessage;
 	
 	@PostConstruct
-	public void init(){
+	/*public void init(){
 		dispatcherMessage = this;
 		dispatcherMessage.videoService = this.videoService;
-	}
+	}*/
 
 	/**
 	 * @Description: 主菜单信息
@@ -63,7 +55,7 @@ public class DispatcherMessage {
 		return stringBuffer.toString();
 	}
 
-	public static String getMovie(String content) throws Exception{
+	/*public static String getMovie(String content) throws Exception{
 		String searchWord = content.replaceAll("^电影[\\+ ~!@#%^-_=]?", "");
 		if("".equals(searchWord)){
 			return getMovieMenu();
@@ -104,7 +96,7 @@ public class DispatcherMessage {
 				}
 			}
 		}
-	}
+	}*/
 
 	/**
 	 * @Description: 小玖购物菜单
@@ -132,9 +124,9 @@ public class DispatcherMessage {
 		return stringBuffer.toString();
 	}
 
-	public static String getChat(String openId, String mPid, String content) throws Exception{
+	/*public static String getChat(String openId, String mPid, String content) throws Exception{
 
-		/*
+		*//*
     	Code	说明
     	100000	文本类
     	200000	链接类
@@ -147,7 +139,7 @@ public class DispatcherMessage {
     	40002	请求内容info为空
     	40004	当天请求次数已使用完
     	40007	数据格式异常
-		 */
+		 *//*
 		content = content.replaceAll("^聊天[\\+ ~!@#%^-_=]?", "");
 		TuLingMessage tuLingMessage = TuLingApiUtils.getTulingResult(content);
 		// 100000|313000|314000|40001|40002|40004|40007 -> 文本类
@@ -222,5 +214,5 @@ public class DispatcherMessage {
 			txtMsg.setContent("小玖已休息, 请稍后再来 ..\n" + getMainMenu());
 			return MessageUtil.textMessageToXml(txtMsg);
 		}
-	}
+	}*/
 }

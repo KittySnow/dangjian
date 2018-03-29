@@ -1,7 +1,9 @@
 package cn.dlbdata.dangjian.thirdparty.mp.sdk.common.dispatcher;
 
-import com.xiaojiu.wechat.A.message.res.TextMessage;
-import com.xiaojiu.wechat.B.util.MessageUtil;
+
+
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.domain.res.TextMessage;
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.util.MessageUtil;
 
 import java.util.Date;
 import java.util.Map;
@@ -36,10 +38,10 @@ public class MsgDispatcher {
         		txtMsg.setContent(DispatcherMessage.getChatMenu());
         	}
         	else if(content.startsWith("电影")){
-        		txtMsg.setContent(DispatcherMessage.getMovie(content));
+        		//txtMsg.setContent(DispatcherMessage.getMovie(content));
         	}
         	else if(content.startsWith("聊天")){
-        		return DispatcherMessage.getChat(openId, mPid, content);
+        		//return DispatcherMessage.getChat(openId, mPid, content);
         	}
         	else {
         		txtMsg.setContent(DispatcherMessage.getMainMenu());
