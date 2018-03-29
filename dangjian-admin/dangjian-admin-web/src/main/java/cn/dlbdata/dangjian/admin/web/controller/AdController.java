@@ -155,7 +155,7 @@ public class AdController {
 	/*
 	 * 检查登录账号和密码。
 	 */
-	@RequestMapping(value = "login", method = RequestMethod.POST)
+	/*@RequestMapping(value = "login", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> login(
 			@RequestParam("loginMail")String loginMail,
@@ -199,7 +199,7 @@ public class AdController {
 		result.setMsg(retMsg);
 		
 		return result.getResult();
-	} 
+	} */
 
 	private static boolean checkSession(HttpSession session)	{
 		boolean result	= false;
@@ -217,7 +217,7 @@ public class AdController {
 	/*
 	 * 检查登录账号和密码。
 	 */
-	@RequestMapping(value = "changePassword", method = RequestMethod.POST)
+	/*@RequestMapping(value = "changePassword", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> changePassword(
 			@RequestParam("loginMail")String loginMail,
@@ -263,6 +263,6 @@ public class AdController {
 		}
 		
 		return result.getResult();
-	}
+	}*/
 	
 }
