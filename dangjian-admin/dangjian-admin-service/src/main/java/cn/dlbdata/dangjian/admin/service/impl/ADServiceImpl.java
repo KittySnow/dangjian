@@ -152,7 +152,7 @@ public class ADServiceImpl implements ADService {
 					ret	= 1;
 				}
 			}
-		}*/
+		}
 			
 		return ret;
 	}
