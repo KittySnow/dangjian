@@ -3,8 +3,8 @@ package cn.dlbdata.dangjian.admin.web.interceptor;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
@@ -12,14 +12,20 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @ComponentScan
 public class InterceptorManage extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
-//        // 登陆拦截器
-//        registry.addInterceptor(new LoginInterceptor())
-//                .excludePathPatterns("/dex.html")
-//                .excludePathPatterns("/puser/tologin", "/puser/login")
+        // 登陆拦截器
+        registry.addInterceptor(new LoginInterceptor())
+                .excludePathPatterns("/puser/tologin", "/puser/login")
 //                .excludePathPatterns("/pscorelevel/**")
-//                .excludePathPatterns("/error")
-//                .addPathPatterns("/**");
-//
-//        super.addInterceptors(registry);
+                .excludePathPatterns("/error")
+                .addPathPatterns("/**")
+        ;
+
+        super.addInterceptors(registry);
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // 静态资源访问映射
+        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
     }
 }
