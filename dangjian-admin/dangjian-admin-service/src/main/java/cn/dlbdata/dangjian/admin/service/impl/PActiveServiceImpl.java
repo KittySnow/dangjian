@@ -32,8 +32,8 @@ public class PActiveServiceImpl implements PActiveService {
     }
     
     @Override
-    public int deleteByPrimaryKey(Integer id) {
-        return pActiveDao.deleteByPrimaryKey(id);
+    public int deleteByPrimaryKey(Integer activeId) {
+        return pActiveDao.deleteByPrimaryKey(activeId);
     }
     
     @Override
@@ -54,8 +54,8 @@ public class PActiveServiceImpl implements PActiveService {
     }
 
     @Override
-    public PActive selectByPrimaryKey(Integer id) {
-        return pActiveDao.selectByPrimaryKey(id);
+    public PActive selectByPrimaryKey(Integer activeId) {
+        return pActiveDao.selectByPrimaryKey(activeId);
     }
 
     @Override

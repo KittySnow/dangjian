@@ -2,10 +2,11 @@ package cn.dlbdata.dangjian.admin.dao.mapper;
 
 import cn.dlbdata.dangjian.admin.dao.model.PActivePicture;
 import cn.dlbdata.dangjian.admin.dao.model.PActivePictureExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-
+@Mapper
 public interface PActivePictureDao {
     long countByExample(PActivePictureExample example);
 

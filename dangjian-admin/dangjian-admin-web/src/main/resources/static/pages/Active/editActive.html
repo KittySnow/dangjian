@@ -1,19 +1,23 @@
 <ol class="breadcrumb newcrumb">
     <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
-    <li><a href="#!/Active/active">活动列表</a></li>
-    <li class="active">添加活动</li>
+    <li><a href="#!/Active/active">党员活动列表</a></li>
+    <li class="active">添加党员活动</li>
 </ol>
 <!-- 添加项目html -->
 <div class="row">
     <div class="col-md-12">
         <div class="box ">
             <div class="box-header">
-                <h3 class="box-title">修改活动</h3>
+                <h3 class="box-title">修改党员活动</h3>
             </div>
             <form role="form" class="loginForm form-horizontal" action="./pactive/updateById" method="post" onsubmit="return validateCallback(this)"  novalidate>
                 <div class="box-bodyed">
-                <input type="hidden" name="id" value="{{pActive.id}}">
+                <input type="hidden" name="activeid" value="{{pActive.activeid}}">
 
+                <div class="form-group">
+                    <label><span class="red">*</span>活动表id</label>
+                    <input type="text" class="form-control" name="id" placeholder="请输入活动表id" required value="{{pActive.id}}"/>
+                </div>
                 <div class="form-group">
                     <label><span class="red">*</span>活动名称</label>
                     <input type="text" class="form-control" name="active_name" placeholder="请输入活动名称" required value="{{pActive.active_name}}"/>

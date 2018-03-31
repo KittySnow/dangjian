@@ -54,6 +54,13 @@ public class PActive implements Serializable {
     private String activePrincipalPeople;
 
     /**
+     * 活动是否审核：0：未审核；1：审核通过；2：审核失败
+     *
+     * @mbg.generated
+     */
+    private Integer activeStatus;
+
+    /**
      * 开始时间
      *
      * @mbg.generated
@@ -139,6 +146,14 @@ public class PActive implements Serializable {
         this.activePrincipalPeople = activePrincipalPeople;
     }
 
+    public Integer getActiveStatus() {
+        return activeStatus;
+    }
+
+    public void setActiveStatus(Integer activeStatus) {
+        this.activeStatus = activeStatus;
+    }
+
     public Date getStartTime() {
         return startTime;
     }
@@ -184,6 +199,7 @@ public class PActive implements Serializable {
         sb.append(", activePace=").append(activePace);
         sb.append(", activeCreatePeople=").append(activeCreatePeople);
         sb.append(", activePrincipalPeople=").append(activePrincipalPeople);
+        sb.append(", activeStatus=").append(activeStatus);
         sb.append(", startTime=").append(startTime);
         sb.append(", endTime=").append(endTime);
         sb.append(", activeContext=").append(activeContext);
@@ -211,6 +227,7 @@ public class PActive implements Serializable {
             && (this.getActivePace() == null ? other.getActivePace() == null : this.getActivePace().equals(other.getActivePace()))
             && (this.getActiveCreatePeople() == null ? other.getActiveCreatePeople() == null : this.getActiveCreatePeople().equals(other.getActiveCreatePeople()))
             && (this.getActivePrincipalPeople() == null ? other.getActivePrincipalPeople() == null : this.getActivePrincipalPeople().equals(other.getActivePrincipalPeople()))
+            && (this.getActiveStatus() == null ? other.getActiveStatus() == null : this.getActiveStatus().equals(other.getActiveStatus()))
             && (this.getStartTime() == null ? other.getStartTime() == null : this.getStartTime().equals(other.getStartTime()))
             && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()))
             && (this.getActiveContext() == null ? other.getActiveContext() == null : this.getActiveContext().equals(other.getActiveContext()))
@@ -228,6 +245,7 @@ public class PActive implements Serializable {
         result = prime * result + ((getActivePace() == null) ? 0 : getActivePace().hashCode());
         result = prime * result + ((getActiveCreatePeople() == null) ? 0 : getActiveCreatePeople().hashCode());
         result = prime * result + ((getActivePrincipalPeople() == null) ? 0 : getActivePrincipalPeople().hashCode());
+        result = prime * result + ((getActiveStatus() == null) ? 0 : getActiveStatus().hashCode());
         result = prime * result + ((getStartTime() == null) ? 0 : getStartTime().hashCode());
         result = prime * result + ((getEndTime() == null) ? 0 : getEndTime().hashCode());
         result = prime * result + ((getActiveContext() == null) ? 0 : getActiveContext().hashCode());

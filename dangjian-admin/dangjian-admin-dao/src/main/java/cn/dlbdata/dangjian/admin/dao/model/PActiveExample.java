@@ -568,6 +568,66 @@ public class PActiveExample implements Serializable {
             return (Criteria) this;
         }
 
+        public Criteria andActiveStatusIsNull() {
+            addCriterion("active_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusIsNotNull() {
+            addCriterion("active_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusEqualTo(Integer value) {
+            addCriterion("active_status =", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusNotEqualTo(Integer value) {
+            addCriterion("active_status <>", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusGreaterThan(Integer value) {
+            addCriterion("active_status >", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("active_status >=", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusLessThan(Integer value) {
+            addCriterion("active_status <", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("active_status <=", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusIn(List<Integer> values) {
+            addCriterion("active_status in", values, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusNotIn(List<Integer> values) {
+            addCriterion("active_status not in", values, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusBetween(Integer value1, Integer value2) {
+            addCriterion("active_status between", value1, value2, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("active_status not between", value1, value2, "activeStatus");
+            return (Criteria) this;
+        }
+
         public Criteria andStartTimeIsNull() {
             addCriterion("start_time is null");
             return (Criteria) this;

@@ -12,7 +12,7 @@ public interface PActiveService {
     
     public int deleteByExample(PActiveExample example);
     
-    public int deleteByPrimaryKey(Integer id);
+    public int deleteByPrimaryKey(Integer activeId);
     
     public int insert(PActive pActive);
     
@@ -20,7 +20,7 @@ public interface PActiveService {
     
     public List<PActive> selectByExample(PActiveExample example);
 
-    public PActive selectByPrimaryKey(Integer id);
+    public PActive selectByPrimaryKey(Integer activeId);
 
     public int updateByExampleSelective(@Param("pActive") PActive pActive, @Param("example") PActiveExample example);
 

@@ -2,10 +2,11 @@ package cn.dlbdata.dangjian.admin.dao.mapper;
 
 import cn.dlbdata.dangjian.admin.dao.model.PActiveParticipate;
 import cn.dlbdata.dangjian.admin.dao.model.PActiveParticipateExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-
+@Mapper
 public interface PActiveParticipateDao {
     long countByExample(PActiveParticipateExample example);
 

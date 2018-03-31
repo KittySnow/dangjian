@@ -193,4 +193,5 @@
       create_time = #{createTime,jdbcType=DATE}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <cache />
 </mapper>

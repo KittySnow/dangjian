@@ -323,4 +323,5 @@ function WxBindAdminEditCtrl($scope, $http, $timeout ,$routeParams) {
 }
 function WxSendCtrl($scope, $http, $timeout ,$routeParams) {
 
+
 }
