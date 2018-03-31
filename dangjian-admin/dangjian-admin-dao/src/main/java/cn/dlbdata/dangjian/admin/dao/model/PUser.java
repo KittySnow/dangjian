@@ -47,6 +47,21 @@ public class PUser implements Serializable {
      */
     private Integer roleid;
 
+    /**
+     * 微信openid
+     *
+     * @mbg.generated
+     */
+    private String openid;
+
+    /**
+     * 后台生成token
+     *
+     * @mbg.generated
+     */
+    private String token;
+
+
     private String rolename;
     private String departmentname;
 
@@ -145,6 +160,22 @@ public class PUser implements Serializable {
         this.departmentname = departmentname;
     }
 
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -157,9 +188,11 @@ public class PUser implements Serializable {
         sb.append(", password=").append(password);
         sb.append(", company=").append(company);
         sb.append(", job=").append(job);
-        sb.append(", roleid=").append(roleid);
         sb.append(", tel=").append(tel);
+        sb.append(", roleid=").append(roleid);
         sb.append(", departmentid=").append(departmentid);
+        sb.append(", openid=").append(openid);
+        sb.append(", token=").append(token);
         sb.append("]");
         return sb.toString();
     }
@@ -177,14 +210,16 @@ public class PUser implements Serializable {
         }
         PUser other = (PUser) that;
         return (this.getUserid() == null ? other.getUserid() == null : this.getUserid().equals(other.getUserid()))
-            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
-            && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
-            && (this.getCompany() == null ? other.getCompany() == null : this.getCompany().equals(other.getCompany()))
-            && (this.getJob() == null ? other.getJob() == null : this.getJob().equals(other.getJob()))
-            && (this.getRoleid() == null ? other.getRoleid() == null : this.getRoleid().equals(other.getRoleid()))
-            && (this.getTel() == null ? other.getTel() == null : this.getTel().equals(other.getTel()))
-            && (this.getDepartmentid() == null ? other.getDepartmentid() == null : this.getDepartmentid().equals(other.getDepartmentid()));
+                && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+                && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
+                && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
+                && (this.getCompany() == null ? other.getCompany() == null : this.getCompany().equals(other.getCompany()))
+                && (this.getJob() == null ? other.getJob() == null : this.getJob().equals(other.getJob()))
+                && (this.getTel() == null ? other.getTel() == null : this.getTel().equals(other.getTel()))
+                && (this.getRoleid() == null ? other.getRoleid() == null : this.getRoleid().equals(other.getRoleid()))
+                && (this.getDepartmentid() == null ? other.getDepartmentid() == null : this.getDepartmentid().equals(other.getDepartmentid()))
+                && (this.getOpenid() == null ? other.getOpenid() == null : this.getOpenid().equals(other.getOpenid()))
+                && (this.getToken() == null ? other.getToken() == null : this.getToken().equals(other.getToken()));
     }
 
     @Override
@@ -197,9 +232,11 @@ public class PUser implements Serializable {
         result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
         result = prime * result + ((getCompany() == null) ? 0 : getCompany().hashCode());
         result = prime * result + ((getJob() == null) ? 0 : getJob().hashCode());
-        result = prime * result + ((getRoleid() == null) ? 0 : getRoleid().hashCode());
         result = prime * result + ((getTel() == null) ? 0 : getTel().hashCode());
+        result = prime * result + ((getRoleid() == null) ? 0 : getRoleid().hashCode());
         result = prime * result + ((getDepartmentid() == null) ? 0 : getDepartmentid().hashCode());
+        result = prime * result + ((getOpenid() == null) ? 0 : getOpenid().hashCode());
+        result = prime * result + ((getToken() == null) ? 0 : getToken().hashCode());
         return result;
     }
 }
