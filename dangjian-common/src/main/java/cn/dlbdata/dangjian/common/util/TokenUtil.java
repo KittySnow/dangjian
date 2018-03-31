@@ -163,7 +163,8 @@ public class TokenUtil {
     private static String createToken(String userAgent, int userId) throws NoSuchPaddingException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, UnsupportedEncodingException, InvalidKeyException {
         // TODO: 加入时效信息, 失效时间
         Long currentTime = System.currentTimeMillis();
-        String originalEncrypt = "userAgent=" + userAgent + ",userId=" + userId + ",time=" + currentTime.toString();
+        // 加密字段 值为字符串的 需要做 URLEncode 操作
+        String originalEncrypt = "userAgent=" + URLEncoder.encode(userAgent, "utf-8") + ",userId=" + userId + ",time=" + currentTime.toString();
 
         return AESUtil.encrypt(originalEncrypt);
     }
