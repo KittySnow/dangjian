@@ -1,0 +1,94 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li class="active"><a href="#!/ScoreLevel/scoreLevel">党员积分等级分值列表</a></li>
+</ol>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">党员积分等级分值列表</h3>
+            </div>
+            <div class="box-mgr">
+                <a class="btn btn-info" href="#!/ScoreLevel/addScorelevel">添加党员积分等级分值</a>
+            </div>
+            <div class="box-body table-responsive">
+                <table id="ScoreLevelTable" class="table table-bordered table-striped" data-unique-id="scoreid">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.actionScoreLevelEvents = {
+        'click .editScoreLevel' : function (e, value, row, index) {
+            console.log(row);
+        },
+        'click .delScoreLevel' : function (e, value, row, index) {
+            deleteAjax(row,'./pscorelevel/deleteScorelevelById','scoreid','post');
+        }
+    };
+
+
+    function ScoreLevelStausFormatter(value,row,index) {
+        return '<a class="btn btn-info btn-sm editScoreLevel" href="#!/ScoreLevel/editScorelevel/'+row.scoreid+'">修改</a>　<a class="btn btn-warning btn-sm delScoreLevel">删除</a>'
+    }
+
+
+    $(function(){
+
+        $('#ScoreLevelTable').bootstrapTable({
+            showHeader:true,
+            columns: [
+                {
+                    field: 'scoreid',
+                    formatter:fmtIdx,
+                    title:'编号'
+                },
+                {
+                    field: 'min',
+                    title: '最小值'
+                },
+                {
+                    field: 'max',
+                    title: '最大值'
+                },
+                {
+                    field: 'level',
+                    title: '级别'
+                },
+                {
+                    title: '操作',
+                    width:250,
+                    formatter: ScoreLevelStausFormatter,
+                    events: actionScoreLevelEvents
+                }],
+            method: 'GET',
+            url: "./pscorelevel/list",
+            sidePagination: "server", //服务端请求
+            queryParams:function (params) {
+                return {
+                    pageSize:params.limit||10,
+                    pageNum:~~(params.offset/10)+1||1
+                }
+            },
+            dataField:'list',
+            responseHandler:function(res){
+                return res.data;
+            },
+            showColumns:true,
+            pagination:true,
+            cache: false,
+            striped: true,
+            pageSize: 10,
+            pageList: [5,10,15],
+            paginationHAlign: 'right', //right, left
+            paginationVAlign: 'bottom', //bottom, top, both
+            sortable:false,
+            search: true,
+            showPaginationSwitch: false,
+            showRefresh: true,
+            clickToSelect: true
+        });
+    });
+
+</script>

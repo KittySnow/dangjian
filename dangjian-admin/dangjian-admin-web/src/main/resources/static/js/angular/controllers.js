@@ -283,6 +283,23 @@ function FeatureListEditCtrl($scope, $http, $timeout ,$routeParams) {
 	});
 }
 
+
+function ScoreLevelCtrl($scope, $http, $timeout ,$routeParams) {
+
+}
+function ScoreLevelEditCtrl($scope, $http, $timeout ,$routeParams) {
+    $scope.scoreid = $routeParams.scoreid;
+    $http({
+        method: "GET",
+        url: "./../pscorelevel/queryById.do?scoreid="+Number($scope.scoreid),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).success(function (data,status) {
+        $scope.pScorelevel= data.data;
+    });
+}
+
+
+
 function SysLogCtrl($scope, $http, $timeout ,$routeParams) {
 
 }

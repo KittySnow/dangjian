@@ -240,6 +240,21 @@ config(['$routeProvider',
             controller: RoleListEditCtrl,
             activetab: 'RoleList'
         }).
+        when('/ScoreLevel/scoreLevel', {
+            templateUrl: 'pages/ScoreLevel/scoreLevel.html',
+            controller: ScoreLevelCtrl,
+            activetab: 'ScoreLevel'
+        }).
+        when('/ScoreLevel/addScorelevel', {
+            templateUrl: 'pages/ScoreLevel/addScorelevel.html',
+            controller: ScoreLevelCtrl,
+            activetab: 'ScoreLevel'
+        }).
+        when('/ScoreLevel/editScorelevel/:scoreid', {
+            templateUrl: 'pages/ScoreLevel/editScoreLevel.html',
+            controller: ScoreLevelEditCtrl,
+            activetab: 'ScoreLevel'
+        }).
         when('/FeatureList/featureList', {
             templateUrl: 'pages/FeatureList/featureList.html',
             controller: FeatureListCtrl,
