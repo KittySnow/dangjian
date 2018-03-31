@@ -1,0 +1,65 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li><a href="#!/Active/active">活动列表</a></li>
+    <li class="active">添加活动</li>
+</ol>
+<!-- 添加项目html -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="box ">
+            <div class="box-header">
+                <h3 class="box-title">添加活动</h3>
+            </div>
+            <form role="form" class="loginForm form-horizontal" action="./pactive/save" method="post" onsubmit="return validateCallback(this)"  novalidate>
+                <div class="box-bodyed">
+                <div class="form-group">
+                    <label><span class="red">*</span>活动名称</label>
+                    <input type="text" class="form-control" name="active_name" placeholder="请输入活动名称" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>活动所属项目（表）</label>
+                    <input type="text" class="form-control" name="active_project_id" placeholder="请输入活动所属项目（表）" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>活动类型(特殊表)</label>
+                    <input type="text" class="form-control" name="active_type" placeholder="请输入活动类型(特殊表)" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>活动地点</label>
+                    <input type="text" class="form-control" name="active_pace" placeholder="请输入活动地点" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>活动发起人</label>
+                    <input type="text" class="form-control" name="active_create_people" placeholder="请输入活动发起人" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>活动负责人</label>
+                    <input type="text" class="form-control" name="active_principal_people" placeholder="请输入活动负责人" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>开始时间</label>
+                    <input type="text" class="form-control" name="start_time" placeholder="请输入开始时间" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>结束时间</label>
+                    <input type="text" class="form-control" name="end_time" placeholder="请输入结束时间" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>活动内容</label>
+                    <input type="text" class="form-control" name="active_context" placeholder="请输入活动内容" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>支部信息</label>
+                    <input type="text" class="form-control" name="zb_message" placeholder="请输入支部信息" required/>
+                </div>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">提交</button>　
+                    <a type="btn" class="btn btn-danger" id="addAdminSubmit" href="#!/Active/active">返回列表</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>

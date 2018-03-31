@@ -1,0 +1,33 @@
+package cn.dlbdata.dangjian.admin.service;
+
+import cn.dlbdata.dangjian.admin.dao.model.PActive;
+import cn.dlbdata.dangjian.admin.dao.model.PActiveExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface PActiveService {
+
+    public long countByExample(PActiveExample example);
+    
+    public int deleteByExample(PActiveExample example);
+    
+    public int deleteByPrimaryKey(Integer id);
+    
+    public int insert(PActive pActive);
+    
+    public int insertSelective(PActive pActive);
+    
+    public List<PActive> selectByExample(PActiveExample example);
+
+    public PActive selectByPrimaryKey(Integer id);
+
+    public int updateByExampleSelective(@Param("pActive") PActive pActive, @Param("example") PActiveExample example);
+
+    public int updateByExample(@Param("pActive") PActive pActive, @Param("example") PActiveExample example);
+
+    public int updateByPrimaryKeySelective(PActive pActive);
+
+    public int updateByPrimaryKey(PActive pActive);
+    
+}

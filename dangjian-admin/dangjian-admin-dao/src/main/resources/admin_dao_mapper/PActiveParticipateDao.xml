@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.dlbdata.dangjian.admin.dao.mapper.PPartymenberDuesDao">
-  <resultMap id="BaseResultMap" type="cn.dlbdata.dangjian.admin.dao.model.PPartymenberDues">
-    <id column="dues_id" jdbcType="INTEGER" property="duesId" />
-    <result column="party_member_id" jdbcType="INTEGER" property="partyMemberId" />
-    <result column="dues" jdbcType="VARCHAR" property="dues" />
-    <result column="month" jdbcType="INTEGER" property="month" />
-    <result column="year" jdbcType="INTEGER" property="year" />
+<mapper namespace="cn.dlbdata.dangjian.admin.dao.mapper.PActiveParticipateDao">
+  <resultMap id="BaseResultMap" type="cn.dlbdata.dangjian.admin.dao.model.PActiveParticipate">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    dues_id, party_member_id, dues, month, year, status
+    id, user_id, status, create_time
   </sql>
-  <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymenberDuesExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveParticipateExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from p_partymenber_dues
+    from p_active_participate
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,96 +85,76 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from p_partymenber_dues
-    where dues_id = #{duesId,jdbcType=INTEGER}
+    from p_active_participate
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from p_partymenber_dues
-    where dues_id = #{duesId,jdbcType=INTEGER}
+    delete from p_active_participate
+    where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymenberDuesExample">
-    delete from p_partymenber_dues
+  <delete id="deleteByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveParticipateExample">
+    delete from p_active_participate
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymenberDues">
-    insert into p_partymenber_dues (dues_id, party_member_id, dues, 
-      month, year, status
-      )
-    values (#{duesId,jdbcType=INTEGER}, #{partyMemberId,jdbcType=INTEGER}, #{dues,jdbcType=VARCHAR}, 
-      #{month,jdbcType=INTEGER}, #{year,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}
-      )
+  <insert id="insert" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveParticipate">
+    insert into p_active_participate (id, user_id, status, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=DATE})
   </insert>
-  <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymenberDues">
-    insert into p_partymenber_dues
+  <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveParticipate">
+    insert into p_active_participate
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="duesId != null">
-        dues_id,
+      <if test="id != null">
+        id,
       </if>
-      <if test="partyMemberId != null">
-        party_member_id,
-      </if>
-      <if test="dues != null">
-        dues,
-      </if>
-      <if test="month != null">
-        month,
-      </if>
-      <if test="year != null">
-        year,
+      <if test="userId != null">
+        user_id,
       </if>
       <if test="status != null">
         status,
       </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="duesId != null">
-        #{duesId,jdbcType=INTEGER},
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
       </if>
-      <if test="partyMemberId != null">
-        #{partyMemberId,jdbcType=INTEGER},
-      </if>
-      <if test="dues != null">
-        #{dues,jdbcType=VARCHAR},
-      </if>
-      <if test="month != null">
-        #{month,jdbcType=INTEGER},
-      </if>
-      <if test="year != null">
-        #{year,jdbcType=INTEGER},
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
       </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=DATE},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymenberDuesExample" resultType="java.lang.Long">
-    select count(*) from p_partymenber_dues
+  <select id="countByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveParticipateExample" resultType="java.lang.Long">
+    select count(*) from p_active_participate
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update p_partymenber_dues
+    update p_active_participate
     <set>
-      <if test="record.duesId != null">
-        dues_id = #{record.duesId,jdbcType=INTEGER},
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.partyMemberId != null">
-        party_member_id = #{record.partyMemberId,jdbcType=INTEGER},
-      </if>
-      <if test="record.dues != null">
-        dues = #{record.dues,jdbcType=VARCHAR},
-      </if>
-      <if test="record.month != null">
-        month = #{record.month,jdbcType=INTEGER},
-      </if>
-      <if test="record.year != null">
-        year = #{record.year,jdbcType=INTEGER},
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
       </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=DATE},
       </if>
     </set>
     <if test="_parameter != null">
@@ -184,45 +162,35 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update p_partymenber_dues
-    set dues_id = #{record.duesId,jdbcType=INTEGER},
-      party_member_id = #{record.partyMemberId,jdbcType=INTEGER},
-      dues = #{record.dues,jdbcType=VARCHAR},
-      month = #{record.month,jdbcType=INTEGER},
-      year = #{record.year,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=INTEGER}
+    update p_active_participate
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=DATE}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymenberDues">
-    update p_partymenber_dues
+  <update id="updateByPrimaryKeySelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveParticipate">
+    update p_active_participate
     <set>
-      <if test="partyMemberId != null">
-        party_member_id = #{partyMemberId,jdbcType=INTEGER},
-      </if>
-      <if test="dues != null">
-        dues = #{dues,jdbcType=VARCHAR},
-      </if>
-      <if test="month != null">
-        month = #{month,jdbcType=INTEGER},
-      </if>
-      <if test="year != null">
-        year = #{year,jdbcType=INTEGER},
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
       </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
     </set>
-    where dues_id = #{duesId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymenberDues">
-    update p_partymenber_dues
-    set party_member_id = #{partyMemberId,jdbcType=INTEGER},
-      dues = #{dues,jdbcType=VARCHAR},
-      month = #{month,jdbcType=INTEGER},
-      year = #{year,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER}
-    where dues_id = #{duesId,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveParticipate">
+    update p_active_participate
+    set user_id = #{userId,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

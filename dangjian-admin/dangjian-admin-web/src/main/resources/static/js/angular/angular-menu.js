@@ -255,6 +255,21 @@ config(['$routeProvider',
             controller: ScoreLevelEditCtrl,
             activetab: 'ScoreLevel'
         }).
+        when('/PartymamberDues/editScorelevel/:scoreid', {
+            templateUrl: 'pages/PartymamberDues/editPartymamberDues.html',
+            controller: PartymamberDuesEditCtrl,
+            activetab: 'PartymamberDues'
+        }).
+        when('/PartymamberDues/partymamberDues', {
+            templateUrl: 'pages/PartymamberDues/partymamberDues.html',
+            controller: PartymamberDuesCtrl,
+            activetab: 'PartymamberDues'
+        }).
+        when('/PartymamberDues/addPartymenberDues', {
+            templateUrl: 'pages/PartymamberDues/addPartymenberDues.html',
+            controller: PartymamberDuesCtrl,
+            activetab: 'PartymamberDues'
+        }).
         when('/FeatureList/featureList', {
             templateUrl: 'pages/FeatureList/featureList.html',
             controller: FeatureListCtrl,
