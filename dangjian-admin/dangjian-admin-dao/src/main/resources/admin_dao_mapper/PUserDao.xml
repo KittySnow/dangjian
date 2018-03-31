@@ -7,10 +7,12 @@
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="company" jdbcType="VARCHAR" property="company" />
-    <result column="departmentid" jdbcType="INTEGER" property="departmentid" />
     <result column="job" jdbcType="VARCHAR" property="job" />
-    <result column="roleid" jdbcType="INTEGER" property="roleid" />
     <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="roleid" jdbcType="INTEGER" property="roleid" />
+    <result column="departmentid" jdbcType="INTEGER" property="departmentid" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="token" jdbcType="VARCHAR" property="token" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    userid, name, email, password, company, departmentid, job, roleid, tel
+    userid, name, email, password, company, job, tel, roleid, departmentid, openid, token
   </sql>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PUserExample" resultMap="BaseResultMap">
     select
@@ -87,28 +89,8 @@
       order by ${orderByClause}
     </if>
   </select>
-
-  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.String">
-    SELECT p_user.*, t2.rolename ,t3.departmentname
-    FROM p_user
-    LEFT JOIN p_role t2
-    ON p_user.roleid=t2.roleid LEFT JOIN p_department t3 on p_user.departmentid =  t3.departmentid
-    <if test="_parameter != null">
-      WHERE
-      p_user.name like #{searchText,jdbcType=VARCHAR} OR
-      p_user.email like #{searchText,jdbcType=VARCHAR} OR
-      p_user.password like #{searchText,jdbcType=VARCHAR} OR
-      p_user.company like #{searchText,jdbcType=VARCHAR} OR
-      p_user.job like #{searchText,jdbcType=VARCHAR} OR
-      p_user.tel like #{searchText,jdbcType=VARCHAR} OR
-      t2.rolename like #{searchText,jdbcType=VARCHAR}
-    </if>
-    ORDER BY p_user.userid
-  </select>
-
-
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from p_user
     where userid = #{userid,jdbcType=INTEGER}
@@ -124,25 +106,24 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.dlbdata.dangjian.admin.dao.model.PUser">
-    <selectKey keyProperty="userid" resultType="int" order="AFTER">
-        <!--&lt;!&ndash;SELECT nextval('p_user_userid_seq') as userid&ndash;&gt;-->
+    <selectKey keyProperty="userid" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID() AS userid
     </selectKey>
-    insert into p_user (userid,name, email, password,
-      company, departmentid, job,
-      roleid, tel)
-    values (#{userid},#{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
-      #{company,jdbcType=VARCHAR}, #{departmentid,jdbcType=INTEGER}, #{job,jdbcType=VARCHAR},
-      #{roleid,jdbcType=INTEGER}, #{tel,jdbcType=VARCHAR}) <!--RETURNING userid-->
+    insert into p_user (name, email, password,
+    company, job, tel,
+    roleid, departmentid, openid,
+    token)
+    values (#{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+    #{company,jdbcType=VARCHAR}, #{job,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR},
+    #{roleid,jdbcType=INTEGER}, #{departmentid,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR},
+    #{token,jdbcType=VARCHAR})
   </insert>
-
-  <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PUser" >
-    <selectKey keyProperty="userid" resultType="int" order="AFTER">
-      <!--SELECT nextval('p_user_userid_seq') as userid-->
-    SELECT LAST_INSERT_ID() AS userid
+  <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PUser">
+    <selectKey keyProperty="userid" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID() AS userid
     </selectKey>
-  insert into p_user
-    <trim prefix="(userid," suffix=")" suffixOverrides=",">
+    insert into p_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="name != null">
         name,
       </if>
@@ -155,21 +136,26 @@
       <if test="company != null">
         company,
       </if>
-      <if test="departmentid != null">
-        departmentid,
-      </if>
       <if test="job != null">
         job,
-      </if>
-      <if test="roleid != null">
-        roleid,
       </if>
       <if test="tel != null">
         tel,
       </if>
+      <if test="roleid != null">
+        roleid,
+      </if>
+      <if test="departmentid != null">
+        departmentid,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="token != null">
+        token,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      #{userid},
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
@@ -182,20 +168,25 @@
       <if test="company != null">
         #{company,jdbcType=VARCHAR},
       </if>
-      <if test="departmentid != null">
-        #{departmentid,jdbcType=INTEGER},
-      </if>
       <if test="job != null">
         #{job,jdbcType=VARCHAR},
-      </if>
-      <if test="roleid != null">
-        #{roleid,jdbcType=INTEGER},
       </if>
       <if test="tel != null">
         #{tel,jdbcType=VARCHAR},
       </if>
+      <if test="roleid != null">
+        #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="departmentid != null">
+        #{departmentid,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null">
+        #{token,jdbcType=VARCHAR},
+      </if>
     </trim>
-   <!-- RETURNING userid-->
   </insert>
   <select id="countByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PUserExample" resultType="java.lang.Long">
     select count(*) from p_user
@@ -221,17 +212,23 @@
       <if test="record.company != null">
         company = #{record.company,jdbcType=VARCHAR},
       </if>
-      <if test="record.departmentid != null">
-        departmentid = #{record.departmentid,jdbcType=INTEGER},
-      </if>
       <if test="record.job != null">
         job = #{record.job,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null">
+        tel = #{record.tel,jdbcType=VARCHAR},
       </if>
       <if test="record.roleid != null">
         roleid = #{record.roleid,jdbcType=INTEGER},
       </if>
-      <if test="record.tel != null">
-        tel = #{record.tel,jdbcType=VARCHAR},
+      <if test="record.departmentid != null">
+        departmentid = #{record.departmentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.openid != null">
+        openid = #{record.openid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.token != null">
+        token = #{record.token,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -241,14 +238,16 @@
   <update id="updateByExample" parameterType="map">
     update p_user
     set userid = #{record.userid,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=VARCHAR},
-      email = #{record.email,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR},
-      company = #{record.company,jdbcType=VARCHAR},
-      departmentid = #{record.departmentid,jdbcType=INTEGER},
-      job = #{record.job,jdbcType=VARCHAR},
-      roleid = #{record.roleid,jdbcType=INTEGER},
-      tel = #{record.tel,jdbcType=VARCHAR}
+    name = #{record.name,jdbcType=VARCHAR},
+    email = #{record.email,jdbcType=VARCHAR},
+    password = #{record.password,jdbcType=VARCHAR},
+    company = #{record.company,jdbcType=VARCHAR},
+    job = #{record.job,jdbcType=VARCHAR},
+    tel = #{record.tel,jdbcType=VARCHAR},
+    roleid = #{record.roleid,jdbcType=INTEGER},
+    departmentid = #{record.departmentid,jdbcType=INTEGER},
+    openid = #{record.openid,jdbcType=VARCHAR},
+    token = #{record.token,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -268,17 +267,23 @@
       <if test="company != null">
         company = #{company,jdbcType=VARCHAR},
       </if>
-      <if test="departmentid != null">
-        departmentid = #{departmentid,jdbcType=INTEGER},
-      </if>
       <if test="job != null">
         job = #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
       </if>
       <if test="roleid != null">
         roleid = #{roleid,jdbcType=INTEGER},
       </if>
-      <if test="tel != null">
-        tel = #{tel,jdbcType=VARCHAR},
+      <if test="departmentid != null">
+        departmentid = #{departmentid,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null">
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null">
+        token = #{token,jdbcType=VARCHAR},
       </if>
     </set>
     where userid = #{userid,jdbcType=INTEGER}
@@ -286,30 +291,50 @@
   <update id="updateByPrimaryKey" parameterType="cn.dlbdata.dangjian.admin.dao.model.PUser">
     update p_user
     set name = #{name,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      company = #{company,jdbcType=VARCHAR},
-      departmentid = #{departmentid,jdbcType=INTEGER},
-      job = #{job,jdbcType=VARCHAR},
-      roleid = #{roleid,jdbcType=INTEGER},
-      tel = #{tel,jdbcType=VARCHAR}
+    email = #{email,jdbcType=VARCHAR},
+    password = #{password,jdbcType=VARCHAR},
+    company = #{company,jdbcType=VARCHAR},
+    job = #{job,jdbcType=VARCHAR},
+    tel = #{tel,jdbcType=VARCHAR},
+    roleid = #{roleid,jdbcType=INTEGER},
+    departmentid = #{departmentid,jdbcType=INTEGER},
+    openid = #{openid,jdbcType=VARCHAR},
+    token = #{token,jdbcType=VARCHAR}
     where userid = #{userid,jdbcType=INTEGER}
   </update>
-	
-	<!--Michael-->	
-	<select id="selectByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
-	    SELECT t1.*, t2.rolename,t3.departmentname
-	    FROM
-	    (SELECT password,name,company,departmentid,job,tel,roleid,userid
-	    FROM p_user
-	    WHERE email = #{email,jdbcType=VARCHAR}) t1
-	    LEFT JOIN p_role t2
-		ON t1.roleid=t2.roleid
-		LEFT JOIN p_department t3
-		ON t1.departmentid=t3.departmentid
-  	</select>
-  	<update id="updatePasswordByEmail" parameterType="cn.dlbdata.dangjian.admin.dao.model.PUser">
-    	UPDATE p_user
-    	SET password = #{password,jdbcType=VARCHAR}
-		WHERE email  = #{email,jdbcType=VARCHAR}
-  	</update></mapper>
+
+  <!--Michael-->
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT p_user.*, t2.rolename ,t3.departmentname
+    FROM p_user
+    LEFT JOIN p_role t2
+    ON p_user.roleid=t2.roleid LEFT JOIN p_department t3 on p_user.departmentid =  t3.departmentid
+    <if test="_parameter != null">
+      WHERE
+      p_user.name like #{searchText,jdbcType=VARCHAR} OR
+      p_user.email like #{searchText,jdbcType=VARCHAR} OR
+      p_user.password like #{searchText,jdbcType=VARCHAR} OR
+      p_user.company like #{searchText,jdbcType=VARCHAR} OR
+      p_user.job like #{searchText,jdbcType=VARCHAR} OR
+      p_user.tel like #{searchText,jdbcType=VARCHAR} OR
+      t2.rolename like #{searchText,jdbcType=VARCHAR}
+    </if>
+    ORDER BY p_user.userid
+  </select>
+  <select id="selectByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT t1.*, t2.rolename,t3.departmentname
+    FROM
+    (SELECT password,name,company,departmentid,job,tel,roleid,userid
+    FROM p_user
+    WHERE email = #{email,jdbcType=VARCHAR}) t1
+    LEFT JOIN p_role t2
+    ON t1.roleid=t2.roleid
+    LEFT JOIN p_department t3
+    ON t1.departmentid=t3.departmentid
+  </select>
+  <update id="updatePasswordByEmail" parameterType="cn.dlbdata.dangjian.admin.dao.model.PUser">
+    UPDATE p_user
+    SET password = #{password,jdbcType=VARCHAR}
+    WHERE email  = #{email,jdbcType=VARCHAR}
+  </update>
+</mapper>
