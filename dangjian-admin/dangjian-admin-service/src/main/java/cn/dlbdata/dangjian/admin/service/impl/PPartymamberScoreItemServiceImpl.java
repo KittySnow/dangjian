@@ -33,8 +33,8 @@ public class PPartymamberScoreItemServiceImpl implements PPartymamberScoreItemSe
     }
     
     @Override
-    public int deleteByPrimaryKey(Integer item_id) {
-        return pPartymamberScoreItemDao.deleteByPrimaryKey(item_id);
+    public int deleteByPrimaryKey(Integer itemId) {
+        return pPartymamberScoreItemDao.deleteByPrimaryKey(itemId);
     }
     
     @Override

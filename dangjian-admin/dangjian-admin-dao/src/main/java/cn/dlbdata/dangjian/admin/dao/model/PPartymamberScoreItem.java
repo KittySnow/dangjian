@@ -42,13 +42,6 @@ public class PPartymamberScoreItem implements Serializable {
     private Integer pictureId;
 
     /**
-     * 提交到的对象
-     *
-     * @mbg.generated
-     */
-    private Integer toUserId;
-
-    /**
      * 主要内容
      *
      * @mbg.generated
@@ -105,14 +98,6 @@ public class PPartymamberScoreItem implements Serializable {
         this.pictureId = pictureId;
     }
 
-    public Integer getToUserId() {
-        return toUserId;
-    }
-
-    public void setToUserId(Integer toUserId) {
-        this.toUserId = toUserId;
-    }
-
     public String getContent() {
         return content;
     }
@@ -133,7 +118,6 @@ public class PPartymamberScoreItem implements Serializable {
         sb.append(", startTime=").append(startTime);
         sb.append(", endTime=").append(endTime);
         sb.append(", pictureId=").append(pictureId);
-        sb.append(", toUserId=").append(toUserId);
         sb.append(", content=").append(content);
         sb.append("]");
         return sb.toString();
@@ -157,7 +141,6 @@ public class PPartymamberScoreItem implements Serializable {
             && (this.getStartTime() == null ? other.getStartTime() == null : this.getStartTime().equals(other.getStartTime()))
             && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()))
             && (this.getPictureId() == null ? other.getPictureId() == null : this.getPictureId().equals(other.getPictureId()))
-            && (this.getToUserId() == null ? other.getToUserId() == null : this.getToUserId().equals(other.getToUserId()))
             && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()));
     }
 
@@ -171,7 +154,6 @@ public class PPartymamberScoreItem implements Serializable {
         result = prime * result + ((getStartTime() == null) ? 0 : getStartTime().hashCode());
         result = prime * result + ((getEndTime() == null) ? 0 : getEndTime().hashCode());
         result = prime * result + ((getPictureId() == null) ? 0 : getPictureId().hashCode());
-        result = prime * result + ((getToUserId() == null) ? 0 : getToUserId().hashCode());
         result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
         return result;
     }

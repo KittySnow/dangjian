@@ -467,66 +467,6 @@ public class PPartymamberScoreItemExample implements Serializable {
             addCriterion("picture_id not between", value1, value2, "pictureId");
             return (Criteria) this;
         }
-
-        public Criteria andToUserIdIsNull() {
-            addCriterion("to_user_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andToUserIdIsNotNull() {
-            addCriterion("to_user_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andToUserIdEqualTo(Integer value) {
-            addCriterion("to_user_id =", value, "toUserId");
-            return (Criteria) this;
-        }
-
-        public Criteria andToUserIdNotEqualTo(Integer value) {
-            addCriterion("to_user_id <>", value, "toUserId");
-            return (Criteria) this;
-        }
-
-        public Criteria andToUserIdGreaterThan(Integer value) {
-            addCriterion("to_user_id >", value, "toUserId");
-            return (Criteria) this;
-        }
-
-        public Criteria andToUserIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("to_user_id >=", value, "toUserId");
-            return (Criteria) this;
-        }
-
-        public Criteria andToUserIdLessThan(Integer value) {
-            addCriterion("to_user_id <", value, "toUserId");
-            return (Criteria) this;
-        }
-
-        public Criteria andToUserIdLessThanOrEqualTo(Integer value) {
-            addCriterion("to_user_id <=", value, "toUserId");
-            return (Criteria) this;
-        }
-
-        public Criteria andToUserIdIn(List<Integer> values) {
-            addCriterion("to_user_id in", values, "toUserId");
-            return (Criteria) this;
-        }
-
-        public Criteria andToUserIdNotIn(List<Integer> values) {
-            addCriterion("to_user_id not in", values, "toUserId");
-            return (Criteria) this;
-        }
-
-        public Criteria andToUserIdBetween(Integer value1, Integer value2) {
-            addCriterion("to_user_id between", value1, value2, "toUserId");
-            return (Criteria) this;
-        }
-
-        public Criteria andToUserIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("to_user_id not between", value1, value2, "toUserId");
-            return (Criteria) this;
-        }
     }
 
     public static class Criteria extends GeneratedCriteria implements Serializable {
