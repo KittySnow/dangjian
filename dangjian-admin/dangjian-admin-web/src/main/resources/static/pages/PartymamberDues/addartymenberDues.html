@@ -1,0 +1,45 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li><a href="#!/PartymamberDues/partymamberDues">党员党费情况列表</a></li>
+    <li class="active">添加党员党费情况</li>
+</ol>
+<!-- 添加项目html -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="box ">
+            <div class="box-header">
+                <h3 class="box-title">添加党员党费情况</h3>
+            </div>
+            <form role="form" class="loginForm form-horizontal" action="./ppartymenberdues/save" method="post" onsubmit="return validateCallback(this)"  novalidate>
+                <div class="box-bodyed">
+                <div class="form-group">
+                    <label><span class="red">*</span>对应的党员ID</label>
+                    <input type="text" class="form-control" name="party_member_id" placeholder="请输入对应的党员ID" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>党费额度</label>
+                    <input type="text" class="form-control" name="dues" placeholder="请输入党费额度" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>党费月份</label>
+                    <input type="text" class="form-control" name="month" placeholder="请输入党费月份" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>党费年份</label>
+                    <input type="text" class="form-control" name="year" placeholder="请输入党费年份" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>缴费状态</label>
+                    <input type="text" class="form-control" name="status" placeholder="请输入缴费状态" required/>
+                </div>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">提交</button>　
+                    <a type="btn" class="btn btn-danger" id="addAdminSubmit" href="#!/PartymamberDues/partymamberDues">返回列表</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>

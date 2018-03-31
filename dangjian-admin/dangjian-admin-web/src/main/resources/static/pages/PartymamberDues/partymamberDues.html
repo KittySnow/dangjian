@@ -1,0 +1,102 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li class="active"><a href="#!/PartymamberDues/partymamberDues">党员党费情况列表</a></li>
+</ol>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">党员党费情况列表</h3>
+            </div>
+            <div class="box-mgr">
+                <a class="btn btn-info" href="#!/PartymamberDues/addPartymenberDues">添加党员党费情况</a>
+            </div>
+            <div class="box-body table-responsive">
+                <table id="PartymamberDuesTable" class="table table-bordered table-striped" data-unique-id="dues_id">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.actionPartymamberDuesEvents = {
+        'click .editPartymamberDues' : function (e, value, row, index) {
+            console.log(row);
+        },
+        'click .delPartymamberDues' : function (e, value, row, index) {
+            deleteAjax(row,'./ppartymenberdues/deleteById','dues_id','post');
+        }
+    };
+
+
+    function PartymamberDuesStausFormatter(value,row,index) {
+        return '<a class="btn btn-info btn-sm editPartymamberDues" href="#!/PartymamberDues/editPartymenberDues/'+row.dues_id+'">修改</a>　<a class="btn btn-warning btn-sm delPartymamberDues">删除</a>'
+    }
+
+
+    $(function(){
+
+        $('#PartymamberDuesTable').bootstrapTable({
+            showHeader:true,
+            columns: [
+                {
+                    field: 'dues_id',
+                    formatter:fmtIdx,
+                    title:'编号'
+                },
+                {
+                    field: 'party_member_id',
+                    title: '对应的党员ID'
+                },
+                {
+                    field: 'dues',
+                    title: '党费额度'
+                },
+                {
+                    field: 'month',
+                    title: '党费月份'
+                },
+                {
+                    field: 'year',
+                    title: '党费年份'
+                },
+                {
+                    field: 'status',
+                    title: '缴费状态'
+                },
+                {
+                    title: '操作',
+                    width:250,
+                    formatter: PartymamberDuesStausFormatter,
+                    events: actionPartymamberDuesEvents
+                }],
+            method: 'GET',
+            url: "./ppartymenberdues/list",
+            sidePagination: "server", //服务端请求
+            queryParams:function (params) {
+                return {
+                    pageSize:params.limit||10,
+                    pageNum:~~(params.offset/10)+1||1
+                }
+            },
+            dataField:'list',
+            responseHandler:function(res){
+                return res.data;
+            },
+            showColumns:true,
+            pagination:true,
+            cache: false,
+            striped: true,
+            pageSize: 10,
+            pageList: [5,10,15],
+            paginationHAlign: 'right', //right, left
+            paginationVAlign: 'bottom', //bottom, top, both
+            sortable:false,
+            search: true,
+            showPaginationSwitch: false,
+            showRefresh: true,
+            clickToSelect: true
+        });
+    });
+
+</script>
