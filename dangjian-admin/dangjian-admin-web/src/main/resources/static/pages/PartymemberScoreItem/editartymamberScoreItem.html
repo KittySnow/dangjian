@@ -1,0 +1,56 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li><a href="#!/PartymemberScoreItem/partymemberScoreItem">党员积分项列表</a></li>
+    <li class="active">添加党员积分项</li>
+</ol>
+<!-- 添加项目html -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="box ">
+            <div class="box-header">
+                <h3 class="box-title">修改党员积分项</h3>
+            </div>
+            <form role="form" class="loginForm form-horizontal" action="./ppartymamberscoreitem/updateById" method="post" onsubmit="return validateCallback(this)"  novalidate>
+                <div class="box-bodyed">
+                <input type="hidden" name="item_id" value="{{pPartymamberScoreItem.item_id}}">
+
+                <div class="form-group">
+                    <label><span class="red">*</span>党员ID</label>
+                    <input type="text" class="form-control" name="party_member_id" placeholder="请输入党员ID" required value="{{pPartymamberScoreItem.party_member_id}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>党员积分项ID</label>
+                    <input type="text" class="form-control" name="score_party_id" placeholder="请输入党员积分项ID" required value="{{pPartymamberScoreItem.score_party_id}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>主要内容</label>
+                    <input type="text" class="form-control" name="content" placeholder="请输入主要内容" required value="{{pPartymamberScoreItem.content}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>开始时间</label>
+                    <input type="text" class="form-control" name="start_time" placeholder="请输入开始时间" required value="{{pPartymamberScoreItem.start_time}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>结束时间</label>
+                    <input type="text" class="form-control" name="end_time" placeholder="请输入结束时间" required value="{{pPartymamberScoreItem.end_time}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>提交图片</label>
+                    <input type="text" class="form-control" name="picture_id" placeholder="请输入提交图片" required value="{{pPartymamberScoreItem.picture_id}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>提交到的对象</label>
+                    <input type="text" class="form-control" name="to_user_id" placeholder="请输入提交到的对象" required value="{{pPartymamberScoreItem.to_user_id}}"/>
+                </div>
+
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">提交</button>　
+                    <a type="btn" class="btn btn-danger" href="#!/PartymemberScoreItem/partymemberScoreItem">返回列表</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>
