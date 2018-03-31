@@ -517,66 +517,6 @@ public class PUserExample implements Serializable {
             return (Criteria) this;
         }
 
-        public Criteria andRoleidIsNull() {
-            addCriterion("roleid is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andRoleidIsNotNull() {
-            addCriterion("roleid is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andRoleidEqualTo(Integer value) {
-            addCriterion("roleid =", value, "roleid");
-            return (Criteria) this;
-        }
-
-        public Criteria andRoleidNotEqualTo(Integer value) {
-            addCriterion("roleid <>", value, "roleid");
-            return (Criteria) this;
-        }
-
-        public Criteria andRoleidGreaterThan(Integer value) {
-            addCriterion("roleid >", value, "roleid");
-            return (Criteria) this;
-        }
-
-        public Criteria andRoleidGreaterThanOrEqualTo(Integer value) {
-            addCriterion("roleid >=", value, "roleid");
-            return (Criteria) this;
-        }
-
-        public Criteria andRoleidLessThan(Integer value) {
-            addCriterion("roleid <", value, "roleid");
-            return (Criteria) this;
-        }
-
-        public Criteria andRoleidLessThanOrEqualTo(Integer value) {
-            addCriterion("roleid <=", value, "roleid");
-            return (Criteria) this;
-        }
-
-        public Criteria andRoleidIn(List<Integer> values) {
-            addCriterion("roleid in", values, "roleid");
-            return (Criteria) this;
-        }
-
-        public Criteria andRoleidNotIn(List<Integer> values) {
-            addCriterion("roleid not in", values, "roleid");
-            return (Criteria) this;
-        }
-
-        public Criteria andRoleidBetween(Integer value1, Integer value2) {
-            addCriterion("roleid between", value1, value2, "roleid");
-            return (Criteria) this;
-        }
-
-        public Criteria andRoleidNotBetween(Integer value1, Integer value2) {
-            addCriterion("roleid not between", value1, value2, "roleid");
-            return (Criteria) this;
-        }
-
         public Criteria andTelIsNull() {
             addCriterion("tel is null");
             return (Criteria) this;
@@ -647,6 +587,66 @@ public class PUserExample implements Serializable {
             return (Criteria) this;
         }
 
+        public Criteria andRoleidIsNull() {
+            addCriterion("roleid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleidIsNotNull() {
+            addCriterion("roleid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleidEqualTo(Integer value) {
+            addCriterion("roleid =", value, "roleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleidNotEqualTo(Integer value) {
+            addCriterion("roleid <>", value, "roleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleidGreaterThan(Integer value) {
+            addCriterion("roleid >", value, "roleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("roleid >=", value, "roleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleidLessThan(Integer value) {
+            addCriterion("roleid <", value, "roleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleidLessThanOrEqualTo(Integer value) {
+            addCriterion("roleid <=", value, "roleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleidIn(List<Integer> values) {
+            addCriterion("roleid in", values, "roleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleidNotIn(List<Integer> values) {
+            addCriterion("roleid not in", values, "roleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleidBetween(Integer value1, Integer value2) {
+            addCriterion("roleid between", value1, value2, "roleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleidNotBetween(Integer value1, Integer value2) {
+            addCriterion("roleid not between", value1, value2, "roleid");
+            return (Criteria) this;
+        }
+
         public Criteria andDepartmentidIsNull() {
             addCriterion("departmentid is null");
             return (Criteria) this;
@@ -704,6 +704,146 @@ public class PUserExample implements Serializable {
 
         public Criteria andDepartmentidNotBetween(Integer value1, Integer value2) {
             addCriterion("departmentid not between", value1, value2, "departmentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenidIsNull() {
+            addCriterion("openid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenidIsNotNull() {
+            addCriterion("openid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenidEqualTo(String value) {
+            addCriterion("openid =", value, "openid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenidNotEqualTo(String value) {
+            addCriterion("openid <>", value, "openid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenidGreaterThan(String value) {
+            addCriterion("openid >", value, "openid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenidGreaterThanOrEqualTo(String value) {
+            addCriterion("openid >=", value, "openid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenidLessThan(String value) {
+            addCriterion("openid <", value, "openid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenidLessThanOrEqualTo(String value) {
+            addCriterion("openid <=", value, "openid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenidLike(String value) {
+            addCriterion("openid like", value, "openid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenidNotLike(String value) {
+            addCriterion("openid not like", value, "openid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenidIn(List<String> values) {
+            addCriterion("openid in", values, "openid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenidNotIn(List<String> values) {
+            addCriterion("openid not in", values, "openid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenidBetween(String value1, String value2) {
+            addCriterion("openid between", value1, value2, "openid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenidNotBetween(String value1, String value2) {
+            addCriterion("openid not between", value1, value2, "openid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenIsNull() {
+            addCriterion("token is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenIsNotNull() {
+            addCriterion("token is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenEqualTo(String value) {
+            addCriterion("token =", value, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenNotEqualTo(String value) {
+            addCriterion("token <>", value, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenGreaterThan(String value) {
+            addCriterion("token >", value, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenGreaterThanOrEqualTo(String value) {
+            addCriterion("token >=", value, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenLessThan(String value) {
+            addCriterion("token <", value, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenLessThanOrEqualTo(String value) {
+            addCriterion("token <=", value, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenLike(String value) {
+            addCriterion("token like", value, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenNotLike(String value) {
+            addCriterion("token not like", value, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenIn(List<String> values) {
+            addCriterion("token in", values, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenNotIn(List<String> values) {
+            addCriterion("token not in", values, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenBetween(String value1, String value2) {
+            addCriterion("token between", value1, value2, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenNotBetween(String value1, String value2) {
+            addCriterion("token not between", value1, value2, "token");
             return (Criteria) this;
         }
     }
