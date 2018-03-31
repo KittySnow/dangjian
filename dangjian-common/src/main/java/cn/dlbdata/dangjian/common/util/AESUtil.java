@@ -1,5 +1,7 @@
 package cn.dlbdata.dangjian.common.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -12,26 +14,18 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 public class AESUtil {
+    private static Logger logger = LoggerFactory.getLogger(AESUtil.class);
+
     private static final String password = "SW1$EgHgK4e!GsE^";
 
-    private static SecretKeySpec getKey() {
+    private static SecretKeySpec getKey() throws NoSuchAlgorithmException, UnsupportedEncodingException {
         KeyGenerator kgen;
         SecureRandom secureRandom;
 
-        try {
-            kgen = KeyGenerator.getInstance("AES");
+        kgen = KeyGenerator.getInstance("AES");
 
-            secureRandom = SecureRandom.getInstance("SHA1PRNG");
-            secureRandom.setSeed(password.getBytes("utf-8"));
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-
-            return null;
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-
-            return null;
-        }
+        secureRandom = SecureRandom.getInstance("SHA1PRNG");
+        secureRandom.setSeed(password.getBytes("utf-8"));
 
         kgen.init(128, secureRandom);
 
