@@ -8,7 +8,8 @@ import cn.dlbdata.dangjian.common.util.FileUtil;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/picture")
 public class PPictureController {
-    private final Logger logger = Logger.getLogger(PPictureController.class);
+    private final Logger logger = LoggerFactory.getLogger(PPictureController.class);
 
     private final String PICTURE_PATH = "C:\\picture\\";
 
