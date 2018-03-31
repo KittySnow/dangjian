@@ -225,5 +225,4 @@
       status = #{status,jdbcType=INTEGER}
     where dues_id = #{duesId,jdbcType=INTEGER}
   </update>
-  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
 </mapper>
