@@ -1,0 +1,69 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li><a href="#!/ScoreParty/scoreParty">党员积分列表</a></li>
+    <li class="active">添加党员积分</li>
+</ol>
+<!-- 添加项目html -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="box ">
+            <div class="box-header">
+                <h3 class="box-title">添加党员积分</h3>
+            </div>
+            <form role="form" class="loginForm form-horizontal" action="./pscoreparty/save" method="post" onsubmit="return validateCallback(this)"  novalidate>
+                <div class="box-bodyed">
+                <div class="form-group">
+                    <label><span class="red">*</span>项目ID</label>
+                    <input type="text" class="form-control" name="project_id" placeholder="请输入项目ID" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>项目明细ID</label>
+                    <input type="text" class="form-control" name="detail_id" placeholder="请输入项目明细ID" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>分值</label>
+                    <input type="text" class="form-control" name="score" placeholder="请输入分值" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>加分者ID</label>
+                    <input type="text" class="form-control" name="adder_id" placeholder="请输入加分者ID" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>评审人ID</label>
+                    <input type="text" class="form-control" name="approved_id" placeholder="请输入评审人ID" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>积分年度</label>
+                    <input type="text" class="form-control" name="year" placeholder="请输入积分年度" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>积分时间(yyyy-MM-dd HH:mm:ss)</label>
+                    <input type="text" class="form-control" name="score_time" placeholder="请输入积分时间(yyyy-MM-dd HH:mm:ss)" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>创建时间</label>
+                    <input type="text" class="form-control" name="add_time" placeholder="请输入创建时间" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>创建人ID</label>
+                    <input type="text" class="form-control" name="add_id" placeholder="请输入创建人ID" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>是否有效</label>
+                    <input type="text" class="form-control" name="valid_yn" placeholder="请输入是否有效" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>党员ID</label>
+                    <input type="text" class="form-control" name="user_id" placeholder="请输入党员ID" required/>
+                </div>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">提交</button>　
+                    <a type="btn" class="btn btn-danger" id="addAdminSubmit" href="#!/ScoreParty/scoreParty">返回列表</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>

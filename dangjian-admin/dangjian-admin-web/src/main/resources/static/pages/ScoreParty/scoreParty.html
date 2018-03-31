@@ -1,0 +1,126 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li class="active"><a href="#!/ScoreParty/scoreParty">党员积分列表</a></li>
+</ol>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">党员积分列表</h3>
+            </div>
+            <div class="box-mgr">
+                <a class="btn btn-info" href="#!/ScoreParty/addScoreParty">添加党员积分</a>
+            </div>
+            <div class="box-body table-responsive">
+                <table id="ScorePartyTable" class="table table-bordered table-striped" data-unique-id="id">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.actionScorePartyEvents = {
+        'click .editScoreParty' : function (e, value, row, index) {
+            console.log(row);
+        },
+        'click .delScoreParty' : function (e, value, row, index) {
+            deleteAjax(row,'./pscoreparty/deleteById','id','post');
+        }
+    };
+
+
+    function ScorePartyStausFormatter(value,row,index) {
+        return '<a class="btn btn-info btn-sm editScoreParty" href="#!/ScoreParty/editScoreParty/'+row.id+'">修改</a>　<a class="btn btn-warning btn-sm delScoreParty">删除</a>'
+    }
+
+
+    $(function(){
+
+        $('#ScorePartyTable').bootstrapTable({
+            showHeader:true,
+            columns: [
+                {
+                    field: 'id',
+                    formatter:fmtIdx,
+                    title:'编号'
+                },
+                {
+                    field: 'project_id',
+                    title: '项目ID'
+                },
+                {
+                    field: 'detail_id',
+                    title: '项目明细ID'
+                },
+                {
+                    field: 'score',
+                    title: '分值'
+                },
+                {
+                    field: 'adder_id',
+                    title: '加分者ID'
+                },
+                {
+                    field: 'approved_id',
+                    title: '评审人ID'
+                },
+                {
+                    field: 'year',
+                    title: '积分年度'
+                },
+                {
+                    field: 'score_time',
+                    title: '积分时间(yyyy-MM-dd HH:mm:ss)'
+                },
+                {
+                    field: 'add_time',
+                    title: '创建时间'
+                },
+                {
+                    field: 'add_id',
+                    title: '创建人ID'
+                },
+                {
+                    field: 'valid_yn',
+                    title: '是否有效'
+                },
+                {
+                    field: 'user_id',
+                    title: '党员ID'
+                },
+                {
+                    title: '操作',
+                    width:250,
+                    formatter: ScorePartyStausFormatter,
+                    events: actionScorePartyEvents
+                }],
+            method: 'GET',
+            url: "./pscoreparty/list",
+            sidePagination: "server", //服务端请求
+            queryParams:function (params) {
+                return {
+                    pageSize:params.limit||10,
+                    pageNum:~~(params.offset/10)+1||1
+                }
+            },
+            dataField:'list',
+            responseHandler:function(res){
+                return res.data;
+            },
+            showColumns:true,
+            pagination:true,
+            cache: false,
+            striped: true,
+            pageSize: 10,
+            pageList: [5,10,15],
+            paginationHAlign: 'right', //right, left
+            paginationVAlign: 'bottom', //bottom, top, both
+            sortable:false,
+            search: true,
+            showPaginationSwitch: false,
+            showRefresh: true,
+            clickToSelect: true
+        });
+    });
+
+</script>
