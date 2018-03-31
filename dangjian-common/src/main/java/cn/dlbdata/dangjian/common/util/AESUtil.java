@@ -77,12 +77,14 @@ public class AESUtil {
         SecretKeySpec key = getKey();
 
         Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+//        System.out.println(cipher.getBlockSize());
 
         cipher.init(Cipher.DECRYPT_MODE, key);
 
         byte[] decordedValue = new BASE64Decoder().decodeBuffer(content);
+        byte[] decrypts = cipher.doFinal(decordedValue);
 
-        return new String(cipher.doFinal(decordedValue), "utf-8");
+        return new String(decrypts, "utf-8");
     }
 
     public static void main(String[] argv) {

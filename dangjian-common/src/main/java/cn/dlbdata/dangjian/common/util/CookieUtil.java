@@ -1,6 +1,7 @@
 package cn.dlbdata.dangjian.common.util;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class CookieUtil {
@@ -11,5 +12,19 @@ public class CookieUtil {
         cookie.setPath("/");
 
         response.addCookie(cookie);
+    }
+
+    public static Cookie getCookie(HttpServletRequest request, String name) {
+        Cookie[] cookies = request.getCookies();
+
+        if (null != cookies) {
+            for (Cookie cookie : cookies) {
+                if (name.equals(cookie.getName())) {
+                    return cookie;
+                }
+            }
+        }
+
+        return null;
     }
 }
