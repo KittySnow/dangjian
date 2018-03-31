@@ -3,11 +3,15 @@ package cn.dlbdata.dangjian.admin.web.controller;
 
 import cn.dlbdata.dangjian.admin.dao.model.PUser;
 import cn.dlbdata.dangjian.admin.dao.model.PUserExample;
-import cn.dlbdata.dangjian.admin.dao.model.UserToken;
 import cn.dlbdata.dangjian.admin.service.PUserService;
+import cn.dlbdata.dangjian.admin.web.VO.LoginVO;
+import cn.dlbdata.dangjian.common.util.CookieUtil;
+import cn.dlbdata.dangjian.common.util.HttpResult;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
+import cn.dlbdata.dangjian.common.util.TokenUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -171,52 +175,78 @@ public class PUserController {
     /**user login*/
     @RequestMapping(value = "/tologin", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> tologin(@RequestParam(required = true, value = "name") String name, @RequestParam(required = true, value = "password") String password,
-                                       HttpServletRequest request) {
-        //创建返回结果信息工具类
-        ResultUtil result = new ResultUtil();
-        try {
-            //查询用户的账号与密码
-            PUser pUser = this.puserService.tologin(name, password);
-            //查询roleid
-            PUser pUser1 = this.puserService.findRoleid(name);
-            //判断是否为空且密码是否相同
-            if (pUser != null && pUser.getPassword().equals(password)) {
-                //创建session且获取session
-                HttpSession session = request.getSession();
-                //创建user Token
-                UserToken userToken = new UserToken(pUser.getName(),pUser.getPassword(),pUser1.getRoleid());
-                //如果roleid为1
-                if(userToken.getRoleid()==1){
-                    //set值
-                    session.setAttribute("userToken", "userToken");
-                    result.setSuccess(true);
-                    return null;
-                }
-                //如果roleid为2或3
-                if(userToken.getRoleid()==2 || userToken.getRoleid()==3) {
-                    //set值
-                    session.setAttribute("userToken", "userToken");
-                    result.setSuccess(true);
-                    return null;
-                }
-                //返回boolean类型的结果值
+    public HttpResult tologin(@RequestParam(value = "name", required = false) String name, @RequestParam(value = "password", required = false) String password,
+                              HttpServletRequest request, HttpServletResponse response) {
+        if (null == name || name.length() <= 0 || null == password || password.length() <= 0) {
+            return HttpResult.failure("登陆失败，用户名或密码不能为空.");
+        }
 
-            } //else判断
-                else {
-                result.setSuccess(false);
-                result.setMsg("name or password error");
+        // 创建返回结果信息工具类
+//        ResultUtil result = new ResultUtil();
+
+        try {
+            // 查询用户的账号与密码
+            PUser pUser = this.puserService.tologin(name, password);
+            // 查询roleid
+//            PUser pUserRole = this.puserService.findRoleid(name);
+
+            // 验证通过
+            if (pUser != null && pUser.getPassword().equals(password)) {
+                // 尽量 确保 userAgent 唯一性
+                String userAgent = request.getHeader("user-agent");
+                if (null == userAgent || userAgent.length() <= 0) {
+                    userAgent = RandomStringUtils.randomAlphabetic(32);
+                }
+
+                String token = TokenUtil.token(userAgent, pUser.getUserid());
+
+                LoginVO loginVO = new LoginVO();
+                loginVO.setPtoken(token);
+                loginVO.setRoleId(pUser.getUserid());
+                loginVO.setUserId(pUser.getUserid());
+
+                CookieUtil.setCookie(response, "roleId", pUser.getRoleid().toString());
+                CookieUtil.setCookie(response, "userId", pUser.getUserid().toString());
+                CookieUtil.setCookie(response,"ptoken", token);
+
+                return HttpResult.success(loginVO);
+//                //创建session且获取session
+//                HttpSession session = request.getSession();
+//                //创建user Token
+//                UserToken userToken = new UserToken(pUser.getName(),pUser.getPassword(),pUserRole.getRoleid());
+//
+//                //如果roleid为1
+//                if(userToken.getRoleid()==1){
+//                    //set值
+//                    session.setAttribute("userToken", "userToken");
+//                    result.setSuccess(true);
+//
+//                    return null;
+//                }
+//
+//                //如果roleid为2或3
+//                if(userToken.getRoleid()==2 || userToken.getRoleid()==3) {
+//                    //set值
+//                    session.setAttribute("userToken", "userToken");
+//                    result.setSuccess(true);
+//
+//                    return null;
+//                }
+//                //返回boolean类型的结果值
+            } else {
+                return HttpResult.failure("登陆失败，用户名或密码错误.");
+//                result.setSuccess(false);
+//                result.setMsg("name or password error");
             }
 
-        }   //异常捕捉
-            catch (Exception e) {
-            result.setSuccess(false);
-            result.setMsg("exception error");
+        } catch (Exception e) {
+            LOGGER.error("User login error.", e);
+//            result.setSuccess(false);
+//            result.setMsg("exception error");
+            return HttpResult.failure("登陆失败，系统错误.");
         }
+
         //final return值
-        return null;
+//        return null;
     }
-
 }
-
-

@@ -3,6 +3,8 @@ package cn.dlbdata.dangjian.common.util;
 
 import org.apache.commons.lang.StringUtils;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,6 +16,9 @@ public class StringUtil {
 
     private static Pattern linePattern = Pattern.compile("_(\\w)");
     private static Pattern humpPattern = Pattern.compile("[A-Z]");
+
+    private static final char[] HEX_DIGITS = { '0', '1', '2', '3', '4', '5',
+            '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
     /**
      * 下划线转驼峰
@@ -155,4 +160,38 @@ public class StringUtil {
         }
     }
 
+    public static String encoderPassword(String password) {
+        return getMD5Digest32(password);
+    }
+
+    public static String getMD5Digest32(String str) {
+        if (str == null) {
+            return null;
+        }
+
+        MessageDigest md = null;
+
+        try {
+            md = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+
+        md.update(str.getBytes());
+
+        return getFormattedText(md.digest());
+    }
+
+    private static String getFormattedText(byte[] bytes) {
+        int len = bytes.length;
+        StringBuilder buf = new StringBuilder(len * 2);
+
+        // 把密文转换成十六进制的字符串形式
+        for (int j = 0; j < len; j++) {
+            buf.append(HEX_DIGITS[(bytes[j] >> 4) & 0x0f]);
+            buf.append(HEX_DIGITS[bytes[j] & 0x0f]);
+        }
+
+        return buf.toString();
+    }
 }
