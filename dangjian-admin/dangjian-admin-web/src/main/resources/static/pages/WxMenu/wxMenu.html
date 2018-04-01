@@ -104,7 +104,7 @@
         var tr = JSON.stringify(jsonObj);
         $.ajax({
             type:'POST',
-            url:'/mp/createMenu',
+            url:'./mp/createMenu',
             data:'json='+tr,
             dataType:"json",
             cache: false,
@@ -112,8 +112,8 @@
                 if(res.success){
                     var dialog = art.dialog({
                         title: '提示',
-                        content: res.msg,
-                        icon: 'error',
+                        content: '操作成功',
+                        icon: '操作成功',
                         ok: function(){
                             dialog.close()
                         }
@@ -121,7 +121,7 @@
                 }else{
                     var dialog = art.dialog({
                         title: '提示',
-                        content: res.msg,
+                        content: '操作失败',
                         icon: 'error',
                         ok: function(){
                             dialog.close()
