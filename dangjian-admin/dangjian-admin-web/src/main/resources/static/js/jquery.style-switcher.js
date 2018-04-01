@@ -22,7 +22,7 @@
             preview: true,
             container: this.selector,
             directory: "css/",
-            useCookie: true,
+            useCookie: false,
             cookieExpires: 30,
             manageCookieLoad: true
         };

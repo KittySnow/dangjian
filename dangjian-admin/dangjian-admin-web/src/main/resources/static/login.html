@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html class="bg-black">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bonanzooka using Angular Templating</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/icons-payment.css" rel="stylesheet" type="text/css" />
+    <link href="css/flag-icon.css" rel="stylesheet" type="text/css" />
+    <link href="css/typicons.css" rel="stylesheet" type="text/css" />
+    <link href="css/bonanzooka.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="bg-black">
+
+    <div class="form-box" id="login-box">
+        <div class="header bg-green">
+            <div class="logo">
+                <strong>用户登录</strong>
+            </div>
+        </div>
+        <form action="puser/tologin" method="post">
+            <div class="body bg-white">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success" type="button"><i class="fontello-user-1"></i>
+                        </button>
+                    </span>
+                    <input type="text" placeholder="用户名" class="form-control"  id="username" name="name" value="wangjie">
+                </div>
+
+                <br>
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success" type="button"><i class="fontello-lock"></i>
+                        </button>
+                    </span>
+                    <input type="password" name="password" class="form-control" placeholder="密码" id="pwd" value="12345678"/>
+                </div>
+                <br>
+                <button type="button" class="pull-right btn btn-success" onclick="toLogin()">登录</button>
+                  
+            </div>
+
+          
+        </form>
+
+    </div>
+
+
+    <!-- jQuery 2.0.2 -->
+    <script src="js/jquery-2.0.3.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+
+    <script>
+    function toLogin(){
+        var name = $("#username").val();
+        var pwd = $("#pwd").val();
+        $.ajax({
+            url: "puser/tologin",
+            type: "POST",
+            datType: "JSON",
+            contentType: "application/json",
+            data: JSON.stringify({name:name,password:pwd}),
+            async: false,
+            success: function (res) {
+                if(res.status){
+                    window.location.href="dex.html"
+                }
+            }
+        });
+    }
+
+    </script>
+</body>
+
+</html>
