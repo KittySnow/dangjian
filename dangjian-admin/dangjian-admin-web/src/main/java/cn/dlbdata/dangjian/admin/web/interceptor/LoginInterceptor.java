@@ -19,37 +19,37 @@ public class LoginInterceptor implements HandlerInterceptor{
     private final String USER_ID = "userId";
 
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-//        String ptoken;
-//        String userId;
-//
-//        // 按照 cookie -> header 的顺序获取
-//        Cookie ptokenCookie = CookieUtil.getCookie(httpServletRequest, PTOKEN);
-//        if (null != ptokenCookie) {
-//            ptoken = ptokenCookie.getValue();
-//        } else {
-//            ptoken = httpServletRequest.getHeader(PTOKEN);
-//        }
-//
-//        Cookie userIdCookie = CookieUtil.getCookie(httpServletRequest, USER_ID);
-//        if (null != userIdCookie) {
-//            userId = userIdCookie.getValue();
-//        } else {
-//            userId = httpServletRequest.getHeader(USER_ID);
-//        }
-//
-//        if (null == ptoken || ptoken.length() <= 0 || null == userId || userId.length() <= 0) {
-//            sendNeedLoginResponse(httpServletResponse);
-//            logger.warn("ptoken or userId is illegal. ptoken=" + ptoken + ",userId=" + userId);
-//
-//            return false;
-//        }
-//
-//        if (!TokenUtil.checkToken(ptoken, userId)) {
-//            sendNeedLoginResponse(httpServletResponse);
-//            logger.warn("token check error. ptoken=" + ptoken + ",userId=" + userId);
-//
-//            return false;
-//        }
+        String ptoken;
+        String userId;
+
+        // 按照 cookie -> header 的顺序获取
+        Cookie ptokenCookie = CookieUtil.getCookie(httpServletRequest, PTOKEN);
+        if (null != ptokenCookie) {
+            ptoken = ptokenCookie.getValue();
+        } else {
+            ptoken = httpServletRequest.getHeader(PTOKEN);
+        }
+
+        Cookie userIdCookie = CookieUtil.getCookie(httpServletRequest, USER_ID);
+        if (null != userIdCookie) {
+            userId = userIdCookie.getValue();
+        } else {
+            userId = httpServletRequest.getHeader(USER_ID);
+        }
+
+        if (null == ptoken || ptoken.length() <= 0 || null == userId || userId.length() <= 0) {
+            sendNeedLoginResponse(httpServletResponse);
+            logger.warn("ptoken or userId is illegal. ptoken=" + ptoken + ",userId=" + userId);
+
+            return false;
+        }
+
+        if (!TokenUtil.checkToken(ptoken, userId)) {
+            sendNeedLoginResponse(httpServletResponse);
+            logger.warn("token check error. ptoken=" + ptoken + ",userId=" + userId);
+
+            return false;
+        }
 
         return true;
     }
