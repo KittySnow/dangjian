@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dlbdata.dangjian.admin.dao.mapper.PActiveDao">
+  <resultMap id="BaseResultMap" type="cn.dlbdata.dangjian.admin.dao.model.PActive">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="active_name" jdbcType="VARCHAR" property="activeName" />
+    <result column="active_project_id" jdbcType="INTEGER" property="activeProjectId" />
+    <result column="active_type" jdbcType="INTEGER" property="activeType" />
+    <result column="active_pace" jdbcType="VARCHAR" property="activePace" />
+    <result column="active_create_people" jdbcType="VARCHAR" property="activeCreatePeople" />
+    <result column="active_principal_people" jdbcType="VARCHAR" property="activePrincipalPeople" />
+    <result column="active_status" jdbcType="INTEGER" property="activeStatus" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="active_context" jdbcType="VARCHAR" property="activeContext" />
+    <result column="zb_message" jdbcType="VARCHAR" property="zbMessage" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, active_name, active_project_id, active_type, active_pace, active_create_people, 
+    active_principal_people, active_status, start_time, end_time, active_context, zb_message
+  </sql>
+  <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from p_active
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from p_active
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from p_active
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveExample">
+    delete from p_active
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActive">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into p_active (active_name, active_project_id, active_type, 
+      active_pace, active_create_people, active_principal_people, 
+      active_status, start_time, end_time, 
+      active_context, zb_message)
+    values (#{activeName,jdbcType=VARCHAR}, #{activeProjectId,jdbcType=INTEGER}, #{activeType,jdbcType=INTEGER}, 
+      #{activePace,jdbcType=VARCHAR}, #{activeCreatePeople,jdbcType=VARCHAR}, #{activePrincipalPeople,jdbcType=VARCHAR}, 
+      #{activeStatus,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{activeContext,jdbcType=VARCHAR}, #{zbMessage,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActive">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into p_active
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="activeName != null">
+        active_name,
+      </if>
+      <if test="activeProjectId != null">
+        active_project_id,
+      </if>
+      <if test="activeType != null">
+        active_type,
+      </if>
+      <if test="activePace != null">
+        active_pace,
+      </if>
+      <if test="activeCreatePeople != null">
+        active_create_people,
+      </if>
+      <if test="activePrincipalPeople != null">
+        active_principal_people,
+      </if>
+      <if test="activeStatus != null">
+        active_status,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="activeContext != null">
+        active_context,
+      </if>
+      <if test="zbMessage != null">
+        zb_message,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="activeName != null">
+        #{activeName,jdbcType=VARCHAR},
+      </if>
+      <if test="activeProjectId != null">
+        #{activeProjectId,jdbcType=INTEGER},
+      </if>
+      <if test="activeType != null">
+        #{activeType,jdbcType=INTEGER},
+      </if>
+      <if test="activePace != null">
+        #{activePace,jdbcType=VARCHAR},
+      </if>
+      <if test="activeCreatePeople != null">
+        #{activeCreatePeople,jdbcType=VARCHAR},
+      </if>
+      <if test="activePrincipalPeople != null">
+        #{activePrincipalPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="activeStatus != null">
+        #{activeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activeContext != null">
+        #{activeContext,jdbcType=VARCHAR},
+      </if>
+      <if test="zbMessage != null">
+        #{zbMessage,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveExample" resultType="java.lang.Long">
+    select count(*) from p_active
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update p_active
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.activeName != null">
+        active_name = #{record.activeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activeProjectId != null">
+        active_project_id = #{record.activeProjectId,jdbcType=INTEGER},
+      </if>
+      <if test="record.activeType != null">
+        active_type = #{record.activeType,jdbcType=INTEGER},
+      </if>
+      <if test="record.activePace != null">
+        active_pace = #{record.activePace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activeCreatePeople != null">
+        active_create_people = #{record.activeCreatePeople,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activePrincipalPeople != null">
+        active_principal_people = #{record.activePrincipalPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activeStatus != null">
+        active_status = #{record.activeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.startTime != null">
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null">
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.activeContext != null">
+        active_context = #{record.activeContext,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zbMessage != null">
+        zb_message = #{record.zbMessage,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update p_active
+    set id = #{record.id,jdbcType=INTEGER},
+      active_name = #{record.activeName,jdbcType=VARCHAR},
+      active_project_id = #{record.activeProjectId,jdbcType=INTEGER},
+      active_type = #{record.activeType,jdbcType=INTEGER},
+      active_pace = #{record.activePace,jdbcType=VARCHAR},
+      active_create_people = #{record.activeCreatePeople,jdbcType=VARCHAR},
+      active_principal_people = #{record.activePrincipalPeople,jdbcType=VARCHAR},
+      active_status = #{record.activeStatus,jdbcType=INTEGER},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      active_context = #{record.activeContext,jdbcType=VARCHAR},
+      zb_message = #{record.zbMessage,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActive">
+    update p_active
+    <set>
+      <if test="activeName != null">
+        active_name = #{activeName,jdbcType=VARCHAR},
+      </if>
+      <if test="activeProjectId != null">
+        active_project_id = #{activeProjectId,jdbcType=INTEGER},
+      </if>
+      <if test="activeType != null">
+        active_type = #{activeType,jdbcType=INTEGER},
+      </if>
+      <if test="activePace != null">
+        active_pace = #{activePace,jdbcType=VARCHAR},
+      </if>
+      <if test="activeCreatePeople != null">
+        active_create_people = #{activeCreatePeople,jdbcType=VARCHAR},
+      </if>
+      <if test="activePrincipalPeople != null">
+        active_principal_people = #{activePrincipalPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="activeStatus != null">
+        active_status = #{activeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activeContext != null">
+        active_context = #{activeContext,jdbcType=VARCHAR},
+      </if>
+      <if test="zbMessage != null">
+        zb_message = #{zbMessage,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActive">
+    update p_active
+    set active_name = #{activeName,jdbcType=VARCHAR},
+      active_project_id = #{activeProjectId,jdbcType=INTEGER},
+      active_type = #{activeType,jdbcType=INTEGER},
+      active_pace = #{activePace,jdbcType=VARCHAR},
+      active_create_people = #{activeCreatePeople,jdbcType=VARCHAR},
+      active_principal_people = #{activePrincipalPeople,jdbcType=VARCHAR},
+      active_status = #{activeStatus,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      active_context = #{activeContext,jdbcType=VARCHAR},
+      zb_message = #{zbMessage,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <cache />
+</mapper>
