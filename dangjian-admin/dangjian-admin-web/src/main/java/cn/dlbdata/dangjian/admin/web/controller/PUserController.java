@@ -127,9 +127,9 @@ public class PUserController {
 
     @RequestMapping(value = "/queryById", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> queryById(Integer userid) {
+    public Map<String, Object> queryById(Integer userId) {
         ResultUtil result = new ResultUtil();
-        PUser puser = puserService.selectByPrimaryKey(userid);
+        PUser puser = puserService.selectByPrimaryKey(userId);
         // 密码不能返回，置为 null
         puser.setPassword(null);
         result.setSuccess(true);
