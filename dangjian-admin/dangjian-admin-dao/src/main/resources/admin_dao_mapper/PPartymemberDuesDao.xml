@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.dlbdata.dangjian.admin.dao.mapper.PPartymenberDuesDao">
-  <resultMap id="BaseResultMap" type="cn.dlbdata.dangjian.admin.dao.model.PPartymenberDues">
+<mapper namespace="cn.dlbdata.dangjian.admin.dao.mapper.PPartymemberDuesDao">
+  <resultMap id="BaseResultMap" type="cn.dlbdata.dangjian.admin.dao.model.PPartymemberDues">
     <id column="dues_id" jdbcType="INTEGER" property="duesId" />
     <result column="party_member_id" jdbcType="INTEGER" property="partyMemberId" />
     <result column="dues" jdbcType="VARCHAR" property="dues" />
@@ -70,13 +70,13 @@
   <sql id="Base_Column_List">
     dues_id, party_member_id, dues, month, year, status
   </sql>
-  <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymenberDuesExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymemberDuesExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from p_partymenber_dues
+    from p_partymember_dues
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,33 +87,34 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from p_partymenber_dues
+    from p_partymember_dues
     where dues_id = #{duesId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from p_partymenber_dues
+    delete from p_partymember_dues
     where dues_id = #{duesId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymenberDuesExample">
-    delete from p_partymenber_dues
+  <delete id="deleteByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymemberDuesExample">
+    delete from p_partymember_dues
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymenberDues">
-    insert into p_partymenber_dues (dues_id, party_member_id, dues, 
-      month, year, status
-      )
-    values (#{duesId,jdbcType=INTEGER}, #{partyMemberId,jdbcType=INTEGER}, #{dues,jdbcType=VARCHAR}, 
-      #{month,jdbcType=INTEGER}, #{year,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}
-      )
+  <insert id="insert" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymemberDues">
+    <selectKey keyProperty="duesId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into p_partymember_dues (party_member_id, dues, month, 
+      year, status)
+    values (#{partyMemberId,jdbcType=INTEGER}, #{dues,jdbcType=VARCHAR}, #{month,jdbcType=INTEGER}, 
+      #{year,jdbcType=INTEGER}, #{status,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymenberDues">
-    insert into p_partymenber_dues
+  <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymemberDues">
+    <selectKey keyProperty="duesId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into p_partymember_dues
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="duesId != null">
-        dues_id,
-      </if>
       <if test="partyMemberId != null">
         party_member_id,
       </if>
@@ -131,9 +132,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="duesId != null">
-        #{duesId,jdbcType=INTEGER},
-      </if>
       <if test="partyMemberId != null">
         #{partyMemberId,jdbcType=INTEGER},
       </if>
@@ -151,14 +149,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymenberDuesExample" resultType="java.lang.Long">
-    select count(*) from p_partymenber_dues
+  <select id="countByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymemberDuesExample" resultType="java.lang.Long">
+    select count(*) from p_partymember_dues
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update p_partymenber_dues
+    update p_partymember_dues
     <set>
       <if test="record.duesId != null">
         dues_id = #{record.duesId,jdbcType=INTEGER},
@@ -184,7 +182,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update p_partymenber_dues
+    update p_partymember_dues
     set dues_id = #{record.duesId,jdbcType=INTEGER},
       party_member_id = #{record.partyMemberId,jdbcType=INTEGER},
       dues = #{record.dues,jdbcType=VARCHAR},
@@ -195,8 +193,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymenberDues">
-    update p_partymenber_dues
+  <update id="updateByPrimaryKeySelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymemberDues">
+    update p_partymember_dues
     <set>
       <if test="partyMemberId != null">
         party_member_id = #{partyMemberId,jdbcType=INTEGER},
@@ -216,8 +214,8 @@
     </set>
     where dues_id = #{duesId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymenberDues">
-    update p_partymenber_dues
+  <update id="updateByPrimaryKey" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymemberDues">
+    update p_partymember_dues
     set party_member_id = #{partyMemberId,jdbcType=INTEGER},
       dues = #{dues,jdbcType=VARCHAR},
       month = #{month,jdbcType=INTEGER},
