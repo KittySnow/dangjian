@@ -10,6 +10,7 @@ import cn.dlbdata.dangjian.admin.service.PScoreDetailService;
 import cn.dlbdata.dangjian.admin.service.PUserService;
 import cn.dlbdata.dangjian.admin.service.impl.PActiveParticipateServiceImpl;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang.StringUtils;
@@ -138,7 +139,7 @@ public class PActiveController {
         PActiveExample example = new PActiveExample();
         example.createCriteria().andActiveStatusEqualTo(1)
         .andStartTimeLessThanOrEqualTo(new Date());
-        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(pageNum, pageSize,true);
         List<PActive> pActiveList = pActiveService.selectByExample(example);
         PageInfo<PActive> pageInfo=new PageInfo<PActive>(pActiveList);
         result.setSuccess(true);
@@ -158,7 +159,7 @@ public class PActiveController {
         PActiveExample example = new PActiveExample();
         example.createCriteria().andActiveStatusEqualTo(1)
         .andStartTimeGreaterThan(new Date());
-        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(pageNum, pageSize,true);
         List<PActive> pActiveList = pActiveService.selectByExample(example);
         PageInfo<PActive> pageInfo=new PageInfo<PActive>(pActiveList);
         result.setSuccess(true);
@@ -208,7 +209,7 @@ public class PActiveController {
         return result.getResult();
     }
 
-    @RequestMapping(value="/queryById",method= RequestMethod.GET)
+    @RequestMapping(value="/queryById",method= RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> queryById(Integer activeid){
         ResultUtil result = new ResultUtil();
