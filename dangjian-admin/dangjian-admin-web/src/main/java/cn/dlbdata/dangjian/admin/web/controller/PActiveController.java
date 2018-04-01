@@ -1,18 +1,18 @@
 package cn.dlbdata.dangjian.admin.web.controller;
 
-import cn.dlbdata.dangjian.admin.dao.model.PActive;
-import cn.dlbdata.dangjian.admin.dao.model.PActiveExample;
-import cn.dlbdata.dangjian.admin.dao.model.PActiveParticipate;
-import cn.dlbdata.dangjian.admin.dao.model.PScoreDetail;
-import cn.dlbdata.dangjian.admin.service.PActiveParticipateService;
-import cn.dlbdata.dangjian.admin.service.PActiveService;
-import cn.dlbdata.dangjian.admin.service.PScoreDetailService;
-import cn.dlbdata.dangjian.admin.service.PUserService;
+import cn.dlbdata.dangjian.admin.dao.model.*;
+import cn.dlbdata.dangjian.admin.service.*;
 import cn.dlbdata.dangjian.admin.service.impl.PActiveParticipateServiceImpl;
+import cn.dlbdata.dangjian.common.util.DateUtil;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.slf4j.Logger;
@@ -23,7 +23,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.OutputStream;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 /**
@@ -42,6 +47,8 @@ public class PActiveController {
     private PUserService pUserService;
     @Autowired
     private PActiveService pActiveService;
+    @Autowired
+    private PPictureService pPictureService;
     @Autowired
     private PActiveParticipateService activeParticipateService;
     @Autowired
@@ -111,6 +118,13 @@ public class PActiveController {
         }
         if(pUserService.selectByPrimaryKey(userId)==null){
             result.setMsg("用户不存在！");
+            result.setSuccess(false);
+            return result.getResult();
+        }
+        PActiveParticipateExample example = new PActiveParticipateExample();
+        example.createCriteria().andUserIdEqualTo(userId).andActiveIdEqualTo(activeId);
+        if(activeParticipateService.selectByExample(example).size()>0){
+            result.setMsg("请勿重复报名");
             result.setSuccess(false);
             return result.getResult();
         }
@@ -211,11 +225,130 @@ public class PActiveController {
 
     @RequestMapping(value="/queryById",method= RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> queryById(Integer activeid){
+    public Map<String, Object> queryById(Integer activeId){
         ResultUtil result = new ResultUtil();
-        PActive pActive = pActiveService.selectByPrimaryKey(activeid);
+        PActive pActive = pActiveService.selectByPrimaryKey(activeId);
         result.setSuccess(true);
         result.setData(pActive);
         return result.getResult();
+    }
+
+    /**
+     * 查询年度参与次数
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value="/getParticipateCount",method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> getParticipateCount(Integer userId,Integer activeType) {
+        ResultUtil result = new ResultUtil();
+        PActiveParticipateExample example = new PActiveParticipateExample();
+        example.createCriteria().andUserIdEqualTo(userId)
+        .andCreateTimeBetween(DateUtil.getCurrYearFirst(),DateUtil.getCurrYearLast());
+        int count = pActiveService.selectByActiveTypeAndUserParticipate(userId, activeType);
+        result.setSuccess(true);
+        result.setMsg("查询成功");
+        result.setData(count);
+        return result.getResult();
+    }
+    /**
+     * 保存活动图片
+     * @param activeId
+     * @param pictureId
+     * @return
+     */
+    @RequestMapping(value="/savePicture",method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> savePicture(Integer activeId,Integer pictureId) {
+        ResultUtil result = new ResultUtil();
+        if(pActiveService.selectByPrimaryKey(activeId)==null){
+            result.setMsg("活动不存在！");
+            result.setSuccess(false);
+            return result.getResult();
+        }
+        if(pPictureService.selectByPrimaryKey(pictureId)==null){
+            result.setMsg("图片不存在！");
+            result.setSuccess(false);
+            return result.getResult();
+        }
+        PActivePicture activePicture = new PActivePicture();
+        activePicture.setActiveId(activeId);
+        activePicture.setPictureId(pictureId);
+        int id = pActiveService.savePicture(activePicture);
+        result.setSuccess(true);
+        result.setMsg("保存成功");
+        result.setData(id);
+        return result.getResult();
+    }
+
+    /**
+     * 查询活动图集
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value="/getActivePictures",method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> getActivePictures(Integer activeId,Integer pageNum, Integer pageSize){
+        ResultUtil result = new ResultUtil();
+        PActivePictureExample example = new PActivePictureExample();
+        example.createCriteria().andActiveIdEqualTo(activeId);
+        PageHelper.startPage(pageNum, pageSize,true);
+        List<PActivePicture> pActiveList = pPictureService.selectActivePictures(example);
+        PageInfo<PActivePicture> pageInfo=new PageInfo<PActivePicture>(pActiveList);
+        result.setSuccess(true);
+        result.setData(pageInfo);
+        return result.getResult();
+    }
+    /**
+     * 显示活动二维码
+     * @return
+     */
+    @RequestMapping(value="/showQrCode",method= RequestMethod.POST)
+    public void showQrCode(Integer activeId,HttpServletResponse response){
+        String content = "请复制这段对话进行全局搜索，该变量是用来转换为二维码的变量";
+        BufferedImage image;
+        try {
+            image = genPic(content);
+            response.setContentType("image/jpeg");
+            // 设置页面不缓存
+            response.setHeader("Pragma", "No-cache");
+            response.setHeader("Cache-Control", "no-cache");
+            response.setDateHeader("Expires", 0);
+            OutputStream out = response.getOutputStream();//取得响应输出流
+            ImageIO.write(image, "JPEG", out);
+            out.flush();
+            out.close();
+        }catch (Exception e){
+            _log.error(e.getMessage(), e);
+        }
+    }
+
+    private BufferedImage genPic(String content)throws Exception{
+//        int qr_size = 400;
+//        int qr_size = 213;
+        int qr_size = 150;
+        Object errorCorrectionLevel = ErrorCorrectionLevel.H;
+        Map hints = new HashMap();
+        hints.put(EncodeHintType.ERROR_CORRECTION, errorCorrectionLevel);
+        // hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+        hints.put(EncodeHintType.MARGIN, 1);
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        BitMatrix bitMatrix = multiFormatWriter.encode(content, BarcodeFormat.QR_CODE, qr_size, qr_size, hints);
+        BufferedImage image = toBufferedImage(bitMatrix);
+        return image;
+    }
+
+    private BufferedImage toBufferedImage(BitMatrix matrix) {
+        int width = matrix.getWidth();
+        int height = matrix.getHeight();
+        BufferedImage image = new BufferedImage(width, height,
+                BufferedImage.TYPE_INT_RGB);
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                image.setRGB(x, y, matrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+            }
+        }
+        return image;
     }
 }

@@ -1,7 +1,10 @@
 package cn.dlbdata.dangjian.admin.service.impl;
 
 
+import cn.dlbdata.dangjian.admin.dao.mapper.PActivePictureDao;
 import cn.dlbdata.dangjian.admin.dao.mapper.PPictureDao;
+import cn.dlbdata.dangjian.admin.dao.model.PActivePicture;
+import cn.dlbdata.dangjian.admin.dao.model.PActivePictureExample;
 import cn.dlbdata.dangjian.admin.dao.model.PPicture;
 import cn.dlbdata.dangjian.admin.dao.model.PPictureExample;
 import cn.dlbdata.dangjian.admin.service.PPictureService;
@@ -20,6 +23,8 @@ public class PPictureServiceImpl implements PPictureService {
 
     @Autowired
     PPictureDao pPictureDao;
+    @Autowired
+    PActivePictureDao pActivePictureDao;
 
     @Override
     public long countByExample(PPictureExample example) {
@@ -76,6 +81,11 @@ public class PPictureServiceImpl implements PPictureService {
     @Override
     public int updateByPrimaryKey(PPicture pPicture) {
         return pPictureDao.updateByPrimaryKey(pPicture);
+    }
+
+    @Override
+    public List<PActivePicture> selectActivePictures(PActivePictureExample example ) {
+        return pActivePictureDao.selectByExample(example);
     }
 
 }

@@ -2,8 +2,10 @@ package cn.dlbdata.dangjian.admin.service.impl;
 
 
 import cn.dlbdata.dangjian.admin.dao.mapper.PActiveDao;
+import cn.dlbdata.dangjian.admin.dao.mapper.PActivePictureDao;
 import cn.dlbdata.dangjian.admin.dao.model.PActive;
 import cn.dlbdata.dangjian.admin.dao.model.PActiveExample;
+import cn.dlbdata.dangjian.admin.dao.model.PActivePicture;
 import cn.dlbdata.dangjian.admin.service.PActiveService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,8 @@ public class PActiveServiceImpl implements PActiveService {
 
     @Autowired
     PActiveDao pActiveDao;
+    @Autowired
+    PActivePictureDao pActivePictureDao;
 
     @Override
     public long countByExample(PActiveExample example) {
@@ -76,6 +80,16 @@ public class PActiveServiceImpl implements PActiveService {
     @Override
     public int updateByPrimaryKey(PActive pActive) {
         return pActiveDao.updateByPrimaryKey(pActive);
+    }
+
+    @Override
+    public int selectByActiveTypeAndUserParticipate(Integer userId, Integer activeType) {
+        return pActiveDao.selectByActiveTypeAndUserParticipate(userId, activeType);
+    }
+
+    @Override
+    public int savePicture(PActivePicture activePicture) {
+        return pActivePictureDao.insert(activePicture);
     }
 
 }

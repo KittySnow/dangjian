@@ -2,6 +2,7 @@ package cn.dlbdata.dangjian.admin.service;
 
 import cn.dlbdata.dangjian.admin.dao.model.PActive;
 import cn.dlbdata.dangjian.admin.dao.model.PActiveExample;
+import cn.dlbdata.dangjian.admin.dao.model.PActivePicture;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -29,5 +30,9 @@ public interface PActiveService {
     public int updateByPrimaryKeySelective(PActive pActive);
 
     public int updateByPrimaryKey(PActive pActive);
-    
+
+    public int selectByActiveTypeAndUserParticipate(Integer userId, Integer activeType);
+
+    public int savePicture(PActivePicture activePicture);
+
 }

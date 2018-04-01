@@ -1,5 +1,7 @@
 package cn.dlbdata.dangjian.admin.service;
 
+import cn.dlbdata.dangjian.admin.dao.model.PActivePicture;
+import cn.dlbdata.dangjian.admin.dao.model.PActivePictureExample;
 import cn.dlbdata.dangjian.admin.dao.model.PPicture;
 import cn.dlbdata.dangjian.admin.dao.model.PPictureExample;
 import org.apache.ibatis.annotations.Param;
@@ -29,5 +31,7 @@ public interface PPictureService {
     public int updateByPrimaryKeySelective(PPicture pPicture);
 
     public int updateByPrimaryKey(PPicture pPicture);
+
+    public List<PActivePicture> selectActivePictures(PActivePictureExample example);
     
 }

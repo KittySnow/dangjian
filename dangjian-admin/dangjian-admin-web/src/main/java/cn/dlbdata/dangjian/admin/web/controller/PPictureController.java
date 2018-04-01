@@ -51,7 +51,8 @@ public class PPictureController {
      *
      * @return
      */
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    @RequestMapping(value = "/upload")
+    @ResponseBody
     public Map<String, Object> upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
         ResultUtil result = new ResultUtil();
         String userId;
@@ -88,7 +89,7 @@ public class PPictureController {
     /**
      * 显示图片
      */
-    @RequestMapping(value = "/show", method = RequestMethod.POST)
+    @RequestMapping(value = "/show", method = RequestMethod.GET)
     public void showPicture(Integer pictureId,HttpServletResponse response) {
         PPicture picture = pPictureService.selectByPrimaryKey(pictureId);
         String path = picture.getUrl();
