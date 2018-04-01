@@ -179,6 +179,10 @@ public class PUserController {
     public HttpResult tologin(@RequestBody(required = false) UserLoginDO userLoginDO,
                               HttpServletRequest request, HttpServletResponse response) {
 
+        if (null == userLoginDO) {
+            return HttpResult.failure("登陆失败，用户名或密码不能为空.");
+        }
+
         String name = userLoginDO.getName();
         String password = userLoginDO.getPassword();
 
