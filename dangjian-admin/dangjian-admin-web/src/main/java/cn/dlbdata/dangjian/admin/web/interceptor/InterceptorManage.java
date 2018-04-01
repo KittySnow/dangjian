@@ -18,7 +18,7 @@ public class InterceptorManage extends WebMvcConfigurerAdapter {
 //                .excludePathPatterns("/pscorelevel/**")
                 .excludePathPatterns("*/mp/**")
                 .excludePathPatterns("*/wechat/**")
-                .excludePathPatterns("/error")
+                .excludePathPatterns("*/error")
                 .addPathPatterns("/**")
         ;
 
