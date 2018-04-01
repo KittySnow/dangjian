@@ -5,6 +5,7 @@ import cn.dlbdata.dangjian.admin.dao.model.PUser;
 import cn.dlbdata.dangjian.admin.dao.model.PUserExample;
 import cn.dlbdata.dangjian.admin.service.PUserService;
 import cn.dlbdata.dangjian.admin.web.VO.LoginVO;
+import cn.dlbdata.dangjian.common.DO.UserLoginDO;
 import cn.dlbdata.dangjian.common.util.CookieUtil;
 import cn.dlbdata.dangjian.common.util.HttpResult;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
@@ -175,14 +176,15 @@ public class PUserController {
     /**user login*/
     @RequestMapping(value = "/tologin", method = RequestMethod.POST)
     @ResponseBody
-    public HttpResult tologin(@RequestParam(value = "name", required = false) String name, @RequestParam(value = "password", required = false) String password,
+    public HttpResult tologin(@RequestBody(required = false) UserLoginDO userLoginDO,
                               HttpServletRequest request, HttpServletResponse response) {
+
+        String name = userLoginDO.getName();
+        String password = userLoginDO.getPassword();
+
         if (null == name || name.length() <= 0 || null == password || password.length() <= 0) {
             return HttpResult.failure("登陆失败，用户名或密码不能为空.");
         }
-
-        // 创建返回结果信息工具类
-//        ResultUtil result = new ResultUtil();
 
         try {
             // 查询用户的账号与密码
