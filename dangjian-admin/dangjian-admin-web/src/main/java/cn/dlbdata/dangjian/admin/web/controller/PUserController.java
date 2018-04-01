@@ -130,6 +130,8 @@ public class PUserController {
     public Map<String, Object> queryById(Integer userid) {
         ResultUtil result = new ResultUtil();
         PUser puser = puserService.selectByPrimaryKey(userid);
+        // 密码不能返回，置为 null
+        puser.setPassword(null);
         result.setSuccess(true);
         result.setData(puser);
         return result.getResult();
