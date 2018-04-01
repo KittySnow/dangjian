@@ -290,6 +290,21 @@ config(['$routeProvider',
             controller: BimModelEditCtrl,
             activetab: 'BimProject'
         }).
+        when('/Active/active', {
+            templateUrl: 'pages/Active/active.html',
+            controller: ActiveCtrl,
+            activetab: 'Active'
+        }).
+        when('/Active/addActive/', {
+            templateUrl: 'pages/Active/addActive.html',
+            controller: ActiveCtrl,
+            activetab: 'Active'
+        }).
+        when('/Active/editActive/:id', {
+            templateUrl: 'pages/Active/editActive.html',
+            controller: ActiveEditCtrl,
+            activetab: 'Active'
+        }).
         when('/SysLog/sysLog', {
             templateUrl: 'pages/SysLog/sysLog.html',
             controller: SysLogCtrl,

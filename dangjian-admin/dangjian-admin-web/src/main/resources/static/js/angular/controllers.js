@@ -337,3 +337,15 @@ function PartymemberDuesEditCtrl($scope, $http, $timeout ,$routeParams) {
         $scope.pPartymemberDues= data.data;
     });
 }
+function ActiveCtrl($scope, $http, $timeout ,$routeParams) {
+}
+function ActiveEditCtrl($scope, $http, $timeout ,$routeParams) {
+    $scope.id = $routeParams.id;
+    $http({
+        method: "GET",
+        url: "./../pactive/queryById.do?id="+Number($scope.id),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).success(function (data,status) {
+        $scope.pActive= data.data;
+    });
+}
