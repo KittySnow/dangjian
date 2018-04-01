@@ -1,6 +1,6 @@
 <ol class="breadcrumb newcrumb">
     <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
-    <li class="active"><a href="#!/PartymamberDues/partymamberDues">党员党费情况列表</a></li>
+    <li class="active"><a href="#!/PartymemberDues/partymemberDues">党员党费情况列表</a></li>
 </ol>
 <div class="row">
     <div class="col-xs-12">
@@ -9,34 +9,34 @@
                 <h3 class="box-title">党员党费情况列表</h3>
             </div>
             <div class="box-mgr">
-                <a class="btn btn-info" href="#!/PartymamberDues/addPartymenberDues">添加党员党费情况</a>
+                <a class="btn btn-info" href="#!/PartymemberDues/addPartymemberDues">添加党员党费情况</a>
             </div>
             <div class="box-body table-responsive">
-                <table id="PartymamberDuesTable" class="table table-bordered table-striped" data-unique-id="dues_id">
+                <table id="PartymemberDuesTable" class="table table-bordered table-striped" data-unique-id="dues_id">
                 </table>
             </div>
         </div>
     </div>
 </div>
 <script>
-    window.actionPartymamberDuesEvents = {
-        'click .editPartymamberDues' : function (e, value, row, index) {
+    window.actionPartymemberDuesEvents = {
+        'click .editPartymemberDues' : function (e, value, row, index) {
             console.log(row);
         },
-        'click .delPartymamberDues' : function (e, value, row, index) {
-            deleteAjax(row,'./ppartymenberdues/deleteById','dues_id','post');
+        'click .delPartymemberDues' : function (e, value, row, index) {
+            deleteAjax(row,'./ppartymemberdues/deleteById','dues_id','post');
         }
     };
 
 
-    function PartymamberDuesStausFormatter(value,row,index) {
-        return '<a class="btn btn-info btn-sm editPartymamberDues" href="#!/PartymamberDues/editPartymenberDues/'+row.dues_id+'">修改</a>　<a class="btn btn-warning btn-sm delPartymamberDues">删除</a>'
+    function PartymemberDuesStausFormatter(value,row,index) {
+        return '<a class="btn btn-info btn-sm editPartymemberDues" href="#!/PartymemberDues/editPartymemberDues/'+row.dues_id+'">修改</a>　<a class="btn btn-warning btn-sm delPartymemberDues">删除</a>'
     }
 
 
     $(function(){
 
-        $('#PartymamberDuesTable').bootstrapTable({
+        $('#PartymemberDuesTable').bootstrapTable({
             showHeader:true,
             columns: [
                 {
@@ -62,16 +62,16 @@
                 },
                 {
                     field: 'status',
-                    title: '缴费状态'
+                    title: '缴费状态，1-已缴，2-未缴'
                 },
                 {
                     title: '操作',
                     width:250,
-                    formatter: PartymamberDuesStausFormatter,
-                    events: actionPartymamberDuesEvents
+                    formatter: PartymemberDuesStausFormatter,
+                    events: actionPartymemberDuesEvents
                 }],
             method: 'GET',
-            url: "./ppartymenberdues/list",
+            url: "./ppartymemberdues/list",
             sidePagination: "server", //服务端请求
             queryParams:function (params) {
                 return {

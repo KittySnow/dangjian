@@ -255,21 +255,6 @@ config(['$routeProvider',
             controller: ScoreLevelEditCtrl,
             activetab: 'ScoreLevel'
         }).
-        when('/PartymamberDues/editScorelevel/:scoreid', {
-            templateUrl: 'pages/PartymamberDues/editPartymamberDues.html',
-            controller: PartymamberDuesEditCtrl,
-            activetab: 'PartymamberDues'
-        }).
-        when('/PartymamberDues/partymamberDues', {
-            templateUrl: 'pages/PartymamberDues/partymamberDues.html',
-            controller: PartymamberDuesCtrl,
-            activetab: 'PartymamberDues'
-        }).
-        when('/PartymamberDues/addPartymenberDues', {
-            templateUrl: 'pages/PartymamberDues/addPartymenberDues.html',
-            controller: PartymamberDuesCtrl,
-            activetab: 'PartymamberDues'
-        }).
         when('/FeatureList/featureList', {
             templateUrl: 'pages/FeatureList/featureList.html',
             controller: FeatureListCtrl,
@@ -339,6 +324,21 @@ config(['$routeProvider',
             templateUrl: 'pages/WxSend/wxSend.html',
             controller: WxSendCtrl,
             activetab: 'WxSendCtrl'
+        }).
+        when('/PartymemberDues/partymemberDues', {
+            templateUrl: 'pages/PartymemberDues/partymemberDues.html',
+            controller: PartymemberDuesCtrl,
+            activetab: 'PartymemberDues'
+        }).
+        when('/PartymemberDues/addPartymemberDues/', {
+            templateUrl: 'pages/PartymemberDues/addPartymemberDues.html',
+            controller: PartymemberDuesCtrl,
+            activetab: 'PartymemberDues'
+        }).
+        when('/PartymemberDues/editPartymemberDues/:dues_id', {
+            templateUrl: 'pages/PartymemberDues/editPartymemberDues.html',
+            controller: PartymemberDuesEditCtrl,
+            activetab: 'PartymemberDues'
         }).
         otherwise({
             redirectTo: '/',
