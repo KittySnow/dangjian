@@ -14,11 +14,11 @@ public class InterceptorManage extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         // 登陆拦截器
         registry.addInterceptor(new LoginInterceptor())
-                .excludePathPatterns("*/puser/tologin", "*/puser/login")
-//                .excludePathPatterns("/pscorelevel/**")
-                .excludePathPatterns("*/mp/**")
-                .excludePathPatterns("*/wechat/**")
-                .excludePathPatterns("*/error")
+                .excludePathPatterns("/puser/tologin", "/puser/login")
+                .excludePathPatterns("/dangjian/puser/tologin", "/dangjian/puser/login")
+                .excludePathPatterns("/mp/**", "/dangjian/mp/**")
+                .excludePathPatterns("/wechat/**", "/dangjian/wechat/**")
+                .excludePathPatterns("/error", "/dangjian/error")
                 .addPathPatterns("/**")
         ;
 
