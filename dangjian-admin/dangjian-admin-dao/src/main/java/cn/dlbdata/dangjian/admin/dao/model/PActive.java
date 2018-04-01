@@ -65,14 +65,14 @@ public class PActive implements Serializable {
      *
      * @mbg.generated
      */
-    private String startTime;
+    private Date startTime;
 
     /**
      * 结束时间
      *
      * @mbg.generated
      */
-    private String endTime;
+    private Date endTime;
 
     /**
      * 活动内容
@@ -156,19 +156,19 @@ public class PActive implements Serializable {
         this.activeStatus = activeStatus;
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 

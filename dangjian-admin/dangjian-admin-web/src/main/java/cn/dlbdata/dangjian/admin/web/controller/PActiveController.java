@@ -52,11 +52,11 @@ public class PActiveController {
      */
     @RequestMapping(value="/create",method= RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> create(String startTime,String endTime,Integer activeType,Integer activeStatus,
+    public Map<String, Object> create(Long startTime,Long endTime,Integer activeType,Integer activeStatus,
                                       String activeName,String activePace,String activeCreatePeople,
                                       String activePrincipalPeople,String activeContext) {
         ResultUtil result = new ResultUtil();
-        if(StringUtils.isBlank(startTime)){
+        if(startTime==null){
             result.setMsg("活动时间开始时间不能为空");
             result.setSuccess(false);
             return result.getResult();
@@ -73,8 +73,10 @@ public class PActiveController {
             return result.getResult();
         }
         PActive active = new PActive();
-        active.setStartTime(startTime);
-        active.setEndTime(endTime);
+        active.setStartTime(new Date(startTime));
+        if(endTime!=null){
+            active.setEndTime(new Date(endTime));
+        }
         active.setActiveType(detail.getId());
         active.setActiveProjectId(detail.getProjectId());
         active.setActiveStatus(activeStatus);
@@ -123,21 +125,52 @@ public class PActiveController {
         return result.getResult();
     }
 
-    @RequestMapping(value="/getList",method= RequestMethod.GET)
+    /**
+     * 查询正在进行的活动，或者已经开始的活动
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value="/getRunningActive",method= RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> getList(Integer pageNum, Integer pageSize){
+    public Map<String, Object> getRunningActive(Integer pageNum, Integer pageSize){
         ResultUtil result = new ResultUtil();
-        List<PActive> pActiveList = pActiveService.selectByExample(new PActiveExample());
+        PActiveExample example = new PActiveExample();
+        example.createCriteria().andActiveStatusEqualTo(1)
+        .andStartTimeLessThanOrEqualTo(new Date());
+        PageHelper.startPage(pageNum, pageSize);
+        List<PActive> pActiveList = pActiveService.selectByExample(example);
+        PageInfo<PActive> pageInfo=new PageInfo<PActive>(pActiveList);
         result.setSuccess(true);
-        result.setData(pActiveList);
+        result.setData(pageInfo);
+        return result.getResult();
+    }
+    /**
+     * 查询正在进行的活动，或者已经开始的活动
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value="/getParticipateActive",method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> getParticipateActive(Integer pageNum, Integer pageSize){
+        ResultUtil result = new ResultUtil();
+        PActiveExample example = new PActiveExample();
+        example.createCriteria().andActiveStatusEqualTo(1)
+        .andStartTimeGreaterThan(new Date());
+        PageHelper.startPage(pageNum, pageSize);
+        List<PActive> pActiveList = pActiveService.selectByExample(example);
+        PageInfo<PActive> pageInfo=new PageInfo<PActive>(pActiveList);
+        result.setSuccess(true);
+        result.setData(pageInfo);
         return result.getResult();
     }
 
-    @RequestMapping(value="/list",method= RequestMethod.GET)
+    @RequestMapping(value="/list",method= RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> list(Integer pageNum, Integer pageSize){
         ResultUtil result = new ResultUtil();
-        PageHelper.startPage(pageNum, pageSize,true);
+        PageHelper.startPage(pageNum, pageSize);
         List<PActive> pActiveList = pActiveService.selectByExample(new PActiveExample());
         PageInfo<PActive> p=new PageInfo<PActive>(pActiveList);
         result.setSuccess(true);

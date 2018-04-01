@@ -14,6 +14,7 @@
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
     <result column="active_context" jdbcType="VARCHAR" property="activeContext" />
     <result column="zb_message" jdbcType="VARCHAR" property="zbMessage" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -75,7 +76,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, active_name, active_project_id, active_type, active_pace, active_create_people, 
-    active_principal_people, active_status, start_time, end_time, active_context, zb_message
+    active_principal_people, active_status, start_time, end_time, active_context, zb_message, 
+    create_time
   </sql>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveExample" resultMap="BaseResultMap">
     select
@@ -114,11 +116,13 @@
     insert into p_active (active_name, active_project_id, active_type, 
       active_pace, active_create_people, active_principal_people, 
       active_status, start_time, end_time, 
-      active_context, zb_message)
+      active_context, zb_message, create_time
+      )
     values (#{activeName,jdbcType=VARCHAR}, #{activeProjectId,jdbcType=INTEGER}, #{activeType,jdbcType=INTEGER}, 
       #{activePace,jdbcType=VARCHAR}, #{activeCreatePeople,jdbcType=VARCHAR}, #{activePrincipalPeople,jdbcType=VARCHAR}, 
       #{activeStatus,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
-      #{activeContext,jdbcType=VARCHAR}, #{zbMessage,jdbcType=VARCHAR})
+      #{activeContext,jdbcType=VARCHAR}, #{zbMessage,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActive">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -159,6 +163,9 @@
       <if test="zbMessage != null">
         zb_message,
       </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="activeName != null">
@@ -193,6 +200,9 @@
       </if>
       <if test="zbMessage != null">
         #{zbMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -241,6 +251,9 @@
       <if test="record.zbMessage != null">
         zb_message = #{record.zbMessage,jdbcType=VARCHAR},
       </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -259,7 +272,8 @@
       start_time = #{record.startTime,jdbcType=TIMESTAMP},
       end_time = #{record.endTime,jdbcType=TIMESTAMP},
       active_context = #{record.activeContext,jdbcType=VARCHAR},
-      zb_message = #{record.zbMessage,jdbcType=VARCHAR}
+      zb_message = #{record.zbMessage,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -300,6 +314,9 @@
       <if test="zbMessage != null">
         zb_message = #{zbMessage,jdbcType=VARCHAR},
       </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -315,8 +332,8 @@
       start_time = #{startTime,jdbcType=TIMESTAMP},
       end_time = #{endTime,jdbcType=TIMESTAMP},
       active_context = #{activeContext,jdbcType=VARCHAR},
-      zb_message = #{zbMessage,jdbcType=VARCHAR}
+      zb_message = #{zbMessage,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <cache />
 </mapper>
