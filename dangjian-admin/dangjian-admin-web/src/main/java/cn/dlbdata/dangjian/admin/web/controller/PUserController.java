@@ -127,14 +127,16 @@ public class PUserController {
 
     @RequestMapping(value = "/queryById", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> queryById(Integer userId) {
-        ResultUtil result = new ResultUtil();
+    public HttpResult queryById(Integer userId) {
+        if (null == userId) {
+            return HttpResult.failure("userId不能为空");
+        }
+
         PUser puser = puserService.selectByPrimaryKey(userId);
         // 密码不能返回，置为 null
         puser.setPassword(null);
-        result.setSuccess(true);
-        result.setData(puser);
-        return result.getResult();
+
+        return HttpResult.success(puser);
     }
 
     /**root directory 直接访问*/
