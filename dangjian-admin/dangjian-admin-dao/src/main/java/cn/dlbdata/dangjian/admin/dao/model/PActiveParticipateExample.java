@@ -3,7 +3,6 @@ package cn.dlbdata.dangjian.admin.dao.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class PActiveParticipateExample implements Serializable {
@@ -109,32 +108,6 @@ public class PActiveParticipateExample implements Serializable {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
-        }
-
         public Criteria andIdIsNull() {
             addCriterion("id is null");
             return (Criteria) this;
@@ -192,6 +165,66 @@ public class PActiveParticipateExample implements Serializable {
 
         public Criteria andIdNotBetween(Integer value1, Integer value2) {
             addCriterion("id not between", value1, value2, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveIdIsNull() {
+            addCriterion("active_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveIdIsNotNull() {
+            addCriterion("active_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveIdEqualTo(Integer value) {
+            addCriterion("active_id =", value, "activeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveIdNotEqualTo(Integer value) {
+            addCriterion("active_id <>", value, "activeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveIdGreaterThan(Integer value) {
+            addCriterion("active_id >", value, "activeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("active_id >=", value, "activeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveIdLessThan(Integer value) {
+            addCriterion("active_id <", value, "activeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveIdLessThanOrEqualTo(Integer value) {
+            addCriterion("active_id <=", value, "activeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveIdIn(List<Integer> values) {
+            addCriterion("active_id in", values, "activeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveIdNotIn(List<Integer> values) {
+            addCriterion("active_id not in", values, "activeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveIdBetween(Integer value1, Integer value2) {
+            addCriterion("active_id between", value1, value2, "activeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("active_id not between", value1, value2, "activeId");
             return (Criteria) this;
         }
 
@@ -326,52 +359,52 @@ public class PActiveParticipateExample implements Serializable {
         }
 
         public Criteria andCreateTimeEqualTo(Date value) {
-            addCriterionForJDBCDate("create_time =", value, "createTime");
+            addCriterion("create_time =", value, "createTime");
             return (Criteria) this;
         }
 
         public Criteria andCreateTimeNotEqualTo(Date value) {
-            addCriterionForJDBCDate("create_time <>", value, "createTime");
+            addCriterion("create_time <>", value, "createTime");
             return (Criteria) this;
         }
 
         public Criteria andCreateTimeGreaterThan(Date value) {
-            addCriterionForJDBCDate("create_time >", value, "createTime");
+            addCriterion("create_time >", value, "createTime");
             return (Criteria) this;
         }
 
         public Criteria andCreateTimeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("create_time >=", value, "createTime");
+            addCriterion("create_time >=", value, "createTime");
             return (Criteria) this;
         }
 
         public Criteria andCreateTimeLessThan(Date value) {
-            addCriterionForJDBCDate("create_time <", value, "createTime");
+            addCriterion("create_time <", value, "createTime");
             return (Criteria) this;
         }
 
         public Criteria andCreateTimeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("create_time <=", value, "createTime");
+            addCriterion("create_time <=", value, "createTime");
             return (Criteria) this;
         }
 
         public Criteria andCreateTimeIn(List<Date> values) {
-            addCriterionForJDBCDate("create_time in", values, "createTime");
+            addCriterion("create_time in", values, "createTime");
             return (Criteria) this;
         }
 
         public Criteria andCreateTimeNotIn(List<Date> values) {
-            addCriterionForJDBCDate("create_time not in", values, "createTime");
+            addCriterion("create_time not in", values, "createTime");
             return (Criteria) this;
         }
 
         public Criteria andCreateTimeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("create_time between", value1, value2, "createTime");
+            addCriterion("create_time between", value1, value2, "createTime");
             return (Criteria) this;
         }
 
         public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("create_time not between", value1, value2, "createTime");
+            addCriterion("create_time not between", value1, value2, "createTime");
             return (Criteria) this;
         }
     }

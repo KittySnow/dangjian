@@ -1,18 +1,18 @@
 <ol class="breadcrumb newcrumb">
     <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
-    <li class="active"><a href="#!/Active/active">活动列表</a></li>
+    <li class="active"><a href="#!/Active/active">党员活动列表</a></li>
 </ol>
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">活动列表</h3>
+                <h3 class="box-title">党员活动列表</h3>
             </div>
             <div class="box-mgr">
-                <a class="btn btn-info" href="#!/Active/addActive">添加活动</a>
+                <a class="btn btn-info" href="#!/Active/addActive">添加党员活动</a>
             </div>
             <div class="box-body table-responsive">
-                <table id="ActiveTable" class="table table-bordered table-striped" data-unique-id="id">
+                <table id="ActiveTable" class="table table-bordered table-striped" data-unique-id="activeid">
                 </table>
             </div>
         </div>
@@ -24,13 +24,13 @@
             console.log(row);
         },
         'click .delActive' : function (e, value, row, index) {
-            deleteAjax(row,'./pactive/deleteById','id','post');
+            deleteAjax(row,'./pactive/deleteById','activeid','post');
         }
     };
 
 
     function ActiveStausFormatter(value,row,index) {
-        return '<a class="btn btn-info btn-sm editActive" href="#!/Active/editActive/'+row.id+'">修改</a>　<a class="btn btn-warning btn-sm delActive">删除</a>'
+        return '<a class="btn btn-info btn-sm editActive" href="#!/Active/editActive/'+row.activeid+'">修改</a>　<a class="btn btn-warning btn-sm delActive">删除</a>'
     }
 
 
@@ -40,9 +40,13 @@
             showHeader:true,
             columns: [
                 {
-                    field: 'id',
+                    field: 'activeid',
                     formatter:fmtIdx,
                     title:'编号'
+                },
+                {
+                    field: 'id',
+                    title: '活动表id'
                 },
                 {
                     field: 'active_name',

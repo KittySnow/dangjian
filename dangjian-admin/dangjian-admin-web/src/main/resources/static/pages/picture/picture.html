@@ -1,6 +1,6 @@
 <ol class="breadcrumb newcrumb">
     <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
-    <li class="active"><a href="#!/picture/picture">图片列表</a></li>
+    <li class="active"><a href="#!/Picture/picture">图片列表</a></li>
 </ol>
 <div class="row">
     <div class="col-xs-12">
@@ -9,34 +9,34 @@
                 <h3 class="box-title">图片列表</h3>
             </div>
             <div class="box-mgr">
-                <a class="btn btn-info" href="#!/picture/addPicture">添加图片</a>
+                <a class="btn btn-info" href="#!/Picture/addPicture">添加图片</a>
             </div>
             <div class="box-body table-responsive">
-                <table id="pictureTable" class="table table-bordered table-striped" data-unique-id="id">
+                <table id="PictureTable" class="table table-bordered table-striped" data-unique-id="id">
                 </table>
             </div>
         </div>
     </div>
 </div>
 <script>
-    window.actionpictureEvents = {
-        'click .editpicture' : function (e, value, row, index) {
+    window.actionPictureEvents = {
+        'click .editPicture' : function (e, value, row, index) {
             console.log(row);
         },
-        'click .delpicture' : function (e, value, row, index) {
-            deleteAjax(row,'./ppicture/deleteById','id','post');
+        'click .delPicture' : function (e, value, row, index) {
+            deleteAjax(row,'./ppicture/deletePictureById','id','post');
         }
     };
 
 
-    function pictureStausFormatter(value,row,index) {
-        return '<a class="btn btn-info btn-sm editpicture" href="#!/picture/editPicture/'+row.id+'">修改</a>　<a class="btn btn-warning btn-sm delpicture">删除</a>'
+    function PictureStausFormatter(value,row,index) {
+        return '<a class="btn btn-info btn-sm editPicture" href="#!/Picture/editPicture/'+row.id+'">修改</a>　<a class="btn btn-warning btn-sm delPicture">删除</a>'
     }
 
 
     $(function(){
 
-        $('#pictureTable').bootstrapTable({
+        $('#PictureTable').bootstrapTable({
             showHeader:true,
             columns: [
                 {
@@ -55,8 +55,8 @@
                 {
                     title: '操作',
                     width:250,
-                    formatter: pictureStausFormatter,
-                    events: actionpictureEvents
+                    formatter: PictureStausFormatter,
+                    events: actionPictureEvents
                 }],
             method: 'GET',
             url: "./ppicture/list",

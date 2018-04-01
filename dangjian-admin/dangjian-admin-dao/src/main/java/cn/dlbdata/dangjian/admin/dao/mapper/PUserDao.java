@@ -23,10 +23,7 @@ public interface PUserDao {
 
     List<PUser> selectByExample(PUserExample example);
 
-    List<PUser> selectAll(String searchText);
-
     PUser selectByPrimaryKey(Integer userid);
-    PUser selectByEmail(final String email);
 
     int updateByExampleSelective(@Param("record") PUser record, @Param("example") PUserExample example);
 
@@ -36,11 +33,15 @@ public interface PUserDao {
 
     int updateByPrimaryKey(PUser record);
 
-    int updatePasswordByEmail(final PUser user);
-
     @Select("select * from p_user where name=#{name} and password=#{password}")
     PUser tologin(@Param("name")String name,@Param("password")String passowrd);
 
     @Select("select roleid from p_user where name=#{name}")
     public PUser findRoleid(@Param("name") String name);
+
+    List<PUser> selectAll(String searchText);
+
+    PUser selectByEmail(final String email);
+
+    int updatePasswordByEmail(final PUser user);
 }

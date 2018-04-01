@@ -568,6 +568,66 @@ public class PActiveExample implements Serializable {
             return (Criteria) this;
         }
 
+        public Criteria andActiveStatusIsNull() {
+            addCriterion("active_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusIsNotNull() {
+            addCriterion("active_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusEqualTo(Integer value) {
+            addCriterion("active_status =", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusNotEqualTo(Integer value) {
+            addCriterion("active_status <>", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusGreaterThan(Integer value) {
+            addCriterion("active_status >", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("active_status >=", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusLessThan(Integer value) {
+            addCriterion("active_status <", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("active_status <=", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusIn(List<Integer> values) {
+            addCriterion("active_status in", values, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusNotIn(List<Integer> values) {
+            addCriterion("active_status not in", values, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusBetween(Integer value1, Integer value2) {
+            addCriterion("active_status between", value1, value2, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("active_status not between", value1, value2, "activeStatus");
+            return (Criteria) this;
+        }
+
         public Criteria andStartTimeIsNull() {
             addCriterion("start_time is null");
             return (Criteria) this;
@@ -578,52 +638,62 @@ public class PActiveExample implements Serializable {
             return (Criteria) this;
         }
 
-        public Criteria andStartTimeEqualTo(Date value) {
+        public Criteria andStartTimeEqualTo(String value) {
             addCriterion("start_time =", value, "startTime");
             return (Criteria) this;
         }
 
-        public Criteria andStartTimeNotEqualTo(Date value) {
+        public Criteria andStartTimeNotEqualTo(String value) {
             addCriterion("start_time <>", value, "startTime");
             return (Criteria) this;
         }
 
-        public Criteria andStartTimeGreaterThan(Date value) {
+        public Criteria andStartTimeGreaterThan(String value) {
             addCriterion("start_time >", value, "startTime");
             return (Criteria) this;
         }
 
-        public Criteria andStartTimeGreaterThanOrEqualTo(Date value) {
+        public Criteria andStartTimeGreaterThanOrEqualTo(String value) {
             addCriterion("start_time >=", value, "startTime");
             return (Criteria) this;
         }
 
-        public Criteria andStartTimeLessThan(Date value) {
+        public Criteria andStartTimeLessThan(String value) {
             addCriterion("start_time <", value, "startTime");
             return (Criteria) this;
         }
 
-        public Criteria andStartTimeLessThanOrEqualTo(Date value) {
+        public Criteria andStartTimeLessThanOrEqualTo(String value) {
             addCriterion("start_time <=", value, "startTime");
             return (Criteria) this;
         }
 
-        public Criteria andStartTimeIn(List<Date> values) {
+        public Criteria andStartTimeLike(String value) {
+            addCriterion("start_time like", value, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeNotLike(String value) {
+            addCriterion("start_time not like", value, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeIn(List<String> values) {
             addCriterion("start_time in", values, "startTime");
             return (Criteria) this;
         }
 
-        public Criteria andStartTimeNotIn(List<Date> values) {
+        public Criteria andStartTimeNotIn(List<String> values) {
             addCriterion("start_time not in", values, "startTime");
             return (Criteria) this;
         }
 
-        public Criteria andStartTimeBetween(Date value1, Date value2) {
+        public Criteria andStartTimeBetween(String value1, String value2) {
             addCriterion("start_time between", value1, value2, "startTime");
             return (Criteria) this;
         }
 
-        public Criteria andStartTimeNotBetween(Date value1, Date value2) {
+        public Criteria andStartTimeNotBetween(String value1, String value2) {
             addCriterion("start_time not between", value1, value2, "startTime");
             return (Criteria) this;
         }
@@ -638,52 +708,62 @@ public class PActiveExample implements Serializable {
             return (Criteria) this;
         }
 
-        public Criteria andEndTimeEqualTo(Date value) {
+        public Criteria andEndTimeEqualTo(String value) {
             addCriterion("end_time =", value, "endTime");
             return (Criteria) this;
         }
 
-        public Criteria andEndTimeNotEqualTo(Date value) {
+        public Criteria andEndTimeNotEqualTo(String value) {
             addCriterion("end_time <>", value, "endTime");
             return (Criteria) this;
         }
 
-        public Criteria andEndTimeGreaterThan(Date value) {
+        public Criteria andEndTimeGreaterThan(String value) {
             addCriterion("end_time >", value, "endTime");
             return (Criteria) this;
         }
 
-        public Criteria andEndTimeGreaterThanOrEqualTo(Date value) {
+        public Criteria andEndTimeGreaterThanOrEqualTo(String value) {
             addCriterion("end_time >=", value, "endTime");
             return (Criteria) this;
         }
 
-        public Criteria andEndTimeLessThan(Date value) {
+        public Criteria andEndTimeLessThan(String value) {
             addCriterion("end_time <", value, "endTime");
             return (Criteria) this;
         }
 
-        public Criteria andEndTimeLessThanOrEqualTo(Date value) {
+        public Criteria andEndTimeLessThanOrEqualTo(String value) {
             addCriterion("end_time <=", value, "endTime");
             return (Criteria) this;
         }
 
-        public Criteria andEndTimeIn(List<Date> values) {
+        public Criteria andEndTimeLike(String value) {
+            addCriterion("end_time like", value, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeNotLike(String value) {
+            addCriterion("end_time not like", value, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeIn(List<String> values) {
             addCriterion("end_time in", values, "endTime");
             return (Criteria) this;
         }
 
-        public Criteria andEndTimeNotIn(List<Date> values) {
+        public Criteria andEndTimeNotIn(List<String> values) {
             addCriterion("end_time not in", values, "endTime");
             return (Criteria) this;
         }
 
-        public Criteria andEndTimeBetween(Date value1, Date value2) {
+        public Criteria andEndTimeBetween(String value1, String value2) {
             addCriterion("end_time between", value1, value2, "endTime");
             return (Criteria) this;
         }
 
-        public Criteria andEndTimeNotBetween(Date value1, Date value2) {
+        public Criteria andEndTimeNotBetween(String value1, String value2) {
             addCriterion("end_time not between", value1, value2, "endTime");
             return (Criteria) this;
         }
@@ -825,6 +905,66 @@ public class PActiveExample implements Serializable {
 
         public Criteria andZbMessageNotBetween(String value1, String value2) {
             addCriterion("zb_message not between", value1, value2, "zbMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIsNull() {
+            addCriterion("create_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIsNotNull() {
+            addCriterion("create_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeEqualTo(Date value) {
+            addCriterion("create_time =", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotEqualTo(Date value) {
+            addCriterion("create_time <>", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeGreaterThan(Date value) {
+            addCriterion("create_time >", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("create_time >=", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeLessThan(Date value) {
+            addCriterion("create_time <", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("create_time <=", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIn(List<Date> values) {
+            addCriterion("create_time in", values, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotIn(List<Date> values) {
+            addCriterion("create_time not in", values, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeBetween(Date value1, Date value2) {
+            addCriterion("create_time between", value1, value2, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("create_time not between", value1, value2, "createTime");
             return (Criteria) this;
         }
     }

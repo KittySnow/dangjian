@@ -178,4 +178,5 @@
       active_id = #{activeId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <cache />
 </mapper>

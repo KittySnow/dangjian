@@ -3,9 +3,10 @@
 <mapper namespace="cn.dlbdata.dangjian.admin.dao.mapper.PActiveParticipateDao">
   <resultMap id="BaseResultMap" type="cn.dlbdata.dangjian.admin.dao.model.PActiveParticipate">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="active_id" jdbcType="INTEGER" property="activeId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="create_time" jdbcType="DATE" property="createTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, status, create_time
+    id, active_id, user_id, status, create_time
   </sql>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveParticipateExample" resultMap="BaseResultMap">
     select
@@ -99,16 +100,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveParticipate">
-    insert into p_active_participate (id, user_id, status, 
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into p_active_participate (active_id, user_id, status, 
       create_time)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=DATE})
+    values (#{activeId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveParticipate">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into p_active_participate
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
+      <if test="activeId != null">
+        active_id,
       </if>
       <if test="userId != null">
         user_id,
@@ -121,8 +128,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
+      <if test="activeId != null">
+        #{activeId,jdbcType=INTEGER},
       </if>
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
@@ -131,7 +138,7 @@
         #{status,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
-        #{createTime,jdbcType=DATE},
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -147,6 +154,9 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.activeId != null">
+        active_id = #{record.activeId,jdbcType=INTEGER},
+      </if>
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=INTEGER},
       </if>
@@ -154,7 +164,7 @@
         status = #{record.status,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=DATE},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -164,9 +174,10 @@
   <update id="updateByExample" parameterType="map">
     update p_active_participate
     set id = #{record.id,jdbcType=INTEGER},
+      active_id = #{record.activeId,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
-      create_time = #{record.createTime,jdbcType=DATE}
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -174,6 +185,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveParticipate">
     update p_active_participate
     <set>
+      <if test="activeId != null">
+        active_id = #{activeId,jdbcType=INTEGER},
+      </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=INTEGER},
       </if>
@@ -181,16 +195,17 @@
         status = #{status,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
-        create_time = #{createTime,jdbcType=DATE},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveParticipate">
     update p_active_participate
-    set user_id = #{userId,jdbcType=INTEGER},
+    set active_id = #{activeId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=DATE}
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

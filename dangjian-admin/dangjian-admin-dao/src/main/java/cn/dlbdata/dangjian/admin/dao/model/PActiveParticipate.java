@@ -12,6 +12,13 @@ public class PActiveParticipate implements Serializable {
     private Integer id;
 
     /**
+     * 活动ID
+     *
+     * @mbg.generated
+     */
+    private Integer activeId;
+
+    /**
      * 用户ID
      *
      * @mbg.generated
@@ -40,6 +47,14 @@ public class PActiveParticipate implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getActiveId() {
+        return activeId;
+    }
+
+    public void setActiveId(Integer activeId) {
+        this.activeId = activeId;
     }
 
     public Integer getUserId() {
@@ -73,6 +88,7 @@ public class PActiveParticipate implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
+        sb.append(", activeId=").append(activeId);
         sb.append(", userId=").append(userId);
         sb.append(", status=").append(status);
         sb.append(", createTime=").append(createTime);
@@ -93,6 +109,7 @@ public class PActiveParticipate implements Serializable {
         }
         PActiveParticipate other = (PActiveParticipate) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getActiveId() == null ? other.getActiveId() == null : this.getActiveId().equals(other.getActiveId()))
             && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()));
@@ -103,6 +120,7 @@ public class PActiveParticipate implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getActiveId() == null) ? 0 : getActiveId().hashCode());
         result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());

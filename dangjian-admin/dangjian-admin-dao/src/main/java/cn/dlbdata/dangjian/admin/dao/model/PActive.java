@@ -54,18 +54,25 @@ public class PActive implements Serializable {
     private String activePrincipalPeople;
 
     /**
+     * 活动是否审核：0：未审核；1：审核通过；2：审核失败
+     *
+     * @mbg.generated
+     */
+    private Integer activeStatus;
+
+    /**
      * 开始时间
      *
      * @mbg.generated
      */
-    private Date startTime;
+    private String startTime;
 
     /**
      * 结束时间
      *
      * @mbg.generated
      */
-    private Date endTime;
+    private String endTime;
 
     /**
      * 活动内容
@@ -80,6 +87,8 @@ public class PActive implements Serializable {
      * @mbg.generated
      */
     private String zbMessage;
+
+    private Date createTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -139,19 +148,27 @@ public class PActive implements Serializable {
         this.activePrincipalPeople = activePrincipalPeople;
     }
 
-    public Date getStartTime() {
+    public Integer getActiveStatus() {
+        return activeStatus;
+    }
+
+    public void setActiveStatus(Integer activeStatus) {
+        this.activeStatus = activeStatus;
+    }
+
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
@@ -171,6 +188,14 @@ public class PActive implements Serializable {
         this.zbMessage = zbMessage;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -184,10 +209,12 @@ public class PActive implements Serializable {
         sb.append(", activePace=").append(activePace);
         sb.append(", activeCreatePeople=").append(activeCreatePeople);
         sb.append(", activePrincipalPeople=").append(activePrincipalPeople);
+        sb.append(", activeStatus=").append(activeStatus);
         sb.append(", startTime=").append(startTime);
         sb.append(", endTime=").append(endTime);
         sb.append(", activeContext=").append(activeContext);
         sb.append(", zbMessage=").append(zbMessage);
+        sb.append(", createTime=").append(createTime);
         sb.append("]");
         return sb.toString();
     }
@@ -211,10 +238,12 @@ public class PActive implements Serializable {
             && (this.getActivePace() == null ? other.getActivePace() == null : this.getActivePace().equals(other.getActivePace()))
             && (this.getActiveCreatePeople() == null ? other.getActiveCreatePeople() == null : this.getActiveCreatePeople().equals(other.getActiveCreatePeople()))
             && (this.getActivePrincipalPeople() == null ? other.getActivePrincipalPeople() == null : this.getActivePrincipalPeople().equals(other.getActivePrincipalPeople()))
+            && (this.getActiveStatus() == null ? other.getActiveStatus() == null : this.getActiveStatus().equals(other.getActiveStatus()))
             && (this.getStartTime() == null ? other.getStartTime() == null : this.getStartTime().equals(other.getStartTime()))
             && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()))
             && (this.getActiveContext() == null ? other.getActiveContext() == null : this.getActiveContext().equals(other.getActiveContext()))
-            && (this.getZbMessage() == null ? other.getZbMessage() == null : this.getZbMessage().equals(other.getZbMessage()));
+            && (this.getZbMessage() == null ? other.getZbMessage() == null : this.getZbMessage().equals(other.getZbMessage()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()));
     }
 
     @Override
@@ -228,10 +257,12 @@ public class PActive implements Serializable {
         result = prime * result + ((getActivePace() == null) ? 0 : getActivePace().hashCode());
         result = prime * result + ((getActiveCreatePeople() == null) ? 0 : getActiveCreatePeople().hashCode());
         result = prime * result + ((getActivePrincipalPeople() == null) ? 0 : getActivePrincipalPeople().hashCode());
+        result = prime * result + ((getActiveStatus() == null) ? 0 : getActiveStatus().hashCode());
         result = prime * result + ((getStartTime() == null) ? 0 : getStartTime().hashCode());
         result = prime * result + ((getEndTime() == null) ? 0 : getEndTime().hashCode());
         result = prime * result + ((getActiveContext() == null) ? 0 : getActiveContext().hashCode());
         result = prime * result + ((getZbMessage() == null) ? 0 : getZbMessage().hashCode());
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         return result;
     }
 }
