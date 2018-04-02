@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 
@@ -19,7 +20,7 @@ public class PDepartmentServiceImpl implements PDepartmentService {
 
     private static Logger _log = LoggerFactory.getLogger(PDepartmentServiceImpl.class);
 
-    @Autowired
+    @Resource
     PDepartmentDao pDepartmentDao;
 
     @Override

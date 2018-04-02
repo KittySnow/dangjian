@@ -1,42 +1,42 @@
 <ol class="breadcrumb newcrumb">
     <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
-    <li class="active"><a href="#!/ScoreParty/scoreParty">党员积分列表</a></li>
+    <li class="active"><a href="#!/ScoreProject/scoreProject">评分项目列表</a></li>
 </ol>
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">党员积分列表</h3>
+                <h3 class="box-title">评分项目列表</h3>
             </div>
             <div class="box-mgr">
-                <a class="btn btn-info" href="#!/ScoreParty/addScoreParty">添加党员积分</a>
+                <a class="btn btn-info" href="#!/ScoreProject/addScoreProject">添加评分项目</a>
             </div>
             <div class="box-body table-responsive">
-                <table id="ScorePartyTable" class="table table-bordered table-striped" data-unique-id="id">
+                <table id="ScoreProjectTable" class="table table-bordered table-striped" data-unique-id="id">
                 </table>
             </div>
         </div>
     </div>
 </div>
 <script>
-    window.actionScorePartyEvents = {
-        'click .editScoreParty' : function (e, value, row, index) {
+    window.actionScoreProjectEvents = {
+        'click .editScoreProject' : function (e, value, row, index) {
             console.log(row);
         },
-        'click .delScoreParty' : function (e, value, row, index) {
-            deleteAjax(row,'./pscoreparty/deleteById','id','post');
+        'click .delScoreProject' : function (e, value, row, index) {
+            deleteAjax(row,'./pscoreproject/deleteById','id','post');
         }
     };
 
 
-    function ScorePartyStausFormatter(value,row,index) {
-        return '<a class="btn btn-info btn-sm editScoreParty" href="#!/ScoreParty/editScoreParty/'+row.id+'">修改</a>　<a class="btn btn-warning btn-sm delScoreParty">删除</a>'
+    function ScoreProjectStausFormatter(value,row,index) {
+        return '<a class="btn btn-info btn-sm editScoreProject" href="#!/ScoreProject/editScoreProject/'+row.id+'">修改</a>　<a class="btn btn-warning btn-sm delScoreProject">删除</a>'
     }
 
 
     $(function(){
 
-        $('#ScorePartyTable').bootstrapTable({
+        $('#ScoreProjectTable').bootstrapTable({
             showHeader:true,
             columns: [
                 {
@@ -49,37 +49,17 @@
                     title: '项目名称'
                 },
                 {
-                    field: 'content',
-                    title: '内容'
-                },
-                {
                     field: 'score',
                     title: '分值'
                 },
                 {
-                    field: 'adder',
-                    title: '加分者'
-                },
-                {
-                    field: 'approved',
-                    title: '评审人'
-                },
-                {
-                    field: 'year',
-                    title: '积分年度'
-                },
-                {
-                    field: 'scoreTime',
-                    title: '积分时间'
-                },
-                {
                     title: '操作',
                     width:250,
-                    formatter: ScorePartyStausFormatter,
-                    events: actionScorePartyEvents
+                    formatter: ScoreProjectStausFormatter,
+                    events: actionScoreProjectEvents
                 }],
             method: 'GET',
-            url: "./pscoreparty/list",
+            url: "./pscoreproject/list",
             sidePagination: "server", //服务端请求
             queryParams:function (params) {
                 return {

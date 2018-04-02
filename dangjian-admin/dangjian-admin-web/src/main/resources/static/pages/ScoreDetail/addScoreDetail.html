@@ -1,0 +1,82 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li><a href="#!/ScoreDetail/scoreDetail">项目明细列表</a></li>
+    <li class="active">添加项目明细</li>
+</ol>
+<!-- 添加项目html -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="box ">
+            <div class="box-header">
+                <h3 class="box-title">添加项目明细</h3>
+            </div>
+            <form role="form" class="loginForm form-horizontal" action="./pscoredetail/save" method="post" onsubmit="return validateCallback(this)"  novalidate>
+                <div class="box-bodyed">
+                    <div class="form-group">
+                        <label><span class="red">*</span>项目</label>
+                        <select class="form-control" id="projectId" name="projectId">
+                            <option  ng-repeat="x in listChoose" value="{{x.id}}">{{x.projectName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="red">*</span>标题</label>
+                        <input type="text" class="form-control" name="title" placeholder="请输入明细标题" required/>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="red">*</span>内容</label>
+                        <input type="text" class="form-control" name="content" placeholder="请输入明细内容" required/>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="red">*</span>分值</label>
+                        <input type="text" class="form-control" name="score" placeholder="请输入分值" required/>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="red">*</span>参与一次</label>
+                        <select class="form-control" id="onlyYn" name="onlyYn" >
+                            <option value="Y">是</option>
+                            <option value="N">否</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="red">*</span>参与角色</label>
+                        <select class="form-control" id="actorRoleId" name="actorRoleId">
+                            <option  ng-repeat="x in roleChoose" value="{{x.roleid}}">{{x.rolename}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="red">*</span>加分角色</label>
+                        <select class="form-control" id="adderRoleId" name="adderRoleId">
+                            <option  ng-repeat="x in roleChoose" value="{{x.roleid}}">{{x.rolename}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="red">*</span>审评角色</label>
+                        <select class="form-control" id="approvedRoleId" name="approvedRoleId">
+                            <option  ng-repeat="x in roleChoose" value="{{x.roleid}}">{{x.rolename}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="red">*</span>开始日期</label>
+                        <input type="text" class="form-control" name="begin_date" placeholder="请输入开始日期(yyyy-MM-dd HH:mm:ss)" required/>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="red">*</span>结束日期</label>
+                        <input type="text" class="form-control" name="end_date" placeholder="请输入结束日期(yyyy-MM-dd HH:mm:ss)" required/>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="red">*</span>获取方式</label>
+                        <select class="form-control" id="scoreGetMethodCd" name="scoreGetMethodCd">
+                            <option value="10">扫码获取</option>
+                            <option value="20">评定获取</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">提交</button>　
+                    <a type="btn" class="btn btn-danger" id="addAdminSubmit" href="#!/ScoreDetail/scoreDetail">返回列表</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

@@ -35,4 +35,8 @@ public class EncryptorFactory {
         encryptor.setConfig(config);
         return encryptor;
     }
+
+    public static void main(String[] args) {
+        System.out.print(EncryptorFactory.newStringEncryptor().decrypt("ETWygv0bn5NoUv2V96KGbXgPbzxqxvRz"));
+    }
 }

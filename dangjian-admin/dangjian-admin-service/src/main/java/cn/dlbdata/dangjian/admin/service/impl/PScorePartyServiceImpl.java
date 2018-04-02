@@ -79,4 +79,23 @@ public class PScorePartyServiceImpl implements PScorePartyService {
         return pScorePartyDao.updateByPrimaryKey(pScoreParty);
     }
 
+    @Override
+    public int updateScanCode(PScoreParty pScoreParty) {
+        return this.pScorePartyDao.updateScanCode(pScoreParty);
+    }
+
+    @Override
+    public int updateScoreCustom(PScoreParty pScoreParty) {
+        return this.pScorePartyDao.updateScoreCustom(pScoreParty);
+    }
+
+    @Override
+    public int updateSscoreClean(PScoreParty pScoreParty) {
+        return this.pScorePartyDao.updateSscoreClean(pScoreParty);
+    }
+
+    @Override
+    public int updateAudit(PScoreParty pScoreParty) {
+        return this.pScorePartyDao.updateAudit(pScoreParty);
+    }
 }

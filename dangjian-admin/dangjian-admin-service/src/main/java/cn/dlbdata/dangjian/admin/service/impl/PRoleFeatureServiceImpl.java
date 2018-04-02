@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service("PRoleFeatureService")
@@ -16,7 +17,7 @@ public class PRoleFeatureServiceImpl implements PRoleFeatureService {
 
     private static Logger _log = LoggerFactory.getLogger(PRoleFeatureServiceImpl.class);
 
-    @Autowired
+    @Resource
     PRoleFeatureDao pRoleFeatureDao;
 
 

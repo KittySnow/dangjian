@@ -1,0 +1,36 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li><a href="#!/ScoreParty/scoreParty">党员积分列表</a></li>
+    <li class="active">添加党员积分</li>
+</ol>
+<!-- 添加项目html -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="box ">
+            <div class="box-header">
+                <h3 class="box-title">修改党员积分</h3>
+            </div>
+            <form role="form" class="loginForm form-horizontal" action="./pscoreparty/updateById" method="post" onsubmit="return validateCallback(this)"  novalidate>
+                <div class="box-bodyed">
+                <input type="hidden" name="id" value="{{pScoreParty.id}}">
+                    <div class="form-group">
+                        <label><span class="red">*</span>项目明细</label>
+                        <select class="form-control" id="detailId" name="detailId">
+                            <option  ng-repeat="x in listChoose" value="{{x.id}}" ng-selected="pScoreParty.detailId==x.id">{{x.projectName}}-{{x.content}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="red">*</span>分值</label>
+                        <input type="text" class="form-control" name="score" placeholder="请输入分值" required value="{{pScoreParty.score}}"/>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">提交</button>　
+                    <a type="btn" class="btn btn-danger" href="#!/ScoreParty/scoreParty">返回列表</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>

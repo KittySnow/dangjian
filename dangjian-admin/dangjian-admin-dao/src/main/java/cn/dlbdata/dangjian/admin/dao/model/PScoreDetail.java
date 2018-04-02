@@ -1,5 +1,7 @@
 package cn.dlbdata.dangjian.admin.dao.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -82,6 +84,7 @@ public class PScoreDetail implements Serializable {
      *
      * @mbg.generated
      */
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
     private Date beginDate;
 
     /**
@@ -89,6 +92,7 @@ public class PScoreDetail implements Serializable {
      *
      * @mbg.generated
      */
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
     private Date endDate;
 
     /**
@@ -104,6 +108,9 @@ public class PScoreDetail implements Serializable {
      * @mbg.generated
      */
     private String scoreGetMethodCd;
+
+    private String scoreGetMethod;
+    private String projectName;
 
     private static final long serialVersionUID = 1L;
 
@@ -225,6 +232,22 @@ public class PScoreDetail implements Serializable {
 
     public void setScoreGetMethodCd(String scoreGetMethodCd) {
         this.scoreGetMethodCd = scoreGetMethodCd;
+    }
+
+    public String getScoreGetMethod() {
+        return scoreGetMethod;
+    }
+
+    public void setScoreGetMethod(String scoreGetMethod) {
+        this.scoreGetMethod = scoreGetMethod;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
     @Override

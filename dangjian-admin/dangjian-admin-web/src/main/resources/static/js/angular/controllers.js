@@ -323,18 +323,90 @@ function WxBindAdminEditCtrl($scope, $http, $timeout ,$routeParams) {
 }
 function WxSendCtrl($scope, $http, $timeout ,$routeParams) {
 
+}
 
+function ScoreProjectCtrl($scope, $http, $timeout ,$routeParams) {
+    
 }
-function PartymemberDuesCtrl($scope, $http, $timeout ,$routeParams) {
-}
-function PartymemberDuesEditCtrl($scope, $http, $timeout ,$routeParams) {
-    $scope.dues_id = $routeParams.dues_id;
+function ScoreProjectEditCtrl($scope, $http, $timeout ,$routeParams) {
     $http({
         method: "GET",
-        url: "./../ppartymemberdues/queryById.do?dues_id="+Number($scope.dues_id),
+        url: "./../pscoreproject/queryById.do?id="+Number($routeParams.id),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
-        $scope.pPartymemberDues= data.data;
+        $scope.pScoreProject = data.data;
+    });
+}
+function ScoreDetailCtrl($scope, $http, $timeout ,$routeParams) {
+
+}
+function ScoreDetailAddCtrl($scope, $http, $timeout ,$routeParams) {
+    $http({
+        method: "GET",
+        url: "../pscoreproject/getList.do",
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).success(function (data, status) {
+        $scope.listChoose = data.data;
+    });
+    $http({
+        method: "GET",
+        url: "../prole/getList.do",
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).success(function (data, status) {
+        $scope.roleChoose = data.data;
+    });
+}
+function ScoreDetailEditCtrl($scope, $http, $timeout ,$routeParams) {
+    $http({
+        method: "GET",
+        url: "../pscoreproject/getList.do",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).success(function (data,status) {
+        $scope.listChoose = data.data;
+    });
+    $http({
+        method: "GET",
+        url: "../prole/getList.do",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).success(function (data,status) {
+        $scope.roleChoose = data.data;
+    });
+
+    $http({
+        method: "GET",
+        url: "../pscoredetail/queryById.do?id="+Number($routeParams.id),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).success(function (data,status) {
+        $scope.pScoreDetail = data.data;
+    });
+}
+function ScorePartyCtrl($scope, $http, $timeout ,$routeParams) {
+
+}
+function ScorePartyAddCtrl($scope, $http, $timeout ,$routeParams) {
+    $http({
+        method: "GET",
+        url: "../pscoredetail/getList.do",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).success(function (data,status) {
+        $scope.listChoose = data.data;
+    });
+}
+function ScorePartyEditCtrl($scope, $http, $timeout ,$routeParams) {
+    $http({
+        method: "GET",
+        url: "../pscoredetail/getList.do",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).success(function (data,status) {
+        $scope.listChoose = data.data;
+    });
+
+    $http({
+        method: "GET",
+        url: "../pscoreparty/queryById.do?id="+Number($routeParams.id),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).success(function (data,status) {
+        $scope.pScoreParty = data.data;
     });
 }
 function ActiveCtrl($scope, $http, $timeout ,$routeParams) {

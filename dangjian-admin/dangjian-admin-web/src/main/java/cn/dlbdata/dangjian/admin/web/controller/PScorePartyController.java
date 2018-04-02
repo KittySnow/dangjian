@@ -3,6 +3,7 @@ package cn.dlbdata.dangjian.admin.web.controller;
 import cn.dlbdata.dangjian.admin.dao.model.PScoreParty;
 import cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample;
 import cn.dlbdata.dangjian.admin.service.PScorePartyService;
+import cn.dlbdata.dangjian.common.util.HttpResult;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -18,7 +19,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/pscoreparty")
 
-public class PScorePartyController {
+public class PScorePartyController{
 
     @Autowired
     private PScorePartyService pScorePartyService;
@@ -56,7 +57,7 @@ public class PScorePartyController {
         return result.getResult();
     }
 
-    @RequestMapping(value="/deleteById",method= RequestMethod.DELETE)
+    @RequestMapping(value="/deleteById",method= {RequestMethod.DELETE,RequestMethod.POST})
     @ResponseBody
     public Map<String, Object> deleteById(Integer id){
         ResultUtil result = new ResultUtil();
@@ -95,4 +96,94 @@ public class PScorePartyController {
         result.setData(pScoreParty);
         return result.getResult();
     }
+
+    /**
+     * 扫码获取积分
+     *
+     * @author July july_sky@foxmail.com
+     * @date 2018-04-01 09:09:22
+     * @Copyright ©2015-2035 湘豫(北京)科技有限公司. All Rights Reserved.
+     * @version 1.0
+     * @param pScoreParty
+     * @return
+     */
+    @RequestMapping(value="/scanCode",method= {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String, Object> updateScanCode(PScoreParty pScoreParty){
+        ResultUtil result = new ResultUtil();
+        if (pScoreParty.getDetailId() == null || pScoreParty.getUserId() == null || pScoreParty.getAdderId() == null){
+            result.setSuccess(false);
+            result.setMsg("请求参数不完整");
+            return result.getResult();
+        }
+        if(pScorePartyService.updateScanCode(pScoreParty)>0){
+            result.setSuccess(true);
+            result.setMsg("添加成功");
+            return result.getResult();
+        }
+        result.setSuccess(false);
+        result.setMsg("已经获取积分，无需重复获取");
+        return result.getResult();
+    }
+
+    @RequestMapping(value="/scoreCustom",method= {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String, Object> updateScoreCustom(PScoreParty pScoreParty){
+        ResultUtil result = new ResultUtil();
+        if (pScoreParty.getDetailId() == null || pScoreParty.getUserId() == null || pScoreParty.getAdderId() == null || pScoreParty.getScore() == null || pScoreParty.getScore() <= 0){
+            result.setSuccess(false);
+            result.setMsg("请求参数不完整");
+            return result.getResult();
+        }
+        if(pScorePartyService.updateScoreCustom(pScoreParty)>0){
+            result.setSuccess(true);
+            result.setMsg("添加成功");
+            return result.getResult();
+        }
+        result.setSuccess(false);
+        result.setMsg("已经获取积分，无需重复获取");
+        return result.getResult();
+    }
+
+    @RequestMapping(value="/scoreClean",method= {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String, Object> updateSscoreClean(PScoreParty pScoreParty){
+        ResultUtil result = new ResultUtil();
+        if (pScoreParty.getDetailId() == null || pScoreParty.getUserId() == null || pScoreParty.getAdderId() == null){
+            result.setSuccess(false);
+            result.setMsg("请求参数不完整");
+            return result.getResult();
+        }
+        if(pScorePartyService.updateSscoreClean(pScoreParty)>0){
+            result.setSuccess(true);
+            result.setMsg("扣除成功");
+            return result.getResult();
+        }
+        result.setSuccess(false);
+        result.setMsg("已无可扣除积分");
+        return result.getResult();
+    }
+
+    @RequestMapping(value="/updateAudit",method= {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String, Object> updateAudit(PScoreParty pScoreParty){
+        ResultUtil result = new ResultUtil();
+        if (pScoreParty.getId() == null || pScoreParty.getApprovedId()==null || pScoreParty.getStatusCd() == null){
+            result.setSuccess(false);
+            result.setMsg("请求参数不完整");
+            return result.getResult();
+        }
+        if (!"30".equals(pScoreParty.getStatusCd())) {
+            pScoreParty.setStatusCd("91");
+        }
+        if(pScorePartyService.updateAudit(pScoreParty)>0){
+            result.setSuccess(true);
+            result.setMsg("审核成功");
+            return result.getResult();
+        }
+        result.setSuccess(false);
+        result.setMsg("已审核，无需重复审核");
+        return result.getResult();
+    }
+
 }

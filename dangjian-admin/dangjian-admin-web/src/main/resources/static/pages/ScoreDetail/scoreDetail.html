@@ -1,42 +1,44 @@
 <ol class="breadcrumb newcrumb">
     <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
-    <li class="active"><a href="#!/ScoreParty/scoreParty">党员积分列表</a></li>
+    <li class="active"><a href="#!/ScoreDetail/scoreDetail">项目明细列表</a></li>
 </ol>
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">党员积分列表</h3>
+                <h3 class="box-title">项目明细列表</h3>
             </div>
             <div class="box-mgr">
-                <a class="btn btn-info" href="#!/ScoreParty/addScoreParty">添加党员积分</a>
+                <a class="btn btn-info" href="#!/ScoreDetail/addScoreDetail">添加项目明细</a>
             </div>
             <div class="box-body table-responsive">
-                <table id="ScorePartyTable" class="table table-bordered table-striped" data-unique-id="id">
+                <table id="ScoreDetailTable" class="table table-bordered table-striped" data-unique-id="id">
                 </table>
             </div>
         </div>
     </div>
 </div>
 <script>
-    window.actionScorePartyEvents = {
-        'click .editScoreParty' : function (e, value, row, index) {
+    window.actionScoreDetailEvents = {
+        'click .editScoreDetail' : function (e, value, row, index) {
             console.log(row);
         },
-        'click .delScoreParty' : function (e, value, row, index) {
-            deleteAjax(row,'./pscoreparty/deleteById','id','post');
+        'click .delScoreDetail' : function (e, value, row, index) {
+            deleteAjax(row,'./pscoredetail/deleteById','id','post');
         }
     };
 
-
-    function ScorePartyStausFormatter(value,row,index) {
-        return '<a class="btn btn-info btn-sm editScoreParty" href="#!/ScoreParty/editScoreParty/'+row.id+'">修改</a>　<a class="btn btn-warning btn-sm delScoreParty">删除</a>'
+    function ScoreDetailStausFormatter(value,row,index) {
+        return '<a class="btn btn-info btn-sm editScoreDetail" href="#!/ScoreDetail/editScoreDetail/'+row.id+'">修改</a>　<a class="btn btn-warning btn-sm delScoreDetail">删除</a>'
     }
 
+    function formatGetMethod(value,row,index) {
+        return value =='10'?'二维码':'评定';
+    }
 
     $(function(){
 
-        $('#ScorePartyTable').bootstrapTable({
+        $('#ScoreDetailTable').bootstrapTable({
             showHeader:true,
             columns: [
                 {
@@ -49,37 +51,42 @@
                     title: '项目名称'
                 },
                 {
+                    field: 'title',
+                    title: '明细标题'
+                },
+                {
                     field: 'content',
-                    title: '内容'
+                    title: '明细内容'
                 },
                 {
                     field: 'score',
                     title: '分值'
                 },
                 {
-                    field: 'adder',
-                    title: '加分者'
+                    field: 'onlyYn',
+                    title: '单次参与'
                 },
                 {
-                    field: 'approved',
-                    title: '评审人'
+                    field: 'beginDate',
+                    title: '开始日期'
                 },
                 {
-                    field: 'year',
-                    title: '积分年度'
+                    field: 'endDate',
+                    title: '结束日期'
                 },
                 {
-                    field: 'scoreTime',
-                    title: '积分时间'
+                    field: 'scoreGetMethodCd',
+                    title: '获取方式',
+                    formatter:formatGetMethod
                 },
                 {
                     title: '操作',
                     width:250,
-                    formatter: ScorePartyStausFormatter,
-                    events: actionScorePartyEvents
+                    formatter: ScoreDetailStausFormatter,
+                    events: actionScoreDetailEvents
                 }],
             method: 'GET',
-            url: "./pscoreparty/list",
+            url: "./pscoredetail/list",
             sidePagination: "server", //服务端请求
             queryParams:function (params) {
                 return {

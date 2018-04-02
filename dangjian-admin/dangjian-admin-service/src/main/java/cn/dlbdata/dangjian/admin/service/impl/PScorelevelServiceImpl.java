@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 
@@ -18,7 +19,7 @@ public class PScorelevelServiceImpl implements PScorelevelService {
 
     private static Logger _log = LoggerFactory.getLogger(PScorelevelServiceImpl.class);
 
-    @Autowired
+    @Resource
     PScorelevelDao pScorelevelDao;
 
     @Override

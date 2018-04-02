@@ -2,10 +2,11 @@ package cn.dlbdata.dangjian.admin.dao.mapper;
 
 import cn.dlbdata.dangjian.admin.dao.model.PScoreParty;
 import cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-
+@Mapper
 public interface PScorePartyDao {
     long countByExample(PScorePartyExample example);
 
@@ -28,4 +29,12 @@ public interface PScorePartyDao {
     int updateByPrimaryKeySelective(PScoreParty record);
 
     int updateByPrimaryKey(PScoreParty record);
+
+    int updateScanCode(PScoreParty pScoreParty);
+
+    int updateScoreCustom(PScoreParty pScoreParty);
+
+    int updateSscoreClean(PScoreParty pScoreParty);
+
+    int updateAudit(PScoreParty pScoreParty);
 }

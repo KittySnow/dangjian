@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service("PFeatureService")
@@ -17,7 +18,7 @@ public class PFeatureServiceImpl implements PFeatureService {
 
     private static Logger _log = LoggerFactory.getLogger(PFeatureServiceImpl.class);
 
-    @Autowired
+    @Resource
     PFeatureDao pFeatureDao;
 
     @Override

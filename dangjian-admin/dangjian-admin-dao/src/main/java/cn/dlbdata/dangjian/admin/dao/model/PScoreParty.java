@@ -31,7 +31,7 @@ public class PScoreParty implements Serializable {
      *
      * @mbg.generated
      */
-    private BigDecimal score;
+    private Double score;
 
     /**
      * 加分者ID
@@ -81,11 +81,18 @@ public class PScoreParty implements Serializable {
      * @mbg.generated
      */
     private String validYn;
+    /** 状态 */
+    private String statusCd;
 
     /**
      * 党员ID
      *
-     * @mbg.generated
+     * @author July july_sky@foxmail.com
+     * @date 2018-04-01 09:12:01
+     * @Copyright ©2015-2035 湘豫(北京)科技有限公司. All Rights Reserved.
+     * @version 1.0
+     * @param null
+     * @return
      */
     private Integer userId;
 
@@ -115,11 +122,11 @@ public class PScoreParty implements Serializable {
         this.detailId = detailId;
     }
 
-    public BigDecimal getScore() {
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(BigDecimal score) {
+    public void setScore(Double score) {
         this.score = score;
     }
 
@@ -187,6 +194,14 @@ public class PScoreParty implements Serializable {
         this.userId = userId;
     }
 
+    public String getStatusCd() {
+        return statusCd;
+    }
+
+    public void setStatusCd(String statusCd) {
+        this.statusCd = statusCd;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -204,7 +219,6 @@ public class PScoreParty implements Serializable {
         sb.append(", addTime=").append(addTime);
         sb.append(", addId=").append(addId);
         sb.append(", validYn=").append(validYn);
-        sb.append(", userId=").append(userId);
         sb.append("]");
         return sb.toString();
     }
@@ -231,8 +245,7 @@ public class PScoreParty implements Serializable {
             && (this.getScoreTime() == null ? other.getScoreTime() == null : this.getScoreTime().equals(other.getScoreTime()))
             && (this.getAddTime() == null ? other.getAddTime() == null : this.getAddTime().equals(other.getAddTime()))
             && (this.getAddId() == null ? other.getAddId() == null : this.getAddId().equals(other.getAddId()))
-            && (this.getValidYn() == null ? other.getValidYn() == null : this.getValidYn().equals(other.getValidYn()))
-            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()));
+            && (this.getValidYn() == null ? other.getValidYn() == null : this.getValidYn().equals(other.getValidYn()));
     }
 
     @Override
@@ -250,7 +263,6 @@ public class PScoreParty implements Serializable {
         result = prime * result + ((getAddTime() == null) ? 0 : getAddTime().hashCode());
         result = prime * result + ((getAddId() == null) ? 0 : getAddId().hashCode());
         result = prime * result + ((getValidYn() == null) ? 0 : getValidYn().hashCode());
-        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         return result;
     }
 }

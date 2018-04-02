@@ -17,6 +17,7 @@
     <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
     <result column="valid_yn" jdbcType="CHAR" property="validYn" />
     <result column="score_get_method_cd" jdbcType="CHAR" property="scoreGetMethodCd" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -79,6 +80,7 @@
   <sql id="Base_Column_List">
     id, project_id, title, content, score, only_yn, actor_role_id, adder_role_id, approved_role_id, 
     add_id, add_time, begin_date, end_date, valid_yn, score_get_method_cd
+    ,(select p.project_name from p_score_project p where p.id = p_score_detail.project_id) as project_name
   </sql>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScoreDetailExample" resultMap="BaseResultMap">
     select
@@ -111,25 +113,26 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScoreDetail">
-    insert into p_score_detail (id, project_id, title, 
-      content, score, only_yn, 
-      actor_role_id, adder_role_id, approved_role_id, 
-      add_id, add_time, begin_date, 
-      end_date, valid_yn, score_get_method_cd
-      )
-    values (#{id,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
-      #{content,jdbcType=VARCHAR}, #{score,jdbcType=DECIMAL}, #{onlyYn,jdbcType=CHAR}, 
-      #{actorRoleId,jdbcType=INTEGER}, #{adderRoleId,jdbcType=INTEGER}, #{approvedRoleId,jdbcType=INTEGER}, 
-      #{addId,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{beginDate,jdbcType=TIMESTAMP}, 
-      #{endDate,jdbcType=TIMESTAMP}, #{validYn,jdbcType=CHAR}, #{scoreGetMethodCd,jdbcType=CHAR}
-      )
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into p_score_detail (project_id, title, content, 
+      score, only_yn, actor_role_id, 
+      adder_role_id, approved_role_id, add_id, 
+      add_time, begin_date, end_date, 
+      valid_yn, score_get_method_cd)
+    values (#{projectId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{score,jdbcType=DECIMAL}, #{onlyYn,jdbcType=CHAR}, #{actorRoleId,jdbcType=INTEGER}, 
+      #{adderRoleId,jdbcType=INTEGER}, #{approvedRoleId,jdbcType=INTEGER}, #{addId,jdbcType=INTEGER}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{beginDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, 
+      #{validYn,jdbcType=CHAR}, #{scoreGetMethodCd,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScoreDetail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into p_score_detail
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="projectId != null">
         project_id,
       </if>
@@ -157,26 +160,17 @@
       <if test="addId != null">
         add_id,
       </if>
-      <if test="addTime != null">
-        add_time,
-      </if>
       <if test="beginDate != null">
         begin_date,
       </if>
       <if test="endDate != null">
         end_date,
       </if>
-      <if test="validYn != null">
-        valid_yn,
-      </if>
       <if test="scoreGetMethodCd != null">
         score_get_method_cd,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="projectId != null">
         #{projectId,jdbcType=INTEGER},
       </if>
@@ -204,17 +198,11 @@
       <if test="addId != null">
         #{addId,jdbcType=INTEGER},
       </if>
-      <if test="addTime != null">
-        #{addTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="beginDate != null">
         #{beginDate,jdbcType=TIMESTAMP},
       </if>
       <if test="endDate != null">
         #{endDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="validYn != null">
-        #{validYn,jdbcType=CHAR},
       </if>
       <if test="scoreGetMethodCd != null">
         #{scoreGetMethodCd,jdbcType=CHAR},
@@ -292,10 +280,8 @@
       adder_role_id = #{record.adderRoleId,jdbcType=INTEGER},
       approved_role_id = #{record.approvedRoleId,jdbcType=INTEGER},
       add_id = #{record.addId,jdbcType=INTEGER},
-      add_time = #{record.addTime,jdbcType=TIMESTAMP},
       begin_date = #{record.beginDate,jdbcType=TIMESTAMP},
       end_date = #{record.endDate,jdbcType=TIMESTAMP},
-      valid_yn = #{record.validYn,jdbcType=CHAR},
       score_get_method_cd = #{record.scoreGetMethodCd,jdbcType=CHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />

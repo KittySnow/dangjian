@@ -340,20 +340,50 @@ config(['$routeProvider',
             controller: WxSendCtrl,
             activetab: 'WxSendCtrl'
         }).
-        when('/PartymemberDues/partymemberDues', {
-            templateUrl: 'pages/PartymemberDues/partymemberDues.html',
-            controller: PartymemberDuesCtrl,
-            activetab: 'PartymemberDues'
+        when('/ScoreProject/scoreProject', {
+            templateUrl: 'pages/ScoreProject/scoreProject.html',
+            controller: ScoreProjectCtrl,
+            activetab: 'ScoreProject'
         }).
-        when('/PartymemberDues/addPartymemberDues/', {
-            templateUrl: 'pages/PartymemberDues/addPartymemberDues.html',
-            controller: PartymemberDuesCtrl,
-            activetab: 'PartymemberDues'
+        when('/ScoreProject/addScoreProject', {
+            templateUrl: 'pages/ScoreProject/addScoreProject.html',
+            controller: ScoreProjectCtrl,
+            activetab: 'ScoreProject'
         }).
-        when('/PartymemberDues/editPartymemberDues/:dues_id', {
-            templateUrl: 'pages/PartymemberDues/editPartymemberDues.html',
-            controller: PartymemberDuesEditCtrl,
-            activetab: 'PartymemberDues'
+        when('/ScoreProject/editScoreProject/:id', {
+            templateUrl: 'pages/ScoreProject/editScoreProject.html',
+            controller: ScoreProjectEditCtrl,
+            activetab: 'ScoreProject'
+        }).
+        when('/ScoreDetail/scoreDetail', {
+            templateUrl: 'pages/ScoreDetail/scoreDetail.html',
+            controller: ScoreDetailCtrl,
+            activetab: 'ScoreDetail'
+        }).
+        when('/ScoreDetail/addScoreDetail', {
+            templateUrl: 'pages/ScoreDetail/addScoreDetail.html',
+            controller: ScoreDetailAddCtrl,
+            activetab: 'ScoreDetail'
+        }).
+        when('/ScoreDetail/editScoreDetail/:id', {
+            templateUrl: 'pages/ScoreDetail/editScoreDetail.html',
+            controller: ScoreDetailEditCtrl,
+            activetab: 'ScoreDetail'
+        }).
+        when('/ScoreParty/scoreParty', {
+            templateUrl: 'pages/ScoreParty/scoreParty.html',
+            controller: ScorePartyCtrl,
+            activetab: 'ScoreParty'
+        }).
+        when('/ScoreParty/addScoreParty', {
+            templateUrl: 'pages/ScoreParty/addScoreParty.html',
+            controller: ScorePartyAddCtrl,
+            activetab: 'ScoreParty'
+        }).
+        when('/ScoreParty/editScoreParty/:id', {
+            templateUrl: 'pages/ScoreParty/editScoreparty.html',
+            controller: ScorePartyEditCtrl,
+            activetab: 'ScoreParty'
         }).
         otherwise({
             redirectTo: '/',

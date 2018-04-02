@@ -38,13 +38,13 @@ public class AdController {
 	private HttpServletRequest request;
 
 	@Autowired
-	private ADService adService;
+	private ADService adServ;
 
 	@Autowired
-	private PUserService userService;
+	private PUserService userServ;
 
 	@Autowired
-	private PFeatureService featureService;
+	private PFeatureService featureServ;
 
 	private static String getIpAddr(final HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
@@ -75,7 +75,7 @@ public class AdController {
         }
         return ip;
 	}
-
+	
 	/*
 	 * 检查登录账号和密码。
 	 */
@@ -86,7 +86,7 @@ public class AdController {
 			@RequestParam("loginPasswd")String loginPasswd,
 			HttpSession session
 	) {
-		final String msg0	= "邮箱、密码已匹配，登录成功！";
+		final String msg0	= "邮箱、密码已匹配，登录成功！";		
 		final String msg1	= "邮箱、密码不匹配，无法登录！";
 		final String msg2	= "账号已被锁定，请3小时后再尝试登录！";
 		final String msg3	= "你已经登录了，无法同时进行第2次登录！";
@@ -95,7 +95,7 @@ public class AdController {
 		final String ip	= getIpAddr(request);
 		ResultUtil result	= new ResultUtil();
 		result.setSuccess(false);
-		int loginResult	= adService.checkLogin(loginMail, loginPasswd, ip);
+		int loginResult	= adServ.checkLogin(loginMail, loginPasswd, ip);
 		//0通过验证；1验证失败；2账号被锁定。
 		if (0==loginResult)	{
 			Date now = new Date(System.currentTimeMillis());
@@ -112,12 +112,12 @@ public class AdController {
 		} else if (2==loginResult)	{
 			retMsg = msg2 + "你本次登录IP地址是："+ip;
 		} else {
-			retMsg = msg3 + "你上次登录IP地址是："+adService.getLastLoginIp(lowercase);
+			retMsg = msg3 + "你上次登录IP地址是："+adServ.getLastLoginIp(lowercase);			
 		}
 		result.setMsg(retMsg);
-
+		
 		return result.getResult();
-	}
+	} 
 
 	/*
 	 * 退出登录。
@@ -137,7 +137,7 @@ public class AdController {
 			return result.getResult();
 		}
 		final String loginMail	= loggedUser.getLoginMail();
-		boolean b	= adService.logout(loginMail);
+		boolean b	= adServ.logout(loginMail);
 		if (b)	{
 			session.removeAttribute(LOGGED_USER);
 			session.invalidate();
@@ -162,7 +162,7 @@ public class AdController {
 			@RequestParam("loginPasswd")String loginPasswd,
 			HttpSession session
 	) {
-		final String msg0	= "邮箱、密码已匹配，登录成功！";
+		final String msg0	= "邮箱、密码已匹配，登录成功！";		
 		final String msg1	= "邮箱、密码不匹配，无法登录！";
 		final String msg2	= "账号已被锁定，请3小时后再尝试登录！";
 		final String msg3	= "你已经登录了，无法同时进行第2次登录！";
@@ -183,7 +183,7 @@ public class AdController {
 			session.setAttribute(LOGGED_USER, la);
 			retMsg = msg0 + "你本次登录IP地址是："+ip;
 			result.setSuccess(true);
-
+			
 			PUser u	= userServ.selectByEmail(lowercase);
 			u.setPassword("");
 			u.setEmail(lowercase);
@@ -194,7 +194,7 @@ public class AdController {
 		} else if (2==loginResult)	{
 			retMsg = msg2 + "你本次登录IP地址是："+ip;
 		} else {
-			retMsg = msg3 + "你上次登录IP地址是："+adServ.getLastLoginIp(lowercase);
+			retMsg = msg3 + "你上次登录IP地址是："+adServ.getLastLoginIp(lowercase);			
 		}
 		result.setMsg(retMsg);
 		

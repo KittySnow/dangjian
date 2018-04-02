@@ -29,5 +29,12 @@ public interface PScorePartyService {
     public int updateByPrimaryKeySelective(PScoreParty pScoreParty);
 
     public int updateByPrimaryKey(PScoreParty pScoreParty);
-    
+
+    int updateScanCode(PScoreParty pScoreParty);
+
+    int updateScoreCustom(PScoreParty pScoreParty);
+
+    int updateSscoreClean(PScoreParty pScoreParty);
+
+    int updateAudit(PScoreParty pScoreParty);
 }

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service("PSpaceService")
@@ -17,7 +18,7 @@ public class PSpaceServiceImpl implements PSpaceService {
 
     private static Logger _log = LoggerFactory.getLogger(PSpaceServiceImpl.class);
 
-    @Autowired
+    @Resource
     PSpaceDao pSpaceDao;
 
     @Override
