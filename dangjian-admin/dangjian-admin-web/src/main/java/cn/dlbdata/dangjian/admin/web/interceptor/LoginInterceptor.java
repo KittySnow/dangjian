@@ -19,7 +19,7 @@ public class LoginInterceptor implements HandlerInterceptor{
     private final String USER_ID = "userId";
 
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        String ptoken;
+        /*String ptoken;
         String userId;
 
         // 按照 cookie -> header 的顺序获取
@@ -49,7 +49,7 @@ public class LoginInterceptor implements HandlerInterceptor{
             logger.warn("token check error. ptoken=" + ptoken + ",userId=" + userId);
 
             return false;
-        }
+        }*/
 
         return true;
     }

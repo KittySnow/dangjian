@@ -81,7 +81,7 @@ function BimProjerctEditCtrl($scope, $http, $timeout ,$routeParams) {
 	$scope.pid = $routeParams.pid;
 	$http({    
         method: "POST",    
-        url: "./../project/queryProject.do?pid="+Number($routeParams.pid),
+        url: "./project/queryProject.do?pid="+Number($routeParams.pid),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }  
 	}).success(function (data,status) {
     	$scope.proData = data.data;
@@ -94,7 +94,7 @@ function BimModelEditCtrl($scope, $http, $timeout) {
 	$scope.rid = $routeParams.rid;
 	$http({    
         method: "POST",    
-        url: "./../model/queryModelInfoByRid.do?rid="+Number($routeParams.rid),
+        url: "./model/queryModelInfoByRid.do?rid="+Number($routeParams.rid),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }  
 	}).success(function (data,status) {
     	$scope.modelData = data.data;
@@ -110,7 +110,7 @@ function SpaceAdminEditCtrl($scope, $http, $timeout ,$routeParams) {
     $scope.spaceid = $routeParams.spaceid;
     $http({
         method: "GET",
-        url: "./../pspace/queryById.do?spaceid="+Number($scope.spaceid),
+        url: "./pspace/queryById.do?spaceid="+Number($scope.spaceid),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.pDepartment = data.data;
@@ -118,7 +118,7 @@ function SpaceAdminEditCtrl($scope, $http, $timeout ,$routeParams) {
     
     $http({
         method: "GET",
-        url: "../pdepartment/getList.do",
+        url: "./pdepartment/getList.do",
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.listDepartment = data.data;
@@ -134,7 +134,7 @@ function DepartmentListEditCtrl($scope, $http, $timeout ,$routeParams) {
     $scope.departmentid = $routeParams.departmentid;
     $http({
         method: "GET",
-        url: "./../pdepartment/queryById.do?departmentid="+Number($scope.departmentid),
+        url: "./pdepartment/queryById.do?departmentid="+Number($scope.departmentid),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.pDepartment = data.data;
@@ -147,7 +147,7 @@ function BimModelEditCtrl($scope, $http, $timeout) {
     $scope.rid = $routeParams.rid;
     $http({
         method: "POST",
-        url: "./../model/queryModelInfoByRid.do?rid="+Number($routeParams.rid),
+        url: "./model/queryModelInfoByRid.do?rid="+Number($routeParams.rid),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.modelData = data.data;
@@ -161,7 +161,7 @@ function UserAdminCtrl($scope, $http, $timeout ,$routeParams,$route) {
     console.log($route.current.$$route.activetab);
     $http({
         method: "GET",
-        url: "../prole/getList.do",
+        url: "./prole/getList.do",
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.listChoose = data.data;
@@ -169,7 +169,7 @@ function UserAdminCtrl($scope, $http, $timeout ,$routeParams,$route) {
 
     $http({
         method: "GET",
-        url: "../pdepartment/getList.do",
+        url: "./pdepartment/getList.do",
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.listDepartment = data.data;
@@ -177,12 +177,12 @@ function UserAdminCtrl($scope, $http, $timeout ,$routeParams,$route) {
 
 }
 function UserAdminEditCtrl($scope, $http, $timeout ,$routeParams) {
-	 $scope.userid = $routeParams.userid;
-	 $scope.province = "";
+	$scope.userid = $routeParams.userid;
+	$scope.province = "";
     $scope.listChoose = "";
     $http({
         method: "GET",
-        url: "../prole/getList.do",
+        url: "./prole/getList.do",
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.listChoose = data.data;
@@ -190,7 +190,7 @@ function UserAdminEditCtrl($scope, $http, $timeout ,$routeParams) {
 
     $http({
         method: "GET",
-        url: "./../puser/queryById.do?userid="+Number($scope.userid),
+        url: "./puser/queryById.do?userid="+Number($scope.userid),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.userData = data.data;
@@ -198,7 +198,7 @@ function UserAdminEditCtrl($scope, $http, $timeout ,$routeParams) {
 
     $http({
         method: "GET",
-        url: "../pdepartment/getList.do",
+        url: "./pdepartment/getList.do",
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.listDepartment = data.data;
@@ -215,7 +215,7 @@ function RoleListEditCtrl($scope, $http, $timeout ,$routeParams) {
 	$scope.roleid = $routeParams.roleid;
 	$http({
 		method: "GET",
-		url: "./../prole/queryById.do?roleId="+Number($scope.roleid),
+		url: "./prole/queryById.do?roleId="+Number($scope.roleid),
 		headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 	}).success(function (data,status) {
 		$scope.pRole = data.data;
@@ -229,14 +229,14 @@ function SetFeatureList($scope, $http, $timeout ,$routeParams){
     $scope.roleid = $routeParams.roleid;
     $http({
         method: "GET",
-        url: "./../prole/queryById.do?roleId="+Number($scope.roleid),
+        url: "./prole/queryById.do?roleId="+Number($scope.roleid),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.pRole = data.data;
 
         $.ajax({
             method: 'GET',
-            url: "../prole/selectFeatureByRoid.do?roleid="+$scope.pRole.roleid,
+            url: "./prole/selectFeatureByRoid.do?roleid="+$scope.pRole.roleid,
         }).done(function (response) {
             var arr1 = [];
             for (var i = 0; i < response.data.length; i++) {
@@ -257,7 +257,7 @@ function SetFeatureList($scope, $http, $timeout ,$routeParams){
         string = string.substring(0,string.length-1);
         $.ajax({
             method: 'GET',
-            url: "../prole/insertFeature.do",
+            url: "./prole/insertFeature.do",
             data:{roleid:pRole.roleid,featureids:string}
         }).done(function (res) {
             var dialog = art.dialog({
@@ -276,7 +276,7 @@ function FeatureListEditCtrl($scope, $http, $timeout ,$routeParams) {
 	$scope.featureid = $routeParams.featureid;
 	$http({
 		method: "GET",
-		url: "./../pfeature/queryById.do?featureid="+Number($scope.featureid),
+		url: "./pfeature/queryById.do?featureid="+Number($scope.featureid),
 		headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 	}).success(function (data,status) {
 		$scope.pFeature = data.data;
@@ -291,7 +291,7 @@ function ScoreLevelEditCtrl($scope, $http, $timeout ,$routeParams) {
     $scope.scoreid = $routeParams.scoreid;
     $http({
         method: "GET",
-        url: "./../pscorelevel/queryById.do?scoreid="+Number($scope.scoreid),
+        url: "./pscorelevel/queryById.do?scoreid="+Number($scope.scoreid),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.pScorelevel= data.data;
@@ -331,7 +331,7 @@ function ScoreProjectCtrl($scope, $http, $timeout ,$routeParams) {
 function ScoreProjectEditCtrl($scope, $http, $timeout ,$routeParams) {
     $http({
         method: "GET",
-        url: "./../pscoreproject/queryById.do?id="+Number($routeParams.id),
+        url: "./pscoreproject/queryById.do?id="+Number($routeParams.id),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.pScoreProject = data.data;
@@ -343,14 +343,14 @@ function ScoreDetailCtrl($scope, $http, $timeout ,$routeParams) {
 function ScoreDetailAddCtrl($scope, $http, $timeout ,$routeParams) {
     $http({
         method: "GET",
-        url: "../pscoreproject/getList.do",
+        url: "./pscoreproject/getList.do",
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).success(function (data, status) {
         $scope.listChoose = data.data;
     });
     $http({
         method: "GET",
-        url: "../prole/getList.do",
+        url: "./prole/getList.do",
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).success(function (data, status) {
         $scope.roleChoose = data.data;
@@ -359,14 +359,14 @@ function ScoreDetailAddCtrl($scope, $http, $timeout ,$routeParams) {
 function ScoreDetailEditCtrl($scope, $http, $timeout ,$routeParams) {
     $http({
         method: "GET",
-        url: "../pscoreproject/getList.do",
+        url: "./pscoreproject/getList.do",
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.listChoose = data.data;
     });
     $http({
         method: "GET",
-        url: "../prole/getList.do",
+        url: "./prole/getList.do",
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.roleChoose = data.data;
@@ -374,7 +374,7 @@ function ScoreDetailEditCtrl($scope, $http, $timeout ,$routeParams) {
 
     $http({
         method: "GET",
-        url: "../pscoredetail/queryById.do?id="+Number($routeParams.id),
+        url: "./pscoredetail/queryById.do?id="+Number($routeParams.id),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.pScoreDetail = data.data;
@@ -386,7 +386,7 @@ function ScorePartyCtrl($scope, $http, $timeout ,$routeParams) {
 function ScorePartyAddCtrl($scope, $http, $timeout ,$routeParams) {
     $http({
         method: "GET",
-        url: "../pscoredetail/getList.do",
+        url: "./pscoredetail/getList.do",
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.listChoose = data.data;
@@ -395,7 +395,7 @@ function ScorePartyAddCtrl($scope, $http, $timeout ,$routeParams) {
 function ScorePartyEditCtrl($scope, $http, $timeout ,$routeParams) {
     $http({
         method: "GET",
-        url: "../pscoredetail/getList.do",
+        url: "./pscoredetail/getList.do",
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.listChoose = data.data;
@@ -403,7 +403,7 @@ function ScorePartyEditCtrl($scope, $http, $timeout ,$routeParams) {
 
     $http({
         method: "GET",
-        url: "../pscoreparty/queryById.do?id="+Number($routeParams.id),
+        url: "./pscoreparty/queryById.do?id="+Number($routeParams.id),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.pScoreParty = data.data;
@@ -415,7 +415,7 @@ function ActiveEditCtrl($scope, $http, $timeout ,$routeParams) {
     $scope.id = $routeParams.id;
     $http({
         method: "GET",
-        url: "./../pactive/queryById.do?id="+Number($scope.id),
+        url: "./pactive/queryById.do?id="+Number($scope.id),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.pActive= data.data;

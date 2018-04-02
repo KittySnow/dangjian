@@ -19,8 +19,7 @@ public class InterceptorManage extends WebMvcConfigurerAdapter {
                 .excludePathPatterns("/mp/**", "/dangjian/mp/**")
                 .excludePathPatterns("/wechat/**", "/dangjian/wechat/**")
                 .excludePathPatterns("/error", "/dangjian/error")
-                .addPathPatterns("/**")
-        ;
+                .addPathPatterns("/**");
 
         super.addInterceptors(registry);
     }
