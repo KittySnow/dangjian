@@ -35,6 +35,18 @@ public abstract class TokenBasedService {
         return response;
     }
 
+    protected <R extends BaseMpApiResponse, P> R getAtomEntity(String url, P param, Class<R> responseType) throws DangjianException {
+        if (param == null) {
+            LOGGER.error("Get entity param cannot be null.");
+            throw missingRequiredParam();
+        }
+        Map<String, Object> paramMap = AnnotationExplainer.explainParamMap(param);
+        R response = client.getResponseInJson(url, paramMap, responseType);
+        return response;
+    }
+
+
+
     protected <R extends BaseMpApiResponse, P extends BaseParam> R postEntity(String url, P param, Class<R> responseType) throws DangjianException {
         if (param == null) {
             LOGGER.error("Post entity param cannot be null.");
