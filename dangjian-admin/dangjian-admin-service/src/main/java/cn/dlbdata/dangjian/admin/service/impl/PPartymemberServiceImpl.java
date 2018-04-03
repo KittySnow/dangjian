@@ -78,4 +78,16 @@ public class PPartymemberServiceImpl implements PPartymemberService {
         return pPartymemberDao.updateByPrimaryKey(pPartymember);
     }
 
+    @Override
+    public PPartymember selectByUserId(Integer userid){
+        PPartymemberExample pPartymemberExample = new PPartymemberExample();
+        PPartymemberExample.Criteria criteria =  pPartymemberExample.createCriteria();
+        criteria.andUseridEqualTo(userid);
+        List<PPartymember> pPartymemberList = this.selectByExample(pPartymemberExample);
+        if(pPartymemberList!=null){
+            return pPartymemberList.get(0);
+        }else{
+            return null;
+        }
+    }
 }

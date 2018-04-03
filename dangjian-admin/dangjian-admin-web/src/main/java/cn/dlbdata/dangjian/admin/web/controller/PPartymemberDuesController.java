@@ -1,8 +1,11 @@
 package cn.dlbdata.dangjian.admin.web.controller;
 
+import cn.dlbdata.dangjian.admin.dao.model.PPartymember;
 import cn.dlbdata.dangjian.admin.dao.model.PPartymemberDues;
 import cn.dlbdata.dangjian.admin.dao.model.PPartymemberDuesExample;
+import cn.dlbdata.dangjian.admin.dao.model.PPartymemberExample;
 import cn.dlbdata.dangjian.admin.service.PPartymemberDuesService;
+import cn.dlbdata.dangjian.admin.service.PPartymemberService;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -23,6 +26,8 @@ public class PPartymemberDuesController {
     @Autowired
     private PPartymemberDuesService pPartymemberDuesService;
 
+    @Autowired
+    private PPartymemberService pPartymemberService;
 
     @RequestMapping(value="/save",method= RequestMethod.POST)
     @ResponseBody
@@ -93,6 +98,28 @@ public class PPartymemberDuesController {
         PPartymemberDues pPartymemberDues = pPartymemberDuesService.selectByPrimaryKey(dues_id);
         result.setSuccess(true);
         result.setData(pPartymemberDues);
+        return result.getResult();
+    }
+
+    @RequestMapping(value="/queryByUserId",method= RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> queryByUserId(Integer userid){
+        ResultUtil result = new ResultUtil();
+        if(userid==null){
+            result.setSuccess(false);
+            result.setMsg("请传userid");
+        }else{
+            //根据用户ID 找到党员ID
+            PPartymember pPartymember = pPartymemberService.selectByUserId(userid);
+
+            //根据党员ID 找到记录
+            PPartymemberDuesExample pPartymemberDuesExample = new PPartymemberDuesExample();
+            PPartymemberDuesExample.Criteria criteria =  pPartymemberDuesExample.createCriteria();
+            criteria.andPartyMemberIdEqualTo(pPartymember.getId());
+            List<PPartymemberDues> pPartymemberDuesList = pPartymemberDuesService.selectByExample(pPartymemberDuesExample);
+            result.setSuccess(true);
+            result.setData(pPartymemberDuesList);
+        }
         return result.getResult();
     }
 }

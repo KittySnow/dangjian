@@ -400,6 +400,22 @@ config(['$routeProvider',
             controller: PartyMemberEditCtrl,
             activetab: 'PartyMember'
         }).
+        when('/PartymemberDues/partymemberDues', {
+            templateUrl: 'pages/PartymemberDues/PartymemberDues.html',
+            controller: PartymemberDuesCtrl,
+            activetab: 'PartymemberDues'
+        }).
+        when('/PartymemberDues/addPartymemberDues/', {
+            templateUrl: 'pages/PartymemberDues/addPartymemberDues.html',
+            controller: PartymemberDuesCtrl,
+            activetab: 'PartymemberDues'
+        }).
+        when('/PartymemberDues/editPartymemberDues/:dues_id', {
+            templateUrl: 'pages/PartymemberDues/editPartymemberDues.html',
+            controller: PartymemberDuesEditCtrl,
+            activetab: 'PartymemberDues'
+        }).
+
         otherwise({
             redirectTo: '/',
             activetab: ''

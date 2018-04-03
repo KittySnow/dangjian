@@ -28,4 +28,5 @@ public interface PPartymemberDao {
     int updateByPrimaryKeySelective(PPartymember record);
 
     int updateByPrimaryKey(PPartymember record);
+
 }

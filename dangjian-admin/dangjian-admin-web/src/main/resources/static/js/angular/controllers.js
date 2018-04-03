@@ -433,3 +433,16 @@ function PartyMemberEditCtrl($scope, $http, $timeout ,$routeParams) {
         $scope.pPartymember= data.data;
     });
 }
+
+function PartymemberDuesCtrl($scope, $http, $timeout ,$routeParams) {
+}
+function PartymemberDuesEditCtrl($scope, $http, $timeout ,$routeParams) {
+    $scope.dues_id = $routeParams.dues_id;
+    $http({
+        method: "GET",
+        url: "./ppartymemberdues/queryById.do?dues_id="+Number($scope.dues_id),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).success(function (data,status) {
+        $scope.pPartymemberDues= data.data;
+    });
+}

@@ -20,6 +20,8 @@ public interface PPartymemberService {
     
     public List<PPartymember> selectByExample(PPartymemberExample example);
 
+    public PPartymember selectByUserId(Integer userid);
+
     public PPartymember selectByPrimaryKey(Integer id);
 
     public int updateByExampleSelective(@Param("pPartymember") PPartymember pPartymember, @Param("example") PPartymemberExample example);
