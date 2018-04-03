@@ -95,4 +95,22 @@ public class PPartymemberController {
         result.setData(pPartymember);
         return result.getResult();
     }
+
+    @RequestMapping(value="/queryByUserId",method= RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> queryByUserId(Integer userid){
+        ResultUtil result = new ResultUtil();
+        PPartymemberExample pPartymemberExample = new PPartymemberExample();
+        PPartymemberExample.Criteria criteria =  pPartymemberExample.createCriteria();
+        criteria.andUseridEqualTo(userid);
+        List<PPartymember> pPartymemberList = pPartymemberService.selectByExample(pPartymemberExample);
+        if(pPartymemberList!=null){
+            result.setSuccess(true);
+            result.setData(pPartymemberList.get(0));
+        }else{
+            result.setSuccess(false);
+            result.setMsg("没有找到想对应的党员");
+        }
+        return result.getResult();
+    }
 }

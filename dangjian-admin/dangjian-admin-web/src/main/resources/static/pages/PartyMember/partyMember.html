@@ -34,6 +34,15 @@
     }
 
 
+    function timeDateFormatter(value,row,index) {
+        if(row.zzStudytime){
+            return new Date(row.zzStudytime).format('YYYY-MM-DD hh:mm:ss')
+        }else{
+            return "";
+        }
+
+    }
+
     $(function(){
 
         $('#PartyMemberTable').bootstrapTable({
@@ -61,7 +70,7 @@
                     title: '年龄'
                 },
                 {
-                    field: 'out_zb',
+                    field: 'outZb',
                     title: '转出支部'
                 },
                 {
@@ -78,7 +87,8 @@
                 },
                 {
                     field: 'zzStudytime',
-                    title: '政治学习时间'
+                    title: '政治学习时间',
+                    formatter:timeDateFormatter
                 },
                 {
                     field: 'bid',
