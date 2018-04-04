@@ -5,6 +5,9 @@ import cn.dlbdata.dangjian.admin.service.*;
 import cn.dlbdata.dangjian.admin.service.impl.PActiveParticipateServiceImpl;
 import cn.dlbdata.dangjian.common.util.DateUtil;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -27,10 +30,8 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.OutputStream;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 /**
  * @packageName PActiveController
  * @anthor wayne QQ:353733479
@@ -61,7 +62,7 @@ public class PActiveController {
     @RequestMapping(value="/create",method= RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> create(Long startTime,Long endTime,Integer activeType,Integer activeStatus,
-                                      String activeName,String activePace,String activeCreatePeople,
+                                      String activeName,String activePace,Integer activeCreatePeople,Integer departmentid,
                                       String activePrincipalPeople,String activeContext) {
         ResultUtil result = new ResultUtil();
         if(startTime==null){
@@ -91,6 +92,7 @@ public class PActiveController {
         active.setActiveName(activeName);
         active.setActivePace(activePace);
         active.setActiveCreatePeople(activeCreatePeople);
+        active.setDepartmentid(departmentid);
         active.setActivePrincipalPeople(activePrincipalPeople);
         active.setActiveContext(activeContext);
         active.setCreateTime(new Date());
@@ -142,40 +144,70 @@ public class PActiveController {
 
     /**
      * 查询正在进行的活动，或者已经开始的活动
+     * @param departmentid
      * @param pageNum
      * @param pageSize
      * @return
      */
     @RequestMapping(value="/getRunningActive",method= RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getRunningActive(Integer pageNum, Integer pageSize){
+    public Map<String, Object> getRunningActive(Integer departmentid,Integer pageNum, Integer pageSize){
         ResultUtil result = new ResultUtil();
         PActiveExample example = new PActiveExample();
         example.createCriteria().andActiveStatusEqualTo(1)
         .andStartTimeLessThanOrEqualTo(new Date());
+        if (departmentid != null) {
+            example.createCriteria().andDepartmentidEqualTo(departmentid);
+        }
         PageHelper.startPage(pageNum, pageSize,true);
         List<PActive> pActiveList = pActiveService.selectByExample(example);
-        PageInfo<PActive> pageInfo=new PageInfo<PActive>(pActiveList);
+        List<JSONObject> list = new ArrayList<>();
+        for (PActive active:pActiveList){
+            JSONObject json = JSON.parseObject(JSON.toJSONString(active));
+            PUser createUser = pUserService.selectByPrimaryKey(active.getActiveCreatePeople());
+            if(createUser!=null){
+                json.put("activeCreatePeopleName", createUser.getName());
+            }
+            list.add(json);
+        }
+        JSONArray array = new JSONArray();
+        array.addAll(pActiveList);
+        PageInfo<JSONObject> pageInfo=new PageInfo<JSONObject>(list);
         result.setSuccess(true);
         result.setData(pageInfo);
         return result.getResult();
     }
     /**
      * 查询正在进行的活动，或者已经开始的活动
+     * @param departmentid
      * @param pageNum
      * @param pageSize
      * @return
      */
     @RequestMapping(value="/getParticipateActive",method= RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getParticipateActive(Integer pageNum, Integer pageSize){
+    public Map<String, Object> getParticipateActive(Integer departmentid,Integer pageNum, Integer pageSize){
         ResultUtil result = new ResultUtil();
         PActiveExample example = new PActiveExample();
         example.createCriteria().andActiveStatusEqualTo(1)
         .andStartTimeGreaterThan(new Date());
+        if (departmentid != null) {
+            example.createCriteria().andDepartmentidEqualTo(departmentid);
+        }
         PageHelper.startPage(pageNum, pageSize,true);
         List<PActive> pActiveList = pActiveService.selectByExample(example);
-        PageInfo<PActive> pageInfo=new PageInfo<PActive>(pActiveList);
+        List<JSONObject> list = new ArrayList<>();
+        for (PActive active:pActiveList){
+            JSONObject json = JSON.parseObject(JSON.toJSONString(active));
+            PUser createUser = pUserService.selectByPrimaryKey(active.getActiveCreatePeople());
+            if(createUser!=null){
+                json.put("activeCreatePeopleName", createUser.getName());
+            }
+            list.add(json);
+        }
+        JSONArray array = new JSONArray();
+        array.addAll(pActiveList);
+        PageInfo<JSONObject> pageInfo=new PageInfo<JSONObject>(list);
         result.setSuccess(true);
         result.setData(pageInfo);
         return result.getResult();

@@ -7,7 +7,8 @@
     <result column="active_project_id" jdbcType="INTEGER" property="activeProjectId" />
     <result column="active_type" jdbcType="INTEGER" property="activeType" />
     <result column="active_pace" jdbcType="VARCHAR" property="activePace" />
-    <result column="active_create_people" jdbcType="VARCHAR" property="activeCreatePeople" />
+    <result column="active_create_people" jdbcType="INTEGER" property="activeCreatePeople" />
+    <result column="departmentid" jdbcType="INTEGER" property="departmentid" />
     <result column="active_principal_people" jdbcType="VARCHAR" property="activePrincipalPeople" />
     <result column="active_status" jdbcType="INTEGER" property="activeStatus" />
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
@@ -76,8 +77,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, active_name, active_project_id, active_type, active_pace, active_create_people, 
-    active_principal_people, active_status, start_time, end_time, active_context, zb_message, 
-    create_time
+    departmentid, active_principal_people, active_status, start_time, end_time, active_context, 
+    zb_message, create_time
   </sql>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveExample" resultMap="BaseResultMap">
     select
@@ -114,15 +115,15 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into p_active (active_name, active_project_id, active_type, 
-      active_pace, active_create_people, active_principal_people, 
-      active_status, start_time, end_time, 
-      active_context, zb_message, create_time
-      )
+      active_pace, active_create_people, departmentid, 
+      active_principal_people, active_status, start_time, 
+      end_time, active_context, zb_message, 
+      create_time)
     values (#{activeName,jdbcType=VARCHAR}, #{activeProjectId,jdbcType=INTEGER}, #{activeType,jdbcType=INTEGER}, 
-      #{activePace,jdbcType=VARCHAR}, #{activeCreatePeople,jdbcType=VARCHAR}, #{activePrincipalPeople,jdbcType=VARCHAR}, 
-      #{activeStatus,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
-      #{activeContext,jdbcType=VARCHAR}, #{zbMessage,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
-      )
+      #{activePace,jdbcType=VARCHAR}, #{activeCreatePeople,jdbcType=INTEGER}, #{departmentid,jdbcType=INTEGER}, 
+      #{activePrincipalPeople,jdbcType=VARCHAR}, #{activeStatus,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{activeContext,jdbcType=VARCHAR}, #{zbMessage,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActive">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -144,6 +145,9 @@
       </if>
       <if test="activeCreatePeople != null">
         active_create_people,
+      </if>
+      <if test="departmentid != null">
+        departmentid,
       </if>
       <if test="activePrincipalPeople != null">
         active_principal_people,
@@ -181,7 +185,10 @@
         #{activePace,jdbcType=VARCHAR},
       </if>
       <if test="activeCreatePeople != null">
-        #{activeCreatePeople,jdbcType=VARCHAR},
+        #{activeCreatePeople,jdbcType=INTEGER},
+      </if>
+      <if test="departmentid != null">
+        #{departmentid,jdbcType=INTEGER},
       </if>
       <if test="activePrincipalPeople != null">
         #{activePrincipalPeople,jdbcType=VARCHAR},
@@ -231,7 +238,10 @@
         active_pace = #{record.activePace,jdbcType=VARCHAR},
       </if>
       <if test="record.activeCreatePeople != null">
-        active_create_people = #{record.activeCreatePeople,jdbcType=VARCHAR},
+        active_create_people = #{record.activeCreatePeople,jdbcType=INTEGER},
+      </if>
+      <if test="record.departmentid != null">
+        departmentid = #{record.departmentid,jdbcType=INTEGER},
       </if>
       <if test="record.activePrincipalPeople != null">
         active_principal_people = #{record.activePrincipalPeople,jdbcType=VARCHAR},
@@ -266,7 +276,8 @@
       active_project_id = #{record.activeProjectId,jdbcType=INTEGER},
       active_type = #{record.activeType,jdbcType=INTEGER},
       active_pace = #{record.activePace,jdbcType=VARCHAR},
-      active_create_people = #{record.activeCreatePeople,jdbcType=VARCHAR},
+      active_create_people = #{record.activeCreatePeople,jdbcType=INTEGER},
+      departmentid = #{record.departmentid,jdbcType=INTEGER},
       active_principal_people = #{record.activePrincipalPeople,jdbcType=VARCHAR},
       active_status = #{record.activeStatus,jdbcType=INTEGER},
       start_time = #{record.startTime,jdbcType=TIMESTAMP},
@@ -294,7 +305,10 @@
         active_pace = #{activePace,jdbcType=VARCHAR},
       </if>
       <if test="activeCreatePeople != null">
-        active_create_people = #{activeCreatePeople,jdbcType=VARCHAR},
+        active_create_people = #{activeCreatePeople,jdbcType=INTEGER},
+      </if>
+      <if test="departmentid != null">
+        departmentid = #{departmentid,jdbcType=INTEGER},
       </if>
       <if test="activePrincipalPeople != null">
         active_principal_people = #{activePrincipalPeople,jdbcType=VARCHAR},
@@ -326,7 +340,8 @@
       active_project_id = #{activeProjectId,jdbcType=INTEGER},
       active_type = #{activeType,jdbcType=INTEGER},
       active_pace = #{activePace,jdbcType=VARCHAR},
-      active_create_people = #{activeCreatePeople,jdbcType=VARCHAR},
+      active_create_people = #{activeCreatePeople,jdbcType=INTEGER},
+      departmentid = #{departmentid,jdbcType=INTEGER},
       active_principal_people = #{activePrincipalPeople,jdbcType=VARCHAR},
       active_status = #{activeStatus,jdbcType=INTEGER},
       start_time = #{startTime,jdbcType=TIMESTAMP},

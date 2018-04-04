@@ -438,63 +438,113 @@ public class PActiveExample implements Serializable {
             return (Criteria) this;
         }
 
-        public Criteria andActiveCreatePeopleEqualTo(String value) {
+        public Criteria andActiveCreatePeopleEqualTo(Integer value) {
             addCriterion("active_create_people =", value, "activeCreatePeople");
             return (Criteria) this;
         }
 
-        public Criteria andActiveCreatePeopleNotEqualTo(String value) {
+        public Criteria andActiveCreatePeopleNotEqualTo(Integer value) {
             addCriterion("active_create_people <>", value, "activeCreatePeople");
             return (Criteria) this;
         }
 
-        public Criteria andActiveCreatePeopleGreaterThan(String value) {
+        public Criteria andActiveCreatePeopleGreaterThan(Integer value) {
             addCriterion("active_create_people >", value, "activeCreatePeople");
             return (Criteria) this;
         }
 
-        public Criteria andActiveCreatePeopleGreaterThanOrEqualTo(String value) {
+        public Criteria andActiveCreatePeopleGreaterThanOrEqualTo(Integer value) {
             addCriterion("active_create_people >=", value, "activeCreatePeople");
             return (Criteria) this;
         }
 
-        public Criteria andActiveCreatePeopleLessThan(String value) {
+        public Criteria andActiveCreatePeopleLessThan(Integer value) {
             addCriterion("active_create_people <", value, "activeCreatePeople");
             return (Criteria) this;
         }
 
-        public Criteria andActiveCreatePeopleLessThanOrEqualTo(String value) {
+        public Criteria andActiveCreatePeopleLessThanOrEqualTo(Integer value) {
             addCriterion("active_create_people <=", value, "activeCreatePeople");
             return (Criteria) this;
         }
 
-        public Criteria andActiveCreatePeopleLike(String value) {
-            addCriterion("active_create_people like", value, "activeCreatePeople");
-            return (Criteria) this;
-        }
-
-        public Criteria andActiveCreatePeopleNotLike(String value) {
-            addCriterion("active_create_people not like", value, "activeCreatePeople");
-            return (Criteria) this;
-        }
-
-        public Criteria andActiveCreatePeopleIn(List<String> values) {
+        public Criteria andActiveCreatePeopleIn(List<Integer> values) {
             addCriterion("active_create_people in", values, "activeCreatePeople");
             return (Criteria) this;
         }
 
-        public Criteria andActiveCreatePeopleNotIn(List<String> values) {
+        public Criteria andActiveCreatePeopleNotIn(List<Integer> values) {
             addCriterion("active_create_people not in", values, "activeCreatePeople");
             return (Criteria) this;
         }
 
-        public Criteria andActiveCreatePeopleBetween(String value1, String value2) {
+        public Criteria andActiveCreatePeopleBetween(Integer value1, Integer value2) {
             addCriterion("active_create_people between", value1, value2, "activeCreatePeople");
             return (Criteria) this;
         }
 
-        public Criteria andActiveCreatePeopleNotBetween(String value1, String value2) {
+        public Criteria andActiveCreatePeopleNotBetween(Integer value1, Integer value2) {
             addCriterion("active_create_people not between", value1, value2, "activeCreatePeople");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidIsNull() {
+            addCriterion("departmentid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidIsNotNull() {
+            addCriterion("departmentid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidEqualTo(Integer value) {
+            addCriterion("departmentid =", value, "departmentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidNotEqualTo(Integer value) {
+            addCriterion("departmentid <>", value, "departmentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidGreaterThan(Integer value) {
+            addCriterion("departmentid >", value, "departmentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("departmentid >=", value, "departmentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidLessThan(Integer value) {
+            addCriterion("departmentid <", value, "departmentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidLessThanOrEqualTo(Integer value) {
+            addCriterion("departmentid <=", value, "departmentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidIn(List<Integer> values) {
+            addCriterion("departmentid in", values, "departmentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidNotIn(List<Integer> values) {
+            addCriterion("departmentid not in", values, "departmentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidBetween(Integer value1, Integer value2) {
+            addCriterion("departmentid between", value1, value2, "departmentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidNotBetween(Integer value1, Integer value2) {
+            addCriterion("departmentid not between", value1, value2, "departmentid");
             return (Criteria) this;
         }
 

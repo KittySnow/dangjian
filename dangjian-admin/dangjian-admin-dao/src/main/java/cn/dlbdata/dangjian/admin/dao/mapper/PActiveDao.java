@@ -2,12 +2,10 @@ package cn.dlbdata.dangjian.admin.dao.mapper;
 
 import cn.dlbdata.dangjian.admin.dao.model.PActive;
 import cn.dlbdata.dangjian.admin.dao.model.PActiveExample;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-@Mapper
 public interface PActiveDao {
     long countByExample(PActiveExample example);
 
@@ -30,6 +28,4 @@ public interface PActiveDao {
     int updateByPrimaryKeySelective(PActive record);
 
     int updateByPrimaryKey(PActive record);
-
-    int selectByActiveTypeAndUserParticipate(@Param("userId")Integer userId, @Param("activeType") Integer activeType);
 }

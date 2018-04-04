@@ -44,7 +44,9 @@ public class PActive implements Serializable {
      *
      * @mbg.generated
      */
-    private String activeCreatePeople;
+    private Integer activeCreatePeople;
+
+    private Integer departmentid;
 
     /**
      * 活动负责人
@@ -132,12 +134,20 @@ public class PActive implements Serializable {
         this.activePace = activePace;
     }
 
-    public String getActiveCreatePeople() {
+    public Integer getActiveCreatePeople() {
         return activeCreatePeople;
     }
 
-    public void setActiveCreatePeople(String activeCreatePeople) {
+    public void setActiveCreatePeople(Integer activeCreatePeople) {
         this.activeCreatePeople = activeCreatePeople;
+    }
+
+    public Integer getDepartmentid() {
+        return departmentid;
+    }
+
+    public void setDepartmentid(Integer departmentid) {
+        this.departmentid = departmentid;
     }
 
     public String getActivePrincipalPeople() {
@@ -208,6 +218,7 @@ public class PActive implements Serializable {
         sb.append(", activeType=").append(activeType);
         sb.append(", activePace=").append(activePace);
         sb.append(", activeCreatePeople=").append(activeCreatePeople);
+        sb.append(", departmentid=").append(departmentid);
         sb.append(", activePrincipalPeople=").append(activePrincipalPeople);
         sb.append(", activeStatus=").append(activeStatus);
         sb.append(", startTime=").append(startTime);
@@ -237,6 +248,7 @@ public class PActive implements Serializable {
             && (this.getActiveType() == null ? other.getActiveType() == null : this.getActiveType().equals(other.getActiveType()))
             && (this.getActivePace() == null ? other.getActivePace() == null : this.getActivePace().equals(other.getActivePace()))
             && (this.getActiveCreatePeople() == null ? other.getActiveCreatePeople() == null : this.getActiveCreatePeople().equals(other.getActiveCreatePeople()))
+            && (this.getDepartmentid() == null ? other.getDepartmentid() == null : this.getDepartmentid().equals(other.getDepartmentid()))
             && (this.getActivePrincipalPeople() == null ? other.getActivePrincipalPeople() == null : this.getActivePrincipalPeople().equals(other.getActivePrincipalPeople()))
             && (this.getActiveStatus() == null ? other.getActiveStatus() == null : this.getActiveStatus().equals(other.getActiveStatus()))
             && (this.getStartTime() == null ? other.getStartTime() == null : this.getStartTime().equals(other.getStartTime()))
@@ -256,6 +268,7 @@ public class PActive implements Serializable {
         result = prime * result + ((getActiveType() == null) ? 0 : getActiveType().hashCode());
         result = prime * result + ((getActivePace() == null) ? 0 : getActivePace().hashCode());
         result = prime * result + ((getActiveCreatePeople() == null) ? 0 : getActiveCreatePeople().hashCode());
+        result = prime * result + ((getDepartmentid() == null) ? 0 : getDepartmentid().hashCode());
         result = prime * result + ((getActivePrincipalPeople() == null) ? 0 : getActivePrincipalPeople().hashCode());
         result = prime * result + ((getActiveStatus() == null) ? 0 : getActiveStatus().hashCode());
         result = prime * result + ((getStartTime() == null) ? 0 : getStartTime().hashCode());
