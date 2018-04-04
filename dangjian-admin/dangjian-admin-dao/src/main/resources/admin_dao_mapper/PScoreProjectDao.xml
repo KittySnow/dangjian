@@ -186,7 +186,7 @@
         select
         <include refid="Base_Column_List"/>
         ,IFNULL((SELECT SUM (p.score) FROM p_score_party p where p.project_id = t.id AND p.year = extract(year from
-        now()),0)
+        now())),0)
         and p.user_id = #{userId}) as have_score
         from p_score_project t
     </select>
