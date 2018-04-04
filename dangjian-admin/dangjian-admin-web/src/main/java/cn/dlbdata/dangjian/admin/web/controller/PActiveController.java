@@ -146,7 +146,7 @@ public class PActiveController {
      * @param pageSize
      * @return
      */
-    @RequestMapping(value="/getRunningActive",method= RequestMethod.POST)
+    @RequestMapping(value="/getRunningActive",method= RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> getRunningActive(Integer pageNum, Integer pageSize){
         ResultUtil result = new ResultUtil();
@@ -166,7 +166,7 @@ public class PActiveController {
      * @param pageSize
      * @return
      */
-    @RequestMapping(value="/getParticipateActive",method= RequestMethod.POST)
+    @RequestMapping(value="/getParticipateActive",method= RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> getParticipateActive(Integer pageNum, Integer pageSize){
         ResultUtil result = new ResultUtil();
@@ -181,7 +181,7 @@ public class PActiveController {
         return result.getResult();
     }
 
-    @RequestMapping(value="/list",method= RequestMethod.POST)
+    @RequestMapping(value="/list",method= RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> list(Integer pageNum, Integer pageSize){
         ResultUtil result = new ResultUtil();
