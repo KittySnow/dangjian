@@ -185,5 +185,4 @@ public class PScorePartyController{
         result.setMsg("已审核，无需重复审核");
         return result.getResult();
     }
-
 }

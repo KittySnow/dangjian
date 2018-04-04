@@ -32,6 +32,8 @@ public class PScoreProject implements Serializable {
      */
     private String validYn;
 
+    private Long userId;
+    private Double haveScore;
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -64,6 +66,22 @@ public class PScoreProject implements Serializable {
 
     public void setValidYn(String validYn) {
         this.validYn = validYn;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Double getHaveScore() {
+        return haveScore;
+    }
+
+    public void setHaveScore(Double haveScore) {
+        this.haveScore = haveScore;
     }
 
     @Override

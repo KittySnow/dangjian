@@ -29,5 +29,6 @@ public interface PScoreProjectService {
     public int updateByPrimaryKeySelective(PScoreProject pScoreProject);
 
     public int updateByPrimaryKey(PScoreProject pScoreProject);
-    
+
+    List<PScoreProject> selectByUserExample(PScoreProject pScoreProject);
 }

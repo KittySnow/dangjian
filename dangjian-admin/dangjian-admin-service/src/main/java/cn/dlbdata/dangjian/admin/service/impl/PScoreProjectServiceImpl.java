@@ -79,4 +79,9 @@ public class PScoreProjectServiceImpl implements PScoreProjectService {
         return pScoreProjectDao.updateByPrimaryKey(pScoreProject);
     }
 
+    @Override
+    public List<PScoreProject> selectByUserExample(PScoreProject pScoreProject) {
+        return pScoreProjectDao.selectByUserExample(pScoreProject);
+    }
+
 }

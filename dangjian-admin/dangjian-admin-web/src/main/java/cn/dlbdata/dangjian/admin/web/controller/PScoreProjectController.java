@@ -95,4 +95,16 @@ public class PScoreProjectController{
         result.setData(pScoreProject);
         return result.getResult();
     }
+
+    @RequestMapping(value="/listByUser",method= RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> listByUser(PScoreProject pScoreProject){
+        ResultUtil result = new ResultUtil();
+        PageHelper.startPage(1, 200,true);
+        List<PScoreProject> pScoreProjectList = pScoreProjectService.selectByUserExample(pScoreProject);
+        PageInfo<PScoreProject> p=new PageInfo<PScoreProject>(pScoreProjectList);
+        result.setSuccess(true);
+        result.setData(p);
+        return result.getResult();
+    }
 }

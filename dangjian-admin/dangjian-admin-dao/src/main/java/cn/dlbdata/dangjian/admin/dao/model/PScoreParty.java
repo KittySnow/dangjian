@@ -95,6 +95,10 @@ public class PScoreParty implements Serializable {
      * @return
      */
     private Integer userId;
+    /** 总分 */
+    private Double totalScore;
+    /** 已获得积分 */
+    private Double obtainScore;
 
     private static final long serialVersionUID = 1L;
 

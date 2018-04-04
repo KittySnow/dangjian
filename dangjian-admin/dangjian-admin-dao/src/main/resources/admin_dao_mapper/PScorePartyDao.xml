@@ -13,6 +13,8 @@
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="add_id" jdbcType="INTEGER" property="addId" />
     <result column="valid_yn" jdbcType="CHAR" property="validYn" />
+    <result column="total_score" jdbcType="DECIMAL" property="totalScore"/>
+      <result column="obtain_score" jdbcType="DECIMAL" property="obtainScore"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>

@@ -29,4 +29,6 @@ public interface PScoreProjectDao {
     int updateByPrimaryKeySelective(PScoreProject record);
 
     int updateByPrimaryKey(PScoreProject record);
+
+    List<PScoreProject> selectByUserExample(PScoreProject pScoreProject);
 }
