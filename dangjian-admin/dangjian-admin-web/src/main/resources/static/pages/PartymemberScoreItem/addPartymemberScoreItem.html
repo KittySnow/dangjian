@@ -1,24 +1,24 @@
 <ol class="breadcrumb newcrumb">
     <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
-    <li><a href="#!/PartymemberScoreItem/partymemberScoreItem">党员积分项列表</a></li>
-    <li class="active">添加党员积分项</li>
+    <li><a href="#!/PartymemberScoreItem/partymemberScoreItem">党员积分明细列表</a></li>
+    <li class="active">添加党员积分明细</li>
 </ol>
 <!-- 添加项目html -->
 <div class="row">
     <div class="col-md-12">
         <div class="box ">
             <div class="box-header">
-                <h3 class="box-title">添加党员积分项</h3>
+                <h3 class="box-title">添加党员积分明细</h3>
             </div>
-            <form role="form" class="loginForm form-horizontal" action="./ppartymamberscoreitem/save" method="post" onsubmit="return validateCallback(this)"  novalidate>
+            <form role="form" class="loginForm form-horizontal" action="./ppartymemberscoreitem/save" method="post" onsubmit="return validateCallback(this)"  novalidate>
                 <div class="box-bodyed">
                 <div class="form-group">
                     <label><span class="red">*</span>党员ID</label>
-                    <input type="text" class="form-control" name="party_member_id" placeholder="请输入党员ID" required/>
+                    <input type="text" class="form-control" name="partymemberid" placeholder="请输入党员ID" required/>
                 </div>
                 <div class="form-group">
                     <label><span class="red">*</span>党员积分项ID</label>
-                    <input type="text" class="form-control" name="score_party_id" placeholder="请输入党员积分项ID" required/>
+                    <input type="text" class="form-control" name="scorepartyid" placeholder="请输入党员积分项ID" required/>
                 </div>
                 <div class="form-group">
                     <label><span class="red">*</span>主要内容</label>
@@ -26,15 +26,15 @@
                 </div>
                 <div class="form-group">
                     <label><span class="red">*</span>开始时间</label>
-                    <input type="text" class="form-control" name="start_time" placeholder="请输入开始时间" required/>
+                    <input type="text" class="form-control" name="starttime" placeholder="请输入开始时间" required/>
                 </div>
                 <div class="form-group">
                     <label><span class="red">*</span>结束时间</label>
-                    <input type="text" class="form-control" name="end_time" placeholder="请输入结束时间" required/>
+                    <input type="text" class="form-control" name="endtime" placeholder="请输入结束时间" required/>
                 </div>
                 <div class="form-group">
                     <label><span class="red">*</span>提交图片</label>
-                    <input type="text" class="form-control" name="picture_id" placeholder="请输入提交图片" required/>
+                    <input type="text" class="form-control" name="pictureid" placeholder="请输入提交图片" required/>
                 </div>
                 </div>
                 <div class="box-footer">

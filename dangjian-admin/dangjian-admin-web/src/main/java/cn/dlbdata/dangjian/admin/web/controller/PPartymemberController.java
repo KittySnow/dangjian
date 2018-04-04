@@ -1,11 +1,11 @@
 package cn.dlbdata.dangjian.admin.web.controller;
 
 import cn.dlbdata.dangjian.admin.dao.model.PPartymember;
-import cn.dlbdata.dangjian.admin.dao.model.PPartymemberDues;
-import cn.dlbdata.dangjian.admin.dao.model.PPartymemberDuesExample;
 import cn.dlbdata.dangjian.admin.dao.model.PPartymemberExample;
-import cn.dlbdata.dangjian.admin.service.PPartymemberDuesService;
+import cn.dlbdata.dangjian.admin.dao.model.PUser;
+import cn.dlbdata.dangjian.admin.dao.model.PUserExample;
 import cn.dlbdata.dangjian.admin.service.PPartymemberService;
+import cn.dlbdata.dangjian.admin.service.PUserService;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -15,25 +15,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/ppartymemberdues")
+@RequestMapping("/ppartymember")
 
-public class PPartymemberDuesController {
-
-    @Autowired
-    private PPartymemberDuesService pPartymemberDuesService;
+public class PPartymemberController {
 
     @Autowired
     private PPartymemberService pPartymemberService;
 
+    private PUserService pUserService;
+
+
     @RequestMapping(value="/save",method= RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> save(PPartymemberDues pPartymemberDues){
+    public Map<String, Object> save(PPartymember pPartymember){
         ResultUtil result = new ResultUtil();
-        int callbackId = pPartymemberDuesService.insert(pPartymemberDues);
+        int callbackId = pPartymemberService.insert(pPartymember);
         result.setData(callbackId);
         result.setSuccess(true);
         return result.getResult();
@@ -43,9 +44,9 @@ public class PPartymemberDuesController {
     @ResponseBody
     public Map<String, Object> getList(Integer pageNum, Integer pageSize){
         ResultUtil result = new ResultUtil();
-        List<PPartymemberDues> pPartymemberDuesList = pPartymemberDuesService.selectByExample(new PPartymemberDuesExample());
+        List<PPartymember> pPartymemberList = pPartymemberService.selectByExample(new PPartymemberExample());
         result.setSuccess(true);
-        result.setData(pPartymemberDuesList);
+        result.setData(pPartymemberList);
         return result.getResult();
     }
 
@@ -54,8 +55,8 @@ public class PPartymemberDuesController {
     public Map<String, Object> list(Integer pageNum, Integer pageSize){
         ResultUtil result = new ResultUtil();
         PageHelper.startPage(pageNum, pageSize,true);
-        List<PPartymemberDues> pPartymemberDuesList = pPartymemberDuesService.selectByExample(new PPartymemberDuesExample());
-        PageInfo<PPartymemberDues> p=new PageInfo<PPartymemberDues>(pPartymemberDuesList);
+        List<PPartymember> pPartymemberList = pPartymemberService.selectByExample(new PPartymemberExample());
+        PageInfo<PPartymember> p=new PageInfo<PPartymember>(pPartymemberList);
         result.setSuccess(true);
         result.setData(p);
         return result.getResult();
@@ -63,10 +64,10 @@ public class PPartymemberDuesController {
 
     @RequestMapping(value="/deleteById",method= RequestMethod.DELETE)
     @ResponseBody
-    public Map<String, Object> deleteById(Integer dues_id){
+    public Map<String, Object> deleteById(Integer id){
         ResultUtil result = new ResultUtil();
-        PPartymemberDuesExample example = new PPartymemberDuesExample();
-        if(pPartymemberDuesService.deleteByPrimaryKey(dues_id)>0){
+        PPartymemberExample example = new PPartymemberExample();
+        if(pPartymemberService.deleteByPrimaryKey(id)>0){
             result.setSuccess(true);
             result.setMsg("删除成功");
         }else{
@@ -79,9 +80,9 @@ public class PPartymemberDuesController {
 
     @RequestMapping(value="/updateById",method= RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> updateById(PPartymemberDues pPartymemberDues){
+    public Map<String, Object> updateById(PPartymember pPartymember){
         ResultUtil result = new ResultUtil();
-        if(pPartymemberDuesService.updateByPrimaryKey(pPartymemberDues)>0){
+        if(pPartymemberService.updateByPrimaryKey(pPartymember)>0){
             result.setSuccess(true);
             result.setMsg("修改成功");
         }else{
@@ -93,11 +94,11 @@ public class PPartymemberDuesController {
 
     @RequestMapping(value="/queryById",method= RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> queryById(Integer dues_id){
+    public Map<String, Object> queryById(Integer id){
         ResultUtil result = new ResultUtil();
-        PPartymemberDues pPartymemberDues = pPartymemberDuesService.selectByPrimaryKey(dues_id);
+        PPartymember pPartymember = pPartymemberService.selectByPrimaryKey(id);
         result.setSuccess(true);
-        result.setData(pPartymemberDues);
+        result.setData(pPartymember);
         return result.getResult();
     }
 
@@ -105,21 +106,39 @@ public class PPartymemberDuesController {
     @ResponseBody
     public Map<String, Object> queryByUserId(Integer userid){
         ResultUtil result = new ResultUtil();
-        if(userid==null){
-            result.setSuccess(false);
-            result.setMsg("请传userid");
-        }else{
-            //根据用户ID 找到党员ID
-            PPartymember pPartymember = pPartymemberService.selectByUserId(userid);
-
-            //根据党员ID 找到记录
-            PPartymemberDuesExample pPartymemberDuesExample = new PPartymemberDuesExample();
-            PPartymemberDuesExample.Criteria criteria =  pPartymemberDuesExample.createCriteria();
-            criteria.andPartyMemberIdEqualTo(pPartymember.getId());
-            List<PPartymemberDues> pPartymemberDuesList = pPartymemberDuesService.selectByExample(pPartymemberDuesExample);
+        PPartymember pPartymember = pPartymemberService.selectByUserId(userid);
+        if(pPartymember!=null){
             result.setSuccess(true);
-            result.setData(pPartymemberDuesList);
+            result.setData(pPartymember);
+        }else{
+            result.setSuccess(false);
+            result.setMsg("没有找到想对应的党员");
         }
+        return result.getResult();
+    }
+
+    //支部党员信息
+    @RequestMapping(value="/queryByDepartmentId",method= RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> queryByDepartmentId(Integer departmentid){
+        ResultUtil result = new ResultUtil();
+
+        PUserExample pUserExample = new PUserExample();
+        PUserExample.Criteria criteria =  pUserExample.createCriteria();
+        criteria.andDepartmentidEqualTo(departmentid);
+        List<PUser> pUserList = pUserService.selectByExample(pUserExample);
+        List<PPartymember> pPartymemberListAll =new ArrayList<>();
+        int pUserListLen = pUserList.size();
+        for(int i = 0 ; i < pUserListLen ; i++) {
+            PPartymemberExample pPartymemberExample = new PPartymemberExample();
+            PPartymemberExample.Criteria pPartymemberCriteria =  pPartymemberExample.createCriteria();
+            pPartymemberCriteria.andUseridEqualTo(pUserList.get(i).getUserid());
+            PPartymember pPartymember = pPartymemberService.selectByExample(pPartymemberExample).get(0);
+            pPartymemberExample = null;
+            pPartymemberListAll.add(pPartymember);
+        }
+        result.setSuccess(true);
+        result.setData(pPartymemberListAll);
         return result.getResult();
     }
 }

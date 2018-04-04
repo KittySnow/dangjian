@@ -385,6 +385,51 @@ config(['$routeProvider',
             controller: ScorePartyEditCtrl,
             activetab: 'ScoreParty'
         }).
+        when('/PartyMember/partyMember', {
+            templateUrl: 'pages/PartyMember/partyMember.html',
+            controller: PartyMemberCtrl,
+            activetab: 'PartyMember'
+        }).
+        when('/PartyMember/addPartymember/', {
+            templateUrl: 'pages/PartyMember/addPartymember.html',
+            controller: PartyMemberCtrl,
+            activetab: 'PartyMember'
+        }).
+        when('/PartyMember/editPartymember/:id', {
+            templateUrl: 'pages/PartyMember/editPartymember.html',
+            controller: PartyMemberEditCtrl,
+            activetab: 'PartyMember'
+        }).
+        when('/PartymemberDues/partymemberDues', {
+            templateUrl: 'pages/PartymemberDues/partymemberDues.html',
+            controller: PartymemberDuesCtrl,
+            activetab: 'PartymemberDues'
+        }).
+        when('/PartymemberDues/addPartymemberDues/', {
+            templateUrl: 'pages/PartymemberDues/addPartymemberDues.html',
+            controller: PartymemberDuesCtrl,
+            activetab: 'PartymemberDues'
+        }).
+        when('/PartymemberDues/editPartymemberDues/:dues_id', {
+            templateUrl: 'pages/PartymemberDues/editPartymemberDues.html',
+            controller: PartymemberDuesEditCtrl,
+            activetab: 'PartymemberDues'
+        }).
+        when('/PartymemberScoreItem/partymemberScoreItem', {
+            templateUrl: 'pages/PartymemberScoreItem/partymemberScoreItem.html',
+            controller: PartymemberScoreItemCtrl,
+            activetab: 'PartymemberScoreItem'
+        }).
+        when('/PartymemberScoreItem/addPartymemberScoreItem/', {
+            templateUrl: 'pages/PartymemberScoreItem/addPartymemberScoreItem.html',
+            controller: PartymemberScoreItemCtrl,
+            activetab: 'PartymemberScoreItem'
+        }).
+        when('/PartymemberScoreItem/editPartymemberScoreItem/:itemid', {
+            templateUrl: 'pages/PartymemberScoreItem/editPartymemberScoreItem.html',
+            controller: PartymemberScoreItemEditCtrl,
+            activetab: 'PartymemberScoreItem'
+        }).
         otherwise({
             redirectTo: '/',
             activetab: ''

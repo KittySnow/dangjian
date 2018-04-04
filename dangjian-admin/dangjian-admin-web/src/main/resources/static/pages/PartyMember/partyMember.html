@@ -1,0 +1,132 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li class="active"><a href="#!/PartyMember/partyMember">党员列表</a></li>
+</ol>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">党员列表</h3>
+            </div>
+            <div class="box-mgr">
+                <a class="btn btn-info" href="#!/PartyMember/addPartymember">添加党员</a>
+            </div>
+            <div class="box-body table-responsive">
+                <table id="PartyMemberTable" class="table table-bordered table-striped" data-unique-id="id">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.actionPartyMemberEvents = {
+        'click .editPartyMember' : function (e, value, row, index) {
+            console.log(row);
+        },
+        'click .delPartyMember' : function (e, value, row, index) {
+            deleteAjax(row,'./ppartymember/deleteById','id','post');
+        }
+    };
+
+
+    function PartyMemberStausFormatter(value,row,index) {
+        return '<a class="btn btn-info btn-sm editPartyMember" href="#!/PartyMember/editPartymember/'+row.id+'">修改</a>　<a class="btn btn-warning btn-sm delPartyMember">删除</a>'
+    }
+
+
+    function timeDateFormatter(value,row,index) {
+        if(row.zzStudytime){
+            return new Date(row.zzStudytime).format('YYYY-MM-DD hh:mm:ss')
+        }else{
+            return "";
+        }
+
+    }
+
+    $(function(){
+
+        $('#PartyMemberTable').bootstrapTable({
+            showHeader:true,
+            columns: [
+                {
+                    field: 'id',
+                    formatter:fmtIdx,
+                    title:'编号'
+                },
+                {
+                    field: 'userid',
+                    title: '用户id'
+                },
+                {
+                    field: 'name',
+                    title: '姓名'
+                },
+                {
+                    field: 'sex',
+                    title: '性别'
+                },
+                {
+                    field: 'age',
+                    title: '年龄'
+                },
+                {
+                    field: 'outZb',
+                    title: '转出支部'
+                },
+                {
+                    field: 'momentScore',
+                    title: '现有积分'
+                },
+                {
+                    field: 'nearScore',
+                    title: '年度积分'
+                },
+                {
+                    field: 'activeTime',
+                    title: '活动次数'
+                },
+                {
+                    field: 'zzStudytime',
+                    title: '政治学习时间',
+                    formatter:timeDateFormatter
+                },
+                {
+                    field: 'bid',
+                    title: '积分分值表id'
+                },
+                {
+                    title: '操作',
+                    width:250,
+                    formatter: PartyMemberStausFormatter,
+                    events: actionPartyMemberEvents
+                }],
+            method: 'GET',
+            url: "./ppartymember/list",
+            sidePagination: "server", //服务端请求
+            queryParams:function (params) {
+                return {
+                    pageSize:params.limit||10,
+                    pageNum:~~(params.offset/10)+1||1
+                }
+            },
+            dataField:'list',
+            responseHandler:function(res){
+                return res.data;
+            },
+            showColumns:true,
+            pagination:true,
+            cache: false,
+            striped: true,
+            pageSize: 10,
+            pageList: [5,10,15],
+            paginationHAlign: 'right', //right, left
+            paginationVAlign: 'bottom', //bottom, top, both
+            sortable:false,
+            search: true,
+            showPaginationSwitch: false,
+            showRefresh: true,
+            clickToSelect: true
+        });
+    });
+
+</script>

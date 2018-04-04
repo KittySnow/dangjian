@@ -16,4 +16,6 @@ public class RequestUrls {
 
   public static final String GREATE_MENU_PREFIX = API_URL_PREFIX + "menu/create";
 
+  public static final String USER_INFO_PREFIX = API_URL_PREFIX + "user/info";
+
 }

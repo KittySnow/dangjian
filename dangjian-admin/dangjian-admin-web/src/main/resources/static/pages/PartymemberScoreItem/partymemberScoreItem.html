@@ -1,18 +1,18 @@
 <ol class="breadcrumb newcrumb">
     <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
-    <li class="active"><a href="#!/PartymemberScoreItem/partymemberScoreItem">党员积分项列表</a></li>
+    <li class="active"><a href="#!/PartymemberScoreItem/partymemberScoreItem">党员积分明细列表</a></li>
 </ol>
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">党员积分项列表</h3>
+                <h3 class="box-title">党员积分明细列表</h3>
             </div>
             <div class="box-mgr">
-                <a class="btn btn-info" href="#!/PartymemberScoreItem/addPartymamberScoreItem">添加党员积分项</a>
+                <a class="btn btn-info" href="#!/PartymemberScoreItem/addPartymemberScoreItem">添加党员积分明细</a>
             </div>
             <div class="box-body table-responsive">
-                <table id="PartymemberScoreItemTable" class="table table-bordered table-striped" data-unique-id="item_id">
+                <table id="PartymemberScoreItemTable" class="table table-bordered table-striped" data-unique-id="itemid">
                 </table>
             </div>
         </div>
@@ -24,13 +24,13 @@
             console.log(row);
         },
         'click .delPartymemberScoreItem' : function (e, value, row, index) {
-            deleteAjax(row,'./ppartymamberscoreitem/deleteById','item_id','post');
+            deleteAjax(row,'./ppartymemberscoreitem/deleteById','itemid','post');
         }
     };
 
 
     function PartymemberScoreItemStausFormatter(value,row,index) {
-        return '<a class="btn btn-info btn-sm editPartymemberScoreItem" href="#!/PartymemberScoreItem/editPartymamberScoreItem/'+row.item_id+'">修改</a>　<a class="btn btn-warning btn-sm delPartymemberScoreItem">删除</a>'
+        return '<a class="btn btn-info btn-sm editPartymemberScoreItem" href="#!/PartymemberScoreItem/editPartymemberScoreItem/'+row.itemid+'">修改</a>　<a class="btn btn-warning btn-sm delPartymemberScoreItem">删除</a>'
     }
 
 
@@ -40,16 +40,16 @@
             showHeader:true,
             columns: [
                 {
-                    field: 'item_id',
+                    field: 'itemid',
                     formatter:fmtIdx,
                     title:'编号'
                 },
                 {
-                    field: 'party_member_id',
+                    field: 'partymemberid',
                     title: '党员ID'
                 },
                 {
-                    field: 'score_party_id',
+                    field: 'scorepartyid',
                     title: '党员积分项ID'
                 },
                 {
@@ -57,15 +57,15 @@
                     title: '主要内容'
                 },
                 {
-                    field: 'start_time',
+                    field: 'starttime',
                     title: '开始时间'
                 },
                 {
-                    field: 'end_time',
+                    field: 'endtime',
                     title: '结束时间'
                 },
                 {
-                    field: 'picture_id',
+                    field: 'pictureid',
                     title: '提交图片'
                 },
                 {
@@ -75,7 +75,7 @@
                     events: actionPartymemberScoreItemEvents
                 }],
             method: 'GET',
-            url: "./ppartymamberscoreitem/list",
+            url: "./ppartymemberscoreitem/list",
             sidePagination: "server", //服务端请求
             queryParams:function (params) {
                 return {

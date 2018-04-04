@@ -42,20 +42,25 @@ public class EventDispatcher {
 
             TextMessage textMessage = new TextMessage();
 
+            textMessage.setToUserName(openId);
+            textMessage.setFromUserName(mPid);
+            textMessage.setCreateTime(new Date().getTime());
+            textMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+
             String eventKey = map.get("EventKey");
 
             String respContent = "";
 
             if (eventKey.equals("11")) {
-                respContent = "天气预报菜单项被点击！";
+                respContent = openId+"欢迎您访问陆家嘴金领驿站积分系统，<a href=\"127.0.0.1:8080/login?openId="+openId+"\">免密登录请点击</a>";
             } else if (eventKey.equals("12")) {
                 respContent = "公交查询菜单项被点击！";
             } else if (eventKey.equals("13")) {
                 respContent = "周边搜索菜单项被点击！";
             } else if (eventKey.equals("14")) {
-                respContent = "历史上的今天菜单项被点击！";
+                respContent = openId+"欢迎您访问陆家嘴金领驿站积分系统，<a href=\"http://www.dlbdata.cn/dangjian/login.html?openId="+openId+"\">免密登录请点击</a>";
             } else if (eventKey.equals("21")) {
-                respContent = "歌曲点播菜单项被点击！";
+                respContent = "<a href=\"http://www.baidu.com\">百度</a>";
             } else if (eventKey.equals("22")) {
                 respContent = "经典游戏菜单项被点击！";
             } else if (eventKey.equals("23")) {

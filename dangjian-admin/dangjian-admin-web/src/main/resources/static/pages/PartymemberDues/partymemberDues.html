@@ -24,15 +24,23 @@
             console.log(row);
         },
         'click .delPartymemberDues' : function (e, value, row, index) {
-            deleteAjax(row,'./ppartymemberdues/deleteById','dues_id','post');
+            deleteAjax(row,'./ppartymemberdues/deleteById','duesId','post');
         }
     };
 
 
     function PartymemberDuesStausFormatter(value,row,index) {
-        return '<a class="btn btn-info btn-sm editPartymemberDues" href="#!/PartymemberDues/editPartymemberDues/'+row.dues_id+'">修改</a>　<a class="btn btn-warning btn-sm delPartymemberDues">删除</a>'
+        return '<a class="btn btn-info btn-sm editPartymemberDues" href="#!/PartymemberDues/editPartymemberDues/'+row.duesId+'">修改</a>　<a class="btn btn-warning btn-sm delPartymemberDues">删除</a>'
     }
 
+    function PartymemberStaus(value,row,index) {
+        if(row.status == 1){
+            return  "<span class='text-red'>已缴</span>"
+        }else{
+            return "<span class='text-green'>未缴</span>"
+        }
+
+    }
 
     $(function(){
 
@@ -40,12 +48,16 @@
             showHeader:true,
             columns: [
                 {
-                    field: 'dues_id',
+                    field: 'duesId',
                     formatter:fmtIdx,
                     title:'编号'
                 },
                 {
-                    field: 'party_member_id',
+                    field: 'duesId',
+                    title:'id'
+                },
+                {
+                    field: 'partyMemberId',
                     title: '对应的党员ID'
                 },
                 {
@@ -61,8 +73,9 @@
                     title: '党费年份'
                 },
                 {
+                    title: '缴费状态',
                     field: 'status',
-                    title: '缴费状态，1-已缴，2-未缴'
+                    formatter: PartymemberStaus
                 },
                 {
                     title: '操作',
