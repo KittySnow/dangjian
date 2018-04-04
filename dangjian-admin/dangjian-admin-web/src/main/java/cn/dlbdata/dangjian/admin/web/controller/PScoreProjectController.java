@@ -100,6 +100,10 @@ public class PScoreProjectController{
     @ResponseBody
     public Map<String, Object> listByUser(PScoreProject pScoreProject){
         ResultUtil result = new ResultUtil();
+        if (pScoreProject == null || pScoreProject.getUserId() == null) {
+            result.setSuccess(false);
+            result.setMsg("党员不能为空");
+        }
         PageHelper.startPage(1, 200,true);
         List<PScoreProject> pScoreProjectList = pScoreProjectService.selectByUserExample(pScoreProject);
         PageInfo<PScoreProject> p=new PageInfo<PScoreProject>(pScoreProjectList);
