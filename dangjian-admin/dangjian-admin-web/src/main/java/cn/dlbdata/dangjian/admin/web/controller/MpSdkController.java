@@ -55,6 +55,7 @@ public class MpSdkController {
         try {
             JSONObject json = userInfoService.userInfo(userInfo);
             result.setSuccess(true);
+            result.setData(json);
         } catch (DangjianException e) {
             result.setMsg(e.getErrorMsg());
             result.setSuccess(false);

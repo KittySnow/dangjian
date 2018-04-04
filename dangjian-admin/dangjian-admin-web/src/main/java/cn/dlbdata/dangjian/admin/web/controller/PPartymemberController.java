@@ -2,7 +2,10 @@ package cn.dlbdata.dangjian.admin.web.controller;
 
 import cn.dlbdata.dangjian.admin.dao.model.PPartymember;
 import cn.dlbdata.dangjian.admin.dao.model.PPartymemberExample;
+import cn.dlbdata.dangjian.admin.dao.model.PUser;
+import cn.dlbdata.dangjian.admin.dao.model.PUserExample;
 import cn.dlbdata.dangjian.admin.service.PPartymemberService;
+import cn.dlbdata.dangjian.admin.service.PUserService;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +26,8 @@ public class PPartymemberController {
 
     @Autowired
     private PPartymemberService pPartymemberService;
+
+    private PUserService pUserService;
 
 
     @RequestMapping(value="/save",method= RequestMethod.POST)
@@ -108,6 +114,31 @@ public class PPartymemberController {
             result.setSuccess(false);
             result.setMsg("没有找到想对应的党员");
         }
+        return result.getResult();
+    }
+
+    //支部党员信息
+    @RequestMapping(value="/queryByDepartmentId",method= RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> queryByDepartmentId(Integer departmentid){
+        ResultUtil result = new ResultUtil();
+
+        PUserExample pUserExample = new PUserExample();
+        PUserExample.Criteria criteria =  pUserExample.createCriteria();
+        criteria.andDepartmentidEqualTo(departmentid);
+        List<PUser> pUserList = pUserService.selectByExample(pUserExample);
+        List<PPartymember> pPartymemberListAll =new ArrayList<>();
+        int pUserListLen = pUserList.size();
+        for(int i = 0 ; i < pUserListLen ; i++) {
+            PPartymemberExample pPartymemberExample = new PPartymemberExample();
+            PPartymemberExample.Criteria pPartymemberCriteria =  pPartymemberExample.createCriteria();
+            pPartymemberCriteria.andUseridEqualTo(pUserList.get(i).getUserid());
+            PPartymember pPartymember = pPartymemberService.selectByExample(pPartymemberExample).get(0);
+            pPartymemberExample = null;
+            pPartymemberListAll.add(pPartymember);
+        }
+        result.setSuccess(true);
+        result.setData(pPartymemberListAll);
         return result.getResult();
     }
 }

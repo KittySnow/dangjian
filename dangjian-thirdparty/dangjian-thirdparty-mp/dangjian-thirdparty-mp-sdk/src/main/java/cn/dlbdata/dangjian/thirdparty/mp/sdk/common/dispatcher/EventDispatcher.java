@@ -52,7 +52,7 @@ public class EventDispatcher {
             String respContent = "";
 
             if (eventKey.equals("11")) {
-                respContent = openId+"欢迎您访问陆家嘴金领驿站积分系统，<a href=\"http://www.dlbdata.cn/dangjian/login.html?openId="+openId+"\">免密登录请点击</a>";
+                respContent = openId+"欢迎您访问陆家嘴金领驿站积分系统，<a href=\"127.0.0.1:8080/login?openId="+openId+"\">免密登录请点击</a>";
             } else if (eventKey.equals("12")) {
                 respContent = "公交查询菜单项被点击！";
             } else if (eventKey.equals("13")) {

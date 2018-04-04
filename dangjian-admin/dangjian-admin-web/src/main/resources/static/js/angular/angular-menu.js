@@ -401,7 +401,7 @@ config(['$routeProvider',
             activetab: 'PartyMember'
         }).
         when('/PartymemberDues/partymemberDues', {
-            templateUrl: 'pages/PartymemberDues/PartymemberDues.html',
+            templateUrl: 'pages/PartymemberDues/partymemberDues.html',
             controller: PartymemberDuesCtrl,
             activetab: 'PartymemberDues'
         }).
@@ -415,7 +415,21 @@ config(['$routeProvider',
             controller: PartymemberDuesEditCtrl,
             activetab: 'PartymemberDues'
         }).
-
+        when('/PartymemberScoreItem/partymemberScoreItem', {
+            templateUrl: 'pages/PartymemberScoreItem/partymemberScoreItem.html',
+            controller: PartymemberScoreItemCtrl,
+            activetab: 'PartymemberScoreItem'
+        }).
+        when('/PartymemberScoreItem/addPartymemberScoreItem/', {
+            templateUrl: 'pages/PartymemberScoreItem/addPartymemberScoreItem.html',
+            controller: PartymemberScoreItemCtrl,
+            activetab: 'PartymemberScoreItem'
+        }).
+        when('/PartymemberScoreItem/editPartymemberScoreItem/:itemid', {
+            templateUrl: 'pages/PartymemberScoreItem/editPartymemberScoreItem.html',
+            controller: PartymemberScoreItemEditCtrl,
+            activetab: 'PartymemberScoreItem'
+        }).
         otherwise({
             redirectTo: '/',
             activetab: ''
