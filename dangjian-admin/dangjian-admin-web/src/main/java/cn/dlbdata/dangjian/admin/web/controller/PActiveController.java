@@ -260,8 +260,13 @@ public class PActiveController {
     public Map<String, Object> queryById(Integer activeId){
         ResultUtil result = new ResultUtil();
         PActive pActive = pActiveService.selectByPrimaryKey(activeId);
+        JSONObject json = JSON.parseObject(JSON.toJSONString(pActive));
+        PUser createUser = pUserService.selectByPrimaryKey(pActive.getActiveCreatePeople());
+        if(createUser!=null){
+            json.put("activeCreatePeopleName", createUser.getName());
+        }
         result.setSuccess(true);
-        result.setData(pActive);
+        result.setData(json);
         return result.getResult();
     }
 
