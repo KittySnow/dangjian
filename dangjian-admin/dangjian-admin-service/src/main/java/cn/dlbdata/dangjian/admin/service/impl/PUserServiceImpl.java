@@ -95,5 +95,8 @@ public class PUserServiceImpl implements PUserService {
     @Override
     public PUser findRoleid(String name) {return pUserDao.findRoleid(name);}
 
-
+    @Override
+    public void saveLoginToken(int userId, String token) {
+        pUserDao.saveLoginToken(userId, token);
+    }
 }

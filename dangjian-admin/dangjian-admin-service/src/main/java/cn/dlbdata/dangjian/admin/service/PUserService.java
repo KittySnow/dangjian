@@ -38,5 +38,5 @@ public interface PUserService {
     PUser tologin(String name, String password);
     public PUser findRoleid(String name);
 
-
+    public void saveLoginToken(int userId, String token);
 }

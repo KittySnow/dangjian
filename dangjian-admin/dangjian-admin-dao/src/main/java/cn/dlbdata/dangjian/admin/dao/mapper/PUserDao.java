@@ -6,6 +6,7 @@ import cn.dlbdata.dangjian.admin.dao.model.PUserExample;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -44,4 +45,7 @@ public interface PUserDao {
     PUser selectByEmail(final String email);
 
     int updatePasswordByEmail(final PUser user);
+
+    @Update("update p_user set token=#{token} where userid=#{userId}")
+    void saveLoginToken(@Param("userId") int userId, @Param("token") String token);
 }
