@@ -18,6 +18,8 @@ import cn.dlbdata.dangjian.thirdparty.mp.sdk.util.TokenBasedHttpClient;
 import net.sf.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,38 +32,41 @@ import java.util.Objects;
  */
 @Service
 public class UserInfoServiceImpl extends TokenBasedService implements UserInfoService {
+    Logger logger = LoggerFactory.getLogger(UserInfoServiceImpl.class);
+
+    @Autowired
+    private AccessService accessService;
 
     public UserInfoServiceImpl(TokenBasedHttpClient client) {
         super(client);
     }
 
-    @Autowired
-    private AccessService accessService;
-
-
-
-
     @Override
     public JSONObject userInfo(GetUserInfo getUserInfo) throws DangjianException {
+        JSONObject jsonObject;
 
-        JSONObject jsonObject = new JSONObject();
         GetaAccessTokenParam getaAccessTokenParam = new GetaAccessTokenParam();
         getaAccessTokenParam.setSecret("8d72463ffdf8a2232241985b442c1c93");
         getaAccessTokenParam.setAppid("wxef4c83c01085bb38");
         getaAccessTokenParam.setGrantType(GrantType.client_credential);
+
         try {
             AccessTokenResponse accessTokenResponse = accessService.getAccessToken(getaAccessTokenParam);
             String Token  = accessTokenResponse.getAccessToken();
             String url = RequestUrls.USER_INFO_PREFIX +"?access_token="+Token+"&openid="+getUserInfo.getOpenid()+"&lang=zh_CN";
             jsonObject =  CommonUtil.httpsRequest(url, "GET",null);
 
-        } catch (DangjianException e) {
-            e.printStackTrace();
-        }
+            if (!jsonObject.has("success") || !jsonObject.getBoolean("success")) {
+                logger.error("Get wx userinfo error, result jsonObject=" + jsonObject.toString());
 
+                throw new RuntimeException("Get wx userInfo error.");
+            }
+        } catch (DangjianException e) {
+            logger.error("", e);
+
+            return null;
+        }
 
         return jsonObject;
     }
-
-
 }
