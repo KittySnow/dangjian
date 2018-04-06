@@ -351,7 +351,7 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByActiveTypeAndUserParticipate" parameterType="map" resultType="java.lang.Long">
+  <select id="selectByActiveTypeAndUserParticipate" parameterType="map" resultType="java.lang.Integer">
     select count(*) from p_active
     WHERE id in (
       SELECT active_id FROM p_active_participate WHERE user_id = #{userId,jdbcType=INTEGER}

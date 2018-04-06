@@ -28,4 +28,6 @@ public interface PActiveDao {
     int updateByPrimaryKeySelective(PActive record);
 
     int updateByPrimaryKey(PActive record);
+
+    int selectByActiveTypeAndUserParticipate(Integer userId, Integer activeType);
 }
