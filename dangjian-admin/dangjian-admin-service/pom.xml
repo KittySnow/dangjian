@@ -17,6 +17,11 @@
             <artifactId>dangjian-admin-dao</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>cn.dlbdata.dangjian</groupId>
+            <artifactId>dangjian-thirdparty-mp-sdk</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>
