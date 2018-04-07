@@ -5,14 +5,12 @@
     <id column="itemid" jdbcType="INTEGER" property="itemid" />
     <result column="partymemberid" jdbcType="INTEGER" property="partymemberid" />
     <result column="moduleid" jdbcType="INTEGER" property="moduleid" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="starttime" jdbcType="TIMESTAMP" property="starttime" />
     <result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
     <result column="approver" jdbcType="INTEGER" property="approver" />
     <result column="projectid" jdbcType="INTEGER" property="projectid" />
     <result column="getscore" jdbcType="INTEGER" property="getscore" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.dlbdata.dangjian.admin.dao.model.PPartymemberGetScoreItem">
-    <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -73,27 +71,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    itemid, partymemberid, moduleid, starttime, endtime, approver, projectid, getscore
+    itemid, partymemberid, moduleid, content, starttime, endtime, approver, projectid, 
+    getscore
   </sql>
-  <sql id="Blob_Column_List">
-    content
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymemberGetScoreItemExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from p_partymember_get_score_item
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymemberGetScoreItemExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -108,11 +88,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from p_partymember_get_score_item
     where itemid = #{itemid,jdbcType=INTEGER}
   </select>
@@ -130,12 +108,12 @@
     <selectKey keyProperty="itemid" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into p_partymember_get_score_item (partymemberid, moduleid, starttime, 
-      endtime, approver, projectid, 
-      getscore, content)
-    values (#{partymemberid,jdbcType=INTEGER}, #{moduleid,jdbcType=INTEGER}, #{starttime,jdbcType=TIMESTAMP}, 
-      #{endtime,jdbcType=TIMESTAMP}, #{approver,jdbcType=INTEGER}, #{projectid,jdbcType=INTEGER}, 
-      #{getscore,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
+    insert into p_partymember_get_score_item (partymemberid, moduleid, content, 
+      starttime, endtime, approver, 
+      projectid, getscore)
+    values (#{partymemberid,jdbcType=INTEGER}, #{moduleid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
+      #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{approver,jdbcType=INTEGER}, 
+      #{projectid,jdbcType=INTEGER}, #{getscore,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymemberGetScoreItem">
     <selectKey keyProperty="itemid" order="AFTER" resultType="java.lang.Integer">
@@ -148,6 +126,9 @@
       </if>
       <if test="moduleid != null">
         moduleid,
+      </if>
+      <if test="content != null">
+        content,
       </if>
       <if test="starttime != null">
         starttime,
@@ -164,9 +145,6 @@
       <if test="getscore != null">
         getscore,
       </if>
-      <if test="content != null">
-        content,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="partymemberid != null">
@@ -174,6 +152,9 @@
       </if>
       <if test="moduleid != null">
         #{moduleid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
       </if>
       <if test="starttime != null">
         #{starttime,jdbcType=TIMESTAMP},
@@ -189,9 +170,6 @@
       </if>
       <if test="getscore != null">
         #{getscore,jdbcType=INTEGER},
-      </if>
-      <if test="content != null">
-        #{content,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -213,6 +191,9 @@
       <if test="record.moduleid != null">
         moduleid = #{record.moduleid,jdbcType=INTEGER},
       </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
       <if test="record.starttime != null">
         starttime = #{record.starttime,jdbcType=TIMESTAMP},
       </if>
@@ -228,25 +209,7 @@
       <if test="record.getscore != null">
         getscore = #{record.getscore,jdbcType=INTEGER},
       </if>
-      <if test="record.content != null">
-        content = #{record.content,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update p_partymember_get_score_item
-    set itemid = #{record.itemid,jdbcType=INTEGER},
-      partymemberid = #{record.partymemberid,jdbcType=INTEGER},
-      moduleid = #{record.moduleid,jdbcType=INTEGER},
-      starttime = #{record.starttime,jdbcType=TIMESTAMP},
-      endtime = #{record.endtime,jdbcType=TIMESTAMP},
-      approver = #{record.approver,jdbcType=INTEGER},
-      projectid = #{record.projectid,jdbcType=INTEGER},
-      getscore = #{record.getscore,jdbcType=INTEGER},
-      content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -256,6 +219,7 @@
     set itemid = #{record.itemid,jdbcType=INTEGER},
       partymemberid = #{record.partymemberid,jdbcType=INTEGER},
       moduleid = #{record.moduleid,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
       starttime = #{record.starttime,jdbcType=TIMESTAMP},
       endtime = #{record.endtime,jdbcType=TIMESTAMP},
       approver = #{record.approver,jdbcType=INTEGER},
@@ -274,6 +238,9 @@
       <if test="moduleid != null">
         moduleid = #{moduleid,jdbcType=INTEGER},
       </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
       <if test="starttime != null">
         starttime = #{starttime,jdbcType=TIMESTAMP},
       </if>
@@ -289,28 +256,14 @@
       <if test="getscore != null">
         getscore = #{getscore,jdbcType=INTEGER},
       </if>
-      <if test="content != null">
-        content = #{content,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where itemid = #{itemid,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymemberGetScoreItem">
-    update p_partymember_get_score_item
-    set partymemberid = #{partymemberid,jdbcType=INTEGER},
-      moduleid = #{moduleid,jdbcType=INTEGER},
-      starttime = #{starttime,jdbcType=TIMESTAMP},
-      endtime = #{endtime,jdbcType=TIMESTAMP},
-      approver = #{approver,jdbcType=INTEGER},
-      projectid = #{projectid,jdbcType=INTEGER},
-      getscore = #{getscore,jdbcType=INTEGER},
-      content = #{content,jdbcType=LONGVARCHAR}
     where itemid = #{itemid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymemberGetScoreItem">
     update p_partymember_get_score_item
     set partymemberid = #{partymemberid,jdbcType=INTEGER},
       moduleid = #{moduleid,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
       starttime = #{starttime,jdbcType=TIMESTAMP},
       endtime = #{endtime,jdbcType=TIMESTAMP},
       approver = #{approver,jdbcType=INTEGER},
