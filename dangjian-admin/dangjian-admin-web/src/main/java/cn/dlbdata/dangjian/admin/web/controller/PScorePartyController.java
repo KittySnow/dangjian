@@ -1,20 +1,26 @@
 package cn.dlbdata.dangjian.admin.web.controller;
 
+import cn.dlbdata.dangjian.admin.dao.model.PScoreDetail;
+import cn.dlbdata.dangjian.admin.dao.model.PScoreDetailExample;
 import cn.dlbdata.dangjian.admin.dao.model.PScoreParty;
 import cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample;
+import cn.dlbdata.dangjian.admin.service.PScoreDetailService;
 import cn.dlbdata.dangjian.admin.service.PScorePartyService;
 import cn.dlbdata.dangjian.common.util.HttpResult;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.api.client.util.ArrayMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/pscoreparty")
@@ -23,6 +29,10 @@ public class PScorePartyController{
 
     @Autowired
     private PScorePartyService pScorePartyService;
+
+    @Autowired
+    private PScoreDetailService pScoreDetailService;
+
 
 
     @RequestMapping(value="/save",method= RequestMethod.POST)
@@ -94,6 +104,33 @@ public class PScorePartyController{
         PScoreParty pScoreParty = pScorePartyService.selectByPrimaryKey(id);
         result.setSuccess(true);
         result.setData(pScoreParty);
+        return result.getResult();
+    }
+
+
+    @RequestMapping(value="/queryByUserId",method= RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> queryByUserId(Integer userid,int year){
+        ResultUtil result = new ResultUtil();
+        PScorePartyExample pScorePartyExample = new PScorePartyExample();
+        PScorePartyExample.Criteria ct = pScorePartyExample.createCriteria();
+        ct.andUserIdEqualTo(userid);
+        ct.andYearEqualTo(year);
+        List<PScoreParty> pScorePartyList = pScorePartyService.selectByExample(pScorePartyExample);
+
+        List<PScoreDetail> pScoreDetailList = pScoreDetailService.selectByExample(new PScoreDetailExample());
+
+        Map<Integer,String> detailIndo = new ArrayMap<Integer, String>();
+        for (int i = 0; i < pScoreDetailList.size(); i++) {
+            PScoreDetail pScoreDetail = pScoreDetailList.get(i);
+            detailIndo.put(pScoreDetail.getId(),pScoreDetail.getTitle());
+        }
+        for (int i = 0; i < pScorePartyList.size(); i++) {
+            PScoreParty pScoreParty = pScorePartyList.get(i);
+            pScoreParty.setDetailTitle(detailIndo.get(pScoreParty.getDetailId()));
+        }
+        result.setSuccess(true);
+        result.setData(pScorePartyList);
         return result.getResult();
     }
 

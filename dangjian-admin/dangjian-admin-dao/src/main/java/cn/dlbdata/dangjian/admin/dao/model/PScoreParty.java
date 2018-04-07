@@ -100,6 +100,9 @@ public class PScoreParty implements Serializable {
     /** 已获得积分 */
     private Double obtainScore;
 
+    private String detailTitle;
+
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -204,6 +207,14 @@ public class PScoreParty implements Serializable {
 
     public void setStatusCd(String statusCd) {
         this.statusCd = statusCd;
+    }
+
+    public String getDetailTitle() {
+        return detailTitle;
+    }
+
+    public void setDetailTitle(String detailTitle) {
+        this.detailTitle = detailTitle;
     }
 
     @Override
