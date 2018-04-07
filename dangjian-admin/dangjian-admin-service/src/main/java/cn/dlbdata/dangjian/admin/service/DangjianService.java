@@ -9,7 +9,7 @@ import java.util.List;
  * @Description: 获取党员信息列表详情
  * @Date: Created on 13:48 2018/4/7
  */
-public interface DangjianPartymemberService {
+public interface DangjianService {
 
     /**
      * 获取党员信息列表详情

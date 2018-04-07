@@ -1,7 +1,7 @@
 package cn.dlbdata.dangjian.admin.web.listener;
 
 import cn.dlbdata.dangjian.admin.service.ADService;
-import cn.dlbdata.dangjian.admin.service.model.LoginAccount;
+import cn.dlbdata.dangjian.admin.service.pojo.LoginAccount;
 import cn.dlbdata.dangjian.admin.web.controller.AdController;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;

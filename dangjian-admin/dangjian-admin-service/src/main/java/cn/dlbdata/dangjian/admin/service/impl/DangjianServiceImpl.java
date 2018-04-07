@@ -18,7 +18,7 @@ import java.util.List;
  * @Date: Created on 12:27 2018/4/7
  */
 @Service
-public class DangjianPartymemberServiceImpl implements DangjianService {
+public class DangjianServiceImpl implements DangjianService {
 
     @Autowired
     private PDepartmentService pDepartmentService;

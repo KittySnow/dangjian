@@ -5,11 +5,10 @@ import cn.dlbdata.dangjian.admin.dao.model.PUser;
 import cn.dlbdata.dangjian.admin.service.ADService;
 import cn.dlbdata.dangjian.admin.service.PFeatureService;
 import cn.dlbdata.dangjian.admin.service.PUserService;
-import cn.dlbdata.dangjian.admin.service.model.LoginAccount;
+import cn.dlbdata.dangjian.admin.service.pojo.LoginAccount;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,8 +21,6 @@ import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.Date;
-
-import static cn.dlbdata.dangjian.admin.service.util.DangjianUtil.getMD5;
 
 @Controller
 @RequestMapping("/ad")

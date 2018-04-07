@@ -3,7 +3,7 @@ package cn.dlbdata.dangjian.admin.service.impl;
 import cn.dlbdata.dangjian.admin.dao.mapper.PUserDao;
 import cn.dlbdata.dangjian.admin.dao.model.PUser;
 import cn.dlbdata.dangjian.admin.service.ADService;
-import cn.dlbdata.dangjian.admin.service.model.LoginAccount;
+import cn.dlbdata.dangjian.admin.service.pojo.LoginAccount;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

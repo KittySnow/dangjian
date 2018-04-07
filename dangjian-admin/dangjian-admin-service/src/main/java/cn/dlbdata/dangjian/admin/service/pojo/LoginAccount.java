@@ -1,4 +1,4 @@
-package cn.dlbdata.dangjian.admin.service.model;
+package cn.dlbdata.dangjian.admin.service.pojo;
 
 public class LoginAccount {
 	private String loginMail;

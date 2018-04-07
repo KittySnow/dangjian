@@ -7,12 +7,9 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="sex" jdbcType="VARCHAR" property="sex" />
     <result column="age" jdbcType="INTEGER" property="age" />
-    <result column="out_zb" jdbcType="VARCHAR" property="outZb" />
-    <result column="moment_score" jdbcType="VARCHAR" property="momentScore" />
-    <result column="near_score" jdbcType="VARCHAR" property="nearScore" />
-    <result column="active_time" jdbcType="INTEGER" property="activeTime" />
-    <result column="zz_studytime" jdbcType="DATE" property="zzStudytime" />
+    <result column="fromdepartmentid" jdbcType="INTEGER" property="fromdepartmentid" />
     <result column="bid" jdbcType="INTEGER" property="bid" />
+    <result column="departmentid" jdbcType="INTEGER" property="departmentid" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -73,8 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, userid, name, sex, age, out_zb, moment_score, near_score, active_time, zz_studytime, 
-    bid
+    id, userid, name, sex, age, fromdepartmentid, bid, departmentid
   </sql>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymemberExample" resultMap="BaseResultMap">
     select
@@ -111,13 +107,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into p_partymember (userid, name, sex, 
-      age, out_zb, moment_score, 
-      near_score, active_time, zz_studytime, 
-      bid)
+      age, fromdepartmentid, bid, 
+      departmentid)
     values (#{userid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
-      #{age,jdbcType=INTEGER}, #{outZb,jdbcType=VARCHAR}, #{momentScore,jdbcType=VARCHAR}, 
-      #{nearScore,jdbcType=VARCHAR}, #{activeTime,jdbcType=INTEGER}, #{zzStudytime,jdbcType=DATE}, 
-      #{bid,jdbcType=INTEGER})
+      #{age,jdbcType=INTEGER}, #{fromdepartmentid,jdbcType=INTEGER}, #{bid,jdbcType=INTEGER}, 
+      #{departmentid,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymember">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -137,23 +131,14 @@
       <if test="age != null">
         age,
       </if>
-      <if test="outZb != null">
-        out_zb,
-      </if>
-      <if test="momentScore != null">
-        moment_score,
-      </if>
-      <if test="nearScore != null">
-        near_score,
-      </if>
-      <if test="activeTime != null">
-        active_time,
-      </if>
-      <if test="zzStudytime != null">
-        zz_studytime,
+      <if test="fromdepartmentid != null">
+        fromdepartmentid,
       </if>
       <if test="bid != null">
         bid,
+      </if>
+      <if test="departmentid != null">
+        departmentid,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -169,23 +154,14 @@
       <if test="age != null">
         #{age,jdbcType=INTEGER},
       </if>
-      <if test="outZb != null">
-        #{outZb,jdbcType=VARCHAR},
-      </if>
-      <if test="momentScore != null">
-        #{momentScore,jdbcType=VARCHAR},
-      </if>
-      <if test="nearScore != null">
-        #{nearScore,jdbcType=VARCHAR},
-      </if>
-      <if test="activeTime != null">
-        #{activeTime,jdbcType=INTEGER},
-      </if>
-      <if test="zzStudytime != null">
-        #{zzStudytime,jdbcType=DATE},
+      <if test="fromdepartmentid != null">
+        #{fromdepartmentid,jdbcType=INTEGER},
       </if>
       <if test="bid != null">
         #{bid,jdbcType=INTEGER},
+      </if>
+      <if test="departmentid != null">
+        #{departmentid,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -213,23 +189,14 @@
       <if test="record.age != null">
         age = #{record.age,jdbcType=INTEGER},
       </if>
-      <if test="record.outZb != null">
-        out_zb = #{record.outZb,jdbcType=VARCHAR},
-      </if>
-      <if test="record.momentScore != null">
-        moment_score = #{record.momentScore,jdbcType=VARCHAR},
-      </if>
-      <if test="record.nearScore != null">
-        near_score = #{record.nearScore,jdbcType=VARCHAR},
-      </if>
-      <if test="record.activeTime != null">
-        active_time = #{record.activeTime,jdbcType=INTEGER},
-      </if>
-      <if test="record.zzStudytime != null">
-        zz_studytime = #{record.zzStudytime,jdbcType=DATE},
+      <if test="record.fromdepartmentid != null">
+        fromdepartmentid = #{record.fromdepartmentid,jdbcType=INTEGER},
       </if>
       <if test="record.bid != null">
         bid = #{record.bid,jdbcType=INTEGER},
+      </if>
+      <if test="record.departmentid != null">
+        departmentid = #{record.departmentid,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -243,12 +210,9 @@
       name = #{record.name,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=VARCHAR},
       age = #{record.age,jdbcType=INTEGER},
-      out_zb = #{record.outZb,jdbcType=VARCHAR},
-      moment_score = #{record.momentScore,jdbcType=VARCHAR},
-      near_score = #{record.nearScore,jdbcType=VARCHAR},
-      active_time = #{record.activeTime,jdbcType=INTEGER},
-      zz_studytime = #{record.zzStudytime,jdbcType=DATE},
-      bid = #{record.bid,jdbcType=INTEGER}
+      fromdepartmentid = #{record.fromdepartmentid,jdbcType=INTEGER},
+      bid = #{record.bid,jdbcType=INTEGER},
+      departmentid = #{record.departmentid,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -268,23 +232,14 @@
       <if test="age != null">
         age = #{age,jdbcType=INTEGER},
       </if>
-      <if test="outZb != null">
-        out_zb = #{outZb,jdbcType=VARCHAR},
-      </if>
-      <if test="momentScore != null">
-        moment_score = #{momentScore,jdbcType=VARCHAR},
-      </if>
-      <if test="nearScore != null">
-        near_score = #{nearScore,jdbcType=VARCHAR},
-      </if>
-      <if test="activeTime != null">
-        active_time = #{activeTime,jdbcType=INTEGER},
-      </if>
-      <if test="zzStudytime != null">
-        zz_studytime = #{zzStudytime,jdbcType=DATE},
+      <if test="fromdepartmentid != null">
+        fromdepartmentid = #{fromdepartmentid,jdbcType=INTEGER},
       </if>
       <if test="bid != null">
         bid = #{bid,jdbcType=INTEGER},
+      </if>
+      <if test="departmentid != null">
+        departmentid = #{departmentid,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -295,12 +250,9 @@
       name = #{name,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=VARCHAR},
       age = #{age,jdbcType=INTEGER},
-      out_zb = #{outZb,jdbcType=VARCHAR},
-      moment_score = #{momentScore,jdbcType=VARCHAR},
-      near_score = #{nearScore,jdbcType=VARCHAR},
-      active_time = #{activeTime,jdbcType=INTEGER},
-      zz_studytime = #{zzStudytime,jdbcType=DATE},
-      bid = #{bid,jdbcType=INTEGER}
+      fromdepartmentid = #{fromdepartmentid,jdbcType=INTEGER},
+      bid = #{bid,jdbcType=INTEGER},
+      departmentid = #{departmentid,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

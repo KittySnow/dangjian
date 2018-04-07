@@ -26,7 +26,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 /**
  * 有关Swagger的配置
  *
- * @author yuguo
+ * @author linfujun
  */
 @Configuration
 @EnableSwagger2
@@ -36,17 +36,17 @@ public class SwaggerConfig {
     return new Docket(DocumentationType.SWAGGER_2)
             .apiInfo(apiInfo())
             .select()
-            .apis(RequestHandlerSelectors.basePackage("com.gridsum.tsa.api.controller"))
+            .apis(RequestHandlerSelectors.basePackage("cn.dlbdata.dangjian.admin.web.controller"))
             .paths(PathSelectors.any())
             .build();
   }
 
   private ApiInfo apiInfo() {
     return new ApiInfoBuilder()
-            .title("AD2腾讯社交广告API列表")
-            .description("腾讯社交广告所用API")
+            .title("党建API列表")
+            .description("党建所用API")
             .termsOfServiceUrl("")
-            .contact("国双")
+            .contact("东链博")
             .version("1.0")
             .build();
   }

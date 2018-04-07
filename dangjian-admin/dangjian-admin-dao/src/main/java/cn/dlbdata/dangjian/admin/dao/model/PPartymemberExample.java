@@ -2,8 +2,6 @@ package cn.dlbdata.dangjian.admin.dao.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class PPartymemberExample implements Serializable {
@@ -107,32 +105,6 @@ public class PPartymemberExample implements Serializable {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andIdIsNull() {
@@ -455,333 +427,63 @@ public class PPartymemberExample implements Serializable {
             return (Criteria) this;
         }
 
-        public Criteria andOutZbIsNull() {
-            addCriterion("out_zb is null");
+        public Criteria andFromdepartmentidIsNull() {
+            addCriterion("fromdepartmentid is null");
             return (Criteria) this;
         }
 
-        public Criteria andOutZbIsNotNull() {
-            addCriterion("out_zb is not null");
+        public Criteria andFromdepartmentidIsNotNull() {
+            addCriterion("fromdepartmentid is not null");
             return (Criteria) this;
         }
 
-        public Criteria andOutZbEqualTo(String value) {
-            addCriterion("out_zb =", value, "outZb");
+        public Criteria andFromdepartmentidEqualTo(Integer value) {
+            addCriterion("fromdepartmentid =", value, "fromdepartmentid");
             return (Criteria) this;
         }
 
-        public Criteria andOutZbNotEqualTo(String value) {
-            addCriterion("out_zb <>", value, "outZb");
+        public Criteria andFromdepartmentidNotEqualTo(Integer value) {
+            addCriterion("fromdepartmentid <>", value, "fromdepartmentid");
             return (Criteria) this;
         }
 
-        public Criteria andOutZbGreaterThan(String value) {
-            addCriterion("out_zb >", value, "outZb");
+        public Criteria andFromdepartmentidGreaterThan(Integer value) {
+            addCriterion("fromdepartmentid >", value, "fromdepartmentid");
             return (Criteria) this;
         }
 
-        public Criteria andOutZbGreaterThanOrEqualTo(String value) {
-            addCriterion("out_zb >=", value, "outZb");
+        public Criteria andFromdepartmentidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("fromdepartmentid >=", value, "fromdepartmentid");
             return (Criteria) this;
         }
 
-        public Criteria andOutZbLessThan(String value) {
-            addCriterion("out_zb <", value, "outZb");
+        public Criteria andFromdepartmentidLessThan(Integer value) {
+            addCriterion("fromdepartmentid <", value, "fromdepartmentid");
             return (Criteria) this;
         }
 
-        public Criteria andOutZbLessThanOrEqualTo(String value) {
-            addCriterion("out_zb <=", value, "outZb");
+        public Criteria andFromdepartmentidLessThanOrEqualTo(Integer value) {
+            addCriterion("fromdepartmentid <=", value, "fromdepartmentid");
             return (Criteria) this;
         }
 
-        public Criteria andOutZbLike(String value) {
-            addCriterion("out_zb like", value, "outZb");
+        public Criteria andFromdepartmentidIn(List<Integer> values) {
+            addCriterion("fromdepartmentid in", values, "fromdepartmentid");
             return (Criteria) this;
         }
 
-        public Criteria andOutZbNotLike(String value) {
-            addCriterion("out_zb not like", value, "outZb");
+        public Criteria andFromdepartmentidNotIn(List<Integer> values) {
+            addCriterion("fromdepartmentid not in", values, "fromdepartmentid");
             return (Criteria) this;
         }
 
-        public Criteria andOutZbIn(List<String> values) {
-            addCriterion("out_zb in", values, "outZb");
+        public Criteria andFromdepartmentidBetween(Integer value1, Integer value2) {
+            addCriterion("fromdepartmentid between", value1, value2, "fromdepartmentid");
             return (Criteria) this;
         }
 
-        public Criteria andOutZbNotIn(List<String> values) {
-            addCriterion("out_zb not in", values, "outZb");
-            return (Criteria) this;
-        }
-
-        public Criteria andOutZbBetween(String value1, String value2) {
-            addCriterion("out_zb between", value1, value2, "outZb");
-            return (Criteria) this;
-        }
-
-        public Criteria andOutZbNotBetween(String value1, String value2) {
-            addCriterion("out_zb not between", value1, value2, "outZb");
-            return (Criteria) this;
-        }
-
-        public Criteria andMomentScoreIsNull() {
-            addCriterion("moment_score is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMomentScoreIsNotNull() {
-            addCriterion("moment_score is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMomentScoreEqualTo(String value) {
-            addCriterion("moment_score =", value, "momentScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andMomentScoreNotEqualTo(String value) {
-            addCriterion("moment_score <>", value, "momentScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andMomentScoreGreaterThan(String value) {
-            addCriterion("moment_score >", value, "momentScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andMomentScoreGreaterThanOrEqualTo(String value) {
-            addCriterion("moment_score >=", value, "momentScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andMomentScoreLessThan(String value) {
-            addCriterion("moment_score <", value, "momentScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andMomentScoreLessThanOrEqualTo(String value) {
-            addCriterion("moment_score <=", value, "momentScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andMomentScoreLike(String value) {
-            addCriterion("moment_score like", value, "momentScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andMomentScoreNotLike(String value) {
-            addCriterion("moment_score not like", value, "momentScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andMomentScoreIn(List<String> values) {
-            addCriterion("moment_score in", values, "momentScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andMomentScoreNotIn(List<String> values) {
-            addCriterion("moment_score not in", values, "momentScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andMomentScoreBetween(String value1, String value2) {
-            addCriterion("moment_score between", value1, value2, "momentScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andMomentScoreNotBetween(String value1, String value2) {
-            addCriterion("moment_score not between", value1, value2, "momentScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andNearScoreIsNull() {
-            addCriterion("near_score is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andNearScoreIsNotNull() {
-            addCriterion("near_score is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andNearScoreEqualTo(String value) {
-            addCriterion("near_score =", value, "nearScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andNearScoreNotEqualTo(String value) {
-            addCriterion("near_score <>", value, "nearScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andNearScoreGreaterThan(String value) {
-            addCriterion("near_score >", value, "nearScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andNearScoreGreaterThanOrEqualTo(String value) {
-            addCriterion("near_score >=", value, "nearScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andNearScoreLessThan(String value) {
-            addCriterion("near_score <", value, "nearScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andNearScoreLessThanOrEqualTo(String value) {
-            addCriterion("near_score <=", value, "nearScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andNearScoreLike(String value) {
-            addCriterion("near_score like", value, "nearScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andNearScoreNotLike(String value) {
-            addCriterion("near_score not like", value, "nearScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andNearScoreIn(List<String> values) {
-            addCriterion("near_score in", values, "nearScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andNearScoreNotIn(List<String> values) {
-            addCriterion("near_score not in", values, "nearScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andNearScoreBetween(String value1, String value2) {
-            addCriterion("near_score between", value1, value2, "nearScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andNearScoreNotBetween(String value1, String value2) {
-            addCriterion("near_score not between", value1, value2, "nearScore");
-            return (Criteria) this;
-        }
-
-        public Criteria andActiveTimeIsNull() {
-            addCriterion("active_time is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andActiveTimeIsNotNull() {
-            addCriterion("active_time is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andActiveTimeEqualTo(Integer value) {
-            addCriterion("active_time =", value, "activeTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andActiveTimeNotEqualTo(Integer value) {
-            addCriterion("active_time <>", value, "activeTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andActiveTimeGreaterThan(Integer value) {
-            addCriterion("active_time >", value, "activeTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andActiveTimeGreaterThanOrEqualTo(Integer value) {
-            addCriterion("active_time >=", value, "activeTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andActiveTimeLessThan(Integer value) {
-            addCriterion("active_time <", value, "activeTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andActiveTimeLessThanOrEqualTo(Integer value) {
-            addCriterion("active_time <=", value, "activeTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andActiveTimeIn(List<Integer> values) {
-            addCriterion("active_time in", values, "activeTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andActiveTimeNotIn(List<Integer> values) {
-            addCriterion("active_time not in", values, "activeTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andActiveTimeBetween(Integer value1, Integer value2) {
-            addCriterion("active_time between", value1, value2, "activeTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andActiveTimeNotBetween(Integer value1, Integer value2) {
-            addCriterion("active_time not between", value1, value2, "activeTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andZzStudytimeIsNull() {
-            addCriterion("zz_studytime is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andZzStudytimeIsNotNull() {
-            addCriterion("zz_studytime is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andZzStudytimeEqualTo(Date value) {
-            addCriterionForJDBCDate("zz_studytime =", value, "zzStudytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andZzStudytimeNotEqualTo(Date value) {
-            addCriterionForJDBCDate("zz_studytime <>", value, "zzStudytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andZzStudytimeGreaterThan(Date value) {
-            addCriterionForJDBCDate("zz_studytime >", value, "zzStudytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andZzStudytimeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("zz_studytime >=", value, "zzStudytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andZzStudytimeLessThan(Date value) {
-            addCriterionForJDBCDate("zz_studytime <", value, "zzStudytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andZzStudytimeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("zz_studytime <=", value, "zzStudytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andZzStudytimeIn(List<Date> values) {
-            addCriterionForJDBCDate("zz_studytime in", values, "zzStudytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andZzStudytimeNotIn(List<Date> values) {
-            addCriterionForJDBCDate("zz_studytime not in", values, "zzStudytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andZzStudytimeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("zz_studytime between", value1, value2, "zzStudytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andZzStudytimeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("zz_studytime not between", value1, value2, "zzStudytime");
+        public Criteria andFromdepartmentidNotBetween(Integer value1, Integer value2) {
+            addCriterion("fromdepartmentid not between", value1, value2, "fromdepartmentid");
             return (Criteria) this;
         }
 
@@ -842,6 +544,66 @@ public class PPartymemberExample implements Serializable {
 
         public Criteria andBidNotBetween(Integer value1, Integer value2) {
             addCriterion("bid not between", value1, value2, "bid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidIsNull() {
+            addCriterion("departmentid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidIsNotNull() {
+            addCriterion("departmentid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidEqualTo(Integer value) {
+            addCriterion("departmentid =", value, "departmentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidNotEqualTo(Integer value) {
+            addCriterion("departmentid <>", value, "departmentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidGreaterThan(Integer value) {
+            addCriterion("departmentid >", value, "departmentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("departmentid >=", value, "departmentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidLessThan(Integer value) {
+            addCriterion("departmentid <", value, "departmentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidLessThanOrEqualTo(Integer value) {
+            addCriterion("departmentid <=", value, "departmentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidIn(List<Integer> values) {
+            addCriterion("departmentid in", values, "departmentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidNotIn(List<Integer> values) {
+            addCriterion("departmentid not in", values, "departmentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidBetween(Integer value1, Integer value2) {
+            addCriterion("departmentid between", value1, value2, "departmentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentidNotBetween(Integer value1, Integer value2) {
+            addCriterion("departmentid not between", value1, value2, "departmentid");
             return (Criteria) this;
         }
     }

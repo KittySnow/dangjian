@@ -1,9 +1,6 @@
 package cn.dlbdata.dangjian.admin.dao.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.io.Serializable;
-import java.util.Date;
 
 public class PPartymember implements Serializable {
     /**
@@ -46,36 +43,7 @@ public class PPartymember implements Serializable {
      *
      * @mbg.generated
      */
-    private String outZb;
-
-    /**
-     * 现有积分
-     *
-     * @mbg.generated
-     */
-    private String momentScore;
-
-    /**
-     * 年度积分
-     *
-     * @mbg.generated
-     */
-    private String nearScore;
-
-    /**
-     * 活动次数
-     *
-     * @mbg.generated
-     */
-    private Integer activeTime;
-
-    /**
-     * 政治学习时间
-     *
-     * @mbg.generated
-     */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date zzStudytime;
+    private Integer fromdepartmentid;
 
     /**
      * 积分分值表id
@@ -83,6 +51,8 @@ public class PPartymember implements Serializable {
      * @mbg.generated
      */
     private Integer bid;
+
+    private Integer departmentid;
 
     private static final long serialVersionUID = 1L;
 
@@ -126,44 +96,12 @@ public class PPartymember implements Serializable {
         this.age = age;
     }
 
-    public String getOutZb() {
-        return outZb;
+    public Integer getFromdepartmentid() {
+        return fromdepartmentid;
     }
 
-    public void setOutZb(String outZb) {
-        this.outZb = outZb;
-    }
-
-    public String getMomentScore() {
-        return momentScore;
-    }
-
-    public void setMomentScore(String momentScore) {
-        this.momentScore = momentScore;
-    }
-
-    public String getNearScore() {
-        return nearScore;
-    }
-
-    public void setNearScore(String nearScore) {
-        this.nearScore = nearScore;
-    }
-
-    public Integer getActiveTime() {
-        return activeTime;
-    }
-
-    public void setActiveTime(Integer activeTime) {
-        this.activeTime = activeTime;
-    }
-
-    public Date getZzStudytime() {
-        return zzStudytime;
-    }
-
-    public void setZzStudytime(Date zzStudytime) {
-        this.zzStudytime = zzStudytime;
+    public void setFromdepartmentid(Integer fromdepartmentid) {
+        this.fromdepartmentid = fromdepartmentid;
     }
 
     public Integer getBid() {
@@ -172,6 +110,14 @@ public class PPartymember implements Serializable {
 
     public void setBid(Integer bid) {
         this.bid = bid;
+    }
+
+    public Integer getDepartmentid() {
+        return departmentid;
+    }
+
+    public void setDepartmentid(Integer departmentid) {
+        this.departmentid = departmentid;
     }
 
     @Override
@@ -185,12 +131,9 @@ public class PPartymember implements Serializable {
         sb.append(", name=").append(name);
         sb.append(", sex=").append(sex);
         sb.append(", age=").append(age);
-        sb.append(", outZb=").append(outZb);
-        sb.append(", momentScore=").append(momentScore);
-        sb.append(", nearScore=").append(nearScore);
-        sb.append(", activeTime=").append(activeTime);
-        sb.append(", zzStudytime=").append(zzStudytime);
+        sb.append(", fromdepartmentid=").append(fromdepartmentid);
         sb.append(", bid=").append(bid);
+        sb.append(", departmentid=").append(departmentid);
         sb.append("]");
         return sb.toString();
     }
@@ -212,12 +155,9 @@ public class PPartymember implements Serializable {
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
             && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()))
             && (this.getAge() == null ? other.getAge() == null : this.getAge().equals(other.getAge()))
-            && (this.getOutZb() == null ? other.getOutZb() == null : this.getOutZb().equals(other.getOutZb()))
-            && (this.getMomentScore() == null ? other.getMomentScore() == null : this.getMomentScore().equals(other.getMomentScore()))
-            && (this.getNearScore() == null ? other.getNearScore() == null : this.getNearScore().equals(other.getNearScore()))
-            && (this.getActiveTime() == null ? other.getActiveTime() == null : this.getActiveTime().equals(other.getActiveTime()))
-            && (this.getZzStudytime() == null ? other.getZzStudytime() == null : this.getZzStudytime().equals(other.getZzStudytime()))
-            && (this.getBid() == null ? other.getBid() == null : this.getBid().equals(other.getBid()));
+            && (this.getFromdepartmentid() == null ? other.getFromdepartmentid() == null : this.getFromdepartmentid().equals(other.getFromdepartmentid()))
+            && (this.getBid() == null ? other.getBid() == null : this.getBid().equals(other.getBid()))
+            && (this.getDepartmentid() == null ? other.getDepartmentid() == null : this.getDepartmentid().equals(other.getDepartmentid()));
     }
 
     @Override
@@ -229,12 +169,9 @@ public class PPartymember implements Serializable {
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         result = prime * result + ((getSex() == null) ? 0 : getSex().hashCode());
         result = prime * result + ((getAge() == null) ? 0 : getAge().hashCode());
-        result = prime * result + ((getOutZb() == null) ? 0 : getOutZb().hashCode());
-        result = prime * result + ((getMomentScore() == null) ? 0 : getMomentScore().hashCode());
-        result = prime * result + ((getNearScore() == null) ? 0 : getNearScore().hashCode());
-        result = prime * result + ((getActiveTime() == null) ? 0 : getActiveTime().hashCode());
-        result = prime * result + ((getZzStudytime() == null) ? 0 : getZzStudytime().hashCode());
+        result = prime * result + ((getFromdepartmentid() == null) ? 0 : getFromdepartmentid().hashCode());
         result = prime * result + ((getBid() == null) ? 0 : getBid().hashCode());
+        result = prime * result + ((getDepartmentid() == null) ? 0 : getDepartmentid().hashCode());
         return result;
     }
 }
