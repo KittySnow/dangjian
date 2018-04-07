@@ -196,10 +196,11 @@
             });
 
         }
-        if(document.cookie.userId){
+        if(!document.cookie){
             window.location.href="./login.html";
+        }else{
+            var userId = document.cookie.split(";")[1].split("=")[1];
         }
-
     });
 </script>
 
