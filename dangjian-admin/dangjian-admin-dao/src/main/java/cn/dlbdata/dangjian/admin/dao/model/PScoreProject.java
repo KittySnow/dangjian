@@ -23,7 +23,7 @@ public class PScoreProject implements Serializable {
      *
      * @mbg.generated
      */
-    private BigDecimal score;
+    private Double score;
 
     /**
      * 是否有效
@@ -52,11 +52,11 @@ public class PScoreProject implements Serializable {
         this.projectName = projectName;
     }
 
-    public BigDecimal getScore() {
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(BigDecimal score) {
+    public void setScore(Double score) {
         this.score = score;
     }
 

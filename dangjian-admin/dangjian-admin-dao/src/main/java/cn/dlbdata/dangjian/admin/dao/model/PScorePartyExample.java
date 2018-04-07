@@ -778,6 +778,136 @@ public class PScorePartyExample implements Serializable {
             addCriterion("valid_yn not between", value1, value2, "validYn");
             return (Criteria) this;
         }
+
+        public Criteria andUserIdIsNull() {
+            addCriterion("user_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdIsNotNull() {
+            addCriterion("user_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdEqualTo(Integer value) {
+            addCriterion("user_id =", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdNotEqualTo(Integer value) {
+            addCriterion("user_id <>", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdGreaterThan(Integer value) {
+            addCriterion("user_id >", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("user_id >=", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdLessThan(Integer value) {
+            addCriterion("user_id <", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdLessThanOrEqualTo(Integer value) {
+            addCriterion("user_id <=", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdIn(List<Integer> values) {
+            addCriterion("user_id in", values, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdNotIn(List<Integer> values) {
+            addCriterion("user_id not in", values, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdBetween(Integer value1, Integer value2) {
+            addCriterion("user_id between", value1, value2, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("user_id not between", value1, value2, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusCdIsNull() {
+            addCriterion("status_cd is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusCdIsNotNull() {
+            addCriterion("status_cd is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusCdEqualTo(String value) {
+            addCriterion("status_cd =", value, "statusCd");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusCdNotEqualTo(String value) {
+            addCriterion("status_cd <>", value, "statusCd");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusCdGreaterThan(String value) {
+            addCriterion("status_cd >", value, "statusCd");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusCdGreaterThanOrEqualTo(String value) {
+            addCriterion("status_cd >=", value, "statusCd");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusCdLessThan(String value) {
+            addCriterion("status_cd <", value, "statusCd");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusCdLessThanOrEqualTo(String value) {
+            addCriterion("status_cd <=", value, "statusCd");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusCdLike(String value) {
+            addCriterion("status_cd like", value, "statusCd");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusCdNotLike(String value) {
+            addCriterion("status_cd not like", value, "statusCd");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusCdIn(List<String> values) {
+            addCriterion("status_cd in", values, "statusCd");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusCdNotIn(List<String> values) {
+            addCriterion("status_cd not in", values, "statusCd");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusCdBetween(String value1, String value2) {
+            addCriterion("status_cd between", value1, value2, "statusCd");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusCdNotBetween(String value1, String value2) {
+            addCriterion("status_cd not between", value1, value2, "statusCd");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria implements Serializable {

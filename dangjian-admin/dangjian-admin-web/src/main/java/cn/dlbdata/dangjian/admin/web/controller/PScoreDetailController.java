@@ -95,4 +95,30 @@ public class PScoreDetailController{
         result.setData(pScoreDetail);
         return result.getResult();
     }
+
+    @RequestMapping(value="/queryByStudyList",method= RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> queryByStudyList(){
+        ResultUtil result = new ResultUtil();
+        PScoreDetailExample pScoreDetailExample = new PScoreDetailExample();
+        PScoreDetailExample.Criteria criteria =  pScoreDetailExample.createCriteria();
+        criteria.andTitleLike("%自主%");
+        List<PScoreDetail> pScoreDetailList = pScoreDetailService.selectByExample(pScoreDetailExample);
+        result.setSuccess(true);
+        result.setData(pScoreDetailList);
+        return result.getResult();
+    }
+
+    @RequestMapping(value="/queryByJoinList",method= RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> queryByJoinList(){
+        ResultUtil result = new ResultUtil();
+        PScoreDetailExample pScoreDetailExample = new PScoreDetailExample();
+        PScoreDetailExample.Criteria criteria =  pScoreDetailExample.createCriteria();
+        criteria.andTitleLike("%参加活动%");
+        List<PScoreDetail> pScoreDetailList = pScoreDetailService.selectByExample(pScoreDetailExample);
+        result.setSuccess(true);
+        result.setData(pScoreDetailList);
+        return result.getResult();
+    }
 }

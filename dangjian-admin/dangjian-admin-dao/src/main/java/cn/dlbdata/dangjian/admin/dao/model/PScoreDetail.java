@@ -35,7 +35,7 @@ public class PScoreDetail implements Serializable {
      *
      * @mbg.generated
      */
-    private BigDecimal score;
+    private double score;
 
     /**
      * 是否仅加分一次
@@ -146,11 +146,11 @@ public class PScoreDetail implements Serializable {
         this.content = content;
     }
 
-    public BigDecimal getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(BigDecimal score) {
+    public void setScore(double score) {
         this.score = score;
     }
 
@@ -291,7 +291,6 @@ public class PScoreDetail implements Serializable {
             && (this.getProjectId() == null ? other.getProjectId() == null : this.getProjectId().equals(other.getProjectId()))
             && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()))
             && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
-            && (this.getScore() == null ? other.getScore() == null : this.getScore().equals(other.getScore()))
             && (this.getOnlyYn() == null ? other.getOnlyYn() == null : this.getOnlyYn().equals(other.getOnlyYn()))
             && (this.getActorRoleId() == null ? other.getActorRoleId() == null : this.getActorRoleId().equals(other.getActorRoleId()))
             && (this.getAdderRoleId() == null ? other.getAdderRoleId() == null : this.getAdderRoleId().equals(other.getAdderRoleId()))
@@ -312,7 +311,6 @@ public class PScoreDetail implements Serializable {
         result = prime * result + ((getProjectId() == null) ? 0 : getProjectId().hashCode());
         result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
         result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
-        result = prime * result + ((getScore() == null) ? 0 : getScore().hashCode());
         result = prime * result + ((getOnlyYn() == null) ? 0 : getOnlyYn().hashCode());
         result = prime * result + ((getActorRoleId() == null) ? 0 : getActorRoleId().hashCode());
         result = prime * result + ((getAdderRoleId() == null) ? 0 : getAdderRoleId().hashCode());

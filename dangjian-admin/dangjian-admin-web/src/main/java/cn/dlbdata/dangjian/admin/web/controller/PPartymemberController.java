@@ -27,6 +27,7 @@ public class PPartymemberController {
     @Autowired
     private PPartymemberService pPartymemberService;
 
+    @Autowired
     private PUserService pUserService;
 
 
@@ -112,7 +113,7 @@ public class PPartymemberController {
             result.setData(pPartymember);
         }else{
             result.setSuccess(false);
-            result.setMsg("没有找到想对应的党员");
+            result.setMsg("没有找到对应的党员");
         }
         return result.getResult();
     }
@@ -134,7 +135,6 @@ public class PPartymemberController {
             PPartymemberExample.Criteria pPartymemberCriteria =  pPartymemberExample.createCriteria();
             pPartymemberCriteria.andUseridEqualTo(pUserList.get(i).getUserid());
             PPartymember pPartymember = pPartymemberService.selectByExample(pPartymemberExample).get(0);
-            pPartymemberExample = null;
             pPartymemberListAll.add(pPartymember);
         }
         result.setSuccess(true);

@@ -1,5 +1,7 @@
 package cn.dlbdata.dangjian.admin.dao.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,6 +13,7 @@ public class PStudy implements Serializable {
      *
      * @mbg.generated
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm")
     private Date starttime;
 
     /**
@@ -18,6 +21,7 @@ public class PStudy implements Serializable {
      *
      * @mbg.generated
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm")
     private Date endtime;
 
     /**
