@@ -1,0 +1,118 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li class="active"><a href="#!/StudyModule/studyModule">自发活动列表</a></li>
+</ol>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">自发活动列表</h3>
+            </div>
+            <div class="box-mgr">
+                <a class="btn btn-info" href="#!/StudyModule/addStudy">添加自发活动</a>
+            </div>
+            <div class="box-body table-responsive">
+                <table id="StudyModuleTable" class="table table-bordered table-striped" data-unique-id="studyid">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.actionStudyModuleEvents = {
+        'click .editStudyModule' : function (e, value, row, index) {
+            console.log(row);
+        },
+        'click .delStudyModule' : function (e, value, row, index) {
+            deleteAjax(row,'./pstudy/deleteById','studyid','post');
+        }
+    };
+
+
+    function StudyModuleStausFormatter(value,row,index) {
+        return '<a class="btn btn-info btn-sm editStudyModule" href="#!/StudyModule/editStudy/'+row.studyid+'">修改</a>　<a class="btn btn-warning btn-sm delStudyModule">删除</a>'
+    }
+
+
+    $(function(){
+
+        $('#StudyModuleTable').bootstrapTable({
+            showHeader:true,
+            columns: [
+                {
+                    field: 'studyid',
+                    formatter:fmtIdx,
+                    title:'编号'
+                },
+                {
+                    field: 'starttime',
+                    title: '开始时间'
+                },
+                {
+                    field: 'endtime',
+                    title: '结束时间'
+                },
+                {
+                    field: 'content',
+                    title: '学习主要内容'
+                },
+                {
+                    field: 'departmentid',
+                    title: '支部ID'
+                },
+                {
+                    field: 'projectid',
+                    title: '项目ID'
+                },
+                {
+                    field: 'moduleid',
+                    title: '模块ID'
+                },
+                {
+                    field: 'status',
+                    title: '上级是否审批'
+                },
+                {
+                    field: 'create_userid',
+                    title: '创建者'
+                },
+                {
+                    field: 'createtime',
+                    title: '创建时间'
+                },
+                {
+                    title: '操作',
+                    width:250,
+                    formatter: StudyModuleStausFormatter,
+                    events: actionStudyModuleEvents
+                }],
+            method: 'GET',
+            url: "./pstudy/list",
+            sidePagination: "server", //服务端请求
+            queryParams:function (params) {
+                return {
+                    pageSize:params.limit||10,
+                    pageNum:~~(params.offset/10)+1||1
+                }
+            },
+            dataField:'list',
+            responseHandler:function(res){
+                return res.data;
+            },
+            showColumns:true,
+            pagination:true,
+            cache: false,
+            striped: true,
+            pageSize: 10,
+            pageList: [5,10,15],
+            paginationHAlign: 'right', //right, left
+            paginationVAlign: 'bottom', //bottom, top, both
+            sortable:false,
+            search: true,
+            showPaginationSwitch: false,
+            showRefresh: true,
+            clickToSelect: true
+        });
+    });
+
+</script>

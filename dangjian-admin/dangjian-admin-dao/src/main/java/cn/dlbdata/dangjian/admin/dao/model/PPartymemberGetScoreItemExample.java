@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PPartymemberScoreItemExample implements Serializable {
+public class PPartymemberGetScoreItemExample implements Serializable {
     protected String orderByClause;
 
     protected boolean distinct;
@@ -14,7 +14,7 @@ public class PPartymemberScoreItemExample implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public PPartymemberScoreItemExample() {
+    public PPartymemberGetScoreItemExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -228,63 +228,63 @@ public class PPartymemberScoreItemExample implements Serializable {
             return (Criteria) this;
         }
 
-        public Criteria andScorepartyidIsNull() {
-            addCriterion("scorepartyid is null");
+        public Criteria andModuleidIsNull() {
+            addCriterion("moduleid is null");
             return (Criteria) this;
         }
 
-        public Criteria andScorepartyidIsNotNull() {
-            addCriterion("scorepartyid is not null");
+        public Criteria andModuleidIsNotNull() {
+            addCriterion("moduleid is not null");
             return (Criteria) this;
         }
 
-        public Criteria andScorepartyidEqualTo(Integer value) {
-            addCriterion("scorepartyid =", value, "scorepartyid");
+        public Criteria andModuleidEqualTo(Integer value) {
+            addCriterion("moduleid =", value, "moduleid");
             return (Criteria) this;
         }
 
-        public Criteria andScorepartyidNotEqualTo(Integer value) {
-            addCriterion("scorepartyid <>", value, "scorepartyid");
+        public Criteria andModuleidNotEqualTo(Integer value) {
+            addCriterion("moduleid <>", value, "moduleid");
             return (Criteria) this;
         }
 
-        public Criteria andScorepartyidGreaterThan(Integer value) {
-            addCriterion("scorepartyid >", value, "scorepartyid");
+        public Criteria andModuleidGreaterThan(Integer value) {
+            addCriterion("moduleid >", value, "moduleid");
             return (Criteria) this;
         }
 
-        public Criteria andScorepartyidGreaterThanOrEqualTo(Integer value) {
-            addCriterion("scorepartyid >=", value, "scorepartyid");
+        public Criteria andModuleidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("moduleid >=", value, "moduleid");
             return (Criteria) this;
         }
 
-        public Criteria andScorepartyidLessThan(Integer value) {
-            addCriterion("scorepartyid <", value, "scorepartyid");
+        public Criteria andModuleidLessThan(Integer value) {
+            addCriterion("moduleid <", value, "moduleid");
             return (Criteria) this;
         }
 
-        public Criteria andScorepartyidLessThanOrEqualTo(Integer value) {
-            addCriterion("scorepartyid <=", value, "scorepartyid");
+        public Criteria andModuleidLessThanOrEqualTo(Integer value) {
+            addCriterion("moduleid <=", value, "moduleid");
             return (Criteria) this;
         }
 
-        public Criteria andScorepartyidIn(List<Integer> values) {
-            addCriterion("scorepartyid in", values, "scorepartyid");
+        public Criteria andModuleidIn(List<Integer> values) {
+            addCriterion("moduleid in", values, "moduleid");
             return (Criteria) this;
         }
 
-        public Criteria andScorepartyidNotIn(List<Integer> values) {
-            addCriterion("scorepartyid not in", values, "scorepartyid");
+        public Criteria andModuleidNotIn(List<Integer> values) {
+            addCriterion("moduleid not in", values, "moduleid");
             return (Criteria) this;
         }
 
-        public Criteria andScorepartyidBetween(Integer value1, Integer value2) {
-            addCriterion("scorepartyid between", value1, value2, "scorepartyid");
+        public Criteria andModuleidBetween(Integer value1, Integer value2) {
+            addCriterion("moduleid between", value1, value2, "moduleid");
             return (Criteria) this;
         }
 
-        public Criteria andScorepartyidNotBetween(Integer value1, Integer value2) {
-            addCriterion("scorepartyid not between", value1, value2, "scorepartyid");
+        public Criteria andModuleidNotBetween(Integer value1, Integer value2) {
+            addCriterion("moduleid not between", value1, value2, "moduleid");
             return (Criteria) this;
         }
 
@@ -408,63 +408,183 @@ public class PPartymemberScoreItemExample implements Serializable {
             return (Criteria) this;
         }
 
-        public Criteria andPictureidIsNull() {
-            addCriterion("pictureid is null");
+        public Criteria andApproverIsNull() {
+            addCriterion("approver is null");
             return (Criteria) this;
         }
 
-        public Criteria andPictureidIsNotNull() {
-            addCriterion("pictureid is not null");
+        public Criteria andApproverIsNotNull() {
+            addCriterion("approver is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPictureidEqualTo(Integer value) {
-            addCriterion("pictureid =", value, "pictureid");
+        public Criteria andApproverEqualTo(Integer value) {
+            addCriterion("approver =", value, "approver");
             return (Criteria) this;
         }
 
-        public Criteria andPictureidNotEqualTo(Integer value) {
-            addCriterion("pictureid <>", value, "pictureid");
+        public Criteria andApproverNotEqualTo(Integer value) {
+            addCriterion("approver <>", value, "approver");
             return (Criteria) this;
         }
 
-        public Criteria andPictureidGreaterThan(Integer value) {
-            addCriterion("pictureid >", value, "pictureid");
+        public Criteria andApproverGreaterThan(Integer value) {
+            addCriterion("approver >", value, "approver");
             return (Criteria) this;
         }
 
-        public Criteria andPictureidGreaterThanOrEqualTo(Integer value) {
-            addCriterion("pictureid >=", value, "pictureid");
+        public Criteria andApproverGreaterThanOrEqualTo(Integer value) {
+            addCriterion("approver >=", value, "approver");
             return (Criteria) this;
         }
 
-        public Criteria andPictureidLessThan(Integer value) {
-            addCriterion("pictureid <", value, "pictureid");
+        public Criteria andApproverLessThan(Integer value) {
+            addCriterion("approver <", value, "approver");
             return (Criteria) this;
         }
 
-        public Criteria andPictureidLessThanOrEqualTo(Integer value) {
-            addCriterion("pictureid <=", value, "pictureid");
+        public Criteria andApproverLessThanOrEqualTo(Integer value) {
+            addCriterion("approver <=", value, "approver");
             return (Criteria) this;
         }
 
-        public Criteria andPictureidIn(List<Integer> values) {
-            addCriterion("pictureid in", values, "pictureid");
+        public Criteria andApproverIn(List<Integer> values) {
+            addCriterion("approver in", values, "approver");
             return (Criteria) this;
         }
 
-        public Criteria andPictureidNotIn(List<Integer> values) {
-            addCriterion("pictureid not in", values, "pictureid");
+        public Criteria andApproverNotIn(List<Integer> values) {
+            addCriterion("approver not in", values, "approver");
             return (Criteria) this;
         }
 
-        public Criteria andPictureidBetween(Integer value1, Integer value2) {
-            addCriterion("pictureid between", value1, value2, "pictureid");
+        public Criteria andApproverBetween(Integer value1, Integer value2) {
+            addCriterion("approver between", value1, value2, "approver");
             return (Criteria) this;
         }
 
-        public Criteria andPictureidNotBetween(Integer value1, Integer value2) {
-            addCriterion("pictureid not between", value1, value2, "pictureid");
+        public Criteria andApproverNotBetween(Integer value1, Integer value2) {
+            addCriterion("approver not between", value1, value2, "approver");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectidIsNull() {
+            addCriterion("projectid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectidIsNotNull() {
+            addCriterion("projectid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectidEqualTo(Integer value) {
+            addCriterion("projectid =", value, "projectid");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectidNotEqualTo(Integer value) {
+            addCriterion("projectid <>", value, "projectid");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectidGreaterThan(Integer value) {
+            addCriterion("projectid >", value, "projectid");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("projectid >=", value, "projectid");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectidLessThan(Integer value) {
+            addCriterion("projectid <", value, "projectid");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectidLessThanOrEqualTo(Integer value) {
+            addCriterion("projectid <=", value, "projectid");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectidIn(List<Integer> values) {
+            addCriterion("projectid in", values, "projectid");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectidNotIn(List<Integer> values) {
+            addCriterion("projectid not in", values, "projectid");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectidBetween(Integer value1, Integer value2) {
+            addCriterion("projectid between", value1, value2, "projectid");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectidNotBetween(Integer value1, Integer value2) {
+            addCriterion("projectid not between", value1, value2, "projectid");
+            return (Criteria) this;
+        }
+
+        public Criteria andGetscoreIsNull() {
+            addCriterion("getscore is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGetscoreIsNotNull() {
+            addCriterion("getscore is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGetscoreEqualTo(Integer value) {
+            addCriterion("getscore =", value, "getscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andGetscoreNotEqualTo(Integer value) {
+            addCriterion("getscore <>", value, "getscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andGetscoreGreaterThan(Integer value) {
+            addCriterion("getscore >", value, "getscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andGetscoreGreaterThanOrEqualTo(Integer value) {
+            addCriterion("getscore >=", value, "getscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andGetscoreLessThan(Integer value) {
+            addCriterion("getscore <", value, "getscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andGetscoreLessThanOrEqualTo(Integer value) {
+            addCriterion("getscore <=", value, "getscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andGetscoreIn(List<Integer> values) {
+            addCriterion("getscore in", values, "getscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andGetscoreNotIn(List<Integer> values) {
+            addCriterion("getscore not in", values, "getscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andGetscoreBetween(Integer value1, Integer value2) {
+            addCriterion("getscore between", value1, value2, "getscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andGetscoreNotBetween(Integer value1, Integer value2) {
+            addCriterion("getscore not between", value1, value2, "getscore");
             return (Criteria) this;
         }
     }

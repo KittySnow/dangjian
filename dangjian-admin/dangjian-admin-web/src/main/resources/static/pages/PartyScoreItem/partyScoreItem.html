@@ -1,42 +1,42 @@
 <ol class="breadcrumb newcrumb">
     <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
-    <li class="active"><a href="#!/PartymemberScoreItem/partymemberScoreItem">党员积分明细列表</a></li>
+    <li class="active"><a href="#!/PartyScoreItem/partyScoreItem">党员获取积分明细列表</a></li>
 </ol>
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">党员积分明细列表</h3>
+                <h3 class="box-title">党员获取积分明细列表</h3>
             </div>
             <div class="box-mgr">
-                <a class="btn btn-info" href="#!/PartymemberScoreItem/addPartymemberScoreItem">添加党员积分明细</a>
+                <a class="btn btn-info" href="#!/PartyScoreItem/addPartymemberGetScoreItem">添加党员获取积分明细</a>
             </div>
             <div class="box-body table-responsive">
-                <table id="PartymemberScoreItemTable" class="table table-bordered table-striped" data-unique-id="itemid">
+                <table id="PartyScoreItemTable" class="table table-bordered table-striped" data-unique-id="itemid">
                 </table>
             </div>
         </div>
     </div>
 </div>
 <script>
-    window.actionPartymemberScoreItemEvents = {
-        'click .editPartymemberScoreItem' : function (e, value, row, index) {
+    window.actionPartyScoreItemEvents = {
+        'click .editPartyScoreItem' : function (e, value, row, index) {
             console.log(row);
         },
-        'click .delPartymemberScoreItem' : function (e, value, row, index) {
-            deleteAjax(row,'./ppartymemberscoreitem/deleteById','itemid','post');
+        'click .delPartyScoreItem' : function (e, value, row, index) {
+            deleteAjax(row,'./ppartymembergetscoreitem/deleteById','itemid','post');
         }
     };
 
 
-    function PartymemberScoreItemStausFormatter(value,row,index) {
-        return '<a class="btn btn-info btn-sm editPartymemberScoreItem" href="#!/PartymemberScoreItem/editPartymemberScoreItem/'+row.itemid+'">修改</a>　<a class="btn btn-warning btn-sm delPartymemberScoreItem">删除</a>'
+    function PartyScoreItemStausFormatter(value,row,index) {
+        return '<a class="btn btn-info btn-sm editPartyScoreItem" href="#!/PartyScoreItem/editPartymemberGetScoreItem/'+row.itemid+'">修改</a>　<a class="btn btn-warning btn-sm delPartyScoreItem">删除</a>'
     }
 
 
     $(function(){
 
-        $('#PartymemberScoreItemTable').bootstrapTable({
+        $('#PartyScoreItemTable').bootstrapTable({
             showHeader:true,
             columns: [
                 {
@@ -49,7 +49,7 @@
                     title: '党员ID'
                 },
                 {
-                    field: 'scorepartyid',
+                    field: 'moduleid',
                     title: '党员积分项ID'
                 },
                 {
@@ -65,17 +65,25 @@
                     title: '结束时间'
                 },
                 {
-                    field: 'pictureid',
-                    title: '提交图片'
+                    field: 'approver',
+                    title: '审批人'
+                },
+                {
+                    field: 'projectid',
+                    title: '项目ID'
+                },
+                {
+                    field: 'getscore',
+                    title: '获得积分'
                 },
                 {
                     title: '操作',
                     width:250,
-                    formatter: PartymemberScoreItemStausFormatter,
-                    events: actionPartymemberScoreItemEvents
+                    formatter: PartyScoreItemStausFormatter,
+                    events: actionPartyScoreItemEvents
                 }],
             method: 'GET',
-            url: "./ppartymemberscoreitem/list",
+            url: "./ppartymembergetscoreitem/list",
             sidePagination: "server", //服务端请求
             queryParams:function (params) {
                 return {

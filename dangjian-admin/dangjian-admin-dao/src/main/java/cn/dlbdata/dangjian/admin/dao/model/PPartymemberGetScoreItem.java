@@ -3,7 +3,7 @@ package cn.dlbdata.dangjian.admin.dao.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class PPartymemberScoreItem implements Serializable {
+public class PPartymemberGetScoreItem implements Serializable {
     private Integer itemid;
 
     /**
@@ -18,7 +18,7 @@ public class PPartymemberScoreItem implements Serializable {
      *
      * @mbg.generated
      */
-    private Integer scorepartyid;
+    private Integer moduleid;
 
     /**
      * 开始时间
@@ -35,11 +35,25 @@ public class PPartymemberScoreItem implements Serializable {
     private Date endtime;
 
     /**
-     * 提交图片
+     * 审批人
      *
      * @mbg.generated
      */
-    private Integer pictureid;
+    private Integer approver;
+
+    /**
+     * 项目ID
+     *
+     * @mbg.generated
+     */
+    private Integer projectid;
+
+    /**
+     * 获得积分
+     *
+     * @mbg.generated
+     */
+    private Integer getscore;
 
     /**
      * 主要内容
@@ -66,12 +80,12 @@ public class PPartymemberScoreItem implements Serializable {
         this.partymemberid = partymemberid;
     }
 
-    public Integer getScorepartyid() {
-        return scorepartyid;
+    public Integer getModuleid() {
+        return moduleid;
     }
 
-    public void setScorepartyid(Integer scorepartyid) {
-        this.scorepartyid = scorepartyid;
+    public void setModuleid(Integer moduleid) {
+        this.moduleid = moduleid;
     }
 
     public Date getStarttime() {
@@ -90,12 +104,28 @@ public class PPartymemberScoreItem implements Serializable {
         this.endtime = endtime;
     }
 
-    public Integer getPictureid() {
-        return pictureid;
+    public Integer getApprover() {
+        return approver;
     }
 
-    public void setPictureid(Integer pictureid) {
-        this.pictureid = pictureid;
+    public void setApprover(Integer approver) {
+        this.approver = approver;
+    }
+
+    public Integer getProjectid() {
+        return projectid;
+    }
+
+    public void setProjectid(Integer projectid) {
+        this.projectid = projectid;
+    }
+
+    public Integer getGetscore() {
+        return getscore;
+    }
+
+    public void setGetscore(Integer getscore) {
+        this.getscore = getscore;
     }
 
     public String getContent() {
@@ -114,10 +144,12 @@ public class PPartymemberScoreItem implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", itemid=").append(itemid);
         sb.append(", partymemberid=").append(partymemberid);
-        sb.append(", scorepartyid=").append(scorepartyid);
+        sb.append(", moduleid=").append(moduleid);
         sb.append(", starttime=").append(starttime);
         sb.append(", endtime=").append(endtime);
-        sb.append(", pictureid=").append(pictureid);
+        sb.append(", approver=").append(approver);
+        sb.append(", projectid=").append(projectid);
+        sb.append(", getscore=").append(getscore);
         sb.append(", content=").append(content);
         sb.append("]");
         return sb.toString();
@@ -134,13 +166,15 @@ public class PPartymemberScoreItem implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        PPartymemberScoreItem other = (PPartymemberScoreItem) that;
+        PPartymemberGetScoreItem other = (PPartymemberGetScoreItem) that;
         return (this.getItemid() == null ? other.getItemid() == null : this.getItemid().equals(other.getItemid()))
             && (this.getPartymemberid() == null ? other.getPartymemberid() == null : this.getPartymemberid().equals(other.getPartymemberid()))
-            && (this.getScorepartyid() == null ? other.getScorepartyid() == null : this.getScorepartyid().equals(other.getScorepartyid()))
+            && (this.getModuleid() == null ? other.getModuleid() == null : this.getModuleid().equals(other.getModuleid()))
             && (this.getStarttime() == null ? other.getStarttime() == null : this.getStarttime().equals(other.getStarttime()))
             && (this.getEndtime() == null ? other.getEndtime() == null : this.getEndtime().equals(other.getEndtime()))
-            && (this.getPictureid() == null ? other.getPictureid() == null : this.getPictureid().equals(other.getPictureid()))
+            && (this.getApprover() == null ? other.getApprover() == null : this.getApprover().equals(other.getApprover()))
+            && (this.getProjectid() == null ? other.getProjectid() == null : this.getProjectid().equals(other.getProjectid()))
+            && (this.getGetscore() == null ? other.getGetscore() == null : this.getGetscore().equals(other.getGetscore()))
             && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()));
     }
 
@@ -150,10 +184,12 @@ public class PPartymemberScoreItem implements Serializable {
         int result = 1;
         result = prime * result + ((getItemid() == null) ? 0 : getItemid().hashCode());
         result = prime * result + ((getPartymemberid() == null) ? 0 : getPartymemberid().hashCode());
-        result = prime * result + ((getScorepartyid() == null) ? 0 : getScorepartyid().hashCode());
+        result = prime * result + ((getModuleid() == null) ? 0 : getModuleid().hashCode());
         result = prime * result + ((getStarttime() == null) ? 0 : getStarttime().hashCode());
         result = prime * result + ((getEndtime() == null) ? 0 : getEndtime().hashCode());
-        result = prime * result + ((getPictureid() == null) ? 0 : getPictureid().hashCode());
+        result = prime * result + ((getApprover() == null) ? 0 : getApprover().hashCode());
+        result = prime * result + ((getProjectid() == null) ? 0 : getProjectid().hashCode());
+        result = prime * result + ((getGetscore() == null) ? 0 : getGetscore().hashCode());
         result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
         return result;
     }

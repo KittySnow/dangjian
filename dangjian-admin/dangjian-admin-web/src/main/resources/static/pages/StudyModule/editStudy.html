@@ -1,0 +1,64 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li><a href="#!/StudyModule/studyModule">自发活动列表</a></li>
+    <li class="active">添加自发活动</li>
+</ol>
+<!-- 添加项目html -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="box ">
+            <div class="box-header">
+                <h3 class="box-title">修改自发活动</h3>
+            </div>
+            <form role="form" class="loginForm form-horizontal" action="./pstudy/updateById" method="post" onsubmit="return validateCallback(this)"  novalidate>
+                <div class="box-bodyed">
+                <input type="hidden" name="studyid" value="{{pStudy.studyid}}">
+
+                <div class="form-group">
+                    <label><span class="red">*</span>开始时间</label>
+                    <input type="text" class="form-control" name="starttime" placeholder="请输入开始时间" required value="{{pStudy.starttime}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>结束时间</label>
+                    <input type="text" class="form-control" name="endtime" placeholder="请输入结束时间" required value="{{pStudy.endtime}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>学习主要内容</label>
+                    <input type="text" class="form-control" name="content" placeholder="请输入学习主要内容" required value="{{pStudy.content}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>支部ID</label>
+                    <input type="text" class="form-control" name="departmentid" placeholder="请输入支部ID" required value="{{pStudy.departmentid}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>项目ID</label>
+                    <input type="text" class="form-control" name="projectid" placeholder="请输入项目ID" required value="{{pStudy.projectid}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>模块ID</label>
+                    <input type="text" class="form-control" name="moduleid" placeholder="请输入模块ID" required value="{{pStudy.moduleid}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>上级是否审批</label>
+                    <input type="text" class="form-control" name="status" placeholder="请输入上级是否审批" required value="{{pStudy.status}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>创建者</label>
+                    <input type="text" class="form-control" name="create_userid" placeholder="请输入创建者" required value="{{pStudy.create_userid}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>创建时间</label>
+                    <input type="text" class="form-control" name="createtime" placeholder="请输入创建时间" required value="{{pStudy.createtime}}"/>
+                </div>
+
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">提交</button>　
+                    <a type="btn" class="btn btn-danger" href="#!/StudyModule/studyModule">返回列表</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>

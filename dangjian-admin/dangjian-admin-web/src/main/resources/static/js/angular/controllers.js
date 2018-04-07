@@ -446,15 +446,27 @@ function PartymemberDuesEditCtrl($scope, $http, $timeout ,$routeParams) {
         $scope.pPartymemberDues= data.data;
     });
 }
-function PartymemberScoreItemCtrl($scope, $http, $timeout ,$routeParams) {
+function StudyModuleCtrl($scope, $http, $timeout ,$routeParams) {
 }
-function PartymemberScoreItemEditCtrl($scope, $http, $timeout ,$routeParams) {
+function StudyModuleEditCtrl($scope, $http, $timeout ,$routeParams) {
+    $scope.studyid = $routeParams.studyid;
+    $http({
+        method: "GET",
+        url: "./pstudy/queryById.do?studyid="+Number($scope.studyid),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).success(function (data,status) {
+        $scope.pStudy= data.data;
+    });
+}
+function PartyScoreItemCtrl($scope, $http, $timeout ,$routeParams) {
+}
+function PartyScoreItemEditCtrl($scope, $http, $timeout ,$routeParams) {
     $scope.itemid = $routeParams.itemid;
     $http({
         method: "GET",
-        url: "./ppartymemberscoreitem/queryById.do?itemid="+Number($scope.itemid),
+        url: "./ppartymembergetscoreitem/queryById.do?itemid="+Number($scope.itemid),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
-        $scope.pPartymemberScoreItem= data.data;
+        $scope.pPartymemberGetScoreItem= data.data;
     });
 }

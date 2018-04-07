@@ -1,16 +1,16 @@
 <ol class="breadcrumb newcrumb">
     <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
-    <li><a href="#!/PartymemberScoreItem/partymemberScoreItem">党员积分明细列表</a></li>
-    <li class="active">添加党员积分明细</li>
+    <li><a href="#!/PartyScoreItem/partyScoreItem">党员获取积分明细列表</a></li>
+    <li class="active">添加党员获取积分明细</li>
 </ol>
 <!-- 添加项目html -->
 <div class="row">
     <div class="col-md-12">
         <div class="box ">
             <div class="box-header">
-                <h3 class="box-title">添加党员积分明细</h3>
+                <h3 class="box-title">添加党员获取积分明细</h3>
             </div>
-            <form role="form" class="loginForm form-horizontal" action="./ppartymemberscoreitem/save" method="post" onsubmit="return validateCallback(this)"  novalidate>
+            <form role="form" class="loginForm form-horizontal" action="./ppartymembergetscoreitem/save" method="post" onsubmit="return validateCallback(this)"  novalidate>
                 <div class="box-bodyed">
                 <div class="form-group">
                     <label><span class="red">*</span>党员ID</label>
@@ -18,7 +18,7 @@
                 </div>
                 <div class="form-group">
                     <label><span class="red">*</span>党员积分项ID</label>
-                    <input type="text" class="form-control" name="scorepartyid" placeholder="请输入党员积分项ID" required/>
+                    <input type="text" class="form-control" name="moduleid" placeholder="请输入党员积分项ID" required/>
                 </div>
                 <div class="form-group">
                     <label><span class="red">*</span>主要内容</label>
@@ -33,13 +33,21 @@
                     <input type="text" class="form-control" name="endtime" placeholder="请输入结束时间" required/>
                 </div>
                 <div class="form-group">
-                    <label><span class="red">*</span>提交图片</label>
-                    <input type="text" class="form-control" name="pictureid" placeholder="请输入提交图片" required/>
+                    <label><span class="red">*</span>审批人</label>
+                    <input type="text" class="form-control" name="approver" placeholder="请输入审批人" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>项目ID</label>
+                    <input type="text" class="form-control" name="projectid" placeholder="请输入项目ID" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>获得积分</label>
+                    <input type="text" class="form-control" name="getscore" placeholder="请输入获得积分" required/>
                 </div>
                 </div>
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary">提交</button>　
-                    <a type="btn" class="btn btn-danger" id="addAdminSubmit" href="#!/PartymemberScoreItem/partymemberScoreItem">返回列表</a>
+                    <a type="btn" class="btn btn-danger" id="addAdminSubmit" href="#!/PartyScoreItem/partyScoreItem">返回列表</a>
                 </div>
             </form>
         </div>
