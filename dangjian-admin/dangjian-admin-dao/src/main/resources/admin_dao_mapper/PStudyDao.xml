@@ -9,6 +9,7 @@
     <result column="departmentid" jdbcType="INTEGER" property="departmentid" />
     <result column="projectid" jdbcType="INTEGER" property="projectid" />
     <result column="moduleid" jdbcType="INTEGER" property="moduleid" />
+    <result column="approvalid" jdbcType="INTEGER" property="approvalid" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_userid" jdbcType="INTEGER" property="createUserid" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
@@ -72,8 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    studyid, starttime, endtime, content, departmentid, projectid, moduleid, status, 
-    create_userid, createtime
+    studyid, starttime, endtime, content, departmentid, projectid, moduleid, approvalid, 
+    status, create_userid, createtime
   </sql>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PStudyExample" resultMap="BaseResultMap">
     select
@@ -108,12 +109,12 @@
   <insert id="insert" parameterType="cn.dlbdata.dangjian.admin.dao.model.PStudy">
     insert into p_study (studyid, starttime, endtime, 
       content, departmentid, projectid, 
-      moduleid, status, create_userid, 
-      createtime)
+      moduleid, approvalid, status, 
+      create_userid, createtime)
     values (#{studyid,jdbcType=INTEGER}, #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
       #{content,jdbcType=VARCHAR}, #{departmentid,jdbcType=INTEGER}, #{projectid,jdbcType=INTEGER}, 
-      #{moduleid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{createUserid,jdbcType=INTEGER}, 
-      #{createtime,jdbcType=TIMESTAMP})
+      #{moduleid,jdbcType=INTEGER}, #{approvalid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{createUserid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PStudy">
     insert into p_study
@@ -138,6 +139,9 @@
       </if>
       <if test="moduleid != null">
         moduleid,
+      </if>
+      <if test="approvalid != null">
+        approvalid,
       </if>
       <if test="status != null">
         status,
@@ -170,6 +174,9 @@
       </if>
       <if test="moduleid != null">
         #{moduleid,jdbcType=INTEGER},
+      </if>
+      <if test="approvalid != null">
+        #{approvalid,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -212,6 +219,9 @@
       <if test="record.moduleid != null">
         moduleid = #{record.moduleid,jdbcType=INTEGER},
       </if>
+      <if test="record.approvalid != null">
+        approvalid = #{record.approvalid,jdbcType=INTEGER},
+      </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
       </if>
@@ -235,6 +245,7 @@
       departmentid = #{record.departmentid,jdbcType=INTEGER},
       projectid = #{record.projectid,jdbcType=INTEGER},
       moduleid = #{record.moduleid,jdbcType=INTEGER},
+      approvalid = #{record.approvalid,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
       create_userid = #{record.createUserid,jdbcType=INTEGER},
       createtime = #{record.createtime,jdbcType=TIMESTAMP}
@@ -263,6 +274,9 @@
       <if test="moduleid != null">
         moduleid = #{moduleid,jdbcType=INTEGER},
       </if>
+      <if test="approvalid != null">
+        approvalid = #{approvalid,jdbcType=INTEGER},
+      </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
       </if>
@@ -283,6 +297,7 @@
       departmentid = #{departmentid,jdbcType=INTEGER},
       projectid = #{projectid,jdbcType=INTEGER},
       moduleid = #{moduleid,jdbcType=INTEGER},
+      approvalid = #{approvalid,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       create_userid = #{createUserid,jdbcType=INTEGER},
       createtime = #{createtime,jdbcType=TIMESTAMP}

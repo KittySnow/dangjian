@@ -288,6 +288,76 @@ public class PStudyExample implements Serializable {
             return (Criteria) this;
         }
 
+        public Criteria andContentIsNull() {
+            addCriterion("content is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentIsNotNull() {
+            addCriterion("content is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentEqualTo(String value) {
+            addCriterion("content =", value, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNotEqualTo(String value) {
+            addCriterion("content <>", value, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentGreaterThan(String value) {
+            addCriterion("content >", value, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentGreaterThanOrEqualTo(String value) {
+            addCriterion("content >=", value, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentLessThan(String value) {
+            addCriterion("content <", value, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentLessThanOrEqualTo(String value) {
+            addCriterion("content <=", value, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentLike(String value) {
+            addCriterion("content like", value, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNotLike(String value) {
+            addCriterion("content not like", value, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentIn(List<String> values) {
+            addCriterion("content in", values, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNotIn(List<String> values) {
+            addCriterion("content not in", values, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentBetween(String value1, String value2) {
+            addCriterion("content between", value1, value2, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNotBetween(String value1, String value2) {
+            addCriterion("content not between", value1, value2, "content");
+            return (Criteria) this;
+        }
+
         public Criteria andDepartmentidIsNull() {
             addCriterion("departmentid is null");
             return (Criteria) this;
@@ -465,6 +535,66 @@ public class PStudyExample implements Serializable {
 
         public Criteria andModuleidNotBetween(Integer value1, Integer value2) {
             addCriterion("moduleid not between", value1, value2, "moduleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalidIsNull() {
+            addCriterion("approvalid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalidIsNotNull() {
+            addCriterion("approvalid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalidEqualTo(Integer value) {
+            addCriterion("approvalid =", value, "approvalid");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalidNotEqualTo(Integer value) {
+            addCriterion("approvalid <>", value, "approvalid");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalidGreaterThan(Integer value) {
+            addCriterion("approvalid >", value, "approvalid");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("approvalid >=", value, "approvalid");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalidLessThan(Integer value) {
+            addCriterion("approvalid <", value, "approvalid");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalidLessThanOrEqualTo(Integer value) {
+            addCriterion("approvalid <=", value, "approvalid");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalidIn(List<Integer> values) {
+            addCriterion("approvalid in", values, "approvalid");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalidNotIn(List<Integer> values) {
+            addCriterion("approvalid not in", values, "approvalid");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalidBetween(Integer value1, Integer value2) {
+            addCriterion("approvalid between", value1, value2, "approvalid");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalidNotBetween(Integer value1, Integer value2) {
+            addCriterion("approvalid not between", value1, value2, "approvalid");
             return (Criteria) this;
         }
 

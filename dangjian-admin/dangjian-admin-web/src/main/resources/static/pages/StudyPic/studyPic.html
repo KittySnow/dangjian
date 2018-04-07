@@ -1,0 +1,90 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li class="active"><a href="#!/StudyPic/studyPic">学习模块图片列表</a></li>
+</ol>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">学习模块图片列表</h3>
+            </div>
+            <div class="box-mgr">
+                <a class="btn btn-info" href="#!/StudyPic/addStudyPicture">添加学习模块图片</a>
+            </div>
+            <div class="box-body table-responsive">
+                <table id="StudyPicTable" class="table table-bordered table-striped" data-unique-id="id">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.actionStudyPicEvents = {
+        'click .editStudyPic' : function (e, value, row, index) {
+            console.log(row);
+        },
+        'click .delStudyPic' : function (e, value, row, index) {
+            deleteAjax(row,'./pstudypicture/deleteById','id','post');
+        }
+    };
+
+
+    function StudyPicStausFormatter(value,row,index) {
+        return '<a class="btn btn-info btn-sm editStudyPic" href="#!/StudyPic/editStudyPicture/'+row.id+'">修改</a>　<a class="btn btn-warning btn-sm delStudyPic">删除</a>'
+    }
+
+
+    $(function(){
+
+        $('#StudyPicTable').bootstrapTable({
+            showHeader:true,
+            columns: [
+                {
+                    field: 'id',
+                    formatter:fmtIdx,
+                    title:'编号'
+                },
+                {
+                    field: 'picture_id',
+                    title: '图片ID'
+                },
+                {
+                    field: 'study_id',
+                    title: '学习模块ID'
+                },
+                {
+                    title: '操作',
+                    width:250,
+                    formatter: StudyPicStausFormatter,
+                    events: actionStudyPicEvents
+                }],
+            method: 'GET',
+            url: "./pstudypicture/list",
+            sidePagination: "server", //服务端请求
+            queryParams:function (params) {
+                return {
+                    pageSize:params.limit||10,
+                    pageNum:~~(params.offset/10)+1||1
+                }
+            },
+            dataField:'list',
+            responseHandler:function(res){
+                return res.data;
+            },
+            showColumns:true,
+            pagination:true,
+            cache: false,
+            striped: true,
+            pageSize: 10,
+            pageList: [5,10,15],
+            paginationHAlign: 'right', //right, left
+            paginationVAlign: 'bottom', //bottom, top, both
+            sortable:false,
+            search: true,
+            showPaginationSwitch: false,
+            showRefresh: true,
+            clickToSelect: true
+        });
+    });
+
+</script>

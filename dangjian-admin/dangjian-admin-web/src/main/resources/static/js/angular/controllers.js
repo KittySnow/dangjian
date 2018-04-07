@@ -470,3 +470,16 @@ function PartyScoreItemEditCtrl($scope, $http, $timeout ,$routeParams) {
         $scope.pPartymemberGetScoreItem= data.data;
     });
 }
+
+function StudyPicCtrl($scope, $http, $timeout ,$routeParams) {
+}
+function StudyPicEditCtrl($scope, $http, $timeout ,$routeParams) {
+    $scope.id = $routeParams.id;
+    $http({
+        method: "GET",
+        url: "./pstudypicture/queryById.do?id="+Number($scope.id),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).success(function (data,status) {
+        $scope.pStudyPicture= data.data;
+    });
+}

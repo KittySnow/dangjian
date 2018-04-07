@@ -445,6 +445,24 @@ config(['$routeProvider',
             controller: PartyScoreItemEditCtrl,
             activetab: 'PartyScoreItem'
         }).
+
+        when('/StudyPic/studyPic', {
+            templateUrl: 'pages/StudyPic/studyPic.html',
+            controller: StudyPicCtrl,
+            activetab: 'StudyPic'
+        }).
+        when('/StudyPic/addStudyPicture/', {
+            templateUrl: 'pages/StudyPic/addStudyPicture.html',
+            controller: StudyPicCtrl,
+            activetab: 'StudyPic'
+        }).
+        when('/StudyPic/editStudyPicture/:id', {
+            templateUrl: 'pages/StudyPic/editStudyPicture.html',
+            controller: StudyPicEditCtrl,
+            activetab: 'StudyPic'
+        }).
+
+
         otherwise({
             redirectTo: '/',
             activetab: ''
