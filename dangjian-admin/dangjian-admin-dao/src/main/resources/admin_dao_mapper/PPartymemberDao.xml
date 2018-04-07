@@ -72,6 +72,12 @@
   <sql id="Base_Column_List">
     id, userid, name, sex, age, fromdepartmentid, bid, departmentid
   </sql>
+
+  <select id="countUser" resultType="java.lang.Long">
+    select count(userid) as users
+    from p_user
+  </select>
+
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymemberExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

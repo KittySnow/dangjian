@@ -25,6 +25,11 @@ public class PPartymemberServiceImpl implements PPartymemberService {
     public long countByExample(PPartymemberExample example) {
         return pPartymemberDao.countByExample(example);
     }
+
+    @Override
+    public long countUser() {
+        return pPartymemberDao.countUser();
+    }
     
     @Override
     public int deleteByExample(PPartymemberExample example) {

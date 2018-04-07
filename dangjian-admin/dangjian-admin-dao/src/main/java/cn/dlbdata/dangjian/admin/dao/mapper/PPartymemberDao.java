@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface PPartymemberDao {
+    long countUser();
+
     long countByExample(PPartymemberExample example);
 
     int deleteByExample(PPartymemberExample example);
