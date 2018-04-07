@@ -83,8 +83,7 @@ public class PStudyController {
             PStudyExample pStudyExample = new PStudyExample();
             PStudyExample.Criteria criteria =  pStudyExample.createCriteria();
             criteria.andStatusEqualTo(1);
-
-            //获得积分了要
+            //获得积分
             PScoreParty pScoreParty = new PScoreParty();
             pScoreParty.setProjectId(pStudy.getDepartmentid());
             pScoreParty.setDetailId((pStudy.getModuleid()));
