@@ -1,0 +1,92 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li><a href="#!/WxUser/wxUser">微信用户列表</a></li>
+    <li class="active">添加微信用户</li>
+</ol>
+<!-- 添加项目html -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="box ">
+            <div class="box-header">
+                <h3 class="box-title">修改微信用户</h3>
+            </div>
+            <form role="form" class="loginForm form-horizontal" action="./pwxuser/updateById" method="post" onsubmit="return validateCallback(this)"  novalidate>
+                <div class="box-bodyed">
+                <input type="hidden" name="id" value="{{pWxUser.id}}">
+
+                <div class="form-group">
+                    <label><span class="red">*</span>用户ID</label>
+                    <input type="text" class="form-control" name="user_id" placeholder="请输入用户ID" required value="{{pWxUser.user_id}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>OpenID</label>
+                    <input type="text" class="form-control" name="open_id" placeholder="请输入OpenID" required value="{{pWxUser.open_id}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>昵称</label>
+                    <input type="text" class="form-control" name="nick_name" placeholder="请输入昵称" required value="{{pWxUser.nick_name}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>性别</label>
+                    <input type="text" class="form-control" name="sex" placeholder="请输入性别" required value="{{pWxUser.sex}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>语言</label>
+                    <input type="text" class="form-control" name="language" placeholder="请输入语言" required value="{{pWxUser.language}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>市</label>
+                    <input type="text" class="form-control" name="city" placeholder="请输入市" required value="{{pWxUser.city}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>省</label>
+                    <input type="text" class="form-control" name="province" placeholder="请输入省" required value="{{pWxUser.province}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>国家</label>
+                    <input type="text" class="form-control" name="country" placeholder="请输入国家" required value="{{pWxUser.country}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>头像</label>
+                    <input type="text" class="form-control" name="head_img_url" placeholder="请输入头像" required value="{{pWxUser.head_img_url}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>用户关注时间</label>
+                    <input type="text" class="form-control" name="subscribe_time" placeholder="请输入用户关注时间" required value="{{pWxUser.subscribe_time}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>备注</label>
+                    <input type="text" class="form-control" name="remark" placeholder="请输入备注" required value="{{pWxUser.remark}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>群组ID</label>
+                    <input type="text" class="form-control" name="group_id" placeholder="请输入群组ID" required value="{{pWxUser.group_id}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>标签列表</label>
+                    <input type="text" class="form-control" name="tagid_list" placeholder="请输入标签列表" required value="{{pWxUser.tagid_list}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>关注详情</label>
+                    <input type="text" class="form-control" name="subscribe_scene" placeholder="请输入关注详情" required value="{{pWxUser.subscribe_scene}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>二维码</label>
+                    <input type="text" class="form-control" name="qr_scene" placeholder="请输入二维码" required value="{{pWxUser.qr_scene}}"/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>二维码签名</label>
+                    <input type="text" class="form-control" name="qr_scene_str" placeholder="请输入二维码签名" required value="{{pWxUser.qr_scene_str}}"/>
+                </div>
+
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">提交</button>　
+                    <a type="btn" class="btn btn-danger" href="#!/WxUser/wxUser">返回列表</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>

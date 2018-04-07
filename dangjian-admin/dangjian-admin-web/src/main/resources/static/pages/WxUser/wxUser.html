@@ -1,0 +1,146 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li class="active"><a href="#!/WxUser/wxUser">微信用户列表</a></li>
+</ol>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">微信用户列表</h3>
+            </div>
+            <div class="box-mgr">
+                <a class="btn btn-info" href="#!/WxUser/addWxUser">添加微信用户</a>
+            </div>
+            <div class="box-body table-responsive">
+                <table id="WxUserTable" class="table table-bordered table-striped" data-unique-id="id">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.actionWxUserEvents = {
+        'click .editWxUser' : function (e, value, row, index) {
+            console.log(row);
+        },
+        'click .delWxUser' : function (e, value, row, index) {
+            deleteAjax(row,'./pwxuser/deleteById','id','post');
+        }
+    };
+
+
+    function WxUserStausFormatter(value,row,index) {
+        return '<a class="btn btn-info btn-sm editWxUser" href="#!/WxUser/editWxUser/'+row.id+'">修改</a>　<a class="btn btn-warning btn-sm delWxUser">删除</a>'
+    }
+
+
+    $(function(){
+
+        $('#WxUserTable').bootstrapTable({
+            showHeader:true,
+            columns: [
+                {
+                    field: 'id',
+                    formatter:fmtIdx,
+                    title:'编号'
+                },
+                {
+                    field: 'user_id',
+                    title: '用户ID'
+                },
+                {
+                    field: 'open_id',
+                    title: 'OpenID'
+                },
+                {
+                    field: 'nick_name',
+                    title: '昵称'
+                },
+                {
+                    field: 'sex',
+                    title: '性别'
+                },
+                {
+                    field: 'language',
+                    title: '语言'
+                },
+                {
+                    field: 'city',
+                    title: '市'
+                },
+                {
+                    field: 'province',
+                    title: '省'
+                },
+                {
+                    field: 'country',
+                    title: '国家'
+                },
+                {
+                    field: 'head_img_url',
+                    title: '头像'
+                },
+                {
+                    field: 'subscribe_time',
+                    title: '用户关注时间'
+                },
+                {
+                    field: 'remark',
+                    title: '备注'
+                },
+                {
+                    field: 'group_id',
+                    title: '群组ID'
+                },
+                {
+                    field: 'tagid_list',
+                    title: '标签列表'
+                },
+                {
+                    field: 'subscribe_scene',
+                    title: '关注详情'
+                },
+                {
+                    field: 'qr_scene',
+                    title: '二维码'
+                },
+                {
+                    field: 'qr_scene_str',
+                    title: '二维码签名'
+                },
+                {
+                    title: '操作',
+                    width:250,
+                    formatter: WxUserStausFormatter,
+                    events: actionWxUserEvents
+                }],
+            method: 'GET',
+            url: "./pwxuser/list",
+            sidePagination: "server", //服务端请求
+            queryParams:function (params) {
+                return {
+                    pageSize:params.limit||10,
+                    pageNum:~~(params.offset/10)+1||1
+                }
+            },
+            dataField:'list',
+            responseHandler:function(res){
+                return res.data;
+            },
+            showColumns:true,
+            pagination:true,
+            cache: false,
+            striped: true,
+            pageSize: 10,
+            pageList: [5,10,15],
+            paginationHAlign: 'right', //right, left
+            paginationVAlign: 'bottom', //bottom, top, both
+            sortable:false,
+            search: true,
+            showPaginationSwitch: false,
+            showRefresh: true,
+            clickToSelect: true
+        });
+    });
+
+</script>

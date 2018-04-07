@@ -483,3 +483,16 @@ function StudyPicEditCtrl($scope, $http, $timeout ,$routeParams) {
         $scope.pStudyPicture= data.data;
     });
 }
+
+function WxUserCtrl($scope, $http, $timeout ,$routeParams) {
+}
+function WxUserEditCtrl($scope, $http, $timeout ,$routeParams) {
+    $scope.id = $routeParams.id;
+    $http({
+        method: "GET",
+        url: "./pwxuser/queryById.do?id="+Number($scope.id),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).success(function (data,status) {
+        $scope.pWxUser= data.data;
+    });
+}

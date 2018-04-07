@@ -462,6 +462,23 @@ config(['$routeProvider',
             activetab: 'StudyPic'
         }).
 
+        when('/WxUser/wxUser', {
+            templateUrl: 'pages/WxUser/wxUser.html',
+            controller: WxUserCtrl,
+            activetab: 'WxUser'
+        }).
+        when('/WxUser/addWxUser/', {
+            templateUrl: 'pages/WxUser/addWxUser.html',
+            controller: WxUserCtrl,
+            activetab: 'WxUser'
+        }).
+        when('/WxUser/editWxUser/:id', {
+            templateUrl: 'pages/WxUser/editWxUser.html',
+            controller: WxUserEditCtrl,
+            activetab: 'WxUser'
+        }).
+
+
 
         otherwise({
             redirectTo: '/',

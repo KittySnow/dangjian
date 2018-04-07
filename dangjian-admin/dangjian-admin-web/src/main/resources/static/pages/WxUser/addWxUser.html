@@ -1,0 +1,89 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li><a href="#!/WxUser/wxUser">微信用户列表</a></li>
+    <li class="active">添加微信用户</li>
+</ol>
+<!-- 添加项目html -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="box ">
+            <div class="box-header">
+                <h3 class="box-title">添加微信用户</h3>
+            </div>
+            <form role="form" class="loginForm form-horizontal" action="./pwxuser/save" method="post" onsubmit="return validateCallback(this)"  novalidate>
+                <div class="box-bodyed">
+                <div class="form-group">
+                    <label><span class="red">*</span>用户ID</label>
+                    <input type="text" class="form-control" name="user_id" placeholder="请输入用户ID" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>OpenID</label>
+                    <input type="text" class="form-control" name="open_id" placeholder="请输入OpenID" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>昵称</label>
+                    <input type="text" class="form-control" name="nick_name" placeholder="请输入昵称" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>性别</label>
+                    <input type="text" class="form-control" name="sex" placeholder="请输入性别" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>语言</label>
+                    <input type="text" class="form-control" name="language" placeholder="请输入语言" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>市</label>
+                    <input type="text" class="form-control" name="city" placeholder="请输入市" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>省</label>
+                    <input type="text" class="form-control" name="province" placeholder="请输入省" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>国家</label>
+                    <input type="text" class="form-control" name="country" placeholder="请输入国家" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>头像</label>
+                    <input type="text" class="form-control" name="head_img_url" placeholder="请输入头像" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>用户关注时间</label>
+                    <input type="text" class="form-control" name="subscribe_time" placeholder="请输入用户关注时间" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>备注</label>
+                    <input type="text" class="form-control" name="remark" placeholder="请输入备注" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>群组ID</label>
+                    <input type="text" class="form-control" name="group_id" placeholder="请输入群组ID" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>标签列表</label>
+                    <input type="text" class="form-control" name="tagid_list" placeholder="请输入标签列表" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>关注详情</label>
+                    <input type="text" class="form-control" name="subscribe_scene" placeholder="请输入关注详情" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>二维码</label>
+                    <input type="text" class="form-control" name="qr_scene" placeholder="请输入二维码" required/>
+                </div>
+                <div class="form-group">
+                    <label><span class="red">*</span>二维码签名</label>
+                    <input type="text" class="form-control" name="qr_scene_str" placeholder="请输入二维码签名" required/>
+                </div>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">提交</button>　
+                    <a type="btn" class="btn btn-danger" id="addAdminSubmit" href="#!/WxUser/wxUser">返回列表</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>
