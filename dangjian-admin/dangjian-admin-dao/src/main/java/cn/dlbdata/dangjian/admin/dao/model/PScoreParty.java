@@ -47,6 +47,32 @@ public class PScoreParty implements Serializable {
      */
     private Integer approvedId;
 
+    public String getApprovedName() {
+        return approvedName;
+    }
+
+    public void setApprovedName(String approvedName) {
+        this.approvedName = approvedName;
+    }
+
+    public Double getTotalScore() {
+        return totalScore;
+    }
+
+    public void setTotalScore(Double totalScore) {
+        this.totalScore = totalScore;
+    }
+
+    public Double getObtainScore() {
+        return obtainScore;
+    }
+
+    public void setObtainScore(Double obtainScore) {
+        this.obtainScore = obtainScore;
+    }
+
+    private String approvedName;
+
     /**
      * 积分年度
      *
