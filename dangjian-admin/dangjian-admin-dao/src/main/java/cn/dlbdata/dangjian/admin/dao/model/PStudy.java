@@ -80,6 +80,10 @@ public class PStudy implements Serializable {
      */
     private Date createtime;
 
+    private String rejectreason;
+
+
+
     private static final long serialVersionUID = 1L;
 
     public Integer getStudyid() {
@@ -112,6 +116,14 @@ public class PStudy implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getRejectreason() {
+        return rejectreason;
+    }
+
+    public void setRejectreason(String rejectreason) {
+        this.rejectreason = rejectreason;
     }
 
     public Integer getDepartmentid() {
@@ -187,6 +199,7 @@ public class PStudy implements Serializable {
         sb.append(", status=").append(status);
         sb.append(", createUserid=").append(createUserid);
         sb.append(", createtime=").append(createtime);
+        sb.append(", rejectreason=").append(rejectreason);
         sb.append("]");
         return sb.toString();
     }

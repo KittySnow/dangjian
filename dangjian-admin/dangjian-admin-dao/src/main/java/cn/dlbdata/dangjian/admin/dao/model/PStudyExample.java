@@ -777,6 +777,76 @@ public class PStudyExample implements Serializable {
             addCriterion("createtime not between", value1, value2, "createtime");
             return (Criteria) this;
         }
+
+        public Criteria andRejectreasonIsNull() {
+            addCriterion("rejectreason is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRejectreasonIsNotNull() {
+            addCriterion("rejectreason is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRejectreasonEqualTo(String value) {
+            addCriterion("rejectreason =", value, "rejectreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRejectreasonNotEqualTo(String value) {
+            addCriterion("rejectreason <>", value, "rejectreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRejectreasonGreaterThan(String value) {
+            addCriterion("rejectreason >", value, "rejectreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRejectreasonGreaterThanOrEqualTo(String value) {
+            addCriterion("rejectreason >=", value, "rejectreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRejectreasonLessThan(String value) {
+            addCriterion("rejectreason <", value, "rejectreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRejectreasonLessThanOrEqualTo(String value) {
+            addCriterion("rejectreason <=", value, "rejectreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRejectreasonLike(String value) {
+            addCriterion("rejectreason like", value, "rejectreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRejectreasonNotLike(String value) {
+            addCriterion("rejectreason not like", value, "rejectreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRejectreasonIn(List<String> values) {
+            addCriterion("rejectreason in", values, "rejectreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRejectreasonNotIn(List<String> values) {
+            addCriterion("rejectreason not in", values, "rejectreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRejectreasonBetween(String value1, String value2) {
+            addCriterion("rejectreason between", value1, value2, "rejectreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRejectreasonNotBetween(String value1, String value2) {
+            addCriterion("rejectreason not between", value1, value2, "rejectreason");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria implements Serializable {

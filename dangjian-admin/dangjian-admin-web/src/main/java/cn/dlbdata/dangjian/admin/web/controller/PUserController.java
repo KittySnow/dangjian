@@ -220,7 +220,9 @@ public class PUserController {
                 CookieUtil.setCookie(response,"ptoken", token);
 
                 // 登陆保存 token 信息
-                puserService.saveLoginUserInfo(pUser.getUserid(), token, userLoginDO.getOpenId());
+                if(userLoginDO.getOpenId()!=null || "".equals(userLoginDO.getOpenId())){
+                    puserService.saveLoginUserInfo(pUser.getUserid(), token, userLoginDO.getOpenId());
+                }
 
                 return HttpResult.success(loginVO);
 //                //创建session且获取session
