@@ -29,5 +29,5 @@ public interface PActiveDao {
 
     int updateByPrimaryKey(PActive record);
 
-    int selectByActiveTypeAndUserParticipate(Integer userId, Integer activeType);
+    int selectByActiveTypeAndUserParticipate(@Param("userId") Integer userId, @Param("activeType") Integer activeType);
 }

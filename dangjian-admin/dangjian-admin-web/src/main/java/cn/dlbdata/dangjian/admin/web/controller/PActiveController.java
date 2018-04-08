@@ -124,7 +124,9 @@ public class PActiveController {
             return result.getResult();
         }
         PActiveParticipateExample example = new PActiveParticipateExample();
-        example.createCriteria().andUserIdEqualTo(userId).andActiveIdEqualTo(activeId);
+        PActiveParticipateExample.Criteria ct = example.createCriteria();
+        ct.andUserIdEqualTo(userId);
+        ct.andActiveIdEqualTo(activeId);
         if(activeParticipateService.selectByExample(example).size()>0){
             result.setMsg("请勿重复报名");
             result.setSuccess(false);
@@ -154,8 +156,9 @@ public class PActiveController {
     public Map<String, Object> getRunningActive(Integer departmentid,Integer pageNum, Integer pageSize){
         ResultUtil result = new ResultUtil();
         PActiveExample example = new PActiveExample();
-        example.createCriteria().andActiveStatusEqualTo(1)
-        .andStartTimeLessThanOrEqualTo(new Date());
+        PActiveExample.Criteria ct = example.createCriteria();
+        ct.andActiveStatusEqualTo(1);
+        ct.andStartTimeLessThanOrEqualTo(new Date());
         if (departmentid != null) {
             example.createCriteria().andDepartmentidEqualTo(departmentid);
         }
@@ -189,8 +192,9 @@ public class PActiveController {
     public Map<String, Object> getParticipateActive(Integer departmentid,Integer pageNum, Integer pageSize){
         ResultUtil result = new ResultUtil();
         PActiveExample example = new PActiveExample();
-        example.createCriteria().andActiveStatusEqualTo(1)
-        .andStartTimeGreaterThan(new Date());
+        PActiveExample.Criteria ct = example.createCriteria();
+        ct.andActiveStatusEqualTo(1);
+        ct.andStartTimeGreaterThan(new Date());
         if (departmentid != null) {
             example.createCriteria().andDepartmentidEqualTo(departmentid);
         }
@@ -275,19 +279,20 @@ public class PActiveController {
      * @param userId
      * @return
      */
-    @RequestMapping(value="/getParticipateCount",method= RequestMethod.POST)
+    @RequestMapping(value="/getParticipateCount",method=RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> getParticipateCount(Integer userId,Integer activeType) {
+    public Map<String, Object> getParticipateCount(int userId,int activeType) {
         ResultUtil result = new ResultUtil();
-        PActiveParticipateExample example = new PActiveParticipateExample();
-        example.createCriteria().andUserIdEqualTo(userId)
-        .andCreateTimeBetween(DateUtil.getCurrYearFirst(),DateUtil.getCurrYearLast());
         int count = pActiveService.selectByActiveTypeAndUserParticipate(userId, activeType);
         result.setSuccess(true);
         result.setMsg("查询成功");
         result.setData(count);
         return result.getResult();
     }
+
+
+
+
     /**
      * 保存活动图片
      * @param activeId
@@ -329,7 +334,8 @@ public class PActiveController {
     public Map<String, Object> getActivePictures(Integer activeId,Integer pageNum, Integer pageSize){
         ResultUtil result = new ResultUtil();
         PActivePictureExample example = new PActivePictureExample();
-        example.createCriteria().andActiveIdEqualTo(activeId);
+        PActivePictureExample.Criteria ct = example.createCriteria();
+        ct.andActiveIdEqualTo(activeId);
         PageHelper.startPage(pageNum, pageSize,true);
         List<PActivePicture> pActiveList = pPictureService.selectActivePictures(example);
         PageInfo<PActivePicture> pageInfo=new PageInfo<PActivePicture>(pActiveList);
