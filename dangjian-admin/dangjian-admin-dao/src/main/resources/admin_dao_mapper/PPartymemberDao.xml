@@ -10,6 +10,7 @@
     <result column="fromdepartmentid" jdbcType="INTEGER" property="fromdepartmentid" />
     <result column="bid" jdbcType="INTEGER" property="bid" />
     <result column="departmentid" jdbcType="INTEGER" property="departmentid" />
+    <result column="departmentname" jdbcType="VARCHAR" property="departmentname" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,7 +71,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, userid, name, sex, age, fromdepartmentid, bid, departmentid
+  id, userid, name, sex, age, fromdepartmentid, bid, departmentid,
+  (select departmentname from p_department d where d.departmentid = p_partymember.departmentid )as departmentname,
+  (select departmentname from p_department d where d.departmentid = p_partymember.fromdepartmentid )as fromdepartmentname
   </sql>
 
   <select id="countUser" resultType="java.lang.Long">

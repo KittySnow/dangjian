@@ -54,6 +54,28 @@ public class PPartymember implements Serializable {
 
     private Integer departmentid;
 
+    private String departmentname;
+
+    private String fromdepartmentname;
+
+    public String getFromdepartmentname() {
+        return fromdepartmentname;
+    }
+
+    public void setFromdepartmentname(String fromdepartmentname) {
+        this.fromdepartmentname = fromdepartmentname;
+    }
+
+    public String getDepartmentname() {
+        return departmentname;
+    }
+
+    public void setDepartmentname(String departmentname) {
+        this.departmentname = departmentname;
+    }
+
+
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
