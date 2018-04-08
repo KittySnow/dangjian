@@ -2,6 +2,9 @@ package cn.dlbdata.dangjian.admin.dao.model;
 
 import java.io.Serializable;
 
+
+
+
 public class PPartymember implements Serializable {
     /**
      * 党员表id

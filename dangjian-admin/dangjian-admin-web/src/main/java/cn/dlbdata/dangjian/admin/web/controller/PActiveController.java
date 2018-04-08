@@ -180,6 +180,40 @@ public class PActiveController {
         result.setData(pageInfo);
         return result.getResult();
     }
+
+
+    //查询已完成（组织生活）的活动
+    @RequestMapping(value="/getAlreadyActive",method= RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getAlreadyActive(Integer departmentid,Integer pageNum, Integer pageSize){
+        ResultUtil result = new ResultUtil();
+        PActiveExample example = new PActiveExample();
+        PActiveExample.Criteria ct = example.createCriteria();
+        ct.andActiveProjectIdEqualTo(2);
+        ct.andActiveStatusEqualTo(1);
+        ct.andEndTimeLessThanOrEqualTo(new Date());
+        if (departmentid != null) {
+            example.createCriteria().andDepartmentidEqualTo(departmentid);
+        }
+        PageHelper.startPage(pageNum, pageSize,true);
+        List<PActive> pActiveList = pActiveService.selectByExample(example);
+        List<JSONObject> list = new ArrayList<>();
+        for (PActive active:pActiveList){
+            JSONObject json = JSON.parseObject(JSON.toJSONString(active));
+            PUser createUser = pUserService.selectByPrimaryKey(active.getActiveCreatePeople());
+            if(createUser!=null){
+                json.put("activeCreatePeopleName", createUser.getName());
+            }
+            list.add(json);
+        }
+        JSONArray array = new JSONArray();
+        array.addAll(pActiveList);
+        PageInfo<JSONObject> pageInfo=new PageInfo<JSONObject>(list);
+        result.setSuccess(true);
+        result.setData(pageInfo);
+        return result.getResult();
+    }
+
     /**
      * 查询正在进行的活动，或者已经开始的活动
      * @param departmentid

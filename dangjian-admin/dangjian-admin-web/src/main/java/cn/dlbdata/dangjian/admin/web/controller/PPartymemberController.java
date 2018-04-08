@@ -124,21 +124,13 @@ public class PPartymemberController {
     public Map<String, Object> queryByDepartmentId(Integer departmentid){
         ResultUtil result = new ResultUtil();
 
-        PUserExample pUserExample = new PUserExample();
-        PUserExample.Criteria criteria =  pUserExample.createCriteria();
-        criteria.andDepartmentidEqualTo(departmentid);
-        List<PUser> pUserList = pUserService.selectByExample(pUserExample);
-        List<PPartymember> pPartymemberListAll =new ArrayList<>();
-        int pUserListLen = pUserList.size();
-        for(int i = 0 ; i < pUserListLen ; i++) {
-            PPartymemberExample pPartymemberExample = new PPartymemberExample();
-            PPartymemberExample.Criteria pPartymemberCriteria =  pPartymemberExample.createCriteria();
-            pPartymemberCriteria.andUseridEqualTo(pUserList.get(i).getUserid());
-            PPartymember pPartymember = pPartymemberService.selectByExample(pPartymemberExample).get(0);
-            pPartymemberListAll.add(pPartymember);
-        }
+        PPartymemberExample pPartymemberExample = new PPartymemberExample();
+        PPartymemberExample.Criteria pPartymemberCriteria =  pPartymemberExample.createCriteria();
+        pPartymemberCriteria.andDepartmentidEqualTo(departmentid);
+        List<PPartymember> pPartymemberList = pPartymemberService.selectByExample(pPartymemberExample);
+
         result.setSuccess(true);
-        result.setData(pPartymemberListAll);
+        result.setData(pPartymemberList);
         return result.getResult();
     }
 }
