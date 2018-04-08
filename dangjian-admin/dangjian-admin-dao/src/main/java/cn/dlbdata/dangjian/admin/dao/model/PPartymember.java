@@ -48,6 +48,16 @@ public class PPartymember implements Serializable {
      */
     private Integer fromdepartmentid;
 
+    public double getTotalscore() {
+        return totalscore;
+    }
+
+    public void setTotalscore(double totalscore) {
+        this.totalscore = totalscore;
+    }
+
+    private double totalscore;
+
     /**
      * 积分分值表id
      *

@@ -4,10 +4,12 @@
   <resultMap id="BaseResultMap" type="cn.dlbdata.dangjian.admin.dao.model.PScoreParty">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="project_id" jdbcType="INTEGER" property="projectId" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
     <result column="detail_id" jdbcType="INTEGER" property="detailId" />
     <result column="score" jdbcType="DECIMAL" property="score" />
     <result column="adder_id" jdbcType="INTEGER" property="adderId" />
     <result column="approved_id" jdbcType="INTEGER" property="approvedId" />
+    <result column="approved_name" jdbcType="INTEGER" property="approvedName" />
     <result column="year" jdbcType="INTEGER" property="year" />
     <result column="score_time" jdbcType="TIMESTAMP" property="scoreTime" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
@@ -462,4 +464,16 @@
           and s.user_id = t.user_id and s.detail_id = 6
         ),0)
     </insert>
+
+  <select id="getProjectScoreByUserId" parameterType="Map">
+    select project_id,project_name,sum(table1.score) as score
+    from p_score_party table1 inner join p_score_project table2 on table1.project_id = table2.id
+    where user_id=#{userId,jdbcType=INTEGER}, and year=#{year,jdbcType=INTEGER} group by table2.id;
+  </select>
+
+  <select id="getSumScoreByUserId" parameterType="Map" resultType="java.lang.Integer">
+    select sum(table1.score) as score
+    from p_score_party where user_id=#{userId,jdbcType=INTEGER}, and year=#{year,jdbcType=INTEGER};
+  </select>
+
 </mapper>

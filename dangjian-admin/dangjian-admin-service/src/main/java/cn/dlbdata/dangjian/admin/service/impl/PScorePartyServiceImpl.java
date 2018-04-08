@@ -5,6 +5,7 @@ import cn.dlbdata.dangjian.admin.dao.mapper.PScorePartyDao;
 import cn.dlbdata.dangjian.admin.dao.model.PScoreParty;
 import cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample;
 import cn.dlbdata.dangjian.admin.service.PScorePartyService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,4 +99,14 @@ public class PScorePartyServiceImpl implements PScorePartyService {
     public int updateAudit(PScoreParty pScoreParty) {
         return this.pScorePartyDao.updateAudit(pScoreParty);
     }
+
+    @Override
+    public List<PScoreParty> getProjectScoreByUserId(Integer userId ,Integer year){
+        return this.pScorePartyDao.getProjectScoreByUserId(userId,year);
+    }
+
+    @Override
+    public int getSumScoreByUserId(Integer userId ,Integer year){
+        return this.pScorePartyDao.getSumScoreByUserId(userId,year);
+    };
 }

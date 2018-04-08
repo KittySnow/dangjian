@@ -41,7 +41,7 @@ import java.util.Map;
 public class PPictureController {
     private final Logger logger = LoggerFactory.getLogger(PPictureController.class);
 
-    private final String PICTURE_PATH = "C:\\picture\\";
+    private final String PICTURE_PATH = "C:\\upload\\";
 
     @Autowired
     private PPictureService pPictureService;
