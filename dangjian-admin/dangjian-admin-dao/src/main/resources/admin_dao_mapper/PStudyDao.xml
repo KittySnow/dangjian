@@ -13,6 +13,7 @@
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_userid" jdbcType="INTEGER" property="createUserid" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="rejectreason" jdbcType="VARCHAR" property="rejectreason" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -74,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List">
     studyid, starttime, endtime, content, departmentid, projectid, moduleid, approvalid, 
-    status, create_userid, createtime
+    status, create_userid, createtime, rejectreason
   </sql>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PStudyExample" resultMap="BaseResultMap">
     select
@@ -110,11 +111,13 @@
     insert into p_study (studyid, starttime, endtime, 
       content, departmentid, projectid, 
       moduleid, approvalid, status, 
-      create_userid, createtime)
+      create_userid, createtime, rejectreason
+      )
     values (#{studyid,jdbcType=INTEGER}, #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
       #{content,jdbcType=VARCHAR}, #{departmentid,jdbcType=INTEGER}, #{projectid,jdbcType=INTEGER}, 
       #{moduleid,jdbcType=INTEGER}, #{approvalid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
-      #{createUserid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP})
+      #{createUserid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{rejectreason,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PStudy">
     insert into p_study
@@ -152,6 +155,9 @@
       <if test="createtime != null">
         createtime,
       </if>
+      <if test="rejectreason != null">
+        rejectreason,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="studyid != null">
@@ -186,6 +192,9 @@
       </if>
       <if test="createtime != null">
         #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rejectreason != null">
+        #{rejectreason,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -231,6 +240,9 @@
       <if test="record.createtime != null">
         createtime = #{record.createtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.rejectreason != null">
+        rejectreason = #{record.rejectreason,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -248,7 +260,8 @@
       approvalid = #{record.approvalid,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
       create_userid = #{record.createUserid,jdbcType=INTEGER},
-      createtime = #{record.createtime,jdbcType=TIMESTAMP}
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      rejectreason = #{record.rejectreason,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -286,6 +299,9 @@
       <if test="createtime != null">
         createtime = #{createtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="rejectreason != null">
+        rejectreason = #{rejectreason,jdbcType=VARCHAR},
+      </if>
     </set>
     where studyid = #{studyid,jdbcType=INTEGER}
   </update>
@@ -300,7 +316,8 @@
       approvalid = #{approvalid,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       create_userid = #{createUserid,jdbcType=INTEGER},
-      createtime = #{createtime,jdbcType=TIMESTAMP}
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      rejectreason = #{rejectreason,jdbcType=VARCHAR}
     where studyid = #{studyid,jdbcType=INTEGER}
   </update>
 </mapper>
