@@ -34,7 +34,7 @@ public interface PUserDao {
 
     int updateByPrimaryKey(PUser record);
 
-    @Select("select * from p_user where name=#{name} and password=#{password}")
+    @Select("select userid,name,email,password,company,job,tel,roleid,departmentid from p_user where name=#{name} and password=#{password}")
     PUser tologin(@Param("name")String name,@Param("password")String passowrd);
 
     @Select("select roleid from p_user where name=#{name}")
