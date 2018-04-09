@@ -1,11 +1,9 @@
 package cn.dlbdata.dangjian.admin.web.controller;
 
-import cn.dlbdata.dangjian.admin.dao.model.PScoreDetail;
-import cn.dlbdata.dangjian.admin.dao.model.PScoreDetailExample;
-import cn.dlbdata.dangjian.admin.dao.model.PScoreParty;
-import cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample;
+import cn.dlbdata.dangjian.admin.dao.model.*;
 import cn.dlbdata.dangjian.admin.service.PScoreDetailService;
 import cn.dlbdata.dangjian.admin.service.PScorePartyService;
+import cn.dlbdata.dangjian.admin.service.PScoreProjectService;
 import cn.dlbdata.dangjian.common.util.HttpResult;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 import com.github.pagehelper.PageHelper;
@@ -17,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping("/pscoreparty")
@@ -32,7 +27,8 @@ public class PScorePartyController{
 
     @Autowired
     private PScoreDetailService pScoreDetailService;
-
+    @Autowired
+    private PScoreProjectService pScoreProjectService;
 
 
     @RequestMapping(value="/save",method= RequestMethod.POST)
@@ -253,8 +249,32 @@ public class PScorePartyController{
     public Map<String, Object> getProjectScoreByUserId(Integer userId ,Integer year){
         ResultUtil result = new ResultUtil();
         List<PScoreParty> pScorePartyList =pScorePartyService.getProjectScoreByUserId(userId,year);
+        List<PScoreProject> pScoreProjectList = pScoreProjectService.selectByExample(new PScoreProjectExample());
+
+
+        Map<Integer, Double> pScorePartyMap = new ArrayMap<>();
+        for(int i=0;i<pScorePartyList.size();i++){
+            PScoreParty p = pScorePartyList.get(i);
+            pScorePartyMap.put(p.getProjectId(),p.getTypetotalscore());;
+        }
+
+        List<PScoreParty> pScoreList =  new ArrayList<>();
+
+        for(int i=0;i<pScoreProjectList.size();i++){
+            PScoreParty pScoreParty = new PScoreParty();
+            PScoreProject pScoreProject = pScoreProjectList.get(i);
+            pScoreParty.setScore(pScoreProject.getScore());
+            pScoreParty.setProjectName(pScoreProject.getProjectName());
+            if(pScorePartyMap.get(pScoreProject.getId())!=null){
+                pScoreParty.setTotalScore(pScorePartyMap.get(pScoreProject.getId()));
+            }else{
+                pScoreParty.setTotalScore(0.0);
+            }
+            pScoreList.add(pScoreParty);
+        }
+
         result.setSuccess(true);
-        result.setData(pScorePartyList);
+        result.setData(pScoreList);
         return result.getResult();
     }
 
