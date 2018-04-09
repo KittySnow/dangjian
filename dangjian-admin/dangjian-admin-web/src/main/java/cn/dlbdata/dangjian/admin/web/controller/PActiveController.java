@@ -216,6 +216,7 @@ public class PActiveController {
 
     /**
      * 查询正在进行的活动，或者已经开始的活动
+     * @param userId 用户ID
      * @param departmentid
      * @param pageNum
      * @param pageSize
@@ -223,7 +224,7 @@ public class PActiveController {
      */
     @RequestMapping(value="/getParticipateActive",method= RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getParticipateActive(Integer departmentid,Integer pageNum, Integer pageSize){
+    public Map<String, Object> getParticipateActive(Integer userId,Integer departmentid,Integer pageNum, Integer pageSize){
         ResultUtil result = new ResultUtil();
         PActiveExample example = new PActiveExample();
         PActiveExample.Criteria ct = example.createCriteria();
@@ -241,6 +242,7 @@ public class PActiveController {
             if(createUser!=null){
                 json.put("activeCreatePeopleName", createUser.getName());
             }
+            json.put("signupstatus", hasParticipate(active.getId(), userId)?1:2);
             list.add(json);
         }
         JSONArray array = new JSONArray();
@@ -249,6 +251,23 @@ public class PActiveController {
         result.setSuccess(true);
         result.setData(pageInfo);
         return result.getResult();
+    }
+
+    /**
+     * 判断是否已经报名的活动
+     * @param activeId
+     * @param userId
+     * @return
+     */
+    private boolean hasParticipate(Integer activeId, Integer userId) {
+        PActiveParticipateExample example = new PActiveParticipateExample();
+        PActiveParticipateExample.Criteria ct = example.createCriteria();
+        ct.andUserIdEqualTo(userId);
+        ct.andActiveIdEqualTo(activeId);
+        if(activeParticipateService.selectByExample(example).size()>0){
+            return true;
+        }
+        return false;
     }
 
     @RequestMapping(value="/list",method= RequestMethod.GET)
