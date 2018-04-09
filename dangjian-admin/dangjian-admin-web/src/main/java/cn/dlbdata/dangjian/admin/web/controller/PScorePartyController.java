@@ -113,8 +113,8 @@ public class PScorePartyController{
         ct.andUserIdEqualTo(userid);
         ct.andYearEqualTo(year);
         List<PScoreParty> pScorePartyList = pScorePartyService.selectByExample(pScorePartyExample);
-
         List<PScoreDetail> pScoreDetailList = pScoreDetailService.selectByExample(new PScoreDetailExample());
+
 
         Map<Integer,String> detailIndo = new ArrayMap<Integer, String>();
         for (int i = 0; i < pScoreDetailList.size(); i++) {
