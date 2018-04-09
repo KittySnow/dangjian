@@ -222,4 +222,49 @@ public class PScorePartyController{
         result.setMsg("已审核，无需重复审核");
         return result.getResult();
     }
+
+
+
+    @RequestMapping(value="/getRole",method= {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String, Object> getRole(PScoreParty pScoreParty){
+        ResultUtil result = new ResultUtil();
+        if (pScoreParty.getId() == null || pScoreParty.getApprovedId()==null || pScoreParty.getStatusCd() == null){
+            result.setSuccess(false);
+            result.setMsg("请求参数不完整");
+            return result.getResult();
+        }
+        if (!"30".equals(pScoreParty.getStatusCd())) {
+            pScoreParty.setStatusCd("91");
+        }
+        if(pScorePartyService.updateAudit(pScoreParty)>0){
+            result.setSuccess(true);
+            result.setMsg("审核成功");
+            return result.getResult();
+        }
+        result.setSuccess(false);
+        result.setMsg("已审核，无需重复审核");
+        return result.getResult();
+    }
+
+
+    @RequestMapping(value="/getProjectScoreByUserId",method= {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String, Object> getProjectScoreByUserId(Integer userId ,Integer year){
+        ResultUtil result = new ResultUtil();
+        List<PScoreParty> pScorePartyList =pScorePartyService.getProjectScoreByUserId(userId,year);
+        result.setSuccess(true);
+        result.setData(pScorePartyList);
+        return result.getResult();
+    }
+
+    @RequestMapping(value="/getSumScoreByUserId",method= {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String, Object> getSumScoreByUserId(Integer userId ,Integer year){
+        ResultUtil result = new ResultUtil();
+        Double dp = pScorePartyService.getSumScoreByUserId(userId,year);
+        result.setSuccess(true);
+        result.setData(dp);
+        return result.getResult();
+    }
 }

@@ -7,6 +7,7 @@
     <result column="project_name" jdbcType="VARCHAR" property="projectName" />
     <result column="detail_id" jdbcType="INTEGER" property="detailId" />
     <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="typetotalscore" jdbcType="DECIMAL" property="typetotalscore" />
     <result column="adder_id" jdbcType="INTEGER" property="adderId" />
     <result column="approved_id" jdbcType="INTEGER" property="approvedId" />
     <result column="approved_name" jdbcType="VARCHAR" property="approvedName" />
@@ -18,6 +19,7 @@
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="status_cd" jdbcType="CHAR" property="statusCd" />
   </resultMap>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -465,15 +467,14 @@
         ),0)
     </insert>
 
-  <select id="getProjectScoreByUserId" parameterType="Map">
-    select project_id,project_name,sum(table1.score) as score
-    from p_score_party table1 inner join p_score_project table2 on table1.project_id = table2.id
-    where user_id=#{userId,jdbcType=INTEGER}, and year=#{year,jdbcType=INTEGER} group by table2.id;
+  <select id="getProjectScoreByUserId" parameterType="Map" resultMap="BaseResultMap">
+    select p_score_party.project_id, table2.project_name, sum(p_score_party.score) as typetotalscore
+    from p_score_party  inner join p_score_project table2 on p_score_party.project_id = table2.id
+    where user_id=#{userId,jdbcType=INTEGER} and year=#{year,jdbcType=INTEGER} group by table2.id;
   </select>
 
-  <select id="getSumScoreByUserId" parameterType="Map" resultType="java.lang.Integer">
-    select sum(table1.score) as score
-    from p_score_party where user_id=#{userId,jdbcType=INTEGER}, and year=#{year,jdbcType=INTEGER};
+  <select id="getSumScoreByUserId" parameterType="Map" resultType="java.lang.Double">
+    select sum(p_score_party.score) from p_score_party where user_id=#{userId,jdbcType=INTEGER} and year=#{year,jdbcType=INTEGER};
   </select>
 
 </mapper>

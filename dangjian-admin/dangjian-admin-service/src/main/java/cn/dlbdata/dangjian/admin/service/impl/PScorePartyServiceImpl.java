@@ -106,7 +106,7 @@ public class PScorePartyServiceImpl implements PScorePartyService {
     }
 
     @Override
-    public int getSumScoreByUserId(Integer userId ,Integer year){
+    public Double getSumScoreByUserId(Integer userId ,Integer year){
         return this.pScorePartyDao.getSumScoreByUserId(userId,year);
     };
 }

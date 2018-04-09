@@ -32,6 +32,15 @@ public class PScoreParty implements Serializable {
      * @mbg.generated
      */
     private Double score;
+    private  Double typetotalscore;
+
+    public Double getTypetotalscore() {
+        return typetotalscore;
+    }
+
+    public void setTypetotalscore(Double typetotalscore) {
+        this.typetotalscore = typetotalscore;
+    }
 
     /**
      * 加分者ID

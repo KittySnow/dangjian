@@ -133,4 +133,7 @@ public class PPartymemberController {
         result.setData(pPartymemberList);
         return result.getResult();
     }
+
+
+
 }

@@ -40,6 +40,6 @@ public interface PScorePartyService {
 
     public List<PScoreParty> getProjectScoreByUserId(Integer userId , Integer year);
 
-    public int getSumScoreByUserId(Integer userId ,Integer year);
+    public Double getSumScoreByUserId(Integer userId ,Integer year);
 
 }

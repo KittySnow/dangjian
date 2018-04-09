@@ -41,6 +41,6 @@ public interface PScorePartyDao {
 
     List<PScoreParty> getProjectScoreByUserId(@Param("userId")Integer  userId , @Param("year") Integer year);
 
-    int getSumScoreByUserId(@Param("userId")Integer  userId , @Param("year") Integer year);
+    Double getSumScoreByUserId(@Param("userId")Integer  userId , @Param("year") Integer year);
 
 }
