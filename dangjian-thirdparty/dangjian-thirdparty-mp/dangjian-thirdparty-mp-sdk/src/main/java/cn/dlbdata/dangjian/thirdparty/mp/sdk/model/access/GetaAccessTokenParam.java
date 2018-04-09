@@ -18,6 +18,38 @@ public class GetaAccessTokenParam extends BaseParam {
     @Param(key = "secret", required = true)
     private String secret;
 
+    private String token;
+
+    private long timestamp;
+
+    private String nonceStr;
+
+    public String getNonceStr() {
+        return nonceStr;
+    }
+
+    public void setNonceStr(String nonceStr) {
+        this.nonceStr = nonceStr;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    private String signature;
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
     public GrantType getGrantType() {
         return grantType;
     }
@@ -41,4 +73,14 @@ public class GetaAccessTokenParam extends BaseParam {
     public void setSecret(String secret) {
         this.secret = secret;
     }
+
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
 }

@@ -9,7 +9,7 @@
     <result column="score" jdbcType="DECIMAL" property="score" />
     <result column="adder_id" jdbcType="INTEGER" property="adderId" />
     <result column="approved_id" jdbcType="INTEGER" property="approvedId" />
-    <result column="approved_name" jdbcType="INTEGER" property="approvedName" />
+    <result column="approved_name" jdbcType="VARCHAR" property="approvedName" />
     <result column="year" jdbcType="INTEGER" property="year" />
     <result column="score_time" jdbcType="TIMESTAMP" property="scoreTime" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
@@ -78,7 +78,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, project_id, detail_id, score, adder_id, approved_id, year, score_time, add_time,
-    add_id, valid_yn, user_id, status_cd
+    add_id, valid_yn, user_id, status_cd,( select name from p_partymember where p_partymember.userid = approved_id ) as approved_name
   </sql>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample" resultMap="BaseResultMap">
     select

@@ -121,4 +121,17 @@ public class PScoreDetailController{
         result.setData(pScoreDetailList);
         return result.getResult();
     }
+
+    @RequestMapping(value="/queryByRoleMenu",method= RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> queryByRoleMenu(Integer roleid){
+        ResultUtil result = new ResultUtil();
+        PScoreDetailExample pScoreDetailExample = new PScoreDetailExample();
+        PScoreDetailExample.Criteria criteria =  pScoreDetailExample.createCriteria();
+        criteria.andAdderRoleIdEqualTo(roleid);
+        List<PScoreDetail> pScoreDetailList = pScoreDetailService.selectByExample(pScoreDetailExample);
+        result.setSuccess(true);
+        result.setData(pScoreDetailList);
+        return result.getResult();
+    }
 }

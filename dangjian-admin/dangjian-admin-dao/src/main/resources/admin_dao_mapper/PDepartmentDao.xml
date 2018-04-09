@@ -8,6 +8,7 @@
     <result column="people" jdbcType="INTEGER" property="people" />
     <result column="honor" jdbcType="VARCHAR" property="honor" />
     <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="partyBranch" jdbcType="VARCHAR" property="partyBranch" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +69,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    departmentid, departmentname, cost, people, honor, address
+    departmentid, departmentname, cost, people, honor, address,
+    (select name from p_partymember A ,p_user B  on A.userid = B.userid where B.departmentid = departmentid and B.roleid = 3 )
   </sql>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PDepartmentExample" resultMap="BaseResultMap">
     select
