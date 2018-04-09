@@ -31,7 +31,7 @@ public interface PActiveService {
 
     public int updateByPrimaryKey(PActive pActive);
 
-    public int selectByActiveTypeAndUserParticipate(Integer userId, Integer activeType);
+    public int selectByActiveTypeAndUserParticipate(@Param("userId") Integer userId,  @Param("activeType")Integer activeType);
 
     public int savePicture(PActivePicture activePicture);
 
