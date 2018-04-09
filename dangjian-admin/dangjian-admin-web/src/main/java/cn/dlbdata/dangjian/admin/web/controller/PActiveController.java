@@ -334,7 +334,7 @@ public class PActiveController {
      */
     @RequestMapping(value="/getParticipateCount",method=RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> getParticipateCount(int userId,int activeType) {
+    public Map<String, Object> getParticipateCount(Integer userId,Integer activeType) {
         ResultUtil result = new ResultUtil();
         int count = pActiveService.selectByActiveTypeAndUserParticipate(userId, activeType);
         result.setSuccess(true);
