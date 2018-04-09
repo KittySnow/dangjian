@@ -11,7 +11,7 @@
     <result column="bid" jdbcType="INTEGER" property="bid" />
     <result column="departmentid" jdbcType="INTEGER" property="departmentid" />
     <result column="departmentname" jdbcType="VARCHAR" property="departmentname" />
-    <result column="totalscore" jdbcType="DECIMAL" property="totalScore" />
+    <result column="totalscore" jdbcType="DOUBLE" property="totalScore" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
