@@ -264,6 +264,7 @@ public class PScorePartyController{
             PScoreParty pScoreParty = new PScoreParty();
             PScoreProject pScoreProject = pScoreProjectList.get(i);
             pScoreParty.setScore(pScoreProject.getScore());
+            pScoreParty.setId(pScoreProject.getId());
             pScoreParty.setProjectName(pScoreProject.getProjectName());
             if(pScorePartyMap.get(pScoreProject.getId())!=null){
                 pScoreParty.setTotalScore(pScorePartyMap.get(pScoreProject.getId()));
