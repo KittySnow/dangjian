@@ -32,5 +32,7 @@ public interface PPartymemberService {
     public int updateByPrimaryKeySelective(PPartymember pPartymember);
 
     public int updateByPrimaryKey(PPartymember pPartymember);
+
+    public List<PPartymember> getPartymemberByDepartmentid(@Param("departmentid") Integer departmentid);
     
 }

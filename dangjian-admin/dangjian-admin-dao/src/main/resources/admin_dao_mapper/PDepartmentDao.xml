@@ -227,4 +227,10 @@
       address = #{address,jdbcType=VARCHAR}
     where departmentid = #{departmentid,jdbcType=INTEGER}
   </update>
+  <select id="getSumPeople" resultType="java.lang.Integer" parameterType="cn.dlbdata.dangjian.admin.dao.model.PDepartment">
+    select sum(people) from p_department
+  </select>
+  <select id="getSumDepartment" resultType="java.lang.Integer" parameterType="cn.dlbdata.dangjian.admin.dao.model.PDepartment">
+    select count(departmentid) from p_department
+  </select>
 </mapper>

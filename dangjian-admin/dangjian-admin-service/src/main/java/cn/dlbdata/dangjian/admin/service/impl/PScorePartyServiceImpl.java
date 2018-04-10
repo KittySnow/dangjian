@@ -102,11 +102,11 @@ public class PScorePartyServiceImpl implements PScorePartyService {
 
     @Override
     public List<PScoreParty> getProjectScoreByUserId(Integer userId ,Integer year){
-        return this.pScorePartyDao.getProjectScoreByUserId(userId,year);
+        return pScorePartyDao.getProjectScoreByUserId(userId,year);
     }
 
     @Override
     public Double getSumScoreByUserId(Integer userId ,Integer year){
-        return this.pScorePartyDao.getSumScoreByUserId(userId,year);
+        return pScorePartyDao.getSumScoreByUserId(userId,year);
     };
 }

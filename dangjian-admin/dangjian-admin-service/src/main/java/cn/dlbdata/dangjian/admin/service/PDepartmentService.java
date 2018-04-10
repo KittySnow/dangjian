@@ -29,5 +29,9 @@ public interface PDepartmentService {
     public int updateByPrimaryKeySelective(PDepartment pDepartment);
 
     public int updateByPrimaryKey(PDepartment pDepartment);
-    
+
+    public int getSumPeople();
+
+    public int getSumDepartment();
+
 }

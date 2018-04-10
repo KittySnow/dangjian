@@ -8,6 +8,7 @@ import cn.dlbdata.dangjian.admin.dao.model.PPartymemberExample;
 import cn.dlbdata.dangjian.admin.dao.model.PUser;
 import cn.dlbdata.dangjian.admin.dao.model.PUserExample;
 import cn.dlbdata.dangjian.admin.service.PPartymemberService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,5 +142,9 @@ public class PPartymemberServiceImpl implements PPartymemberService {
         }else{
             return null;
         }
+    }
+
+    public List<PPartymember> getPartymemberByDepartmentid(Integer departmentid){
+        return pPartymemberDao.getPartymemberByDepartmentid(departmentid);
     }
 }
