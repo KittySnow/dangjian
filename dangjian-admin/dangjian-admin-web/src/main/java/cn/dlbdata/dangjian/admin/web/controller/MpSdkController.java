@@ -157,7 +157,7 @@ public class MpSdkController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        LocalCache.TOKEN_CACHE.put("ACCESS_TOKEN",ticket);
+        LocalCache.TOKEN_CACHE.put("TICKET",ticket);
         return ticket;
     }
 
