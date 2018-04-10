@@ -5,6 +5,7 @@ import cn.dlbdata.dangjian.admin.dao.model.PActiveExample;
 import cn.dlbdata.dangjian.admin.dao.model.PActivePicture;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface PActiveService {
@@ -31,7 +32,7 @@ public interface PActiveService {
 
     public int updateByPrimaryKey(PActive pActive);
 
-    public int selectByActiveTypeAndUserParticipate(@Param("userId") Integer userId,  @Param("activeType")Integer activeType);
+    public int selectByActiveTypeAndUserParticipate(Integer userId, Integer activeType, Date startTime, Date endTime);
 
     public int savePicture(PActivePicture activePicture);
 

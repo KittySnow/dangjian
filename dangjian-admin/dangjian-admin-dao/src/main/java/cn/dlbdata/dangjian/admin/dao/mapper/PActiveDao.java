@@ -4,6 +4,7 @@ import cn.dlbdata.dangjian.admin.dao.model.PActive;
 import cn.dlbdata.dangjian.admin.dao.model.PActiveExample;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface PActiveDao {
@@ -29,5 +30,5 @@ public interface PActiveDao {
 
     int updateByPrimaryKey(PActive record);
 
-    int selectByActiveTypeAndUserParticipate(@Param("userId") Integer userId, @Param("activeType") Integer activeType);
+    int selectByActiveTypeAndUserParticipate(@Param("userId") Integer userId, @Param("activeType") Integer activeType,@Param("startTime") Date startTime,@Param("endTime") Date endTime);
 }

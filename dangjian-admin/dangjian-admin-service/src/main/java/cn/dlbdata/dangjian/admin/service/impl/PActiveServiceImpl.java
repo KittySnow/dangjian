@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -83,8 +84,8 @@ public class PActiveServiceImpl implements PActiveService {
     }
 
     @Override
-    public int selectByActiveTypeAndUserParticipate(Integer userId, Integer activeType) {
-        return pActiveDao.selectByActiveTypeAndUserParticipate(userId, activeType);
+    public int selectByActiveTypeAndUserParticipate(Integer userId, Integer activeType, Date startTime,Date endTime) {
+        return pActiveDao.selectByActiveTypeAndUserParticipate(userId, activeType,startTime,endTime);
     }
 
     @Override

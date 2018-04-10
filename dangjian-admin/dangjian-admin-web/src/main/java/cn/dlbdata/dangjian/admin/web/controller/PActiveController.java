@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.imageio.ImageIO;
@@ -334,9 +335,11 @@ public class PActiveController {
      */
     @RequestMapping(value="/getParticipateCount",method=RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> getParticipateCount(Integer userId,Integer activeType) {
+    public Map<String, Object> getParticipateCount(Integer year,Integer userId,@RequestParam(required = false)Integer activeType) {
         ResultUtil result = new ResultUtil();
-        int count = pActiveService.selectByActiveTypeAndUserParticipate(userId, activeType);
+        Date startTime = DateUtil.getYearFirst(year);
+        Date endTime = DateUtil.getYearLast(year);
+        int count = pActiveService.selectByActiveTypeAndUserParticipate(userId, activeType,startTime,endTime);
         result.setSuccess(true);
         result.setMsg("查询成功");
         result.setData(count);
