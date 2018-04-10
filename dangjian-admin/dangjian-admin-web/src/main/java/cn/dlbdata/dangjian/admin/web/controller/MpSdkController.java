@@ -92,13 +92,13 @@ public class MpSdkController {
         getaAccessTokenParam.setSecret("8d72463ffdf8a2232241985b442c1c93");
         getaAccessTokenParam.setAppid("wxef4c83c01085bb38");
         getaAccessTokenParam.setGrantType(GrantType.client_credential);
-
         try {
             String Token = LocalCache.TOKEN_CACHE.getIfPresent("ACCESS_TOKEN");
             if (null == Token || "".equals(Token)) {
                 AccessTokenResponse accessTokenResponse = accessService.getAccessToken(getaAccessTokenParam);
-                accessTokenResponse.getAccessToken();
+                Token = accessTokenResponse.getAccessToken();
             }
+            getaAccessTokenParam.setToken(Token);
             //获取Ticket
             String jsapi_ticket = getTicket(Token);
 
