@@ -297,5 +297,8 @@
 
   <select id="getPartymemberByDepartmentid" resultMap="BaseResultMap" parameterType="Map">
     select <include refid="Base_Column_List" /> ,(select distinct status from p_avantgrade where p_avantgrade.partmentid = p_partymember.id) as tempint from p_partymember where departmentid = #{departmentid,jdbcType=INTEGER}
+    <if test="activeType != null">
+      AND tempint = #{status,jdbcType=INTEGER}
+    </if>
   </select>
 </mapper>

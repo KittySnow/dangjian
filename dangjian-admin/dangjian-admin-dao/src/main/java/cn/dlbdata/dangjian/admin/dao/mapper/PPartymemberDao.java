@@ -31,6 +31,6 @@ public interface PPartymemberDao {
 
     int updateByPrimaryKey(PPartymember record);
 
-    List<PPartymember> getPartymemberByDepartmentid(@Param("departmentid") Integer departmentid);
+    List<PPartymember> getPartymemberByDepartmentid(@Param("departmentid") Integer departmentid,@Param("status") Integer status);
 
 }

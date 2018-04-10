@@ -144,7 +144,10 @@ public class PPartymemberServiceImpl implements PPartymemberService {
         }
     }
 
-    public List<PPartymember> getPartymemberByDepartmentid(Integer departmentid){
-        return pPartymemberDao.getPartymemberByDepartmentid(departmentid);
+    //查找需要支部书记加分的 先锋模块
+    public List<PPartymember> getPartymemberByDepartmentid(Integer departmentid,Integer status){
+        return pPartymemberDao.getPartymemberByDepartmentid(departmentid,status);
     }
+
+    
 }

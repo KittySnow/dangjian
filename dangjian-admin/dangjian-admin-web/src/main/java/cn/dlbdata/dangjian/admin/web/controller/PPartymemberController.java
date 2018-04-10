@@ -171,7 +171,7 @@ public class PPartymemberController {
     * */
     public Map<String, Object> getPartymemberByDepartmentid(Integer departmentid,Integer status){
         ResultUtil result = new ResultUtil();
-        List<PPartymember> pPartymemberList = pPartymemberService.getPartymemberByDepartmentid(departmentid);
+        List<PPartymember> pPartymemberList = pPartymemberService.getPartymemberByDepartmentid(departmentid,status);
         result.setSuccess(true);
         result.setData(pPartymemberList);
         return result.getResult();
