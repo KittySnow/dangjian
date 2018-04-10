@@ -3,6 +3,7 @@ package cn.dlbdata.dangjian.admin.web.controller;
 import cn.dlbdata.dangjian.common.DangjianException;
 import cn.dlbdata.dangjian.common.util.HttpResult;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
+import cn.dlbdata.dangjian.common.util.StringUtil;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.access.AccessTokenResponse;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.access.GetUserInfo;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.access.GetaAccessTokenParam;
@@ -10,6 +11,7 @@ import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.access.GrantType;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.service.AccessService;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.service.CustomMenuService;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.service.UserInfoService;
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.util.LocalCache;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -46,9 +49,9 @@ public class MpSdkController {
     @Autowired
     private AccessService accessService;
 
-    @RequestMapping(value="/createMenu",method= RequestMethod.POST)
+    @RequestMapping(value = "/createMenu", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> createMenu(String json){
+    public Map<String, Object> createMenu(String json) {
         ResultUtil result = new ResultUtil();
 
         try {
@@ -62,9 +65,9 @@ public class MpSdkController {
         return result.getResult();
     }
 
-    @RequestMapping(value="/userInfo",method= RequestMethod.GET)
+    @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
     @ResponseBody
-    public HttpResult userInfo(String openid){
+    public HttpResult userInfo(String openid) {
         GetUserInfo userInfo = new GetUserInfo();
         userInfo.setLang("zh_CN");
         userInfo.setOpenid(openid);
@@ -81,9 +84,9 @@ public class MpSdkController {
         return HttpResult.success(json);
     }
 
-    @RequestMapping(value="/getToken",method= RequestMethod.GET)
+    @RequestMapping(value = "/getToken", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object>  getToken(){
+    public Map<String, Object> getToken() {
         ResultUtil result = new ResultUtil();
         GetaAccessTokenParam getaAccessTokenParam = new GetaAccessTokenParam();
         getaAccessTokenParam.setSecret("8d72463ffdf8a2232241985b442c1c93");
@@ -91,9 +94,11 @@ public class MpSdkController {
         getaAccessTokenParam.setGrantType(GrantType.client_credential);
 
         try {
-            AccessTokenResponse accessTokenResponse = accessService.getAccessToken(getaAccessTokenParam);
-            String Token  = accessTokenResponse.getAccessToken();
-
+            String Token = LocalCache.TOKEN_CACHE.getIfPresent("ACCESS_TOKEN");
+            if (null == Token || "".equals(Token)) {
+                AccessTokenResponse accessTokenResponse = accessService.getAccessToken(getaAccessTokenParam);
+                accessTokenResponse.getAccessToken();
+            }
             //获取Ticket
             String jsapi_ticket = getTicket(Token);
 
@@ -124,13 +129,16 @@ public class MpSdkController {
 
 
     public static String getTicket(String access_token) {
-        String ticket = null;
-        String url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token="+ access_token +"&type=jsapi";//这个url链接和参数不能变
+        String ticket = LocalCache.TICKET_CACHE.getIfPresent("TICKET");
+        if (null != ticket && !"".equals(ticket)) {
+            return ticket;
+        }
+        String url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=" + access_token + "&type=jsapi";//这个url链接和参数不能变
         try {
             URL urlGet = new URL(url);
             HttpURLConnection http = (HttpURLConnection) urlGet.openConnection();
             http.setRequestMethod("GET"); // 必须是get方式请求
-            http.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
+            http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             http.setDoOutput(true);
             http.setDoInput(true);
             System.setProperty("sun.net.client.defaultConnectTimeout", "30000");// 连接超时30秒
@@ -142,7 +150,7 @@ public class MpSdkController {
             is.read(jsonBytes);
             String message = new String(jsonBytes, "UTF-8");
             JSONObject demoJson = JSONObject.fromObject(message);
-            System.out.println("JSON字符串："+demoJson);
+            System.out.println("JSON字符串：" + demoJson);
             ticket = demoJson.getString("ticket");
             is.close();
         } catch (Exception e) {
