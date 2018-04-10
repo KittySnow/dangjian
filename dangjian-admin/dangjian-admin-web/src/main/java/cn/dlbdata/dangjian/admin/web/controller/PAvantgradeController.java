@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +48,7 @@ public class PAvantgradeController {
             pAvantgrade1.setModuleId(13);
             pAvantgrade1.setProjectId(4);
             pAvantgrade1.setItemscore(5.0);
-            pAvantgrade1.setYear(new Date().getYear());
+            pAvantgrade1.setYear(Calendar.getInstance().get(Calendar.YEAR));
             callbackId1 = pAvantgradeService.insert(pAvantgrade1);
         }
         if("".equals(Messge14)||Messge14!=null) {
@@ -60,7 +61,7 @@ public class PAvantgradeController {
             pAvantgrade2.setModuleId(14);
             pAvantgrade2.setProjectId(4);
             pAvantgrade2.setItemscore(5.0);
-            pAvantgrade2.setYear(new Date().getYear());
+            pAvantgrade2.setYear(Calendar.getInstance().get(Calendar.YEAR));
             callbackId2 = pAvantgradeService.insert(pAvantgrade2);
         }
         //pAvantgrade1.setApproveId();
@@ -73,7 +74,7 @@ public class PAvantgradeController {
             pAvantgrade3.setDepartmentid(departmentid);
             pAvantgrade3.setProjectId(4);
             pAvantgrade3.setItemscore(itemscore);
-            pAvantgrade3.setYear(new Date().getYear());
+            pAvantgrade3.setYear(Calendar.getInstance().get(Calendar.YEAR));
             pAvantgrade3.setCreatetime(new Date());
             callbackId3 = pAvantgradeService.insert(pAvantgrade3);
         }
@@ -84,11 +85,16 @@ public class PAvantgradeController {
         return result.getResult();
     }
 
+
     @RequestMapping(value="/getList",method= RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getList(Integer pageNum, Integer pageSize){
+    public Map<String, Object> getListByUserId(Integer userId){
         ResultUtil result = new ResultUtil();
-        List<PAvantgrade> pAvantgradeList = pAvantgradeService.selectByExample(new PAvantgradeExample());
+        PAvantgradeExample pA = new PAvantgradeExample();
+        PAvantgradeExample.Criteria ct = pA.createCriteria();
+        ct.andUseridEqualTo(userId);
+        ct.andYearEqualTo(Calendar.getInstance().get(Calendar.YEAR));
+        List<PAvantgrade> pAvantgradeList = pAvantgradeService.selectByExample(pA);
         result.setSuccess(true);
         result.setData(pAvantgradeList);
         return result.getResult();

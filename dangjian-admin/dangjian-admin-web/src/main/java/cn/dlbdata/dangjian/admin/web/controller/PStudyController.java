@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -92,7 +93,7 @@ public class PStudyController {
             pScoreParty.setApprovedId(userid);
             pScoreParty.setScoreTime(new Date());
             pScoreParty.setAddTime(new Date());
-            pScoreParty.setYear(new Date().getYear());
+            pScoreParty.setYear(Calendar.getInstance().get(Calendar.YEAR));
             pScoreParty.setValidYn("Y");
             pScoreParty.setStatusCd("30");
             //加的分数要找一下

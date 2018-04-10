@@ -1,5 +1,6 @@
 package cn.dlbdata.dangjian.admin.web.controller;
 
+import cn.dlbdata.dangjian.admin.web.VO.SHA1;
 import cn.dlbdata.dangjian.common.DangjianException;
 import cn.dlbdata.dangjian.common.util.HttpResult;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
@@ -13,6 +14,7 @@ import cn.dlbdata.dangjian.thirdparty.mp.sdk.service.CustomMenuService;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.service.UserInfoService;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.util.LocalCache;
 import net.sf.json.JSONObject;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +25,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.Map;
 import java.util.UUID;
 
@@ -86,7 +90,7 @@ public class MpSdkController {
 
     @RequestMapping(value = "/getToken", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getToken() {
+    public Map<String, Object> getToken(String url) {
         ResultUtil result = new ResultUtil();
         GetaAccessTokenParam getaAccessTokenParam = new GetaAccessTokenParam();
         getaAccessTokenParam.setSecret("8d72463ffdf8a2232241985b442c1c93");
@@ -111,10 +115,10 @@ public class MpSdkController {
             long timestamp = System.currentTimeMillis() / 1000;//时间戳
             getaAccessTokenParam.setTimestamp(timestamp);
 
+            url = "http://www.dlbdata.cn/dj/index.html#/active";
             //获取signature
-            String url = "http://180.169.82.27:7777/";
             String str = "jsapi_ticket=" + jsapi_ticket + "&noncestr=" + noncestr + "&timestamp=" + timestamp + "&url=" + url;
-            String signature = SHA1(str);
+            String signature = getSHA1(str);
             getaAccessTokenParam.setSignature(signature);
 
         } catch (DangjianException e) {
@@ -127,6 +131,7 @@ public class MpSdkController {
         result.setSuccess(true);
         return result.getResult();
     }
+
 
 
     public static String getTicket(String access_token) {
@@ -162,27 +167,46 @@ public class MpSdkController {
     }
 
 
-    public static String SHA1(String decript) {
-        try {
-            MessageDigest digest = java.security.MessageDigest.getInstance("SHA-1");
-            digest.update(decript.getBytes());
-            byte messageDigest[] = digest.digest();
-            // Create Hex String
-            StringBuffer hexString = new StringBuffer();
-            // 字节数组转换为 十六进制 数
-            for (int i = 0; i < messageDigest.length; i++) {
-                String shaHex = Integer.toHexString(messageDigest[i] & 0xFF);
-                if (shaHex.length() < 2) {
-                    hexString.append(0);
-                }
-                hexString.append(shaHex);
-            }
-            return hexString.toString();
 
-        } catch (NoSuchAlgorithmException e) {
+    /**
+     * 获取字符串的SHA1编码
+     * @param requestStr
+     * @return
+     */
+    private static String getSHA1(String requestStr){
+        String signature = new String();
+        try
+        {
+            MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+            crypt.reset();
+            crypt.update(requestStr.getBytes("UTF-8"));
+            signature = byteToHex(crypt.digest());
+        }
+        catch (NoSuchAlgorithmException e)
+        {
             e.printStackTrace();
         }
-        return "";
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        return signature;
+    }
+
+    /**
+     * byte转string(hex)
+     * @param hash
+     * @return
+     */
+    private static String byteToHex(final byte[] hash) {
+        Formatter formatter = new Formatter();
+        for (byte b : hash)
+        {
+            formatter.format("%02x", b);
+        }
+        String result = formatter.toString();
+        formatter.close();
+        return result;
     }
 
 }
