@@ -46,7 +46,7 @@ public class UserInfoServiceImpl extends TokenBasedService implements UserInfoSe
     public JSONObject userInfo(GetUserInfo getUserInfo) throws DangjianException {
         JSONObject jsonObject;
         try {
-            String Token = LocalCache.TOKEN_CACHE.getIfPresent("ACCESS_TOKEN");
+            String Token = LocalCache.TICKET_CACHE.getIfPresent("ACCESS_TOKEN");
             if (null == Token || "".equals(Token)) {
                 GetaAccessTokenParam getaAccessTokenParam = new GetaAccessTokenParam();
                 getaAccessTokenParam.setSecret("8d72463ffdf8a2232241985b442c1c93");
@@ -54,6 +54,7 @@ public class UserInfoServiceImpl extends TokenBasedService implements UserInfoSe
                 getaAccessTokenParam.setGrantType(GrantType.client_credential);
                 AccessTokenResponse accessTokenResponse = accessService.getAccessToken(getaAccessTokenParam);
                 Token = accessTokenResponse.getAccessToken();
+                LocalCache.TICKET_CACHE.put("ACCESS_TOKEN",Token);
             }
             String url = RequestUrls.USER_INFO_PREFIX +"?access_token="+Token+"&openid="+getUserInfo.getOpenid()+"&lang=zh_CN";
             jsonObject =  CommonUtil.httpsRequest(url, "GET",null);

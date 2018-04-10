@@ -93,10 +93,11 @@ public class MpSdkController {
         getaAccessTokenParam.setAppid("wxef4c83c01085bb38");
         getaAccessTokenParam.setGrantType(GrantType.client_credential);
         try {
-            String Token = LocalCache.TOKEN_CACHE.getIfPresent("ACCESS_TOKEN");
+            String Token = LocalCache.TICKET_CACHE.getIfPresent("ACCESS_TOKEN");
             if (null == Token || "".equals(Token)) {
                 AccessTokenResponse accessTokenResponse = accessService.getAccessToken(getaAccessTokenParam);
                 Token = accessTokenResponse.getAccessToken();
+                LocalCache.TICKET_CACHE.put("ACCESS_TOKEN",Token);
             }
             getaAccessTokenParam.setToken(Token);
             //获取Ticket
@@ -129,7 +130,7 @@ public class MpSdkController {
 
 
     public static String getTicket(String access_token) {
-        String ticket = LocalCache.TICKET_CACHE.getIfPresent("TICKET");
+        String ticket = LocalCache.TOKEN_CACHE.getIfPresent("TICKET");
         if (null != ticket && !"".equals(ticket)) {
             return ticket;
         }
@@ -156,6 +157,7 @@ public class MpSdkController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        LocalCache.TOKEN_CACHE.put("ACCESS_TOKEN",ticket);
         return ticket;
     }
 
