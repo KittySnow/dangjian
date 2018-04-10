@@ -105,8 +105,8 @@ public class PPartymemberServiceImpl implements PPartymemberService {
     }
 
     //查找书记
+    @Override
     public PPartymember selectBranchByDepartmentId(Integer departmentid){
-
         PUserExample pUserExample = new PUserExample();
         PUserExample.Criteria ct = pUserExample.createCriteria();
         ct.andRoleidEqualTo(3);
@@ -125,14 +125,13 @@ public class PPartymemberServiceImpl implements PPartymemberService {
     }
 
 
-    //查找片区书记
+    //查找片区负责人
+    @Override
     public PPartymember selectBranchByDepartmentId(){
-
         PUserExample pUserExample = new PUserExample();
         PUserExample.Criteria ct = pUserExample.createCriteria();
         ct.andRoleidEqualTo(2);
         PUser pUser = pUserDao.selectByExample(pUserExample).get(0);
-
         PPartymemberExample pPartymemberExample = new PPartymemberExample();
         PPartymemberExample.Criteria criteria =  pPartymemberExample.createCriteria();
         criteria.andUseridEqualTo(pUser.getUserid());
@@ -144,10 +143,11 @@ public class PPartymemberServiceImpl implements PPartymemberService {
         }
     }
 
-    //查找需要支部书记加分的 先锋模块
+    //查找需要支部书记加分的先锋模块
+    @Override
     public List<PPartymember> getPartymemberByDepartmentid(Integer departmentid,Integer status){
         return pPartymemberDao.getPartymemberByDepartmentid(departmentid,status);
     }
 
-    
+
 }

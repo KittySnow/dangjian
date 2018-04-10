@@ -34,5 +34,9 @@ public interface PPartymemberService {
     public int updateByPrimaryKey(PPartymember pPartymember);
 
     public List<PPartymember> getPartymemberByDepartmentid(@Param("departmentid") Integer departmentid,@Param("status") Integer status);
+
+    public PPartymember selectBranchByDepartmentId(Integer departmentid);
+
+    public PPartymember selectBranchByDepartmentId();
     
 }

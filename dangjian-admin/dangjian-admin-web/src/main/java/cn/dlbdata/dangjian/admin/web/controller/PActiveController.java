@@ -40,6 +40,7 @@ import java.util.*;
  * @change
  * @describe 活动接口
  */
+
 @Controller
 @RequestMapping("/active")
 public class PActiveController {
@@ -403,7 +404,7 @@ public class PActiveController {
      * 显示活动二维码
      * @return
      */
-    @RequestMapping(value="/showQrCode",method= RequestMethod.POST)
+    @RequestMapping(value="/showQrCode",method= {RequestMethod.POST,RequestMethod.GET})
     public void showQrCode(Integer activeId,HttpServletResponse response){
         String content = "请复制这段对话进行全局搜索，该变量是用来转换为二维码的变量";
         BufferedImage image;

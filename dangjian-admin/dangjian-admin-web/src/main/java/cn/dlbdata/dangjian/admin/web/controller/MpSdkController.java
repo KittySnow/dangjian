@@ -106,7 +106,7 @@ public class MpSdkController {
             getaAccessTokenParam.setTimestamp(timestamp);
 
             //获取signature
-            String url = "http://www.dlbdata.cn:7777/";
+            String url = "http://180.169.82.27:7777/";
             String str = "jsapi_ticket=" + jsapi_ticket + "&noncestr=" + noncestr + "&timestamp=" + timestamp + "&url=" + url;
             String signature = SHA1(str);
             getaAccessTokenParam.setSignature(signature);
