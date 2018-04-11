@@ -90,7 +90,18 @@ public class MpSdkController {
 
     @RequestMapping(value = "/getToken", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getToken(String url) {
+    public Map<String, Object> getToken(HttpServletRequest httpRequest,String href) {
+
+        String url ="http://" + httpRequest.getServerName()+ httpRequest.getContextPath() + httpRequest.getServletPath();
+
+        if(httpRequest.getQueryString()!=null) {
+           url+="?"+httpRequest.getQueryString();
+        }
+
+        if(href!=null) {
+           url = href;
+        }
+
         ResultUtil result = new ResultUtil();
         GetaAccessTokenParam getaAccessTokenParam = new GetaAccessTokenParam();
         getaAccessTokenParam.setSecret("8d72463ffdf8a2232241985b442c1c93");
@@ -115,7 +126,6 @@ public class MpSdkController {
             long timestamp = System.currentTimeMillis() / 1000;//时间戳
             getaAccessTokenParam.setTimestamp(timestamp);
 
-            url = "http://www.dlbdata.cn/dj/index.html#/active";
             //获取signature
             String str = "jsapi_ticket=" + jsapi_ticket + "&noncestr=" + noncestr + "&timestamp=" + timestamp + "&url=" + url;
             String signature = getSHA1(str);

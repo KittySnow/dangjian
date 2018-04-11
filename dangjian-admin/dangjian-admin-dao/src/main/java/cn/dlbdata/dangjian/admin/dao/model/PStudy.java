@@ -62,7 +62,7 @@ public class PStudy implements Serializable {
     /**
      * 上级是否审批
      *
-     * @mbg.generated
+     * @mbg.generated 0是等待审核 1是审核通过 2是拒绝
      */
     private Integer status;
 

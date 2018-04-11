@@ -107,14 +107,6 @@ public class PPartymember implements Serializable {
 
 
 
-    public Double getTotalScore() {
-        return totalScore;
-    }
-
-    public void setTotalScore(Double totalScore) {
-        this.totalScore = totalScore;
-    }
-
     public String getPhone() {
         return phone;
     }

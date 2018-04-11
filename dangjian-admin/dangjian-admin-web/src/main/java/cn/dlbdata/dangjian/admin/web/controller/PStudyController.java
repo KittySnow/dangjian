@@ -52,10 +52,12 @@ public class PStudyController {
         List<PUser> pUserList = pUserService.selectByExample(pUserExample);
         PUser leader = pUserList.get(0);
         pStudy.setApprovalid(leader.getUserid());
+        pStudy.setStatus(0);
 
         int callbackId = pStudyService.insert(pStudy);
 
-        if(picIds.length!=0){
+
+       /* if(picIds.length!=0){
             for(int i=0;i<picIds.length;i++){
                 PStudyPicture pStudyPicture = new PStudyPicture();
                 pStudyPicture.setStudyId(callbackId);
@@ -63,7 +65,7 @@ public class PStudyController {
                 pStudyPictureService.insert(pStudyPicture);
             }
         }
-
+*/
         result.setData(callbackId);
         result.setSuccess(true);
         return result.getResult();
