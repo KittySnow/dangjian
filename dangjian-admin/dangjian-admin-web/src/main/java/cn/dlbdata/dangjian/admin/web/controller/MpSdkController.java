@@ -1,10 +1,8 @@
 package cn.dlbdata.dangjian.admin.web.controller;
 
-import cn.dlbdata.dangjian.admin.web.VO.SHA1;
 import cn.dlbdata.dangjian.common.DangjianException;
 import cn.dlbdata.dangjian.common.util.HttpResult;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
-import cn.dlbdata.dangjian.common.util.StringUtil;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.access.AccessTokenResponse;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.access.GetUserInfo;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.access.GetaAccessTokenParam;
@@ -12,9 +10,9 @@ import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.access.GrantType;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.service.AccessService;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.service.CustomMenuService;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.service.UserInfoService;
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.util.CommonUtil;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.util.LocalCache;
 import net.sf.json.JSONObject;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.MessageDigest;
@@ -50,6 +47,7 @@ public class MpSdkController {
     private CustomMenuService customMenuService;
     @Autowired
     private UserInfoService userInfoService;
+
     @Autowired
     private AccessService accessService;
 
@@ -219,4 +217,59 @@ public class MpSdkController {
         return result;
     }
 
+
+    /**
+     * 获取媒体文件
+     *
+     * @param mediaId 媒体文件id
+     * @param savePath 文件在本地服务器上的存储路径
+     * */
+    public static String downloadMedia(String mediaId, String savePath) {
+
+        String filePath = null;
+
+        GetaAccessTokenParam getaAccessTokenParam = new GetaAccessTokenParam();
+        getaAccessTokenParam.setSecret("8d72463ffdf8a2232241985b442c1c93");
+        getaAccessTokenParam.setAppid("wxef4c83c01085bb38");
+        getaAccessTokenParam.setGrantType(GrantType.client_credential);
+        String Token = LocalCache.TICKET_CACHE.getIfPresent("ACCESS_TOKEN");
+        if (null == Token || "".equals(Token)) {
+            AccessTokenResponse accessTokenResponse = accessService.getAccessToken(getaAccessTokenParam);
+            Token = accessTokenResponse.getAccessToken();
+            LocalCache.TICKET_CACHE.put("ACCESS_TOKEN",Token);
+        }
+        // 拼接请求地址
+        String requestUrl = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID";
+        requestUrl = requestUrl.replace("ACCESS_TOKEN", Token).replace("MEDIA_ID", mediaId);
+        try {
+            URL url = new URL(requestUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setDoInput(true);
+            conn.setRequestMethod("GET");
+
+            if (!savePath.endsWith("/")) {
+                savePath += "/";
+            }
+            // 根据内容类型获取扩展名
+            String fileExt = CommonUtil.getFileExt(conn.getHeaderField("Content-Type"));
+            // 将mediaId作为文件名
+            filePath = savePath + mediaId + fileExt;
+            BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
+            FileOutputStream fos = new FileOutputStream(new File(filePath));
+            byte[] buf = new byte[8096];
+            int size = 0;
+            while ((size = bis.read(buf)) != -1)
+                fos.write(buf, 0, size);
+            fos.close();
+            bis.close();
+            conn.disconnect();
+            String info = String.format("下载媒体文件成功，filePath=" + filePath);
+            System.out.println(info);
+        } catch (Exception e) {
+            filePath = null;
+            String error = String.format("下载媒体文件失败：%s", e);
+            System.out.println(error);
+        }
+        return filePath;
+    }
 }

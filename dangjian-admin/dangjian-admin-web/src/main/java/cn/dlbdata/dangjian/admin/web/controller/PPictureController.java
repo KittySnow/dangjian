@@ -6,8 +6,12 @@ import cn.dlbdata.dangjian.admin.service.PPictureService;
 import cn.dlbdata.dangjian.common.util.CookieUtil;
 import cn.dlbdata.dangjian.common.util.FileUtil;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.access.AccessTokenResponse;
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.access.GetaAccessTokenParam;
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.access.GrantType;
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.service.AccessService;
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.util.CommonUtil;
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.util.LocalCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +25,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 
@@ -46,6 +49,8 @@ public class PPictureController {
     @Autowired
     private PPictureService pPictureService;
 
+    @Autowired
+    private AccessService accessService;
     /**
      * 上传图片
      *
@@ -166,4 +171,7 @@ public class PPictureController {
         result.setData(pPicture);
         return result.getResult();
     }
+
+
+
 }

@@ -6,12 +6,16 @@ import cn.dlbdata.dangjian.admin.dao.model.PUserExample;
 import cn.dlbdata.dangjian.admin.service.PUserService;
 import cn.dlbdata.dangjian.admin.web.VO.LoginVO;
 import cn.dlbdata.dangjian.common.DO.UserLoginDO;
+import cn.dlbdata.dangjian.common.DangjianException;
 import cn.dlbdata.dangjian.common.util.CookieUtil;
 import cn.dlbdata.dangjian.common.util.HttpResult;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 import cn.dlbdata.dangjian.common.util.TokenUtil;
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.access.GetUserInfo;
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.service.UserInfoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +41,8 @@ public class PUserController {
 
     @Autowired
     private PUserService puserService;
+    @Autowired
+    private UserInfoService userInfoService;
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
@@ -212,7 +218,7 @@ public class PUserController {
 
                 LoginVO loginVO = new LoginVO();
                 loginVO.setPtoken(token);
-                loginVO.setRoleId(pUser.getUserid());
+                loginVO.setRoleId(pUser.getRoleid());
                 loginVO.setUserId(pUser.getUserid());
 
                 CookieUtil.setCookie(response, "roleId", pUser.getRoleid().toString());
@@ -220,34 +226,25 @@ public class PUserController {
                 CookieUtil.setCookie(response,"ptoken", token);
 
                 // 登陆保存 token 信息
-                if(userLoginDO.getOpenId()!=null || "".equals(userLoginDO.getOpenId())){
+                if(userLoginDO.getOpenId()!= null){
                     puserService.saveLoginUserInfo(pUser.getUserid(), token, userLoginDO.getOpenId());
+
+                }
+                if(pUser.getOpenid()!=null){
+                    GetUserInfo getUserInfo = new GetUserInfo();
+                    getUserInfo.setLang("zh_CN");
+                    getUserInfo.setOpenid(userLoginDO.getOpenId());
+                    try {
+                        JSONObject jsonObject = userInfoService.userInfo(getUserInfo);
+                        loginVO.setWxInfo(jsonObject);
+                    } catch (DangjianException e) {
+                        HttpResult.failure("登陆失败，微信获取用户信息失败.");
+                    }
                 }
 
+
                 return HttpResult.success(loginVO);
-//                //创建session且获取session
-//                HttpSession session = request.getSession();
-//                //创建user Token
-//                UserToken userToken = new UserToken(pUser.getName(),pUser.getPassword(),pUserRole.getRoleid());
-//
-//                //如果roleid为1
-//                if(userToken.getRoleid()==1){
-//                    //set值
-//                    session.setAttribute("userToken", "userToken");
-//                    result.setSuccess(true);
-//
-//                    return null;
-//                }
-//
-//                //如果roleid为2或3
-//                if(userToken.getRoleid()==2 || userToken.getRoleid()==3) {
-//                    //set值
-//                    session.setAttribute("userToken", "userToken");
-//                    result.setSuccess(true);
-//
-//                    return null;
-//                }
-//                //返回boolean类型的结果值
+
             } else {
                 return HttpResult.failure("登陆失败，用户名或密码错误.");
 //                result.setSuccess(false);

@@ -104,7 +104,7 @@ public class PUserServiceImpl implements PUserService {
     public void saveLoginUserInfo(int userId, String token, String openId) {
         pUserDao.saveLoginUserInfo(userId, token, openId);
 
-        GetUserInfo getUserInfo = new GetUserInfo();
+        /*GetUserInfo getUserInfo = new GetUserInfo();
         getUserInfo.setLang("zh_CN");
         getUserInfo.setOpenid(openId);
 
@@ -114,6 +114,6 @@ public class PUserServiceImpl implements PUserService {
 
         } catch (DangjianException e) {
             logger.error("Get wx userinfo error.", e);
-        }
+        }*/
     }
 }

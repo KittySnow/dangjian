@@ -59,11 +59,6 @@ public class UserInfoServiceImpl extends TokenBasedService implements UserInfoSe
             String url = RequestUrls.USER_INFO_PREFIX +"?access_token="+Token+"&openid="+getUserInfo.getOpenid()+"&lang=zh_CN";
             jsonObject =  CommonUtil.httpsRequest(url, "GET",null);
 
-            if (!jsonObject.has("success") || !jsonObject.getBoolean("success")) {
-                logger.error("Get wx userinfo error, result jsonObject=" + jsonObject.toString());
-
-                throw new RuntimeException("Get wx userInfo error.");
-            }
         } catch (DangjianException e) {
             logger.error("", e);
 

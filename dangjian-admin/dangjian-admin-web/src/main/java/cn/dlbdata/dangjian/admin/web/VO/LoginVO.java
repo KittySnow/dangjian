@@ -1,12 +1,14 @@
 package cn.dlbdata.dangjian.admin.web.VO;
 
 import lombok.Data;
+import net.sf.json.JSONObject;
 
 @Data
 public class LoginVO {
     private String ptoken;
     private Integer userId;
     private Integer roleId;
+    private JSONObject wxInfo;
 
     public String getPtoken() {
         return ptoken;
@@ -30,5 +32,13 @@ public class LoginVO {
 
     public void setRoleId(Integer roleId) {
         this.roleId = roleId;
+    }
+
+    public JSONObject getWxInfo() {
+        return wxInfo;
+    }
+
+    public void setWxInfo(JSONObject wxInfo) {
+        this.wxInfo = wxInfo;
     }
 }
