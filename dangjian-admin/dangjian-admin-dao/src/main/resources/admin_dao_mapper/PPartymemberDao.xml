@@ -7,10 +7,15 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="sex" jdbcType="VARCHAR" property="sex" />
     <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="idcard" jdbcType="VARCHAR" property="idcard" />
     <result column="fromdepartmentid" jdbcType="INTEGER" property="fromdepartmentid" />
     <result column="bid" jdbcType="INTEGER" property="bid" />
     <result column="departmentid" jdbcType="INTEGER" property="departmentid" />
+    <result column="fromdepartmentname" jdbcType="VARCHAR" property="fromdepartmentname" />
     <result column="departmentname" jdbcType="VARCHAR" property="departmentname" />
+    <result column="totalscore" jdbcType="DOUBLE" property="totalScore" />
+    <result column="tempint" jdbcType="INTEGER" property="tempint" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,16 +76,11 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-  id, userid, name, sex, age, fromdepartmentid, bid, departmentid,
-  (select departmentname from p_department d where d.departmentid = p_partymember.departmentid )as departmentname,
-  (select departmentname from p_department d where d.departmentid = p_partymember.fromdepartmentid )as fromdepartmentname
+    id, userid, name, sex, age, phone, idcard, fromdepartmentid, bid, departmentid,
+    (select departmentname from p_department d where d.departmentid = p_partymember.departmentid )as departmentname,
+    (select departmentname from p_department d where d.departmentid = p_partymember.fromdepartmentid )as fromdepartmentname,
+    (select sum(table1.score) from p_score_party table1  where table1.user_id = p_partymember.userid and year = (select year(now()) )) as totalscore
   </sql>
-
-  <select id="countUser" resultType="java.lang.Long">
-    select count(userid) as users
-    from p_user
-  </select>
-
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymemberExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -96,7 +96,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from p_partymember
     where id = #{id,jdbcType=INTEGER}
@@ -112,22 +112,21 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymember">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into p_partymember (userid, name, sex, 
-      age, fromdepartmentid, bid, 
-      departmentid)
-    values (#{userid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
-      #{age,jdbcType=INTEGER}, #{fromdepartmentid,jdbcType=INTEGER}, #{bid,jdbcType=INTEGER}, 
-      #{departmentid,jdbcType=INTEGER})
+    insert into p_partymember (id, userid, name,
+    sex, age, phone, idcard,
+    fromdepartmentid, bid, departmentid
+    )
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+    #{sex,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR},
+    #{fromdepartmentid,jdbcType=INTEGER}, #{bid,jdbcType=INTEGER}, #{departmentid,jdbcType=INTEGER}
+    )
   </insert>
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymember">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into p_partymember
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
       <if test="userid != null">
         userid,
       </if>
@@ -140,6 +139,12 @@
       <if test="age != null">
         age,
       </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="idcard != null">
+        idcard,
+      </if>
       <if test="fromdepartmentid != null">
         fromdepartmentid,
       </if>
@@ -151,6 +156,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
       <if test="userid != null">
         #{userid,jdbcType=INTEGER},
       </if>
@@ -162,6 +170,12 @@
       </if>
       <if test="age != null">
         #{age,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null">
+        #{idcard,jdbcType=VARCHAR},
       </if>
       <if test="fromdepartmentid != null">
         #{fromdepartmentid,jdbcType=INTEGER},
@@ -198,6 +212,12 @@
       <if test="record.age != null">
         age = #{record.age,jdbcType=INTEGER},
       </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcard != null">
+        idcard = #{record.idcard,jdbcType=VARCHAR},
+      </if>
       <if test="record.fromdepartmentid != null">
         fromdepartmentid = #{record.fromdepartmentid,jdbcType=INTEGER},
       </if>
@@ -215,13 +235,15 @@
   <update id="updateByExample" parameterType="map">
     update p_partymember
     set id = #{record.id,jdbcType=INTEGER},
-      userid = #{record.userid,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=VARCHAR},
-      sex = #{record.sex,jdbcType=VARCHAR},
-      age = #{record.age,jdbcType=INTEGER},
-      fromdepartmentid = #{record.fromdepartmentid,jdbcType=INTEGER},
-      bid = #{record.bid,jdbcType=INTEGER},
-      departmentid = #{record.departmentid,jdbcType=INTEGER}
+    userid = #{record.userid,jdbcType=INTEGER},
+    name = #{record.name,jdbcType=VARCHAR},
+    sex = #{record.sex,jdbcType=VARCHAR},
+    age = #{record.age,jdbcType=INTEGER},
+    phone = #{record.phone,jdbcType=VARCHAR},
+    idcard = #{record.idcard,jdbcType=VARCHAR},
+    fromdepartmentid = #{record.fromdepartmentid,jdbcType=INTEGER},
+    bid = #{record.bid,jdbcType=INTEGER},
+    departmentid = #{record.departmentid,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -241,6 +263,12 @@
       <if test="age != null">
         age = #{age,jdbcType=INTEGER},
       </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null">
+        idcard = #{idcard,jdbcType=VARCHAR},
+      </if>
       <if test="fromdepartmentid != null">
         fromdepartmentid = #{fromdepartmentid,jdbcType=INTEGER},
       </if>
@@ -256,12 +284,21 @@
   <update id="updateByPrimaryKey" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymember">
     update p_partymember
     set userid = #{userid,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=VARCHAR},
-      age = #{age,jdbcType=INTEGER},
-      fromdepartmentid = #{fromdepartmentid,jdbcType=INTEGER},
-      bid = #{bid,jdbcType=INTEGER},
-      departmentid = #{departmentid,jdbcType=INTEGER}
+    name = #{name,jdbcType=VARCHAR},
+    sex = #{sex,jdbcType=VARCHAR},
+    age = #{age,jdbcType=INTEGER},
+    phone = #{phone,jdbcType=VARCHAR},
+    idcard = #{idcard,jdbcType=VARCHAR},
+    fromdepartmentid = #{fromdepartmentid,jdbcType=INTEGER},
+    bid = #{bid,jdbcType=INTEGER},
+    departmentid = #{departmentid,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getPartymemberByDepartmentid" resultMap="BaseResultMap" parameterType="Map">
+    select <include refid="Base_Column_List" /> ,(select distinct status from p_avantgrade where p_avantgrade.partmentid = p_partymember.id) as tempint from p_partymember where departmentid = #{departmentid,jdbcType=INTEGER}
+    <if test="status != null">
+      AND tempint = #{status,jdbcType=INTEGER}
+    </if>
+  </select>
 </mapper>

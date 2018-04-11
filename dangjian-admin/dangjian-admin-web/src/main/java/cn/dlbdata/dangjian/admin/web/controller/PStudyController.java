@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -51,10 +52,12 @@ public class PStudyController {
         List<PUser> pUserList = pUserService.selectByExample(pUserExample);
         PUser leader = pUserList.get(0);
         pStudy.setApprovalid(leader.getUserid());
+        pStudy.setStatus(0);
 
         int callbackId = pStudyService.insert(pStudy);
 
-        if(picIds.length!=0){
+
+       /* if(picIds.length!=0){
             for(int i=0;i<picIds.length;i++){
                 PStudyPicture pStudyPicture = new PStudyPicture();
                 pStudyPicture.setStudyId(callbackId);
@@ -62,7 +65,7 @@ public class PStudyController {
                 pStudyPictureService.insert(pStudyPicture);
             }
         }
-
+*/
         result.setData(callbackId);
         result.setSuccess(true);
         return result.getResult();
@@ -92,7 +95,7 @@ public class PStudyController {
             pScoreParty.setApprovedId(userid);
             pScoreParty.setScoreTime(new Date());
             pScoreParty.setAddTime(new Date());
-            pScoreParty.setYear(new Date().getYear());
+            pScoreParty.setYear(Calendar.getInstance().get(Calendar.YEAR));
             pScoreParty.setValidYn("Y");
             pScoreParty.setStatusCd("30");
             //加的分数要找一下

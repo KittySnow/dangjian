@@ -4,10 +4,13 @@
   <resultMap id="BaseResultMap" type="cn.dlbdata.dangjian.admin.dao.model.PScoreParty">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="project_id" jdbcType="INTEGER" property="projectId" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
     <result column="detail_id" jdbcType="INTEGER" property="detailId" />
     <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="typetotalscore" jdbcType="DECIMAL" property="typetotalscore" />
     <result column="adder_id" jdbcType="INTEGER" property="adderId" />
     <result column="approved_id" jdbcType="INTEGER" property="approvedId" />
+    <result column="approved_name" jdbcType="VARCHAR" property="approvedName" />
     <result column="year" jdbcType="INTEGER" property="year" />
     <result column="score_time" jdbcType="TIMESTAMP" property="scoreTime" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
@@ -16,6 +19,7 @@
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="status_cd" jdbcType="CHAR" property="statusCd" />
   </resultMap>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -76,7 +80,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, project_id, detail_id, score, adder_id, approved_id, year, score_time, add_time,
-    add_id, valid_yn, user_id, status_cd
+    add_id, valid_yn, user_id, status_cd,( select name from p_partymember where p_partymember.userid = approved_id ) as approved_name
   </sql>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample" resultMap="BaseResultMap">
     select
@@ -462,4 +466,15 @@
           and s.user_id = t.user_id and s.detail_id = 6
         ),0)
     </insert>
+
+  <select id="getProjectScoreByUserId" parameterType="Map" resultMap="BaseResultMap">
+    select p_score_party.project_id, table2.project_name, sum(p_score_party.score) as typetotalscore
+    from p_score_party  inner join p_score_project table2 on p_score_party.project_id = table2.id
+    where user_id=#{userId,jdbcType=INTEGER} and year=#{year,jdbcType=INTEGER} group by table2.id;
+  </select>
+
+  <select id="getSumScoreByUserId" parameterType="Map" resultType="java.lang.Double">
+    select sum(p_score_party.score) from p_score_party where user_id=#{userId,jdbcType=INTEGER} and year=#{year,jdbcType=INTEGER};
+  </select>
+
 </mapper>

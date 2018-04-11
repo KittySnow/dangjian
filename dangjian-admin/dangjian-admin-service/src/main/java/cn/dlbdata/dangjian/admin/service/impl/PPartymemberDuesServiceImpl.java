@@ -78,4 +78,5 @@ public class PPartymemberDuesServiceImpl implements PPartymemberDuesService {
         return pPartymemberDuesDao.updateByPrimaryKey(pPartymemberDues);
     }
 
+
 }

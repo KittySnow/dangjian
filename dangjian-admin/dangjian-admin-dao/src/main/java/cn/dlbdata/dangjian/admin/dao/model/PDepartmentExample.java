@@ -296,6 +296,206 @@ public class PDepartmentExample implements Serializable {
             addCriterion("cost not between", value1, value2, "cost");
             return (Criteria) this;
         }
+
+        public Criteria andPeopleIsNull() {
+            addCriterion("people is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPeopleIsNotNull() {
+            addCriterion("people is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPeopleEqualTo(Integer value) {
+            addCriterion("people =", value, "people");
+            return (Criteria) this;
+        }
+
+        public Criteria andPeopleNotEqualTo(Integer value) {
+            addCriterion("people <>", value, "people");
+            return (Criteria) this;
+        }
+
+        public Criteria andPeopleGreaterThan(Integer value) {
+            addCriterion("people >", value, "people");
+            return (Criteria) this;
+        }
+
+        public Criteria andPeopleGreaterThanOrEqualTo(Integer value) {
+            addCriterion("people >=", value, "people");
+            return (Criteria) this;
+        }
+
+        public Criteria andPeopleLessThan(Integer value) {
+            addCriterion("people <", value, "people");
+            return (Criteria) this;
+        }
+
+        public Criteria andPeopleLessThanOrEqualTo(Integer value) {
+            addCriterion("people <=", value, "people");
+            return (Criteria) this;
+        }
+
+        public Criteria andPeopleIn(List<Integer> values) {
+            addCriterion("people in", values, "people");
+            return (Criteria) this;
+        }
+
+        public Criteria andPeopleNotIn(List<Integer> values) {
+            addCriterion("people not in", values, "people");
+            return (Criteria) this;
+        }
+
+        public Criteria andPeopleBetween(Integer value1, Integer value2) {
+            addCriterion("people between", value1, value2, "people");
+            return (Criteria) this;
+        }
+
+        public Criteria andPeopleNotBetween(Integer value1, Integer value2) {
+            addCriterion("people not between", value1, value2, "people");
+            return (Criteria) this;
+        }
+
+        public Criteria andHonorIsNull() {
+            addCriterion("honor is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHonorIsNotNull() {
+            addCriterion("honor is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHonorEqualTo(String value) {
+            addCriterion("honor =", value, "honor");
+            return (Criteria) this;
+        }
+
+        public Criteria andHonorNotEqualTo(String value) {
+            addCriterion("honor <>", value, "honor");
+            return (Criteria) this;
+        }
+
+        public Criteria andHonorGreaterThan(String value) {
+            addCriterion("honor >", value, "honor");
+            return (Criteria) this;
+        }
+
+        public Criteria andHonorGreaterThanOrEqualTo(String value) {
+            addCriterion("honor >=", value, "honor");
+            return (Criteria) this;
+        }
+
+        public Criteria andHonorLessThan(String value) {
+            addCriterion("honor <", value, "honor");
+            return (Criteria) this;
+        }
+
+        public Criteria andHonorLessThanOrEqualTo(String value) {
+            addCriterion("honor <=", value, "honor");
+            return (Criteria) this;
+        }
+
+        public Criteria andHonorLike(String value) {
+            addCriterion("honor like", value, "honor");
+            return (Criteria) this;
+        }
+
+        public Criteria andHonorNotLike(String value) {
+            addCriterion("honor not like", value, "honor");
+            return (Criteria) this;
+        }
+
+        public Criteria andHonorIn(List<String> values) {
+            addCriterion("honor in", values, "honor");
+            return (Criteria) this;
+        }
+
+        public Criteria andHonorNotIn(List<String> values) {
+            addCriterion("honor not in", values, "honor");
+            return (Criteria) this;
+        }
+
+        public Criteria andHonorBetween(String value1, String value2) {
+            addCriterion("honor between", value1, value2, "honor");
+            return (Criteria) this;
+        }
+
+        public Criteria andHonorNotBetween(String value1, String value2) {
+            addCriterion("honor not between", value1, value2, "honor");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressIsNull() {
+            addCriterion("address is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressIsNotNull() {
+            addCriterion("address is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressEqualTo(String value) {
+            addCriterion("address =", value, "address");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressNotEqualTo(String value) {
+            addCriterion("address <>", value, "address");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressGreaterThan(String value) {
+            addCriterion("address >", value, "address");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressGreaterThanOrEqualTo(String value) {
+            addCriterion("address >=", value, "address");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressLessThan(String value) {
+            addCriterion("address <", value, "address");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressLessThanOrEqualTo(String value) {
+            addCriterion("address <=", value, "address");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressLike(String value) {
+            addCriterion("address like", value, "address");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressNotLike(String value) {
+            addCriterion("address not like", value, "address");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressIn(List<String> values) {
+            addCriterion("address in", values, "address");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressNotIn(List<String> values) {
+            addCriterion("address not in", values, "address");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressBetween(String value1, String value2) {
+            addCriterion("address between", value1, value2, "address");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressNotBetween(String value1, String value2) {
+            addCriterion("address not between", value1, value2, "address");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria implements Serializable {

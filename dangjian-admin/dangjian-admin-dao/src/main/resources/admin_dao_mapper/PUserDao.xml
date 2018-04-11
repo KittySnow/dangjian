@@ -337,4 +337,11 @@
     SET password = #{password,jdbcType=VARCHAR}
     WHERE email  = #{email,jdbcType=VARCHAR}
   </update>
+
+  <update id="saveLoginUserInfo" parameterType="cn.dlbdata.dangjian.admin.dao.model.PUser">
+    UPDATE p_user
+    SET token = #{token,jdbcType=VARCHAR},openid = #{openId,jdbcType=VARCHAR}
+    WHERE userid  = #{userId,jdbcType=INTEGER}
+  </update>
+
 </mapper>

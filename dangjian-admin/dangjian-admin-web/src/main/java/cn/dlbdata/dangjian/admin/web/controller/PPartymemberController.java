@@ -4,11 +4,13 @@ import cn.dlbdata.dangjian.admin.dao.model.PPartymember;
 import cn.dlbdata.dangjian.admin.dao.model.PPartymemberExample;
 import cn.dlbdata.dangjian.admin.dao.model.PUser;
 import cn.dlbdata.dangjian.admin.dao.model.PUserExample;
+import cn.dlbdata.dangjian.admin.service.PDepartmentService;
 import cn.dlbdata.dangjian.admin.service.PPartymemberService;
 import cn.dlbdata.dangjian.admin.service.PUserService;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +32,8 @@ public class PPartymemberController {
     @Autowired
     private PUserService pUserService;
 
+    @Autowired
+    private PDepartmentService pDepartmentService;
 
     @RequestMapping(value="/save",method= RequestMethod.POST)
     @ResponseBody
@@ -118,27 +122,61 @@ public class PPartymemberController {
         return result.getResult();
     }
 
+    //根据角色ID查用户
+    @RequestMapping(value="/queryByRoleId",method= RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> queryByRoleId(Integer roleid){
+        ResultUtil result = new ResultUtil();
+        PUserExample pUserExample = new PUserExample();
+        PUserExample.Criteria criteria =  pUserExample.createCriteria();
+        criteria.andRoleidEqualTo(roleid);
+        List<PUser> pUserList = pUserService.selectByExample(pUserExample);
+        PPartymember pPartymember = pPartymemberService.selectByUserId(pUserList.get(0).getUserid());
+        int people = pDepartmentService.getSumPeople();
+        int department = pDepartmentService.getSumDepartment();
+        String s="{\"name\":\""+ pPartymember.getName() + "\",\"branchSum\":\""+department+"\",\"peopleSum\":\""+department+"\"}";
+        if(pPartymember!=null){
+            result.setSuccess(true);
+            result.setData(s);
+        }else{
+            result.setSuccess(false);
+            result.setMsg("没有找到对应的党员");
+        }
+        return result.getResult();
+    }
+
+
     //支部党员信息
     @RequestMapping(value="/queryByDepartmentId",method= RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> queryByDepartmentId(Integer departmentid){
         ResultUtil result = new ResultUtil();
 
-        PUserExample pUserExample = new PUserExample();
-        PUserExample.Criteria criteria =  pUserExample.createCriteria();
-        criteria.andDepartmentidEqualTo(departmentid);
-        List<PUser> pUserList = pUserService.selectByExample(pUserExample);
-        List<PPartymember> pPartymemberListAll =new ArrayList<>();
-        int pUserListLen = pUserList.size();
-        for(int i = 0 ; i < pUserListLen ; i++) {
-            PPartymemberExample pPartymemberExample = new PPartymemberExample();
-            PPartymemberExample.Criteria pPartymemberCriteria =  pPartymemberExample.createCriteria();
-            pPartymemberCriteria.andUseridEqualTo(pUserList.get(i).getUserid());
-            PPartymember pPartymember = pPartymemberService.selectByExample(pPartymemberExample).get(0);
-            pPartymemberListAll.add(pPartymember);
-        }
+        PPartymemberExample pPartymemberExample = new PPartymemberExample();
+        PPartymemberExample.Criteria pPartymemberCriteria =  pPartymemberExample.createCriteria();
+        pPartymemberCriteria.andDepartmentidEqualTo(departmentid);
+        List<PPartymember> pPartymemberList = pPartymemberService.selectByExample(pPartymemberExample);
+
         result.setSuccess(true);
-        result.setData(pPartymemberListAll);
+        result.setData(pPartymemberList);
         return result.getResult();
     }
+
+
+    //支部党员信息
+    @RequestMapping(value="/getPartymemberByDepartmentid",method= RequestMethod.GET)
+    @ResponseBody
+    /*
+    status:1 代表 等待审核 NULL 代表等待支部书记审核，2代表已通过
+    * */
+    public Map<String, Object> getPartymemberByDepartmentid(Integer departmentid,Integer status){
+        ResultUtil result = new ResultUtil();
+        List<PPartymember> pPartymemberList = pPartymemberService.getPartymemberByDepartmentid(departmentid,status);
+        result.setSuccess(true);
+        result.setData(pPartymemberList);
+        return result.getResult();
+    }
+
+
+
 }

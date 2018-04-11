@@ -13,6 +13,7 @@ import cn.dlbdata.dangjian.thirdparty.mp.sdk.service.AccessService;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.service.TokenBasedService;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.service.UserInfoService;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.util.CommonUtil;
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.util.LocalCache;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.util.TokenBasedHttpClient;
 
 import net.sf.json.JSONObject;
@@ -44,23 +45,20 @@ public class UserInfoServiceImpl extends TokenBasedService implements UserInfoSe
     @Override
     public JSONObject userInfo(GetUserInfo getUserInfo) throws DangjianException {
         JSONObject jsonObject;
-
-        GetaAccessTokenParam getaAccessTokenParam = new GetaAccessTokenParam();
-        getaAccessTokenParam.setSecret("8d72463ffdf8a2232241985b442c1c93");
-        getaAccessTokenParam.setAppid("wxef4c83c01085bb38");
-        getaAccessTokenParam.setGrantType(GrantType.client_credential);
-
         try {
-            AccessTokenResponse accessTokenResponse = accessService.getAccessToken(getaAccessTokenParam);
-            String Token  = accessTokenResponse.getAccessToken();
+            String Token = LocalCache.TICKET_CACHE.getIfPresent("ACCESS_TOKEN");
+            if (null == Token || "".equals(Token)) {
+                GetaAccessTokenParam getaAccessTokenParam = new GetaAccessTokenParam();
+                getaAccessTokenParam.setSecret("8d72463ffdf8a2232241985b442c1c93");
+                getaAccessTokenParam.setAppid("wxef4c83c01085bb38");
+                getaAccessTokenParam.setGrantType(GrantType.client_credential);
+                AccessTokenResponse accessTokenResponse = accessService.getAccessToken(getaAccessTokenParam);
+                Token = accessTokenResponse.getAccessToken();
+                LocalCache.TICKET_CACHE.put("ACCESS_TOKEN",Token);
+            }
             String url = RequestUrls.USER_INFO_PREFIX +"?access_token="+Token+"&openid="+getUserInfo.getOpenid()+"&lang=zh_CN";
             jsonObject =  CommonUtil.httpsRequest(url, "GET",null);
 
-            if (!jsonObject.has("success") || !jsonObject.getBoolean("success")) {
-                logger.error("Get wx userinfo error, result jsonObject=" + jsonObject.toString());
-
-                throw new RuntimeException("Get wx userInfo error.");
-            }
         } catch (DangjianException e) {
             logger.error("", e);
 

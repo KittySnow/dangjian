@@ -38,5 +38,8 @@ public interface PScorePartyService {
 
     int updateAudit(PScoreParty pScoreParty);
 
+    public List<PScoreParty> getProjectScoreByUserId(Integer userId , Integer year);
+
+    public Double getSumScoreByUserId(Integer userId ,Integer year);
 
 }

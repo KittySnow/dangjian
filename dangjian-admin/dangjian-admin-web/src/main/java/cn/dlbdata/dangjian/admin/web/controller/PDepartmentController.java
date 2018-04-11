@@ -94,4 +94,14 @@ public class PDepartmentController {
         result.setData(pDepartment);
         return result.getResult();
     }
+
+    @RequestMapping(value="/getSumPeople",method=RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getSumPeople(){
+        ResultUtil result = new ResultUtil();
+        Integer sum = pDepartmentService.getSumPeople();
+        result.setSuccess(true);
+        result.setData(sum);
+        return result.getResult();
+    }
 }

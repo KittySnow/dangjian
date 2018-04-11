@@ -2,14 +2,19 @@ package cn.dlbdata.dangjian.admin.service.impl;
 
 
 import cn.dlbdata.dangjian.admin.dao.mapper.PPartymemberDao;
+import cn.dlbdata.dangjian.admin.dao.mapper.PUserDao;
 import cn.dlbdata.dangjian.admin.dao.model.PPartymember;
 import cn.dlbdata.dangjian.admin.dao.model.PPartymemberExample;
+import cn.dlbdata.dangjian.admin.dao.model.PUser;
+import cn.dlbdata.dangjian.admin.dao.model.PUserExample;
 import cn.dlbdata.dangjian.admin.service.PPartymemberService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 
@@ -20,6 +25,9 @@ public class PPartymemberServiceImpl implements PPartymemberService {
 
     @Autowired
     PPartymemberDao pPartymemberDao;
+
+    @Resource
+    PUserDao pUserDao;
 
     @Override
     public long countByExample(PPartymemberExample example) {
@@ -95,4 +103,51 @@ public class PPartymemberServiceImpl implements PPartymemberService {
             return null;
         }
     }
+
+    //查找书记
+    @Override
+    public PPartymember selectBranchByDepartmentId(Integer departmentid){
+        PUserExample pUserExample = new PUserExample();
+        PUserExample.Criteria ct = pUserExample.createCriteria();
+        ct.andRoleidEqualTo(3);
+        ct.andDepartmentidEqualTo(departmentid);
+        PUser pUser = pUserDao.selectByExample(pUserExample).get(0);
+
+        PPartymemberExample pPartymemberExample = new PPartymemberExample();
+        PPartymemberExample.Criteria criteria =  pPartymemberExample.createCriteria();
+        criteria.andUseridEqualTo(pUser.getUserid());
+        List<PPartymember> pPartymemberList = this.selectByExample(pPartymemberExample);
+        if(pPartymemberList!=null){
+            return pPartymemberList.get(0);
+        }else{
+            return null;
+        }
+    }
+
+
+    //查找片区负责人
+    @Override
+    public PPartymember selectBranchByDepartmentId(){
+        PUserExample pUserExample = new PUserExample();
+        PUserExample.Criteria ct = pUserExample.createCriteria();
+        ct.andRoleidEqualTo(2);
+        PUser pUser = pUserDao.selectByExample(pUserExample).get(0);
+        PPartymemberExample pPartymemberExample = new PPartymemberExample();
+        PPartymemberExample.Criteria criteria =  pPartymemberExample.createCriteria();
+        criteria.andUseridEqualTo(pUser.getUserid());
+        List<PPartymember> pPartymemberList = this.selectByExample(pPartymemberExample);
+        if(pPartymemberList!=null){
+            return pPartymemberList.get(0);
+        }else{
+            return null;
+        }
+    }
+
+    //查找需要支部书记加分的先锋模块
+    @Override
+    public List<PPartymember> getPartymemberByDepartmentid(Integer departmentid,Integer status){
+        return pPartymemberDao.getPartymemberByDepartmentid(departmentid,status);
+    }
+
+
 }

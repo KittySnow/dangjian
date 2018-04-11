@@ -2,6 +2,9 @@ package cn.dlbdata.dangjian.admin.dao.model;
 
 import java.io.Serializable;
 
+
+
+
 public class PPartymember implements Serializable {
     /**
      * 党员表id
@@ -45,6 +48,18 @@ public class PPartymember implements Serializable {
      */
     private Integer fromdepartmentid;
 
+
+    private Double totalScore;
+
+    /**
+     * 身份证号
+     *
+     * @mbg.generated
+     */
+    private String idcard;
+
+
+
     /**
      * 积分分值表id
      *
@@ -57,6 +72,57 @@ public class PPartymember implements Serializable {
     private String departmentname;
 
     private String fromdepartmentname;
+
+    /**
+     * 电话
+     *
+     * @mbg.generated
+     */
+    private String phone;
+
+
+    private Integer tempint;
+
+
+    private static final long serialVersionUID = 1L;
+
+
+
+    public Double getTotalscore() {
+        return totalScore;
+    }
+
+    public void setTotalscore(Double totalScore) {
+        this.totalScore = totalScore;
+    }
+
+
+    public Integer getTempint() {
+        return tempint;
+    }
+
+    public void setTempint(Integer tempint) {
+        this.tempint = tempint;
+    }
+
+
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getIdcard() {
+        return idcard;
+    }
+
+    public void setIdcard(String idcard) {
+        this.idcard = idcard;
+    }
+
 
     public String getFromdepartmentname() {
         return fromdepartmentname;
@@ -73,10 +139,6 @@ public class PPartymember implements Serializable {
     public void setDepartmentname(String departmentname) {
         this.departmentname = departmentname;
     }
-
-
-
-    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;

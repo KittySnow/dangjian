@@ -1,11 +1,9 @@
 package cn.dlbdata.dangjian.admin.web.controller;
 
-import cn.dlbdata.dangjian.admin.dao.model.PScoreDetail;
-import cn.dlbdata.dangjian.admin.dao.model.PScoreDetailExample;
-import cn.dlbdata.dangjian.admin.dao.model.PScoreParty;
-import cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample;
+import cn.dlbdata.dangjian.admin.dao.model.*;
 import cn.dlbdata.dangjian.admin.service.PScoreDetailService;
 import cn.dlbdata.dangjian.admin.service.PScorePartyService;
+import cn.dlbdata.dangjian.admin.service.PScoreProjectService;
 import cn.dlbdata.dangjian.common.util.HttpResult;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 import com.github.pagehelper.PageHelper;
@@ -17,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping("/pscoreparty")
@@ -32,7 +27,8 @@ public class PScorePartyController{
 
     @Autowired
     private PScoreDetailService pScoreDetailService;
-
+    @Autowired
+    private PScoreProjectService pScoreProjectService;
 
 
     @RequestMapping(value="/save",method= RequestMethod.POST)
@@ -117,8 +113,8 @@ public class PScorePartyController{
         ct.andUserIdEqualTo(userid);
         ct.andYearEqualTo(year);
         List<PScoreParty> pScorePartyList = pScorePartyService.selectByExample(pScorePartyExample);
-
         List<PScoreDetail> pScoreDetailList = pScoreDetailService.selectByExample(new PScoreDetailExample());
+
 
         Map<Integer,String> detailIndo = new ArrayMap<Integer, String>();
         for (int i = 0; i < pScoreDetailList.size(); i++) {
@@ -220,6 +216,76 @@ public class PScorePartyController{
         }
         result.setSuccess(false);
         result.setMsg("已审核，无需重复审核");
+        return result.getResult();
+    }
+
+
+
+    @RequestMapping(value="/getRole",method= {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String, Object> getRole(PScoreParty pScoreParty){
+        ResultUtil result = new ResultUtil();
+        if (pScoreParty.getId() == null || pScoreParty.getApprovedId()==null || pScoreParty.getStatusCd() == null){
+            result.setSuccess(false);
+            result.setMsg("请求参数不完整");
+            return result.getResult();
+        }
+        if (!"30".equals(pScoreParty.getStatusCd())) {
+            pScoreParty.setStatusCd("91");
+        }
+        if(pScorePartyService.updateAudit(pScoreParty)>0){
+            result.setSuccess(true);
+            result.setMsg("审核成功");
+            return result.getResult();
+        }
+        result.setSuccess(false);
+        result.setMsg("已审核，无需重复审核");
+        return result.getResult();
+    }
+
+
+    @RequestMapping(value="/getProjectScoreByUserId",method= {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String, Object> getProjectScoreByUserId(Integer userId ,Integer year){
+        ResultUtil result = new ResultUtil();
+        List<PScoreParty> pScorePartyList =pScorePartyService.getProjectScoreByUserId(userId,year);
+        List<PScoreProject> pScoreProjectList = pScoreProjectService.selectByExample(new PScoreProjectExample());
+
+
+        Map<Integer, Double> pScorePartyMap = new ArrayMap<>();
+        for(int i=0;i<pScorePartyList.size();i++){
+            PScoreParty p = pScorePartyList.get(i);
+            pScorePartyMap.put(p.getProjectId(),p.getTypetotalscore());;
+        }
+
+        List<PScoreParty> pScoreList =  new ArrayList<>();
+
+        for(int i=0;i<pScoreProjectList.size();i++){
+            PScoreParty pScoreParty = new PScoreParty();
+            PScoreProject pScoreProject = pScoreProjectList.get(i);
+            pScoreParty.setScore(pScoreProject.getScore());
+            pScoreParty.setId(pScoreProject.getId());
+            pScoreParty.setProjectName(pScoreProject.getProjectName());
+            if(pScorePartyMap.get(pScoreProject.getId())!=null){
+                pScoreParty.setTotalScore(pScorePartyMap.get(pScoreProject.getId()));
+            }else{
+                pScoreParty.setTotalScore(0.0);
+            }
+            pScoreList.add(pScoreParty);
+        }
+
+        result.setSuccess(true);
+        result.setData(pScoreList);
+        return result.getResult();
+    }
+
+    @RequestMapping(value="/getSumScoreByUserId",method= {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String, Object> getSumScoreByUserId(Integer userId ,Integer year){
+        ResultUtil result = new ResultUtil();
+        Double dp = pScorePartyService.getSumScoreByUserId(userId,year);
+        result.setSuccess(true);
+        result.setData(dp);
         return result.getResult();
     }
 }

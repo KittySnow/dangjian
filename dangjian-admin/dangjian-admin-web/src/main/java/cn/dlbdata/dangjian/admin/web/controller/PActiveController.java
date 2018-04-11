@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.imageio.ImageIO;
@@ -39,6 +40,7 @@ import java.util.*;
  * @change
  * @describe 活动接口
  */
+
 @Controller
 @RequestMapping("/active")
 public class PActiveController {
@@ -180,21 +182,18 @@ public class PActiveController {
         result.setData(pageInfo);
         return result.getResult();
     }
-    /**
-     * 查询正在进行的活动，或者已经开始的活动
-     * @param departmentid
-     * @param pageNum
-     * @param pageSize
-     * @return
-     */
-    @RequestMapping(value="/getParticipateActive",method= RequestMethod.GET)
+
+
+    //查询已完成（组织生活）的活动
+    @RequestMapping(value="/getAlreadyActive",method= RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getParticipateActive(Integer departmentid,Integer pageNum, Integer pageSize){
+    public Map<String, Object> getAlreadyActive(Integer departmentid,Integer pageNum, Integer pageSize){
         ResultUtil result = new ResultUtil();
         PActiveExample example = new PActiveExample();
         PActiveExample.Criteria ct = example.createCriteria();
+        ct.andActiveProjectIdEqualTo(2);
         ct.andActiveStatusEqualTo(1);
-        ct.andStartTimeGreaterThan(new Date());
+        ct.andEndTimeLessThanOrEqualTo(new Date());
         if (departmentid != null) {
             example.createCriteria().andDepartmentidEqualTo(departmentid);
         }
@@ -215,6 +214,62 @@ public class PActiveController {
         result.setSuccess(true);
         result.setData(pageInfo);
         return result.getResult();
+    }
+
+    /**
+     * 查询正在进行的活动，或者已经开始的活动
+     * @param userId 用户ID
+     * @param departmentid
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value="/getParticipateActive",method= RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getParticipateActive(Integer userId,Integer departmentid,Integer pageNum, Integer pageSize){
+        ResultUtil result = new ResultUtil();
+        PActiveExample example = new PActiveExample();
+        PActiveExample.Criteria ct = example.createCriteria();
+        ct.andActiveStatusEqualTo(1);
+        ct.andStartTimeGreaterThan(new Date());
+        if (departmentid != null) {
+            example.createCriteria().andDepartmentidEqualTo(departmentid);
+        }
+        PageHelper.startPage(pageNum, pageSize,true);
+        List<PActive> pActiveList = pActiveService.selectByExample(example);
+        List<JSONObject> list = new ArrayList<>();
+        for (PActive active:pActiveList){
+            JSONObject json = JSON.parseObject(JSON.toJSONString(active));
+            PUser createUser = pUserService.selectByPrimaryKey(active.getActiveCreatePeople());
+            if(createUser!=null){
+                json.put("activeCreatePeopleName", createUser.getName());
+            }
+            json.put("signupstatus", hasParticipate(active.getId(), userId)?1:2);
+            list.add(json);
+        }
+        JSONArray array = new JSONArray();
+        array.addAll(pActiveList);
+        PageInfo<JSONObject> pageInfo=new PageInfo<JSONObject>(list);
+        result.setSuccess(true);
+        result.setData(pageInfo);
+        return result.getResult();
+    }
+
+    /**
+     * 判断是否已经报名的活动
+     * @param activeId
+     * @param userId
+     * @return
+     */
+    private boolean hasParticipate(Integer activeId, Integer userId) {
+        PActiveParticipateExample example = new PActiveParticipateExample();
+        PActiveParticipateExample.Criteria ct = example.createCriteria();
+        ct.andUserIdEqualTo(userId);
+        ct.andActiveIdEqualTo(activeId);
+        if(activeParticipateService.selectByExample(example).size()>0){
+            return true;
+        }
+        return false;
     }
 
     @RequestMapping(value="/list",method= RequestMethod.GET)
@@ -281,9 +336,11 @@ public class PActiveController {
      */
     @RequestMapping(value="/getParticipateCount",method=RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> getParticipateCount(int userId,int activeType) {
+    public Map<String, Object> getParticipateCount(Integer year,Integer userId,@RequestParam(required = false)Integer activeType) {
         ResultUtil result = new ResultUtil();
-        int count = pActiveService.selectByActiveTypeAndUserParticipate(userId, activeType);
+        Date startTime = DateUtil.getYearFirst(year);
+        Date endTime = DateUtil.getYearLast(year);
+        int count = pActiveService.selectByActiveTypeAndUserParticipate(userId, activeType,startTime,endTime);
         result.setSuccess(true);
         result.setMsg("查询成功");
         result.setData(count);
@@ -347,7 +404,7 @@ public class PActiveController {
      * 显示活动二维码
      * @return
      */
-    @RequestMapping(value="/showQrCode",method= RequestMethod.POST)
+    @RequestMapping(value="/showQrCode",method= {RequestMethod.POST,RequestMethod.GET})
     public void showQrCode(Integer activeId,HttpServletResponse response){
         String content = "请复制这段对话进行全局搜索，该变量是用来转换为二维码的变量";
         BufferedImage image;

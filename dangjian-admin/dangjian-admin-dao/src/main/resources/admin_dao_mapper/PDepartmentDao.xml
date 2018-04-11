@@ -5,6 +5,10 @@
     <id column="departmentid" jdbcType="INTEGER" property="departmentid" />
     <result column="departmentname" jdbcType="VARCHAR" property="departmentname" />
     <result column="cost" jdbcType="DOUBLE" property="cost" />
+    <result column="people" jdbcType="INTEGER" property="people" />
+    <result column="honor" jdbcType="VARCHAR" property="honor" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="partyBranch" jdbcType="VARCHAR" property="partyBranch" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,7 +69,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    departmentid, departmentname, cost
+    departmentid, departmentname, cost, people, honor, address,
+    (select A.name from p_partymember A join p_user B  on A.userid = B.userid where A.departmentid = p_department.departmentid and B.roleid = 3 ) as partyBranch
   </sql>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PDepartmentExample" resultMap="BaseResultMap">
     select
@@ -98,31 +103,53 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.dlbdata.dangjian.admin.dao.model.PDepartment">
-    <selectKey keyProperty="departmentid" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID() AS departmentId
-    </selectKey>
-    insert into p_department (departmentname, cost)
-    values (#{departmentname,jdbcType=VARCHAR}, #{cost,jdbcType=DOUBLE})
+    insert into p_department (departmentid, departmentname, cost, 
+      people, honor, address
+      )
+    values (#{departmentid,jdbcType=INTEGER}, #{departmentname,jdbcType=VARCHAR}, #{cost,jdbcType=DOUBLE}, 
+      #{people,jdbcType=INTEGER}, #{honor,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PDepartment">
-    <selectKey keyProperty="departmentid" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID() AS departmentId
-    </selectKey>
     insert into p_department
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="departmentid != null">
+        departmentid,
+      </if>
       <if test="departmentname != null">
         departmentname,
       </if>
       <if test="cost != null">
         cost,
       </if>
+      <if test="people != null">
+        people,
+      </if>
+      <if test="honor != null">
+        honor,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="departmentid != null">
+        #{departmentid,jdbcType=INTEGER},
+      </if>
       <if test="departmentname != null">
         #{departmentname,jdbcType=VARCHAR},
       </if>
       <if test="cost != null">
         #{cost,jdbcType=DOUBLE},
+      </if>
+      <if test="people != null">
+        #{people,jdbcType=INTEGER},
+      </if>
+      <if test="honor != null">
+        #{honor,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -144,6 +171,15 @@
       <if test="record.cost != null">
         cost = #{record.cost,jdbcType=DOUBLE},
       </if>
+      <if test="record.people != null">
+        people = #{record.people,jdbcType=INTEGER},
+      </if>
+      <if test="record.honor != null">
+        honor = #{record.honor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -153,7 +189,10 @@
     update p_department
     set departmentid = #{record.departmentid,jdbcType=INTEGER},
       departmentname = #{record.departmentname,jdbcType=VARCHAR},
-      cost = #{record.cost,jdbcType=DOUBLE}
+      cost = #{record.cost,jdbcType=DOUBLE},
+      people = #{record.people,jdbcType=INTEGER},
+      honor = #{record.honor,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -167,13 +206,31 @@
       <if test="cost != null">
         cost = #{cost,jdbcType=DOUBLE},
       </if>
+      <if test="people != null">
+        people = #{people,jdbcType=INTEGER},
+      </if>
+      <if test="honor != null">
+        honor = #{honor,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
     </set>
     where departmentid = #{departmentid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.dlbdata.dangjian.admin.dao.model.PDepartment">
     update p_department
     set departmentname = #{departmentname,jdbcType=VARCHAR},
-      cost = #{cost,jdbcType=DOUBLE}
+      cost = #{cost,jdbcType=DOUBLE},
+      people = #{people,jdbcType=INTEGER},
+      honor = #{honor,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR}
     where departmentid = #{departmentid,jdbcType=INTEGER}
   </update>
+  <select id="getSumPeople" resultType="java.lang.Integer" parameterType="cn.dlbdata.dangjian.admin.dao.model.PDepartment">
+    select sum(people) from p_department
+  </select>
+  <select id="getSumDepartment" resultType="java.lang.Integer" parameterType="cn.dlbdata.dangjian.admin.dao.model.PDepartment">
+    select count(departmentid) from p_department
+  </select>
 </mapper>

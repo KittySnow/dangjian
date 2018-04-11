@@ -2,6 +2,7 @@ package cn.dlbdata.dangjian.admin.dao.mapper;
 
 import cn.dlbdata.dangjian.admin.dao.model.PScoreParty;
 import cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample;
+import cn.dlbdata.dangjian.admin.dao.model.PUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -37,4 +38,9 @@ public interface PScorePartyDao {
     int updateSscoreClean(PScoreParty pScoreParty);
 
     int updateAudit(PScoreParty pScoreParty);
+
+    List<PScoreParty> getProjectScoreByUserId(@Param("userId")Integer  userId , @Param("year") Integer year);
+
+    Double getSumScoreByUserId(@Param("userId")Integer  userId , @Param("year") Integer year);
+
 }

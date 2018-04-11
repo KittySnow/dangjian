@@ -46,6 +46,5 @@ public interface PUserDao {
 
     int updatePasswordByEmail(final PUser user);
 
-    @Update("update p_user set token=#{token},openid=#{openId} where userid=#{userId}")
     void saveLoginUserInfo(@Param("userId") int userId, @Param("token") String token, @Param("openId") String openId);
 }

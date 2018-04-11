@@ -30,4 +30,8 @@ public interface PDepartmentDao {
     int updateByPrimaryKeySelective(PDepartment record);
 
     int updateByPrimaryKey(PDepartment record);
+
+    int getSumPeople();
+
+    int getSumDepartment();
 }

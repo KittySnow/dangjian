@@ -18,7 +18,7 @@ public class PScoreParty implements Serializable {
      * @mbg.generated
      */
     private Integer projectId;
-
+    private String projectName;
     /**
      * 项目明细ID
      *
@@ -32,6 +32,15 @@ public class PScoreParty implements Serializable {
      * @mbg.generated
      */
     private Double score;
+    private  Double typetotalscore;
+
+    public Double getTypetotalscore() {
+        return typetotalscore;
+    }
+
+    public void setTypetotalscore(Double typetotalscore) {
+        this.typetotalscore = typetotalscore;
+    }
 
     /**
      * 加分者ID
@@ -46,6 +55,10 @@ public class PScoreParty implements Serializable {
      * @mbg.generated
      */
     private Integer approvedId;
+
+
+
+    private String approvedName;
 
     /**
      * 积分年度
@@ -216,6 +229,40 @@ public class PScoreParty implements Serializable {
     public void setDetailTitle(String detailTitle) {
         this.detailTitle = detailTitle;
     }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getApprovedName() {
+        return approvedName;
+    }
+
+    public void setApprovedName(String approvedName) {
+        this.approvedName = approvedName;
+    }
+
+    public Double getTotalScore() {
+        return totalScore;
+    }
+
+    public void setTotalScore(Double totalScore) {
+        this.totalScore = totalScore;
+    }
+
+    public Double getObtainScore() {
+        return obtainScore;
+    }
+
+    public void setObtainScore(Double obtainScore) {
+        this.obtainScore = obtainScore;
+    }
+
+
 
     @Override
     public String toString() {

@@ -80,4 +80,10 @@ public class PDepartmentServiceImpl implements PDepartmentService {
         return pDepartmentDao.updateByPrimaryKey(pDepartment);
     }
 
+    @Override
+    public int getSumPeople(){return pDepartmentDao.getSumPeople();}
+
+    @Override
+    public int getSumDepartment(){return pDepartmentDao.getSumDepartment();}
+
 }
