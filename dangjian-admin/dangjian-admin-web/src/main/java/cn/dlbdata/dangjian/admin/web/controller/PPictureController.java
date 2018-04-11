@@ -44,7 +44,7 @@ import java.util.Map;
 public class PPictureController {
     private final Logger logger = LoggerFactory.getLogger(PPictureController.class);
 
-    private final String PICTURE_PATH = "C:\\upload\\";
+    private final String PICTURE_PATH = "C:\\upload\\picture";
 
     @Autowired
     private PPictureService pPictureService;
@@ -56,37 +56,26 @@ public class PPictureController {
      *
      * @return
      */
-    @RequestMapping(value = "/upload")
+    @RequestMapping(value = "/upload",method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+    public Map<String, Object> upload(String mediaId, HttpServletRequest request) {
         ResultUtil result = new ResultUtil();
-        String userId;
-        Cookie userIdCookie = CookieUtil.getCookie(request, "userId");
-        if (null != userIdCookie) {
-            userId = userIdCookie.getValue();
-        } else {
-            userId = request.getHeader("userId");
-        }
-        String fileName = file.getOriginalFilename();
-        // 获取文件的后缀名
-        String suffixName = file.getOriginalFilename().substring(fileName.lastIndexOf("."));
-
-        fileName = System.currentTimeMillis() + "_" + userId + "." + suffixName;
+        String path;
         try {
-            FileUtil.uploadFile(file.getBytes(), PICTURE_PATH, fileName);
-        } catch (Exception e) {
-            // TODO: handle exception
-            logger.error(e.getMessage(), e);
+            path = downloadMedia(mediaId, PICTURE_PATH);
+        }catch (Exception e){
+            result.setMsg("保存图片失败");
             result.setSuccess(false);
-            result.setMsg("上传图片失败！");
             return result.getResult();
         }
+
         PPicture picture = new PPicture();
         picture.setCreateTime(new Date());
-        picture.setUrl(PICTURE_PATH + fileName);
+        picture.setUrl(path);
         int pictureId = pPictureService.insert(picture);
         result.setData(pictureId);
         result.setMsg("上传图片成功！");
+        result.setSuccess(true);
         //返回json
         return result.getResult();
     }
@@ -173,5 +162,51 @@ public class PPictureController {
     }
 
 
+    /**
+     * 获取媒体文件
+     *
+     * @param mediaId  媒体文件id
+     * @param savePath 文件在本地服务器上的存储路径
+     */
+    public String downloadMedia(String mediaId, String savePath) throws Exception {
 
+        String filePath = null;
+
+        GetaAccessTokenParam getaAccessTokenParam = new GetaAccessTokenParam();
+        getaAccessTokenParam.setSecret("8d72463ffdf8a2232241985b442c1c93");
+        getaAccessTokenParam.setAppid("wxef4c83c01085bb38");
+        getaAccessTokenParam.setGrantType(GrantType.client_credential);
+        String Token = LocalCache.TICKET_CACHE.getIfPresent("ACCESS_TOKEN");
+        if (null == Token || "".equals(Token)) {
+            AccessTokenResponse accessTokenResponse = accessService.getAccessToken(getaAccessTokenParam);
+            Token = accessTokenResponse.getAccessToken();
+            LocalCache.TICKET_CACHE.put("ACCESS_TOKEN", Token);
+        }
+        // 拼接请求地址
+        String requestUrl = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID";
+        requestUrl = requestUrl.replace("ACCESS_TOKEN", Token).replace("MEDIA_ID", mediaId);
+        URL url = new URL(requestUrl);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setDoInput(true);
+        conn.setRequestMethod("GET");
+
+        if (!savePath.endsWith("/")) {
+            savePath += "/";
+        }
+        // 根据内容类型获取扩展名
+        String fileExt = CommonUtil.getFileExt(conn.getHeaderField("Content-Type"));
+        // 将mediaId作为文件名
+        filePath = savePath + mediaId + fileExt;
+        BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
+        FileOutputStream fos = new FileOutputStream(new File(filePath));
+        byte[] buf = new byte[8096];
+        int size = 0;
+        while ((size = bis.read(buf)) != -1)
+            fos.write(buf, 0, size);
+        fos.close();
+        bis.close();
+        conn.disconnect();
+        logger.info("下载媒体文件成功，filePath=" + filePath);
+        return filePath;
+    }
 }

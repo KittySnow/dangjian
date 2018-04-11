@@ -88,16 +88,16 @@ public class MpSdkController {
 
     @RequestMapping(value = "/getToken", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getToken(HttpServletRequest httpRequest,String href) {
+    public Map<String, Object> getToken(HttpServletRequest httpRequest, String href) {
 
-        String url ="http://" + httpRequest.getServerName()+ httpRequest.getContextPath() + httpRequest.getServletPath();
+        String url = "http://" + httpRequest.getServerName() + httpRequest.getContextPath() + httpRequest.getServletPath();
 
-        if(httpRequest.getQueryString()!=null) {
-           url+="?"+httpRequest.getQueryString();
+        if (httpRequest.getQueryString() != null) {
+            url += "?" + httpRequest.getQueryString();
         }
 
-        if(href!=null) {
-           url = href;
+        if (href != null) {
+            url = href;
         }
 
         ResultUtil result = new ResultUtil();
@@ -110,7 +110,7 @@ public class MpSdkController {
             if (null == Token || "".equals(Token)) {
                 AccessTokenResponse accessTokenResponse = accessService.getAccessToken(getaAccessTokenParam);
                 Token = accessTokenResponse.getAccessToken();
-                LocalCache.TICKET_CACHE.put("ACCESS_TOKEN",Token);
+                LocalCache.TICKET_CACHE.put("ACCESS_TOKEN", Token);
             }
             getaAccessTokenParam.setToken(Token);
             //获取Ticket
@@ -141,7 +141,6 @@ public class MpSdkController {
     }
 
 
-
     public static String getTicket(String access_token) {
         String ticket = LocalCache.TOKEN_CACHE.getIfPresent("TICKET");
         if (null != ticket && !"".equals(ticket)) {
@@ -170,32 +169,27 @@ public class MpSdkController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        LocalCache.TOKEN_CACHE.put("TICKET",ticket);
+        LocalCache.TOKEN_CACHE.put("TICKET", ticket);
         return ticket;
     }
 
 
-
     /**
      * 获取字符串的SHA1编码
+     *
      * @param requestStr
      * @return
      */
-    private static String getSHA1(String requestStr){
+    private static String getSHA1(String requestStr) {
         String signature = new String();
-        try
-        {
+        try {
             MessageDigest crypt = MessageDigest.getInstance("SHA-1");
             crypt.reset();
             crypt.update(requestStr.getBytes("UTF-8"));
             signature = byteToHex(crypt.digest());
-        }
-        catch (NoSuchAlgorithmException e)
-        {
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-        }
-        catch (UnsupportedEncodingException e)
-        {
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         return signature;
@@ -203,13 +197,13 @@ public class MpSdkController {
 
     /**
      * byte转string(hex)
+     *
      * @param hash
      * @return
      */
     private static String byteToHex(final byte[] hash) {
         Formatter formatter = new Formatter();
-        for (byte b : hash)
-        {
+        for (byte b : hash) {
             formatter.format("%02x", b);
         }
         String result = formatter.toString();
@@ -217,59 +211,4 @@ public class MpSdkController {
         return result;
     }
 
-
-    /**
-     * 获取媒体文件
-     *
-     * @param mediaId 媒体文件id
-     * @param savePath 文件在本地服务器上的存储路径
-     * */
-    public static String downloadMedia(String mediaId, String savePath) {
-
-        String filePath = null;
-
-        GetaAccessTokenParam getaAccessTokenParam = new GetaAccessTokenParam();
-        getaAccessTokenParam.setSecret("8d72463ffdf8a2232241985b442c1c93");
-        getaAccessTokenParam.setAppid("wxef4c83c01085bb38");
-        getaAccessTokenParam.setGrantType(GrantType.client_credential);
-        String Token = LocalCache.TICKET_CACHE.getIfPresent("ACCESS_TOKEN");
-        if (null == Token || "".equals(Token)) {
-            AccessTokenResponse accessTokenResponse = accessService.getAccessToken(getaAccessTokenParam);
-            Token = accessTokenResponse.getAccessToken();
-            LocalCache.TICKET_CACHE.put("ACCESS_TOKEN",Token);
-        }
-        // 拼接请求地址
-        String requestUrl = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID";
-        requestUrl = requestUrl.replace("ACCESS_TOKEN", Token).replace("MEDIA_ID", mediaId);
-        try {
-            URL url = new URL(requestUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setDoInput(true);
-            conn.setRequestMethod("GET");
-
-            if (!savePath.endsWith("/")) {
-                savePath += "/";
-            }
-            // 根据内容类型获取扩展名
-            String fileExt = CommonUtil.getFileExt(conn.getHeaderField("Content-Type"));
-            // 将mediaId作为文件名
-            filePath = savePath + mediaId + fileExt;
-            BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
-            FileOutputStream fos = new FileOutputStream(new File(filePath));
-            byte[] buf = new byte[8096];
-            int size = 0;
-            while ((size = bis.read(buf)) != -1)
-                fos.write(buf, 0, size);
-            fos.close();
-            bis.close();
-            conn.disconnect();
-            String info = String.format("下载媒体文件成功，filePath=" + filePath);
-            System.out.println(info);
-        } catch (Exception e) {
-            filePath = null;
-            String error = String.format("下载媒体文件失败：%s", e);
-            System.out.println(error);
-        }
-        return filePath;
-    }
 }
