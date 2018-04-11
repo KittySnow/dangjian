@@ -2,20 +2,19 @@ package cn.dlbdata.dangjian.admin.web.controller;
 
 import cn.dlbdata.dangjian.admin.dao.model.*;
 import cn.dlbdata.dangjian.admin.service.*;
+import cn.dlbdata.dangjian.common.util.HttpResult;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/pstudy")
@@ -41,21 +40,38 @@ public class PStudyController {
 
     @RequestMapping(value="/save",method=RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> save(PStudy pStudy,Integer[] picIds,Integer departmentid,Integer roleid){
-        ResultUtil result = new ResultUtil();
+    public HttpResult save(@RequestBody PStudy pStudy){
+//        ResultUtil result = new ResultUtil();
         pStudy.setCreatetime(new Date());
 
         PUserExample pUserExample = new PUserExample();
         PUserExample.Criteria criteria =  pUserExample.createCriteria();
-        criteria.andDepartmentidEqualTo(departmentid);
-        criteria.andRoleidEqualTo(roleid);
+
+        criteria.andDepartmentidEqualTo(pStudy.getDepartmentid());
+        criteria.andRoleidEqualTo(pStudy.getRoleid());
+
         List<PUser> pUserList = pUserService.selectByExample(pUserExample);
-        PUser leader = pUserList.get(0);
-        pStudy.setApprovalid(leader.getUserid());
+
+        if (pUserList.size() <= 0) {
+            pStudy.setApprovalid(0);
+        } else {
+            PUser leader = pUserList.get(0);
+            pStudy.setApprovalid(leader.getUserid());
+        }
+
         pStudy.setStatus(0);
+
+        String[] picIds = pStudy.getPicids().trim().split(",");
+        List<Integer> picIdList = new ArrayList<>(picIds.length);
+        for (String picId : picIds) {
+            picIdList.add(Integer.valueOf(picId));
+        }
+
+        pStudy.setPicIds(picIdList);
 
         int callbackId = pStudyService.insert(pStudy);
 
+        return HttpResult.success(callbackId);
 
        /* if(picIds.length!=0){
             for(int i=0;i<picIds.length;i++){
@@ -66,9 +82,10 @@ public class PStudyController {
             }
         }
 */
-        result.setData(callbackId);
-        result.setSuccess(true);
-        return result.getResult();
+//        result.setData(callbackId);
+//        result.setSuccess(true);
+
+//        return result.getResult();
     }
 
 

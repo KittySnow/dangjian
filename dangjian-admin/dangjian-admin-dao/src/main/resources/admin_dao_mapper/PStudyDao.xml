@@ -111,16 +111,21 @@
     <selectKey keyProperty="studyid" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID() AS studyid
     </selectKey>
-    insert into p_study (studyid, starttime, endtime, 
+    insert into p_study (starttime, endtime,
       content, departmentid, projectid, 
       moduleid, approvalid, status, 
-      create_userid, createtime, rejectreason
+      create_userid, createtime, rejectreason,
+      picid
       )
-    values (#{studyid,jdbcType=INTEGER}, #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
-      #{content,jdbcType=VARCHAR}, #{departmentid,jdbcType=INTEGER}, #{projectid,jdbcType=INTEGER}, 
-      #{moduleid,jdbcType=INTEGER}, #{approvalid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
-      #{createUserid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{rejectreason,jdbcType=VARCHAR}
+    values
+    <foreach collection ="pStudy.picIds" item="picId" index="index" separator =",">
+    (#{pStudy.starttime,jdbcType=TIMESTAMP}, #{pStudy.endtime,jdbcType=TIMESTAMP},
+      #{pStudy.content,jdbcType=VARCHAR}, #{pStudy.departmentid,jdbcType=INTEGER}, #{pStudy.projectid,jdbcType=INTEGER},
+      #{pStudy.moduleid,jdbcType=INTEGER}, #{pStudy.approvalid,jdbcType=INTEGER}, #{pStudy.status,jdbcType=INTEGER},
+      #{pStudy.createUserid,jdbcType=INTEGER}, #{pStudy.createtime,jdbcType=TIMESTAMP}, #{pStudy.rejectreason,jdbcType=VARCHAR},
+      #{picId,jdbcType=INTEGER}
       )
+    </foreach>
   </insert>
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PStudy">
     <selectKey keyProperty="studyid" order="AFTER" resultType="java.lang.Integer">

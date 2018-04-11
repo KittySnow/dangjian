@@ -1,9 +1,14 @@
 package cn.dlbdata.dangjian.admin.dao.model;
 
+import cn.dlbdata.dangjian.common.util.DateJsonDeserializer;
+import cn.dlbdata.dangjian.common.util.DateJsonSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class PStudy implements Serializable {
     private Integer studyid;
@@ -13,7 +18,9 @@ public class PStudy implements Serializable {
      *
      * @mbg.generated
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm")
+//    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm")
+    @JsonDeserialize(using = DateJsonDeserializer.class)
+    @JsonSerialize(using = DateJsonSerializer.class)
     private Date starttime;
 
     /**
@@ -21,7 +28,9 @@ public class PStudy implements Serializable {
      *
      * @mbg.generated
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm")
+//    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm")
+    @JsonDeserialize(using = DateJsonDeserializer.class)
+    @JsonSerialize(using = DateJsonSerializer.class)
     private Date endtime;
 
     /**
@@ -29,7 +38,7 @@ public class PStudy implements Serializable {
      *
      * @mbg.generated
      */
-    private String content;
+    private String content=null;
 
     /**
      * 支部ID
@@ -82,7 +91,11 @@ public class PStudy implements Serializable {
 
     private String rejectreason;
 
+    private List<Integer> picIds=null;
 
+    private Integer roleid;
+
+    private String picids;
 
     private static final long serialVersionUID = 1L;
 
@@ -245,5 +258,29 @@ public class PStudy implements Serializable {
         result = prime * result + ((getCreateUserid() == null) ? 0 : getCreateUserid().hashCode());
         result = prime * result + ((getCreatetime() == null) ? 0 : getCreatetime().hashCode());
         return result;
+    }
+
+    public List<Integer> getPicIds() {
+        return picIds;
+    }
+
+    public void setPicIds(List<Integer> picIds) {
+        this.picIds = picIds;
+    }
+
+    public Integer getRoleid() {
+        return roleid;
+    }
+
+    public void setRoleid(Integer roleid) {
+        this.roleid = roleid;
+    }
+
+    public String getPicids() {
+        return picids;
+    }
+
+    public void setPicids(String picids) {
+        this.picids = picids;
     }
 }

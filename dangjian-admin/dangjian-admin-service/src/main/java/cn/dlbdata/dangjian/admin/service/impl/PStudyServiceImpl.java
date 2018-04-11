@@ -38,8 +38,8 @@ public class PStudyServiceImpl implements PStudyService {
     
     @Override
     public int insert(PStudy pStudy) {
-        pStudyDao.insert(pStudy);
-        return pStudy.getStudyid();
+        // 返回插入的记录数
+        return pStudyDao.insert(pStudy);
     }
     
     @Override
