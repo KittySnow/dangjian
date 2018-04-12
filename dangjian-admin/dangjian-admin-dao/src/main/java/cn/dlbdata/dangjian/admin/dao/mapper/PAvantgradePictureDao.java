@@ -28,4 +28,6 @@ public interface PAvantgradePictureDao {
     int updateByPrimaryKeySelective(PAvantgradePicture record);
 
     int updateByPrimaryKey(PAvantgradePicture record);
+
+    void insertList(@Param("picIds") Integer[] picIds, @Param("avantgradeId") Integer avantgradeId );
 }

@@ -178,4 +178,16 @@
       picid = #{picid,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <insert id="insertList" parameterType="cn.dlbdata.dangjian.admin.dao.model.PAvantgradePicture">
+    insert into p_avantgrade_picture (avantgardeid,picid) values
+    <trim suffixOverrides=",">
+      <foreach collection="picIds" item="picId" index="index" separator=",">
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+          #{avantgradeId,jdbc=INTEGER},#{picId,jdbc=INTEGER}
+        </trim>
+      </foreach>
+    </trim>
+  </insert>
+
 </mapper>
