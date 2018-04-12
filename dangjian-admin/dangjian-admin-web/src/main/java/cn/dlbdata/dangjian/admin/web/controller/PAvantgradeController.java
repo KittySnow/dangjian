@@ -55,6 +55,7 @@ public class PAvantgradeController {
             pAvantgrade1.setPartmentid(partmentid);
             pAvantgrade1.setUserid(userid);
             pAvantgrade1.setModuleId(13);
+            pAvantgrade1.setTitle("获得荣誉");
             pAvantgrade1.setApproveId(leaderId);
             pAvantgrade1.setProjectId(4);
             pAvantgrade1.setItemscore(5.0);
@@ -70,6 +71,7 @@ public class PAvantgradeController {
             pAvantgrade2.setMessage(Messge14);
             pAvantgrade2.setPartmentid(partmentid);
             pAvantgrade2.setUserid(userid);
+            pAvantgrade2.setTitle("先锋表彰");
             pAvantgrade2.setApproveId(leaderId);
             pAvantgrade2.setModuleId(14);
             pAvantgrade2.setProjectId(4);
@@ -87,6 +89,7 @@ public class PAvantgradeController {
             pAvantgrade3.setUserid(userid);
             pAvantgrade3.setModuleId(15);
             pAvantgrade3.setDepartmentid(departmentid);
+            pAvantgrade3.setTitle("先锋模范");
             pAvantgrade3.setProjectId(4);
             pAvantgrade3.setApproveId(leaderId);
             pAvantgrade3.setItemscore(itemscore);
@@ -166,6 +169,7 @@ public class PAvantgradeController {
     public Map<String, Object> examineOK(PAvantgrade pAvantgrade){
         ResultUtil result = new ResultUtil();
         pAvantgrade.setStatus(2);
+        pAvantgrade.setApprovetime(new Date());
         if(pAvantgradeService.updateByPrimaryKeySelective(pAvantgrade)>0){
             result.setSuccess(true);
             result.setMsg("审批成功");
@@ -181,9 +185,10 @@ public class PAvantgradeController {
     public Map<String, Object> examineNo(PAvantgrade pAvantgrade){
         ResultUtil result = new ResultUtil();
         pAvantgrade.setStatus(3);
+        pAvantgrade.setApprovetime(new Date());
         if(pAvantgradeService.updateByPrimaryKeySelective(pAvantgrade)>0){
             result.setSuccess(true);
-            result.setMsg("审批成功");
+            result.setMsg("已审批为不通过");
         }else{
             result.setSuccess(false);
             result.setMsg("审批失败");
