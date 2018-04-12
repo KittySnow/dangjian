@@ -13,7 +13,7 @@ public interface PStudyDao {
 
     int deleteByPrimaryKey(Integer studyid);
 
-    int insert(@Param("pStudy") PStudy record);
+    int insert(PStudy record);
 
     int insertSelective(PStudy record);
 

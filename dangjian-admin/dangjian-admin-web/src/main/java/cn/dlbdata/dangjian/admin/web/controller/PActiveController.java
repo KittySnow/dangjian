@@ -336,7 +336,7 @@ public class PActiveController {
      */
     @RequestMapping(value="/getParticipateCount",method=RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> getParticipateCount(Integer year,Integer userId,@RequestParam(required = false)Integer activeType) {
+    public Map<String, Object> getParticipateCount(Integer year,Integer userId,Integer activeType) {
         ResultUtil result = new ResultUtil();
         Date startTime = DateUtil.getYearFirst(year);
         Date endTime = DateUtil.getYearLast(year);

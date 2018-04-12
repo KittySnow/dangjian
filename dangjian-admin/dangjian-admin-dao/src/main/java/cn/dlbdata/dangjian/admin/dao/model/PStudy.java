@@ -1,14 +1,9 @@
 package cn.dlbdata.dangjian.admin.dao.model;
 
-import cn.dlbdata.dangjian.common.util.DateJsonDeserializer;
-import cn.dlbdata.dangjian.common.util.DateJsonSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 public class PStudy implements Serializable {
     private Integer studyid;
@@ -18,9 +13,7 @@ public class PStudy implements Serializable {
      *
      * @mbg.generated
      */
-//    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm")
-    @JsonDeserialize(using = DateJsonDeserializer.class)
-    @JsonSerialize(using = DateJsonSerializer.class)
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm")
     private Date starttime;
 
     /**
@@ -28,9 +21,7 @@ public class PStudy implements Serializable {
      *
      * @mbg.generated
      */
-//    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm")
-    @JsonDeserialize(using = DateJsonDeserializer.class)
-    @JsonSerialize(using = DateJsonSerializer.class)
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm")
     private Date endtime;
 
     /**
@@ -38,7 +29,7 @@ public class PStudy implements Serializable {
      *
      * @mbg.generated
      */
-    private String content=null;
+    private String content;
 
     /**
      * 支部ID
@@ -91,11 +82,7 @@ public class PStudy implements Serializable {
 
     private String rejectreason;
 
-    private List<Integer> picIds=null;
 
-    private Integer roleid;
-
-    private String picids;
 
     private static final long serialVersionUID = 1L;
 
@@ -230,16 +217,16 @@ public class PStudy implements Serializable {
         }
         PStudy other = (PStudy) that;
         return (this.getStudyid() == null ? other.getStudyid() == null : this.getStudyid().equals(other.getStudyid()))
-            && (this.getStarttime() == null ? other.getStarttime() == null : this.getStarttime().equals(other.getStarttime()))
-            && (this.getEndtime() == null ? other.getEndtime() == null : this.getEndtime().equals(other.getEndtime()))
-            && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
-            && (this.getDepartmentid() == null ? other.getDepartmentid() == null : this.getDepartmentid().equals(other.getDepartmentid()))
-            && (this.getProjectid() == null ? other.getProjectid() == null : this.getProjectid().equals(other.getProjectid()))
-            && (this.getModuleid() == null ? other.getModuleid() == null : this.getModuleid().equals(other.getModuleid()))
-            && (this.getApprovalid() == null ? other.getApprovalid() == null : this.getApprovalid().equals(other.getApprovalid()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-            && (this.getCreateUserid() == null ? other.getCreateUserid() == null : this.getCreateUserid().equals(other.getCreateUserid()))
-            && (this.getCreatetime() == null ? other.getCreatetime() == null : this.getCreatetime().equals(other.getCreatetime()));
+                && (this.getStarttime() == null ? other.getStarttime() == null : this.getStarttime().equals(other.getStarttime()))
+                && (this.getEndtime() == null ? other.getEndtime() == null : this.getEndtime().equals(other.getEndtime()))
+                && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
+                && (this.getDepartmentid() == null ? other.getDepartmentid() == null : this.getDepartmentid().equals(other.getDepartmentid()))
+                && (this.getProjectid() == null ? other.getProjectid() == null : this.getProjectid().equals(other.getProjectid()))
+                && (this.getModuleid() == null ? other.getModuleid() == null : this.getModuleid().equals(other.getModuleid()))
+                && (this.getApprovalid() == null ? other.getApprovalid() == null : this.getApprovalid().equals(other.getApprovalid()))
+                && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+                && (this.getCreateUserid() == null ? other.getCreateUserid() == null : this.getCreateUserid().equals(other.getCreateUserid()))
+                && (this.getCreatetime() == null ? other.getCreatetime() == null : this.getCreatetime().equals(other.getCreatetime()));
     }
 
     @Override
@@ -258,29 +245,5 @@ public class PStudy implements Serializable {
         result = prime * result + ((getCreateUserid() == null) ? 0 : getCreateUserid().hashCode());
         result = prime * result + ((getCreatetime() == null) ? 0 : getCreatetime().hashCode());
         return result;
-    }
-
-    public List<Integer> getPicIds() {
-        return picIds;
-    }
-
-    public void setPicIds(List<Integer> picIds) {
-        this.picIds = picIds;
-    }
-
-    public Integer getRoleid() {
-        return roleid;
-    }
-
-    public void setRoleid(Integer roleid) {
-        this.roleid = roleid;
-    }
-
-    public String getPicids() {
-        return picids;
-    }
-
-    public void setPicids(String picids) {
-        this.picids = picids;
     }
 }

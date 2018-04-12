@@ -52,15 +52,15 @@ public class EventDispatcher {
             String respContent = "";
 
             if (eventKey.equals("11")) {
-                respContent = openId+"欢迎您访问陆家嘴金领驿站积分系统，<a href=\"dj.dlbdata.cn/?openId="+openId+"\">免密登录请点击</a>";
+                respContent = openId+"欢迎您访问陆家嘴金领驿站积分系统，<a href=\"http://dj.dlbdata.cn/?openId="+openId+"\">免密登录请点击</a>";
             } else if (eventKey.equals("12")) {
                 respContent = "公交查询菜单项被点击！";
             } else if (eventKey.equals("13")) {
                 respContent = "周边搜索菜单项被点击！";
             } else if (eventKey.equals("14")) {
-                respContent = openId+"欢迎您访问陆家嘴金领驿站积分系统，<a href=\"dj.dlbdata.cn/?openId="+openId+"\">免密登录请点击</a>";
+                respContent = openId+"欢迎您访问陆家嘴金领驿站积分系统，<a href=\"http://dj.dlbdata.cn/?openId="+openId+"\">免密登录请点击</a>";
             } else if (eventKey.equals("21")) {
-                respContent = openId+"欢迎您访问陆家嘴金领驿站积分系统，<a href=\"dj.dlbdata.cn/?openId="+openId+"\">免密登录请点击</a>";
+                respContent = openId+"欢迎您访问陆家嘴金领驿站积分系统，\n<a href=\"http://dj.dlbdata.cn/?openId="+openId+"\">免密登录请点击</a>";
             } else if (eventKey.equals("22")) {
                 respContent = "经典游戏菜单项被点击！";
             } else if (eventKey.equals("23")) {

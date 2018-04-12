@@ -74,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    studyid, starttime, endtime, content, departmentid, projectid, moduleid, approvalid, 
+    studyid, starttime, endtime, content, departmentid, projectid, moduleid, approvalid,
     status, create_userid, createtime, rejectreason
   </sql>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PStudyExample" resultMap="BaseResultMap">
@@ -92,7 +92,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from p_study
     where studyid = #{studyid,jdbcType=INTEGER}
@@ -111,21 +111,16 @@
     <selectKey keyProperty="studyid" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID() AS studyid
     </selectKey>
-    insert into p_study (starttime, endtime,
-      content, departmentid, projectid, 
-      moduleid, approvalid, status, 
-      create_userid, createtime, rejectreason,
-      picid
-      )
-    values
-    <foreach collection ="pStudy.picIds" item="picId" index="index" separator =",">
-    (#{pStudy.starttime,jdbcType=TIMESTAMP}, #{pStudy.endtime,jdbcType=TIMESTAMP},
-      #{pStudy.content,jdbcType=VARCHAR}, #{pStudy.departmentid,jdbcType=INTEGER}, #{pStudy.projectid,jdbcType=INTEGER},
-      #{pStudy.moduleid,jdbcType=INTEGER}, #{pStudy.approvalid,jdbcType=INTEGER}, #{pStudy.status,jdbcType=INTEGER},
-      #{pStudy.createUserid,jdbcType=INTEGER}, #{pStudy.createtime,jdbcType=TIMESTAMP}, #{pStudy.rejectreason,jdbcType=VARCHAR},
-      #{picId,jdbcType=INTEGER}
-      )
-    </foreach>
+    insert into p_study (studyid, starttime, endtime,
+    content, departmentid, projectid,
+    moduleid, approvalid, status,
+    create_userid, createtime, rejectreason
+    )
+    values (#{studyid,jdbcType=INTEGER}, #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP},
+    #{content,jdbcType=VARCHAR}, #{departmentid,jdbcType=INTEGER}, #{projectid,jdbcType=INTEGER},
+    #{moduleid,jdbcType=INTEGER}, #{approvalid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
+    #{createUserid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{rejectreason,jdbcType=VARCHAR}
+    )
   </insert>
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PStudy">
     <selectKey keyProperty="studyid" order="AFTER" resultType="java.lang.Integer">
@@ -262,17 +257,17 @@
   <update id="updateByExample" parameterType="map">
     update p_study
     set studyid = #{record.studyid,jdbcType=INTEGER},
-      starttime = #{record.starttime,jdbcType=TIMESTAMP},
-      endtime = #{record.endtime,jdbcType=TIMESTAMP},
-      content = #{record.content,jdbcType=VARCHAR},
-      departmentid = #{record.departmentid,jdbcType=INTEGER},
-      projectid = #{record.projectid,jdbcType=INTEGER},
-      moduleid = #{record.moduleid,jdbcType=INTEGER},
-      approvalid = #{record.approvalid,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=INTEGER},
-      create_userid = #{record.createUserid,jdbcType=INTEGER},
-      createtime = #{record.createtime,jdbcType=TIMESTAMP},
-      rejectreason = #{record.rejectreason,jdbcType=VARCHAR}
+    starttime = #{record.starttime,jdbcType=TIMESTAMP},
+    endtime = #{record.endtime,jdbcType=TIMESTAMP},
+    content = #{record.content,jdbcType=VARCHAR},
+    departmentid = #{record.departmentid,jdbcType=INTEGER},
+    projectid = #{record.projectid,jdbcType=INTEGER},
+    moduleid = #{record.moduleid,jdbcType=INTEGER},
+    approvalid = #{record.approvalid,jdbcType=INTEGER},
+    status = #{record.status,jdbcType=INTEGER},
+    create_userid = #{record.createUserid,jdbcType=INTEGER},
+    createtime = #{record.createtime,jdbcType=TIMESTAMP},
+    rejectreason = #{record.rejectreason,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -319,16 +314,16 @@
   <update id="updateByPrimaryKey" parameterType="cn.dlbdata.dangjian.admin.dao.model.PStudy">
     update p_study
     set starttime = #{starttime,jdbcType=TIMESTAMP},
-      endtime = #{endtime,jdbcType=TIMESTAMP},
-      content = #{content,jdbcType=VARCHAR},
-      departmentid = #{departmentid,jdbcType=INTEGER},
-      projectid = #{projectid,jdbcType=INTEGER},
-      moduleid = #{moduleid,jdbcType=INTEGER},
-      approvalid = #{approvalid,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER},
-      create_userid = #{createUserid,jdbcType=INTEGER},
-      createtime = #{createtime,jdbcType=TIMESTAMP},
-      rejectreason = #{rejectreason,jdbcType=VARCHAR}
+    endtime = #{endtime,jdbcType=TIMESTAMP},
+    content = #{content,jdbcType=VARCHAR},
+    departmentid = #{departmentid,jdbcType=INTEGER},
+    projectid = #{projectid,jdbcType=INTEGER},
+    moduleid = #{moduleid,jdbcType=INTEGER},
+    approvalid = #{approvalid,jdbcType=INTEGER},
+    status = #{status,jdbcType=INTEGER},
+    create_userid = #{createUserid,jdbcType=INTEGER},
+    createtime = #{createtime,jdbcType=TIMESTAMP},
+    rejectreason = #{rejectreason,jdbcType=VARCHAR}
     where studyid = #{studyid,jdbcType=INTEGER}
   </update>
 </mapper>
