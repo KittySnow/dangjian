@@ -176,7 +176,7 @@ public class PActiveController {
             PActivePictureExample picExample = new PActivePictureExample();
             PActivePictureExample.Criteria picCt = picExample.createCriteria();
             picCt.andActiveIdEqualTo(active.getId());
-            PageHelper.startPage(1, 3,true);
+//            PageHelper.startPage(1, 3,true);
             List<PActivePicture> picActiveList = pPictureService.selectActivePictures(picExample);
             json.put("pictures", picActiveList);
             list.add(json);
@@ -215,7 +215,7 @@ public class PActiveController {
             PActivePictureExample picExample = new PActivePictureExample();
             PActivePictureExample.Criteria picCt = picExample.createCriteria();
             picCt.andActiveIdEqualTo(active.getId());
-            PageHelper.startPage(1, 3,true);
+//            PageHelper.startPage(1, 3,true);
             List<PActivePicture> picActiveList = pPictureService.selectActivePictures(picExample);
             json.put("pictures", picActiveList);
             list.add(json);
@@ -260,7 +260,7 @@ public class PActiveController {
             PActivePictureExample picExample = new PActivePictureExample();
             PActivePictureExample.Criteria picCt = picExample.createCriteria();
             picCt.andActiveIdEqualTo(active.getId());
-            PageHelper.startPage(1, 3,true);
+//            PageHelper.startPage(1, 3,true);
             List<PActivePicture> picActiveList = pPictureService.selectActivePictures(picExample);
             json.put("pictures", picActiveList);
             list.add(json);
