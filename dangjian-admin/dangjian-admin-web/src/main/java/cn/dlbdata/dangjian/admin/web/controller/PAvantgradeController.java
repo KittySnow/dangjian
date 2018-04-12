@@ -30,8 +30,7 @@ public class PAvantgradeController {
     private PAvantgradeService pAvantgradeService;
     @Autowired
     private PPartymemberService pPartymemberService;
-    @Autowired
-    private PAvantgradePictureService pAvantgradePictureService;
+
 
     @RequestMapping(value="/save",method= RequestMethod.POST)
     @ResponseBody
@@ -49,9 +48,6 @@ public class PAvantgradeController {
         PPartymember leader = pPartymemberService.selectBranchByDepartmentId();
         int leaderId = leader.getId();
 
-
-
-
         if("".equals(Messge13)||Messge13!=null){
             pAvantgrade1.setCreatetime(new Date());
             pAvantgrade1.setDepartmentid(departmentid);
@@ -62,14 +58,10 @@ public class PAvantgradeController {
             pAvantgrade1.setApproveId(leaderId);
             pAvantgrade1.setProjectId(4);
             pAvantgrade1.setItemscore(5.0);
+            if(pic13!=null)pAvantgrade1.setMemo(pic13);
             pAvantgrade1.setYear(Calendar.getInstance().get(Calendar.YEAR));
             callbackId1 = pAvantgradeService.insertSelective(pAvantgrade1);
-            if(callbackId1>0){
-                if(pic13!=null){
-                    Integer[] a = DjStringUtil.changeStringToArray(pic13);
-                    pAvantgradePictureService.insertList(a,callbackId1);
-                }
-            }
+
         }
         if("".equals(Messge14)||Messge14!=null) {
             PAvantgrade pAvantgrade2 = new PAvantgrade();
@@ -82,14 +74,10 @@ public class PAvantgradeController {
             pAvantgrade2.setModuleId(14);
             pAvantgrade2.setProjectId(4);
             pAvantgrade2.setItemscore(5.0);
+            if(pic14!=null)pAvantgrade2.setMemo(pic14);
             pAvantgrade2.setYear(Calendar.getInstance().get(Calendar.YEAR));
             callbackId2 = pAvantgradeService.insertSelective(pAvantgrade2);
-            if(callbackId2>0){
-                if(pic14!=null){
-                    Integer[] a = DjStringUtil.changeStringToArray(pic14);
-                    pAvantgradePictureService.insertList(a,callbackId2);
-                }
-            }
+
         }
         //pAvantgrade1.setApproveId();
         if("".equals(Messge15)||Messge15!=null) {
@@ -102,15 +90,10 @@ public class PAvantgradeController {
             pAvantgrade3.setProjectId(4);
             pAvantgrade3.setApproveId(leaderId);
             pAvantgrade3.setItemscore(itemscore);
+            if(pic15!=null)pAvantgrade3.setMemo(pic15);
             pAvantgrade3.setYear(Calendar.getInstance().get(Calendar.YEAR));
             pAvantgrade3.setCreatetime(new Date());
             callbackId3 = pAvantgradeService.insertSelective(pAvantgrade3);
-            if(callbackId3>0){
-                if(pic15!=null){
-                    Integer[] a = DjStringUtil.changeStringToArray(pic15);
-                    pAvantgradePictureService.insertList(a,callbackId3);
-                }
-            }
         }
 
         int[] a ={callbackId1,callbackId2,callbackId3};
@@ -178,20 +161,35 @@ public class PAvantgradeController {
         return result.getResult();
     }
 
-    @RequestMapping(value="/examine",method= RequestMethod.POST)
+    @RequestMapping(value="/examineOK",method= RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> pass(PAvantgrade pAvantgrade){
+    public Map<String, Object> examineOK(PAvantgrade pAvantgrade){
         ResultUtil result = new ResultUtil();
-        if(pAvantgradeService.updateByPrimaryKey(pAvantgrade)>0){
+        pAvantgrade.setStatus(2);
+        if(pAvantgradeService.updateByPrimaryKeySelective(pAvantgrade)>0){
             result.setSuccess(true);
-            result.setMsg("修改成功");
+            result.setMsg("审批成功");
         }else{
             result.setSuccess(false);
-            result.setMsg("修改失败");
+            result.setMsg("审批失败");
         }
         return result.getResult();
     }
 
+    @RequestMapping(value="/examineNo",method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> examineNo(PAvantgrade pAvantgrade){
+        ResultUtil result = new ResultUtil();
+        pAvantgrade.setStatus(3);
+        if(pAvantgradeService.updateByPrimaryKeySelective(pAvantgrade)>0){
+            result.setSuccess(true);
+            result.setMsg("审批成功");
+        }else{
+            result.setSuccess(false);
+            result.setMsg("审批失败");
+        }
+        return result.getResult();
+    }
 
     @RequestMapping(value="/queryById",method= RequestMethod.GET)
     @ResponseBody
