@@ -58,13 +58,12 @@ public class PPictureController {
      */
     @RequestMapping(value = "/upload",method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> upload(String mediaId) {
+    public Map<String, Object> upload(String mediaId, HttpServletRequest request) {
         ResultUtil result = new ResultUtil();
         String path;
         try {
             path = downloadMedia(mediaId, PICTURE_PATH);
         }catch (Exception e){
-            logger.error(e.getMessage(),e);
             result.setMsg("保存图片失败");
             result.setSuccess(false);
             return result.getResult();
@@ -190,11 +189,6 @@ public class PPictureController {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setDoInput(true);
         conn.setRequestMethod("GET");
-
-        File file = new File(savePath);
-        if(!file.exists()){
-            file.mkdirs();
-        }
 
         if (!savePath.endsWith("/")) {
             savePath += "/";
