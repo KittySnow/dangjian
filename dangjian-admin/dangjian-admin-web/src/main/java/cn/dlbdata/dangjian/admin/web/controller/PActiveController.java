@@ -173,6 +173,12 @@ public class PActiveController {
             if(createUser!=null){
                 json.put("activeCreatePeopleName", createUser.getName());
             }
+            PActivePictureExample picExample = new PActivePictureExample();
+            PActivePictureExample.Criteria picCt = picExample.createCriteria();
+            picCt.andActiveIdEqualTo(active.getId());
+            PageHelper.startPage(1, 3,true);
+            List<PActivePicture> picActiveList = pPictureService.selectActivePictures(picExample);
+            json.put("pictures", picActiveList);
             list.add(json);
         }
         JSONArray array = new JSONArray();
@@ -206,6 +212,12 @@ public class PActiveController {
             if(createUser!=null){
                 json.put("activeCreatePeopleName", createUser.getName());
             }
+            PActivePictureExample picExample = new PActivePictureExample();
+            PActivePictureExample.Criteria picCt = picExample.createCriteria();
+            picCt.andActiveIdEqualTo(active.getId());
+            PageHelper.startPage(1, 3,true);
+            List<PActivePicture> picActiveList = pPictureService.selectActivePictures(picExample);
+            json.put("pictures", picActiveList);
             list.add(json);
         }
         JSONArray array = new JSONArray();
@@ -245,6 +257,12 @@ public class PActiveController {
                 json.put("activeCreatePeopleName", createUser.getName());
             }
             json.put("signupstatus", hasParticipate(active.getId(), userId)?1:2);
+            PActivePictureExample picExample = new PActivePictureExample();
+            PActivePictureExample.Criteria picCt = picExample.createCriteria();
+            picCt.andActiveIdEqualTo(active.getId());
+            PageHelper.startPage(1, 3,true);
+            List<PActivePicture> picActiveList = pPictureService.selectActivePictures(picExample);
+            json.put("pictures", picActiveList);
             list.add(json);
         }
         JSONArray array = new JSONArray();
