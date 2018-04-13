@@ -54,7 +54,7 @@ public class PStudyController {
         }
 
         if(endtime==null){
-            result.setMsg("活动时间开始时间不能为空");
+            result.setMsg("活动时间结束时间不能为空");
             result.setSuccess(false);
             return result.getResult();
         }

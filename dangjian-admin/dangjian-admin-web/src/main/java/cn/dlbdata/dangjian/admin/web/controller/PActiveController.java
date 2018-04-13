@@ -155,12 +155,12 @@ public class PActiveController {
      */
     @RequestMapping(value="/getRunningActive",method= RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getRunningActive(Integer departmentid,Integer pageNum, Integer pageSize,String all){
+    public Map<String, Object> getRunningActive(Integer departmentid,Integer pageNum, Integer pageSize,@RequestParam(required=false)String all){
         ResultUtil result = new ResultUtil();
         PActiveExample example = new PActiveExample();
         PActiveExample.Criteria ct = example.createCriteria();
         ct.andActiveStatusEqualTo(1);
-        if(all.equals("Y")){
+        if(all!=null && all.equals("Y")){
             ct.andStartTimeLessThanOrEqualTo(new Date());
         }
         if (departmentid != null) {
@@ -240,12 +240,12 @@ public class PActiveController {
      */
     @RequestMapping(value="/getParticipateActive",method= RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getParticipateActive(Integer userId,Integer departmentid,Integer pageNum, Integer pageSize,String all){
+    public Map<String, Object> getParticipateActive(Integer userId,Integer departmentid,Integer pageNum, Integer pageSize,@RequestParam(required=false)String all){
         ResultUtil result = new ResultUtil();
         PActiveExample example = new PActiveExample();
         PActiveExample.Criteria ct = example.createCriteria();
         ct.andActiveStatusEqualTo(1);
-        if(all.equals("Y")){
+        if(all!=null && all.equals("Y")){
             ct.andStartTimeGreaterThan(new Date());
         }
         if (departmentid != null) {
@@ -415,11 +415,9 @@ public class PActiveController {
         PActivePictureExample example = new PActivePictureExample();
         PActivePictureExample.Criteria ct = example.createCriteria();
         ct.andActiveIdEqualTo(activeId);
-        PageHelper.startPage(pageNum, pageSize,true);
-        List<PActivePicture> pActiveList = pPictureService.selectActivePictures(example);
-        PageInfo<PActivePicture> pageInfo=new PageInfo<PActivePicture>(pActiveList);
+        List<PActivePicture> pActivePictureList = pPictureService.selectActivePictures(example);
         result.setSuccess(true);
-        result.setData(pageInfo);
+        result.setData(pActivePictureList);
         return result.getResult();
     }
     /**
