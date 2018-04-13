@@ -49,7 +49,7 @@ public class PAvantgradeController {
         PPartymember leader = pPartymemberService.selectBranchByDepartmentId();
         int leaderId = leader.getId();
 
-        if("".equals(Messge13)||Messge13!=null){
+        if(Messge13!=null){
             pAvantgrade1.setCreatetime(new Date());
             pAvantgrade1.setDepartmentid(departmentid);
             pAvantgrade1.setMessage(Messge13);
@@ -65,7 +65,7 @@ public class PAvantgradeController {
             callbackId1 = pAvantgradeService.insertSelective(pAvantgrade1);
 
         }
-        if("".equals(Messge14)||Messge14!=null) {
+        if(Messge14!=null) {
             PAvantgrade pAvantgrade2 = new PAvantgrade();
             pAvantgrade2.setCreatetime(new Date());
             pAvantgrade2.setDepartmentid(departmentid);
@@ -83,7 +83,7 @@ public class PAvantgradeController {
 
         }
         //pAvantgrade1.setApproveId();
-        if("".equals(Messge15)||Messge15!=null) {
+        if(Messge15!=null) {
             PAvantgrade pAvantgrade3 = new PAvantgrade();
             pAvantgrade3.setMessage(Messge15);
             pAvantgrade3.setPartmentid(partmentid);
