@@ -41,8 +41,33 @@ public class PStudyController {
 
     @RequestMapping(value="/save",method=RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> save(PStudy pStudy,String picids,Integer departmentid,Integer roleid){
+    public Map<String, Object> save(
+            Long starttime,Long endtime,Integer projectid,Integer moduleid,String content,
+            Integer createUserid,String picids,Integer departmentid,Integer roleid){
+
         ResultUtil result = new ResultUtil();
+
+        if(starttime==null){
+            result.setMsg("活动时间开始时间不能为空");
+            result.setSuccess(false);
+            return result.getResult();
+        }
+
+        if(endtime==null){
+            result.setMsg("活动时间开始时间不能为空");
+            result.setSuccess(false);
+            return result.getResult();
+        }
+
+        PStudy pStudy = new PStudy();
+        pStudy.setContent(content);
+        pStudy.setCreateUserid(createUserid);
+        pStudy.setProjectid(projectid);
+        pStudy.setModuleid(moduleid);
+        pStudy.setDepartmentid(departmentid);
+        pStudy.setStatus(0);
+        pStudy.setStarttime(new Date(starttime));
+        pStudy.setEndtime(new Date(endtime));
         pStudy.setCreatetime(new Date());
 
         PUserExample pUserExample = new PUserExample();
@@ -52,20 +77,19 @@ public class PStudyController {
         List<PUser> pUserList = pUserService.selectByExample(pUserExample);
         PUser leader = pUserList.get(0);
         pStudy.setApprovalid(leader.getUserid());
-        pStudy.setStatus(0);
+
 
         int callbackId = pStudyService.insert(pStudy);
         if(picids !=null ){
-        String[] picIds = picids.split(",");
-       /* if(picIds.length!=0){
-            for(int i=0;i<picIds.length;i++){
-                PStudyPicture pStudyPicture = new PStudyPicture();
-                pStudyPicture.setStudyId(callbackId);
-                pStudyPicture.setPictureId(picIds[i]);
-                pStudyPictureService.insert(pStudyPicture);
+            String[] picIds = picids.split(",");
+            if(picIds.length!=0){
+                for(int i=0;i<picIds.length;i++){
+                    PStudyPicture pStudyPicture = new PStudyPicture();
+                    pStudyPicture.setStudyId(callbackId);
+                    pStudyPicture.setPictureId(Integer.parseInt(picIds[i]));
+                    pStudyPictureService.insert(pStudyPicture);
+                }
             }
-        }
-*/
         }
         result.setData(callbackId);
         result.setSuccess(true);

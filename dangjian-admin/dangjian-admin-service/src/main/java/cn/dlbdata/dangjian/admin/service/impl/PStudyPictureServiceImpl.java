@@ -78,4 +78,8 @@ public class PStudyPictureServiceImpl implements PStudyPictureService {
         return pStudyPictureDao.updateByPrimaryKey(pStudyPicture);
     }
 
+    @Override
+    public void insertList(Integer[] picIds ,Integer studyid){
+        pStudyPictureDao.insertList(picIds,studyid);
+    }
 }

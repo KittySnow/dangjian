@@ -5,6 +5,7 @@ import cn.dlbdata.dangjian.admin.dao.mapper.PStudyDao;
 import cn.dlbdata.dangjian.admin.dao.model.PStudy;
 import cn.dlbdata.dangjian.admin.dao.model.PStudyExample;
 import cn.dlbdata.dangjian.admin.service.PStudyService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,5 +78,7 @@ public class PStudyServiceImpl implements PStudyService {
     public int updateByPrimaryKey(PStudy pStudy) {
         return pStudyDao.updateByPrimaryKey(pStudy);
     }
+
+
 
 }

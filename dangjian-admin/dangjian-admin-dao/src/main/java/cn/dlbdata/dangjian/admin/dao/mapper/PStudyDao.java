@@ -34,4 +34,7 @@ public interface PStudyDao {
     int updateByPrimaryKeyWithBLOBs(PStudy record);
 
     int updateByPrimaryKey(PStudy record);
+
+
+
 }

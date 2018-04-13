@@ -118,14 +118,31 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="pictureId != null">
-        #{pictureId,jdbcType=INTEGER},
-      </if>
-      <if test="studyId != null">
-        #{studyId,jdbcType=INTEGER},
-      </if>
+        <if test="pictureId != null">
+          #{picId,jdbcType=INTEGER},
+        </if>
+        <if test="studyId != null">
+          #{studyId,jdbcType=INTEGER},
+        </if>
     </trim>
   </insert>
+
+  <insert id="insertList" parameterType="Map">
+    insert into p_study_picture ( picture_id,study_id) values
+    <trim suffixOverrides=",">
+      <foreach collection ="picIds" item="picId" index="index" separator =",">
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+          <if test="picId != null">
+            #{picId,jdbcType=INTEGER},
+          </if>
+          <if test="studyId != null">
+            #{studyId,jdbcType=INTEGER}
+          </if>
+        </trim>
+      </foreach>
+    </trim>
+  </insert>
+
   <select id="countByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PStudyPictureExample" resultType="java.lang.Long">
     select count(*) from p_study_picture
     <if test="_parameter != null">

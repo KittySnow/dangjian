@@ -1,5 +1,6 @@
 package cn.dlbdata.dangjian.admin.dao.mapper;
 
+
 import cn.dlbdata.dangjian.admin.dao.model.PStudyPicture;
 import cn.dlbdata.dangjian.admin.dao.model.PStudyPictureExample;
 import org.apache.ibatis.annotations.Param;
@@ -28,4 +29,6 @@ public interface PStudyPictureDao {
     int updateByPrimaryKeySelective(PStudyPicture record);
 
     int updateByPrimaryKey(PStudyPicture record);
+
+    void insertList(@Param("picIds") Integer[] picIds , @Param("studyId") Integer studyId);
 }

@@ -29,5 +29,7 @@ public interface PStudyPictureService {
     public int updateByPrimaryKeySelective(PStudyPicture pStudyPicture);
 
     public int updateByPrimaryKey(PStudyPicture pStudyPicture);
+
+    public void insertList(@Param("picIds") Integer[] picIds , @Param("studyid") Integer studyid);
     
 }
