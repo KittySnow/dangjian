@@ -5,6 +5,7 @@ import cn.dlbdata.dangjian.admin.service.*;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +45,6 @@ public class PStudyController {
     public Map<String, Object> save(
             Long starttime,Long endtime,Integer projectid,Integer moduleid,String content,
             Integer createUserid,String picids,Integer departmentid,Integer roleid){
-
         ResultUtil result = new ResultUtil();
 
         if(starttime==null){
@@ -78,19 +78,18 @@ public class PStudyController {
         PUser leader = pUserList.get(0);
         pStudy.setApprovalid(leader.getUserid());
 
-
         int callbackId = pStudyService.insert(pStudy);
         if(picids !=null ){
             String[] picIds = picids.split(",");
             if(picIds.length!=0){
+                Integer[] a = new Integer[picIds.length];
                 for(int i=0;i<picIds.length;i++){
-                    PStudyPicture pStudyPicture = new PStudyPicture();
-                    pStudyPicture.setStudyId(callbackId);
-                    pStudyPicture.setPictureId(Integer.parseInt(picIds[i]));
-                    pStudyPictureService.insert(pStudyPicture);
+                    a[i]=Integer.parseInt(picIds[i]);
                 }
+                pStudyPictureService.insertList(a,callbackId);
             }
         }
+
         result.setData(callbackId);
         result.setSuccess(true);
         return result.getResult();
