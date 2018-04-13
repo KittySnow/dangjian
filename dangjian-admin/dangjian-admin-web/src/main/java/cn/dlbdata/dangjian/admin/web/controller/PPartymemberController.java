@@ -1,23 +1,26 @@
 package cn.dlbdata.dangjian.admin.web.controller;
 
-import cn.dlbdata.dangjian.admin.dao.model.PPartymember;
-import cn.dlbdata.dangjian.admin.dao.model.PPartymemberExample;
-import cn.dlbdata.dangjian.admin.dao.model.PUser;
-import cn.dlbdata.dangjian.admin.dao.model.PUserExample;
+import cn.dlbdata.dangjian.admin.dao.model.*;
+import cn.dlbdata.dangjian.admin.service.PAvantgradeService;
 import cn.dlbdata.dangjian.admin.service.PDepartmentService;
 import cn.dlbdata.dangjian.admin.service.PPartymemberService;
 import cn.dlbdata.dangjian.admin.service.PUserService;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +37,9 @@ public class PPartymemberController {
 
     @Autowired
     private PDepartmentService pDepartmentService;
+
+    @Autowired
+    private PAvantgradeService pAvantgradeService;
 
     @RequestMapping(value="/save",method= RequestMethod.POST)
     @ResponseBody
@@ -169,11 +175,64 @@ public class PPartymemberController {
     /*
     status:1 代表 等待审核 NULL 代表等待支部书记审核，2代表已通过
     * */
-    public Map<String, Object> getPartymemberByDepartmentid(Integer departmentid,Integer status){
+    public Map<String, Object> getPartymemberByDepartmentid(Integer departmentid,@RequestParam(required=false) Integer status){
         ResultUtil result = new ResultUtil();
-        List<PPartymember> pPartymemberList = pPartymemberService.getPartymemberByDepartmentid(departmentid,status);
+        PPartymemberExample pPartymemberExample = new PPartymemberExample();
+        PPartymemberExample.Criteria pPartymemberCriteria =  pPartymemberExample.createCriteria();
+        pPartymemberCriteria.andDepartmentidEqualTo(departmentid);
+        List<PPartymember> pPartymemberList = pPartymemberService.selectByExample(pPartymemberExample);
+
+        List<JSONObject> list = new ArrayList<>();
+        for (PPartymember pPartymember:pPartymemberList){
+            JSONObject json = JSON.parseObject(JSON.toJSONString(pPartymember));
+
+            //根据用虎ID 找审核没
+            PAvantgradeExample pA = new PAvantgradeExample();
+            PAvantgradeExample.Criteria ct = pA.createCriteria();
+            ct.andUseridEqualTo(pPartymember.getUserid());
+            ct.andYearEqualTo(Calendar.getInstance().get(Calendar.YEAR));
+            List<PAvantgrade> pAvantgradeList = pAvantgradeService.selectByExample(pA);
+
+            //NULL所有人的状态 1代表审核申请 2代表已审核
+            if(status == null ){
+                if(pAvantgradeList.size()==0){
+                    json.put("tempint", null);
+                }else{
+
+                    int temp = 0;
+
+                    for (PAvantgrade pAvantgrade:pAvantgradeList){
+                        //2代表通过 3代表拒绝
+                        if(pAvantgrade.getStatus() == 2 || pAvantgrade.getStatus() == 3 ){
+                            temp = 1;
+                        }
+                    }
+                    json.put("tempint", temp);
+                }
+
+                list.add(json);
+
+            }else if(status==1 ||  status==0){
+
+                int temp = 0;
+                for (PAvantgrade pAvantgrade:pAvantgradeList){
+                    //2代表通过 3代表拒绝
+                    if(pAvantgrade.getStatus() == 2 || pAvantgrade.getStatus() == 3 ){
+                        temp = 1;
+                    }
+                }
+
+                if(temp==status){
+                    json.put("tempint", temp);
+                    list.add(json);
+                }
+
+            }
+
+
+        }
         result.setSuccess(true);
-        result.setData(pPartymemberList);
+        result.setData(list);
         return result.getResult();
     }
 

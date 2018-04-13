@@ -3,8 +3,10 @@ package cn.dlbdata.dangjian.admin.web.controller;
 import cn.dlbdata.dangjian.admin.dao.model.PAvantgrade;
 import cn.dlbdata.dangjian.admin.dao.model.PAvantgradeExample;
 import cn.dlbdata.dangjian.admin.dao.model.PPartymember;
-import cn.dlbdata.dangjian.admin.dao.model.PScoreParty;
-import cn.dlbdata.dangjian.admin.service.*;
+import cn.dlbdata.dangjian.admin.service.PAvantgradePictureService;
+import cn.dlbdata.dangjian.admin.service.PAvantgradeService;
+import cn.dlbdata.dangjian.admin.service.PPartymemberService;
+import cn.dlbdata.dangjian.admin.web.VO.DjStringUtil;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -29,9 +31,6 @@ public class PAvantgradeController {
     @Autowired
     private PPartymemberService pPartymemberService;
 
-    @Autowired
-    private PScorePartyService pScorePartyService;
-
 
     @RequestMapping(value="/save",method= RequestMethod.POST)
     @ResponseBody
@@ -49,7 +48,7 @@ public class PAvantgradeController {
         PPartymember leader = pPartymemberService.selectBranchByDepartmentId();
         int leaderId = leader.getId();
 
-        if(Messge13!=null){
+        if("".equals(Messge13)||Messge13!=null){
             pAvantgrade1.setCreatetime(new Date());
             pAvantgrade1.setDepartmentid(departmentid);
             pAvantgrade1.setMessage(Messge13);
@@ -65,7 +64,7 @@ public class PAvantgradeController {
             callbackId1 = pAvantgradeService.insertSelective(pAvantgrade1);
 
         }
-        if(Messge14!=null) {
+        if("".equals(Messge14)||Messge14!=null) {
             PAvantgrade pAvantgrade2 = new PAvantgrade();
             pAvantgrade2.setCreatetime(new Date());
             pAvantgrade2.setDepartmentid(departmentid);
@@ -83,7 +82,7 @@ public class PAvantgradeController {
 
         }
         //pAvantgrade1.setApproveId();
-        if(Messge15!=null) {
+        if("".equals(Messge15)||Messge15!=null) {
             PAvantgrade pAvantgrade3 = new PAvantgrade();
             pAvantgrade3.setMessage(Messge15);
             pAvantgrade3.setPartmentid(partmentid);
@@ -172,33 +171,8 @@ public class PAvantgradeController {
         pAvantgrade.setStatus(2);
         pAvantgrade.setApprovetime(new Date());
         if(pAvantgradeService.updateByPrimaryKeySelective(pAvantgrade)>0){
-
-            PAvantgrade pAvantgrade1 = pAvantgradeService.selectByPrimaryKey(pAvantgrade.getId());
-            //添加积分了要
-            PScoreParty pScoreParty = new  PScoreParty();
-
-            PPartymember pPartymember = pPartymemberService.selectBranchByDepartmentId(pAvantgrade1.getDepartmentid());
-
-            pScoreParty.setAdderId(pPartymember.getId());
-            pScoreParty.setAddTime(pAvantgrade1.getApprovetime());
-            pScoreParty.setDetailId(pAvantgrade1.getModuleId());
-            pScoreParty.setApprovedId(pAvantgrade1.getApproveId());
-            pScoreParty.setScore(pAvantgrade1.getItemscore());
-            pScoreParty.setProjectId(pAvantgrade1.getProjectId());
-            pScoreParty.setYear(pAvantgrade1.getYear());
-            pScoreParty.setScoreTime(pAvantgrade1.getApprovetime());
-            pScoreParty.setAddTime(pAvantgrade1.getCreatetime());
-            pScoreParty.setStatusCd("30");
-            pScoreParty.setValidYn("Y");
-
-            if(pScorePartyService.updateScoreCustom(pScoreParty)>0){
-                result.setSuccess(true);
-                result.setMsg("添加成功");
-                return result.getResult();
-            }
-
-            result.setSuccess(false);
-            result.setMsg("已经获取积分，无需重复获取");
+            result.setSuccess(true);
+            result.setMsg("审批成功");
         }else{
             result.setSuccess(false);
             result.setMsg("审批失败");
@@ -235,4 +209,6 @@ public class PAvantgradeController {
 
 
 }
+
+
 
