@@ -147,7 +147,7 @@ public class PActiveController {
     }
 
     /**
-     * 查询正在进行的活动，或者已经开始的活动
+     * 查询部门活动（all 不传已经开始了）
      * @param departmentid
      * @param pageNum
      * @param pageSize
@@ -155,12 +155,14 @@ public class PActiveController {
      */
     @RequestMapping(value="/getRunningActive",method= RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getRunningActive(Integer departmentid,Integer pageNum, Integer pageSize){
+    public Map<String, Object> getRunningActive(Integer departmentid,Integer pageNum, Integer pageSize,String all){
         ResultUtil result = new ResultUtil();
         PActiveExample example = new PActiveExample();
         PActiveExample.Criteria ct = example.createCriteria();
         ct.andActiveStatusEqualTo(1);
-        ct.andStartTimeLessThanOrEqualTo(new Date());
+        if(all.equals("Y")){
+            ct.andStartTimeLessThanOrEqualTo(new Date());
+        }
         if (departmentid != null) {
             example.createCriteria().andDepartmentidEqualTo(departmentid);
         }
@@ -229,7 +231,7 @@ public class PActiveController {
     }
 
     /**
-     * 查询正在进行的活动，或者已经开始的活动
+     * 查询活动能看到 自己报没报名的
      * @param userId 用户ID
      * @param departmentid
      * @param pageNum
@@ -238,12 +240,14 @@ public class PActiveController {
      */
     @RequestMapping(value="/getParticipateActive",method= RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getParticipateActive(Integer userId,Integer departmentid,Integer pageNum, Integer pageSize){
+    public Map<String, Object> getParticipateActive(Integer userId,Integer departmentid,Integer pageNum, Integer pageSize,String all){
         ResultUtil result = new ResultUtil();
         PActiveExample example = new PActiveExample();
         PActiveExample.Criteria ct = example.createCriteria();
         ct.andActiveStatusEqualTo(1);
-        ct.andStartTimeGreaterThan(new Date());
+        if(all.equals("Y")){
+            ct.andStartTimeGreaterThan(new Date());
+        }
         if (departmentid != null) {
             example.createCriteria().andDepartmentidEqualTo(departmentid);
         }

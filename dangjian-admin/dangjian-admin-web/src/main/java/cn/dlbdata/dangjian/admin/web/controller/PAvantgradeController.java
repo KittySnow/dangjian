@@ -3,10 +3,8 @@ package cn.dlbdata.dangjian.admin.web.controller;
 import cn.dlbdata.dangjian.admin.dao.model.PAvantgrade;
 import cn.dlbdata.dangjian.admin.dao.model.PAvantgradeExample;
 import cn.dlbdata.dangjian.admin.dao.model.PPartymember;
-import cn.dlbdata.dangjian.admin.service.PAvantgradePictureService;
-import cn.dlbdata.dangjian.admin.service.PAvantgradeService;
-import cn.dlbdata.dangjian.admin.service.PPartymemberService;
-import cn.dlbdata.dangjian.admin.web.VO.DjStringUtil;
+import cn.dlbdata.dangjian.admin.dao.model.PScoreParty;
+import cn.dlbdata.dangjian.admin.service.*;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -30,6 +28,9 @@ public class PAvantgradeController {
     private PAvantgradeService pAvantgradeService;
     @Autowired
     private PPartymemberService pPartymemberService;
+
+    @Autowired
+    private PScorePartyService pScorePartyService;
 
 
     @RequestMapping(value="/save",method= RequestMethod.POST)
@@ -171,8 +172,33 @@ public class PAvantgradeController {
         pAvantgrade.setStatus(2);
         pAvantgrade.setApprovetime(new Date());
         if(pAvantgradeService.updateByPrimaryKeySelective(pAvantgrade)>0){
-            result.setSuccess(true);
-            result.setMsg("审批成功");
+
+            PAvantgrade pAvantgrade1 = pAvantgradeService.selectByPrimaryKey(pAvantgrade.getId());
+            //添加积分了要
+            PScoreParty pScoreParty = new  PScoreParty();
+
+            PPartymember pPartymember = pPartymemberService.selectBranchByDepartmentId(pAvantgrade1.getDepartmentid());
+
+            pScoreParty.setAdderId(pPartymember.getId());
+            pScoreParty.setAddTime(pAvantgrade1.getApprovetime());
+            pScoreParty.setDetailId(pAvantgrade1.getModuleId());
+            pScoreParty.setApprovedId(pAvantgrade1.getApproveId());
+            pScoreParty.setScore(pAvantgrade1.getItemscore());
+            pScoreParty.setProjectId(pAvantgrade1.getProjectId());
+            pScoreParty.setYear(pAvantgrade1.getYear());
+            pScoreParty.setScoreTime(pAvantgrade1.getApprovetime());
+            pScoreParty.setAddTime(pAvantgrade1.getCreatetime());
+            pScoreParty.setStatusCd("30");
+            pScoreParty.setValidYn("Y");
+
+            if(pScorePartyService.updateScoreCustom(pScoreParty)>0){
+                result.setSuccess(true);
+                result.setMsg("添加成功");
+                return result.getResult();
+            }
+
+            result.setSuccess(false);
+            result.setMsg("已经获取积分，无需重复获取");
         }else{
             result.setSuccess(false);
             result.setMsg("审批失败");

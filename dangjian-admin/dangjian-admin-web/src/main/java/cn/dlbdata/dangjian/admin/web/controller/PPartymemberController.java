@@ -134,7 +134,7 @@ public class PPartymemberController {
         PPartymember pPartymember = pPartymemberService.selectByUserId(pUserList.get(0).getUserid());
         int people = pDepartmentService.getSumPeople();
         int department = pDepartmentService.getSumDepartment();
-        String s="{\"name\":\""+ pPartymember.getName() + "\",\"branchSum\":\""+department+"\",\"peopleSum\":\""+department+"\"}";
+        String s="{\"name\":\""+ pPartymember.getName() + "\",\"branchSum\":\""+department+"\",\"peopleSum\":\""+people+"\"}";
         if(pPartymember!=null){
             result.setSuccess(true);
             result.setData(s);
