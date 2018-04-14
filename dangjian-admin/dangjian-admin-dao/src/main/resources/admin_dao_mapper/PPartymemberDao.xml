@@ -297,10 +297,10 @@
 
   <select id="getPartymemberByDepartmentid" resultMap="BaseResultMap" parameterType="Map">
     select p_partymember.id,p_partymember.userid , name, sex, age, phone, idcard, fromdepartmentid, bid, p_partymember.departmentid,
-    (select departmentname from p_department d where d.departmentid = p_partymember.departmentid )as departmentname,
- (select departmentname from p_department d where d.departmentid = p_partymember.fromdepartmentid )as fromdepartmentname,
-(select sum(table1.score) from p_score_party table1 where table1.user_id = p_partymember.userid and year = (select year(now()) )) as totalscore ,
-(select distinct p_avantgrade.status ) as tempint from p_partymember
+      (select departmentname from p_department d where d.departmentid = p_partymember.departmentid )as departmentname,
+       (select departmentname from p_department d where d.departmentid = p_partymember.fromdepartmentid )as fromdepartmentname,
+      (select sum(table1.score) from p_score_party table1 where table1.user_id = p_partymember.userid and year = (select year(now()) )) as totalscore ,
+      (select distinct p_avantgrade.status ) as tempint from p_partymember
     left join p_avantgrade on p_avantgrade.partmentid = p_partymember.id
     where p_partymember.departmentid = #{departmentid,jdbcType=INTEGER}
     <if test="status != null">

@@ -370,11 +370,14 @@
         'Y',
         #{userId,jdbcType=INTEGER}
       FROM p_score_detail t INNER JOIN p_score_project p ON t.project_id = p.id
+        <!-- 仅针对扫码添加积分的部分 -->
         WHERE t.id = #{detailId,jdbcType=INTEGER} AND t.score_get_method_cd = '10'
+        <!-- 获得的总积分必须小于项目的总分才允许再次获取 -->
         <![CDATA[
           AND ifnull ((SELECT  sum(s.score) FROM p_score_party s where s.detail_id = t.id
             AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now())),0) < p.score
         ]]>
+        <!-- 如果项目只能获取一次积分且党员已经获取过，则不再允许获取积分 -->
       AND NOT EXISTS (SELECT 1 FROM p_score_party s where s.detail_id = t.id
         AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now()) AND t.only_yn = 'Y')
   </insert>
