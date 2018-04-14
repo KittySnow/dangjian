@@ -2,13 +2,11 @@ package cn.dlbdata.dangjian.admin.web.controller;
 
 import cn.dlbdata.dangjian.admin.dao.model.*;
 import cn.dlbdata.dangjian.admin.service.*;
-import cn.dlbdata.dangjian.admin.service.impl.PActiveParticipateServiceImpl;
 import cn.dlbdata.dangjian.common.util.DateUtil;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.zxing.BarcodeFormat;
@@ -16,8 +14,6 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,6 +98,55 @@ public class PActiveController {
         result.setData(id);
         result.setSuccess(true);
         result.setMsg("创建成功！");
+        return result.getResult();
+    }
+
+    /**
+     * 到场签名活动
+     * @param activeId
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value="/approved",method= RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> approved(Integer activeId,Integer userId){
+        ResultUtil result = new ResultUtil();
+        if(pActiveService.selectByPrimaryKey(activeId)==null){
+            result.setMsg("活动不存在！");
+            result.setSuccess(false);
+            return result.getResult();
+        }
+        if(pUserService.selectByPrimaryKey(userId)==null){
+            result.setMsg("用户不存在！");
+            result.setSuccess(false);
+            return result.getResult();
+        }
+        PActiveParticipateExample example = new PActiveParticipateExample();
+        PActiveParticipateExample.Criteria ct = example.createCriteria();
+        ct.andUserIdEqualTo(userId);
+        ct.andActiveIdEqualTo(activeId);
+        List<PActiveParticipate> list = activeParticipateService.selectByExample(example);
+        if(list.size()==0){
+            result.setMsg("请先报名");
+            result.setSuccess(false);
+            return result.getResult();
+        }
+        PActiveParticipate participate = list.get(0);
+        if(!Integer.valueOf(1).equals(participate.getStatus())){
+            result.setMsg("已经签到，请勿重复签到！");
+            result.setSuccess(false);
+            return result.getResult();
+        }
+        if(!Integer.valueOf(2).equals(participate.getStatus())){
+            result.setMsg("不允许签到！");
+            result.setSuccess(false);
+            return result.getResult();
+        }
+        participate.setStatus(1);
+        activeParticipateService.insert(participate);
+
+        result.setMsg("签到成功");
+        result.setSuccess(true);
         return result.getResult();
     }
 
@@ -336,6 +381,11 @@ public class PActiveController {
         return result.getResult();
     }
 
+    /**
+     * 查询活动详情
+     * @param activeId
+     * @return
+     */
     @RequestMapping(value="/queryById",method= RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> queryById(Integer activeId){
@@ -346,6 +396,34 @@ public class PActiveController {
         if(createUser!=null){
             json.put("activeCreatePeopleName", createUser.getName());
         }
+        PActiveParticipateExample pActiveParticipateExample = new PActiveParticipateExample();
+        pActiveParticipateExample.createCriteria().andActiveIdEqualTo(activeId);
+        List<PActiveParticipate> participateList = activeParticipateService.selectByExample(pActiveParticipateExample);
+
+        List<Integer> inList = new ArrayList<>();
+        List<Integer> outList = new ArrayList<>();
+        for (PActiveParticipate item:participateList){
+            if (Integer.valueOf(0).equals(item.getStatus())) {
+                inList.add(item.getUserId());
+            }else if(Integer.valueOf(1).equals(item.getStatus())){
+                outList.add(item.getUserId());
+            }
+        }
+        List<PUser> inUserList = new ArrayList<>();
+        List<PUser> outUserList = new ArrayList<>();
+        if(inList.size()>0){
+            PUserExample inUserExample = new PUserExample();
+            inUserExample.createCriteria().andUseridIn(inList);
+            inUserList.addAll(pUserService.selectByExample(inUserExample));
+        }
+        if(outList.size()>0){
+            PUserExample outUserExample = new PUserExample();
+            outUserExample.createCriteria().andUseridIn(outList);
+            outUserList.addAll(pUserService.selectByExample(outUserExample));
+        }
+        json.put("participate", inUserList);
+        json.put("notParticipate", outUserList);
+
         result.setSuccess(true);
         result.setData(json);
         return result.getResult();
@@ -426,7 +504,7 @@ public class PActiveController {
      */
     @RequestMapping(value="/showQrCode",method= {RequestMethod.POST,RequestMethod.GET})
     public void showQrCode(Integer activeId,HttpServletResponse response){
-        String content = "请复制这段对话进行全局搜索，该变量是用来转换为二维码的变量";
+        String content = "http://localhost/active/approved?activeId="+activeId;
         BufferedImage image;
         try {
             image = genPic(content);

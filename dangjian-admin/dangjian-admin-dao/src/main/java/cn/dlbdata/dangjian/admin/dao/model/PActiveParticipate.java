@@ -26,7 +26,7 @@ public class PActiveParticipate implements Serializable {
     private Integer userId;
 
     /**
-     * 审核状态，0：未审核，1：审核通过，2：审核不通过
+     * 签到状态，0：未签到，1：已经签到，2：不允许参加
      *
      * @mbg.generated
      */
