@@ -353,4 +353,24 @@
       score_get_method_cd = #{scoreGetMethodCd,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectTodoList" parameterType="java.lang.Integer" resultType="java.util.Map">
+    SELECT
+      sd.id as "detailId",
+      t.id as "activeId",
+      sp.id as "projectId",
+      sd.title as "detailTitle",
+      sp.project_name as "projectName",
+      t.active_name as "activeName",
+      t.active_type as "activeType",
+      sd.score_get_method_cd as "scoreGetMethodCd"
+    FROM p_active t INNER JOIN p_score_detail sd ON t.active_project_id = sd.id
+      INNER JOIN p_score_project sp on sd.project_id = sp.id
+      <![CDATA[
+      WHERE t.active_status = 1 AND t.start_time <= DATE_FORMAT(now(),'%y-%m-%d')
+        and t.end_time >= DATE_FORMAT(now(),'%y-%m-%d')
+      ]]>
+      AND (sd.adder_role_id > 0 or sd.approved_role_id > 0)
+      AND EXISTS (SELECT 1 FROM p_user u where u.userid = #userId# AND (u.roleid = sd.adder_role_id or u.roleid = sd.approved_role_id))
+  </select>
 </mapper>

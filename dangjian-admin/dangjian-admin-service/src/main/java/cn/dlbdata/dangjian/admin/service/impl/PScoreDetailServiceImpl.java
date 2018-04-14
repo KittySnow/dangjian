@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Service("PScoreDetailService")
@@ -78,4 +79,8 @@ public class PScoreDetailServiceImpl implements PScoreDetailService {
         return pScoreDetailDao.updateByPrimaryKey(pScoreDetail);
     }
 
+    @Override
+    public List<Map<String, Object>> selectTodoList(Integer userId) {
+        return pScoreDetailDao.selectTodoList(userId);
+    }
 }

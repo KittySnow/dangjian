@@ -5,6 +5,7 @@ import cn.dlbdata.dangjian.admin.dao.model.PScoreDetailExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PScoreDetailService {
 
@@ -29,5 +30,6 @@ public interface PScoreDetailService {
     public int updateByPrimaryKeySelective(PScoreDetail pScoreDetail);
 
     public int updateByPrimaryKey(PScoreDetail pScoreDetail);
-    
+
+    List<Map<String,Object>> selectTodoList(Integer userId);
 }

@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
+
 @Mapper
 public interface PScoreDetailDao {
     long countByExample(PScoreDetailExample example);
@@ -29,4 +31,6 @@ public interface PScoreDetailDao {
     int updateByPrimaryKeySelective(PScoreDetail record);
 
     int updateByPrimaryKey(PScoreDetail record);
+
+    List<Map<String,Object>> selectTodoList(Integer userId);
 }
