@@ -371,6 +371,7 @@
         and t.end_time >= DATE_FORMAT(now(),'%y-%m-%d')
       ]]>
       AND (sd.adder_role_id > 0 or sd.approved_role_id > 0)
-      AND EXISTS (SELECT 1 FROM p_user u where u.userid = #userId# AND (u.roleid = sd.adder_role_id or u.roleid = sd.approved_role_id))
+      AND EXISTS (SELECT 1 FROM p_user u where u.userid = #{userId} AND (u.roleid = sd.adder_role_id or u.roleid =
+      sd.approved_role_id))
   </select>
 </mapper>
