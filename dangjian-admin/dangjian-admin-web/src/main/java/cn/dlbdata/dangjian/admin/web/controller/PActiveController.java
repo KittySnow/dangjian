@@ -403,13 +403,14 @@ public class PActiveController {
         List<Integer> inList = new ArrayList<>();
         List<Integer> outList = new ArrayList<>();
         for (PActiveParticipate item:participateList){
-            if (Integer.valueOf(0).equals(item.getStatus())) {
+            if (Integer.valueOf(1).equals(item.getStatus())) {
                 inList.add(item.getUserId());
-            }else if(Integer.valueOf(1).equals(item.getStatus())){
+            }else if(Integer.valueOf(0).equals(item.getStatus())){
                 outList.add(item.getUserId());
             }
         }
         List<PUser> inUserList = new ArrayList<>();
+
         List<PUser> outUserList = new ArrayList<>();
         if(inList.size()>0){
             PUserExample inUserExample = new PUserExample();

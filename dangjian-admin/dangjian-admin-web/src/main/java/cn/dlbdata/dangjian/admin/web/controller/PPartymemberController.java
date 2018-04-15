@@ -214,19 +214,21 @@ public class PPartymemberController {
 
             }else if(status==1 ||  status==0){
 
-                int temp = 0;
-                for (PAvantgrade pAvantgrade:pAvantgradeList){
-                    //2代表通过 3代表拒绝
-                    if(pAvantgrade.getStatus() == 2 || pAvantgrade.getStatus() == 3 ){
-                        temp = 1;
+                if(pAvantgradeList.size()!=0) {
+
+                    int temp = 0;
+                    for (PAvantgrade pAvantgrade : pAvantgradeList) {
+                        //2代表通过 3代表拒绝
+                        if (pAvantgrade.getStatus() == 2 || pAvantgrade.getStatus() == 3) {
+                            temp = 1;
+                        }
+                    }
+
+                    if (temp == status) {
+                        json.put("tempint", temp);
+                        list.add(json);
                     }
                 }
-
-                if(temp==status){
-                    json.put("tempint", temp);
-                    list.add(json);
-                }
-
             }
 
 
