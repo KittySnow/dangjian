@@ -2,7 +2,10 @@ package cn.dlbdata.dangjian.admin.web.controller;
 
 import cn.dlbdata.dangjian.admin.dao.model.*;
 import cn.dlbdata.dangjian.admin.service.*;
+import cn.dlbdata.dangjian.common.util.DateUtil;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.models.auth.In;
@@ -10,13 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/pstudy")
@@ -27,15 +28,21 @@ public class PStudyController {
     private PStudyService pStudyService;
 
     @Autowired
-    private PUserService pUserService;
-
-    @Autowired
     private PStudyPictureService pStudyPictureService;
 
     @Autowired
     private PScorePartyService pScorePartyService;
     @Autowired
     private PScoreDetailService pScoreDetailService;
+
+    @Autowired
+    private PPartymemberService pPartymemberService;
+
+    @Autowired
+    private PUserService pUserService;
+
+    @Autowired
+    private PDepartmentService pDepartmentService;
 
     @Autowired
     private PScoreProjectService pScoreProjectService;
@@ -198,6 +205,79 @@ public class PStudyController {
         PStudy pStudy = pStudyService.selectByPrimaryKey(studyid);
         result.setSuccess(true);
         result.setData(pStudy);
+        return result.getResult();
+    }
+
+
+
+    //支部党员信息(先锋评定）
+    @RequestMapping(value="/getPartymemberByDepartmentid",method= RequestMethod.GET)
+    @ResponseBody
+    /*
+    status:1 代表 等待审核 NULL 代表等待支部书记审核，2代表已通过
+    * */
+    public Map<String, Object> getPartymemberByDepartmentid(Integer departmentid,@RequestParam(required=false) Integer status){
+        ResultUtil result = new ResultUtil();
+        PPartymemberExample pPartymemberExample = new PPartymemberExample();
+        PPartymemberExample.Criteria pPartymemberCriteria =  pPartymemberExample.createCriteria();
+        pPartymemberCriteria.andDepartmentidEqualTo(departmentid);
+        List<PPartymember> pPartymemberList = pPartymemberService.selectByExample(pPartymemberExample);
+
+        List<JSONObject> list = new ArrayList<>();
+        for (PPartymember pPartymember:pPartymemberList){
+            JSONObject json = JSON.parseObject(JSON.toJSONString(pPartymember));
+
+            //根据用户ID 找审核没
+            PStudyExample pA = new PStudyExample();
+            PStudyExample.Criteria ct = pA.createCriteria();
+            ct.andCreateUseridEqualTo(pPartymember.getUserid());
+            Date startTime = DateUtil.getYearFirst(Calendar.getInstance().get(Calendar.YEAR));
+            Date endTime = DateUtil.getYearLast(Calendar.getInstance().get(Calendar.YEAR));
+            ct.andCreatetimeLessThanOrEqualTo(new Date());
+            List<PStudy> pStudyList = pStudyService.selectByExample(pA);
+
+            //NULL所有人的状态 1代表审核申请 2代表已审核
+            if(status == null ){
+                if(pStudyList.size()==0){
+                    json.put("tempint", null);
+                }else{
+
+                    int temp = 0;
+
+                    for (PStudy pStudy:pStudyList){
+                        //2代表通过 3代表拒绝
+                        if(pStudy.getStatus() == 2 || pStudy.getStatus() == 3 ){
+                            temp = 1;
+                        }
+                    }
+                    json.put("tempint", temp);
+                }
+
+                list.add(json);
+
+            }else if(status==1 ||  status==0){
+
+                if(pStudyList.size()!=0) {
+
+                    int temp = 0;
+                    for (PStudy pStudy : pStudyList) {
+                        //2代表通过 3代表拒绝
+                        if (pStudy.getStatus() == 2 || pStudy.getStatus() == 3) {
+                            temp = 1;
+                        }
+                    }
+
+                    if (temp == status) {
+                        json.put("tempint", temp);
+                        list.add(json);
+                    }
+                }
+            }
+
+
+        }
+        result.setSuccess(true);
+        result.setData(list);
         return result.getResult();
     }
 }

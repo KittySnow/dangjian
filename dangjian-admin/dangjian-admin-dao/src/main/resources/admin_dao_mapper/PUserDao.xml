@@ -12,6 +12,7 @@
     <result column="roleid" jdbcType="INTEGER" property="roleid" />
     <result column="departmentid" jdbcType="INTEGER" property="departmentid" />
     <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="token" jdbcType="VARCHAR" property="token" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -73,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    userid, name, email, password, company, job, tel, roleid, departmentid, openid, token
+    userid, name, email, password, company, job, tel, roleid, departmentid, openid, token ,avatar
   </sql>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PUserExample" resultMap="BaseResultMap">
     select

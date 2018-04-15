@@ -169,7 +169,7 @@ public class PPartymemberController {
     }
 
 
-    //支部党员信息
+    //支部党员信息(先锋评定）
     @RequestMapping(value="/getPartymemberByDepartmentid",method= RequestMethod.GET)
     @ResponseBody
     /*

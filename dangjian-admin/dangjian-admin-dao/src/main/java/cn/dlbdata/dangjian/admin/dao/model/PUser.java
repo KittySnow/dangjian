@@ -26,6 +26,8 @@ public class PUser implements Serializable {
      */
     private String password;
 
+    private String avatar;
+
     /**
      * 用户公司
      *
@@ -174,6 +176,14 @@ public class PUser implements Serializable {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     @Override
