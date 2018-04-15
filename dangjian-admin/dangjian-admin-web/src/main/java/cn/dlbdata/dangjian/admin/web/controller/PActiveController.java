@@ -43,7 +43,10 @@ public class PActiveController {
     private static Logger _log = LoggerFactory.getLogger(PActiveController.class);
 
     @Autowired
+    private PPartymemberService pPartymemberService;
+    @Autowired
     private PUserService pUserService;
+
     @Autowired
     private PActiveService pActiveService;
     @Autowired
@@ -216,7 +219,7 @@ public class PActiveController {
         List<JSONObject> list = new ArrayList<>();
         for (PActive active:pActiveList){
             JSONObject json = JSON.parseObject(JSON.toJSONString(active));
-            PUser createUser = pUserService.selectByPrimaryKey(active.getActiveCreatePeople());
+            PPartymember createUser = pPartymemberService.selectByUserId(active.getActiveCreatePeople());
             if(createUser!=null){
                 json.put("activeCreatePeopleName", createUser.getName());
             }
@@ -255,7 +258,7 @@ public class PActiveController {
         List<JSONObject> list = new ArrayList<>();
         for (PActive active:pActiveList){
             JSONObject json = JSON.parseObject(JSON.toJSONString(active));
-            PUser createUser = pUserService.selectByPrimaryKey(active.getActiveCreatePeople());
+            PPartymember createUser = pPartymemberService.selectByUserId(active.getActiveCreatePeople());
             if(createUser!=null){
                 json.put("activeCreatePeopleName", createUser.getName());
             }
@@ -301,7 +304,7 @@ public class PActiveController {
         List<JSONObject> list = new ArrayList<>();
         for (PActive active:pActiveList){
             JSONObject json = JSON.parseObject(JSON.toJSONString(active));
-            PUser createUser = pUserService.selectByPrimaryKey(active.getActiveCreatePeople());
+            PPartymember createUser = pPartymemberService.selectByUserId(active.getActiveCreatePeople());
             if(createUser!=null){
                 json.put("activeCreatePeopleName", createUser.getName());
             }
@@ -392,7 +395,7 @@ public class PActiveController {
         ResultUtil result = new ResultUtil();
         PActive pActive = pActiveService.selectByPrimaryKey(activeId);
         JSONObject json = JSON.parseObject(JSON.toJSONString(pActive));
-        PUser createUser = pUserService.selectByPrimaryKey(pActive.getActiveCreatePeople());
+        PPartymember createUser = pPartymemberService.selectByUserId(pActive.getActiveCreatePeople());
         if(createUser!=null){
             json.put("activeCreatePeopleName", createUser.getName());
         }
@@ -409,18 +412,18 @@ public class PActiveController {
                 outList.add(item.getUserId());
             }
         }
-        List<PUser> inUserList = new ArrayList<>();
+        List<PPartymember> inUserList = new ArrayList<>();
 
-        List<PUser> outUserList = new ArrayList<>();
+        List<PPartymember> outUserList = new ArrayList<>();
         if(inList.size()>0){
-            PUserExample inUserExample = new PUserExample();
+            PPartymemberExample inUserExample = new PPartymemberExample();
             inUserExample.createCriteria().andUseridIn(inList);
-            inUserList.addAll(pUserService.selectByExample(inUserExample));
+            inUserList.addAll(pPartymemberService.selectByExample(inUserExample));
         }
         if(outList.size()>0){
-            PUserExample outUserExample = new PUserExample();
+            PPartymemberExample outUserExample = new PPartymemberExample();
             outUserExample.createCriteria().andUseridIn(outList);
-            outUserList.addAll(pUserService.selectByExample(outUserExample));
+            outUserList.addAll(pPartymemberService.selectByExample(outUserExample));
         }
         json.put("participate", inUserList);
         json.put("notParticipate", outUserList);
