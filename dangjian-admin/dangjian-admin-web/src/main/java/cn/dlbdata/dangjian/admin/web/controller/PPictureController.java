@@ -196,7 +196,7 @@ public class PPictureController {
         // 根据内容类型获取扩展名
         String fileExt = CommonUtil.getFileExt(conn.getHeaderField("Content-Type"));
         // 将mediaId作为文件名
-        filePath = savePath + mediaId + fileExt;
+        filePath = savePath + System.currentTimeMillis() + fileExt;
         BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
         FileOutputStream fos = new FileOutputStream(new File(filePath));
         byte[] buf = new byte[8096];
