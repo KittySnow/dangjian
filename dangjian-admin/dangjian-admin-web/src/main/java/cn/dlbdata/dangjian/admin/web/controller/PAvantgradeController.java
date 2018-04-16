@@ -190,7 +190,6 @@ public class PAvantgradeController {
             pScoreParty.setProjectId(pAvantgrade1.getProjectId());
             pScoreParty.setDetailId(pAvantgrade1.getModuleId());
             pScoreParty.setScore(pAvantgrade1.getItemscore());
-
             pScoreParty.setAdderId(pPartymember.getUserid());
             pScoreParty.setAddTime(pAvantgrade1.getApprovetime());
             pScoreParty.setAddId(pPartymember.getId());
@@ -200,7 +199,7 @@ public class PAvantgradeController {
             pScoreParty.setScoreTime(pAvantgrade1.getApprovetime());
             pScoreParty.setAddTime(pAvantgrade1.getCreatetime());
             pScoreParty.setStatusCd("30");
-            pScoreParty.setUserId(pPartymember.getUserid());
+            pScoreParty.setUserId(pAvantgrade1.getUserid());
             pScoreParty.setValidYn("Y");
             int callbackId = pScorePartyService.updateScoreCustom(pScoreParty);
             if(callbackId>0){
