@@ -86,7 +86,7 @@ public class PStudyController {
         pStudy.setApprovalid(leader.getUserid());
 
         int callbackId = pStudyService.insert(pStudy);
-        if(picids !=null ){
+        if(picids !=null && !picids.isEmpty()){
             String[] picIds = picids.split(",");
             if(picIds.length!=0){
                 Integer[] a = new Integer[picIds.length];
@@ -205,10 +205,55 @@ public class PStudyController {
         PStudy pStudy = pStudyService.selectByPrimaryKey(studyid);
         result.setSuccess(true);
         result.setData(pStudy);
+        PStudyPictureExample pA = new PStudyPictureExample();
+        PStudyPictureExample.Criteria ct = pA.createCriteria();
+        ct.andStudyIdEqualTo(studyid);
+        List<PStudyPicture> pStudyPictureList = pStudyPictureService.selectByExample(pA);
+        List<JSONObject> list = new ArrayList<>();
+        JSONObject json = JSON.parseObject(JSON.toJSONString(pStudy));
+        PPartymember pPartymember = pPartymemberService.selectByUserId(pStudy.getCreateUserid());
+        json.put("partyname",pPartymember.getName());
+        json.put("pictures", pStudyPictureList);
+        list.add(json);
+        result.setSuccess(true);
+        result.setData(json);
         return result.getResult();
     }
 
+    //根据用户ID 和 分类查找相应列表
+    @RequestMapping(value="/queryByUserId",method=RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> queryByUserId(Integer UserId,Integer activeType){
+        ResultUtil result = new ResultUtil();
+        PStudyExample pA = new PStudyExample();
+        PStudyExample.Criteria ct = pA.createCriteria();
+        Date startTime = DateUtil.getYearFirst(Calendar.getInstance().get(Calendar.YEAR));
+        Date endTime = DateUtil.getYearLast(Calendar.getInstance().get(Calendar.YEAR));
+        ct.andCreateUseridEqualTo(UserId);
+        ct.andModuleidEqualTo(activeType);
+        List<PStudy> pStudyList = pStudyService.selectByExample(pA);
 
+
+        List<JSONObject> list = new ArrayList<>();
+        if(pStudyList!=null){
+            if(pStudyList.size()!=0){
+                for (PStudy pStudy:pStudyList){
+
+                    JSONObject json = JSON.parseObject(JSON.toJSONString(pStudy));
+
+                    PPartymember pPartymember = pPartymemberService.selectByUserId(pStudy.getCreateUserid());
+                    json.put("partyname",pPartymember.getName());
+
+                    list.add(json);
+                }
+            }
+        }
+
+
+        result.setSuccess(true);
+        result.setData(list);
+        return result.getResult();
+    }
 
     //支部党员信息(先锋评定）
     @RequestMapping(value="/getPartymemberByDepartmentid",method= RequestMethod.GET)
@@ -216,66 +261,37 @@ public class PStudyController {
     /*
     status:1 代表 等待审核 NULL 代表等待支部书记审核，2代表已通过
     * */
-    public Map<String, Object> getPartymemberByDepartmentid(Integer departmentid,@RequestParam(required=false) Integer status){
+    public Map<String, Object> getPartymemberByDepartmentid(Integer departmentid,@RequestParam(required=false) Integer status,Integer activeType){
+
+
         ResultUtil result = new ResultUtil();
-        PPartymemberExample pPartymemberExample = new PPartymemberExample();
-        PPartymemberExample.Criteria pPartymemberCriteria =  pPartymemberExample.createCriteria();
-        pPartymemberCriteria.andDepartmentidEqualTo(departmentid);
-        List<PPartymember> pPartymemberList = pPartymemberService.selectByExample(pPartymemberExample);
+
+        //
+        PStudyExample pA = new PStudyExample();
+        PStudyExample.Criteria ct = pA.createCriteria();
+        Date startTime = DateUtil.getYearFirst(Calendar.getInstance().get(Calendar.YEAR));
+        Date endTime = DateUtil.getYearLast(Calendar.getInstance().get(Calendar.YEAR));
+        ct.andCreatetimeLessThanOrEqualTo(new Date());
+        ct.andModuleidEqualTo(activeType);
+        ct.andDepartmentidEqualTo(departmentid);
+        List<PStudy> pStudyList = pStudyService.selectByExample(pA);
 
         List<JSONObject> list = new ArrayList<>();
-        for (PPartymember pPartymember:pPartymemberList){
-            JSONObject json = JSON.parseObject(JSON.toJSONString(pPartymember));
+        if(pStudyList!=null){
+            if(pStudyList.size()!=0){
+                for (PStudy pStudy:pStudyList){
 
-            //根据用户ID 找审核没
-            PStudyExample pA = new PStudyExample();
-            PStudyExample.Criteria ct = pA.createCriteria();
-            ct.andCreateUseridEqualTo(pPartymember.getUserid());
-            Date startTime = DateUtil.getYearFirst(Calendar.getInstance().get(Calendar.YEAR));
-            Date endTime = DateUtil.getYearLast(Calendar.getInstance().get(Calendar.YEAR));
-            ct.andCreatetimeLessThanOrEqualTo(new Date());
-            List<PStudy> pStudyList = pStudyService.selectByExample(pA);
+                    JSONObject json = JSON.parseObject(JSON.toJSONString(pStudy));
 
-            //NULL所有人的状态 1代表审核申请 2代表已审核
-            if(status == null ){
-                if(pStudyList.size()==0){
-                    json.put("tempint", null);
-                }else{
+                    PPartymember pPartymember = pPartymemberService.selectByUserId(pStudy.getCreateUserid());
+                    json.put("partyname",pPartymember.getName());
 
-                    int temp = 0;
-
-                    for (PStudy pStudy:pStudyList){
-                        //2代表通过 3代表拒绝
-                        if(pStudy.getStatus() == 2 || pStudy.getStatus() == 3 ){
-                            temp = 1;
-                        }
-                    }
-                    json.put("tempint", temp);
-                }
-
-                list.add(json);
-
-            }else if(status==1 ||  status==0){
-
-                if(pStudyList.size()!=0) {
-
-                    int temp = 0;
-                    for (PStudy pStudy : pStudyList) {
-                        //2代表通过 3代表拒绝
-                        if (pStudy.getStatus() == 2 || pStudy.getStatus() == 3) {
-                            temp = 1;
-                        }
-                    }
-
-                    if (temp == status) {
-                        json.put("tempint", temp);
-                        list.add(json);
-                    }
+                    list.add(json);
                 }
             }
-
-
         }
+
+
         result.setSuccess(true);
         result.setData(list);
         return result.getResult();

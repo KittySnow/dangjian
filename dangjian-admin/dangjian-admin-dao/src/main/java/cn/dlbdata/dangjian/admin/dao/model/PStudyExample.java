@@ -847,6 +847,66 @@ public class PStudyExample implements Serializable {
             addCriterion("rejectreason not between", value1, value2, "rejectreason");
             return (Criteria) this;
         }
+
+        public Criteria andPicidIsNull() {
+            addCriterion("picid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicidIsNotNull() {
+            addCriterion("picid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicidEqualTo(Integer value) {
+            addCriterion("picid =", value, "picid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicidNotEqualTo(Integer value) {
+            addCriterion("picid <>", value, "picid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicidGreaterThan(Integer value) {
+            addCriterion("picid >", value, "picid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("picid >=", value, "picid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicidLessThan(Integer value) {
+            addCriterion("picid <", value, "picid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicidLessThanOrEqualTo(Integer value) {
+            addCriterion("picid <=", value, "picid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicidIn(List<Integer> values) {
+            addCriterion("picid in", values, "picid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicidNotIn(List<Integer> values) {
+            addCriterion("picid not in", values, "picid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicidBetween(Integer value1, Integer value2) {
+            addCriterion("picid between", value1, value2, "picid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicidNotBetween(Integer value1, Integer value2) {
+            addCriterion("picid not between", value1, value2, "picid");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria implements Serializable {

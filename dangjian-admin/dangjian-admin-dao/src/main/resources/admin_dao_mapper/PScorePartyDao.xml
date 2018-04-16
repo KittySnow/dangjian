@@ -114,16 +114,20 @@
   </delete>
   <insert id="insert" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScoreParty">
     insert into p_score_party (id, project_id, detail_id,
-    score, adder_id, approved_id,
-    year, score_time, add_time,
-    add_id, valid_yn, user_id,
-    status_cd)
+      score, adder_id, approved_id,
+      year, score_time, add_time,
+      add_id, valid_yn, user_id,
+      status_cd, remark, imgs
+      )
     values (#{id,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, #{detailId,jdbcType=INTEGER},
-    #{score,jdbcType=DECIMAL}, #{adderId,jdbcType=INTEGER}, #{approvedId,jdbcType=INTEGER},
-    #{year,jdbcType=INTEGER}, #{scoreTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP},
-    #{addId,jdbcType=INTEGER}, #{validYn,jdbcType=CHAR}, #{userId,jdbcType=INTEGER},
-    #{statusCd,jdbcType=CHAR})
+      #{score,jdbcType=DECIMAL}, #{adderId,jdbcType=INTEGER}, #{approvedId,jdbcType=INTEGER},
+      #{year,jdbcType=INTEGER}, #{scoreTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP},
+      #{addId,jdbcType=INTEGER}, #{validYn,jdbcType=CHAR}, #{userId,jdbcType=INTEGER},
+      #{statusCd,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR}, #{imgs,jdbcType=LONGVARCHAR}
+      )
   </insert>
+
+
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScoreParty">
     insert into p_score_party
     <trim prefix="(" suffix=")" suffixOverrides=",">

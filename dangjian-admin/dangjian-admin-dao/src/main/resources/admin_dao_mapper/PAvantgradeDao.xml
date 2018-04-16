@@ -77,8 +77,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, userid, project_id, module_id, approve_id, createtime, title, message, departmentid, 
-    partmentid, status, reject_reson, memo, approvetime, year
+    id, userid, project_id, module_id, approve_id, createtime, title, message, departmentid,
+    partmentid, status, reject_reson, itemscore, memo, approvetime, year
   </sql>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PAvantgradeExample" resultMap="BaseResultMap">
     select
@@ -95,7 +95,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from p_avantgrade
     where id = #{id,jdbcType=INTEGER}
@@ -111,26 +111,25 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.dlbdata.dangjian.admin.dao.model.PAvantgrade">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into p_avantgrade (userid, project_id, module_id, 
-      approve_id, createtime, title, 
-      message, departmentid, partmentid, 
-      status, reject_reson, memo, 
-      approvetime, year)
-    values (#{userid,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, #{moduleId,jdbcType=INTEGER}, 
-      #{approveId,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, 
-      #{message,jdbcType=VARCHAR}, #{departmentid,jdbcType=INTEGER}, #{partmentid,jdbcType=INTEGER}, 
-      #{status,jdbcType=INTEGER}, #{rejectReson,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, 
-      #{approvetime,jdbcType=TIMESTAMP}, #{year,jdbcType=VARCHAR})
+    insert into p_avantgrade (id, userid, project_id,
+    module_id, approve_id, createtime,
+    title, message, departmentid,
+    partmentid, status, reject_reson,
+    itemscore, memo, approvetime,
+    year)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER},
+    #{moduleId,jdbcType=INTEGER}, #{approveId,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP},
+    #{title,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, #{departmentid,jdbcType=INTEGER},
+    #{partmentid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{rejectReson,jdbcType=VARCHAR},
+    #{itemscore,jdbcType=DECIMAL}, #{memo,jdbcType=VARCHAR}, #{approvetime,jdbcType=TIMESTAMP},
+    #{year,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PAvantgrade">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into p_avantgrade
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
       <if test="userid != null">
         userid,
       </if>
@@ -164,6 +163,9 @@
       <if test="rejectReson != null">
         reject_reson,
       </if>
+      <if test="itemscore != null">
+        itemscore,
+      </if>
       <if test="memo != null">
         memo,
       </if>
@@ -175,6 +177,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
       <if test="userid != null">
         #{userid,jdbcType=INTEGER},
       </if>
@@ -208,6 +213,9 @@
       <if test="rejectReson != null">
         #{rejectReson,jdbcType=VARCHAR},
       </if>
+      <if test="itemscore != null">
+        #{itemscore,jdbcType=DECIMAL},
+      </if>
       <if test="memo != null">
         #{memo,jdbcType=VARCHAR},
       </if>
@@ -215,7 +223,7 @@
         #{approvetime,jdbcType=TIMESTAMP},
       </if>
       <if test="year != null">
-        #{year,jdbcType=VARCHAR},
+        #{year,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -264,6 +272,9 @@
       <if test="record.rejectReson != null">
         reject_reson = #{record.rejectReson,jdbcType=VARCHAR},
       </if>
+      <if test="record.itemscore != null">
+        itemscore = #{record.itemscore,jdbcType=DECIMAL},
+      </if>
       <if test="record.memo != null">
         memo = #{record.memo,jdbcType=VARCHAR},
       </if>
@@ -271,7 +282,7 @@
         approvetime = #{record.approvetime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.year != null">
-        year = #{record.year,jdbcType=VARCHAR},
+        year = #{record.year,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -281,20 +292,21 @@
   <update id="updateByExample" parameterType="map">
     update p_avantgrade
     set id = #{record.id,jdbcType=INTEGER},
-      userid = #{record.userid,jdbcType=INTEGER},
-      project_id = #{record.projectId,jdbcType=INTEGER},
-      module_id = #{record.moduleId,jdbcType=INTEGER},
-      approve_id = #{record.approveId,jdbcType=INTEGER},
-      createtime = #{record.createtime,jdbcType=TIMESTAMP},
-      title = #{record.title,jdbcType=VARCHAR},
-      message = #{record.message,jdbcType=VARCHAR},
-      departmentid = #{record.departmentid,jdbcType=INTEGER},
-      partmentid = #{record.partmentid,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=INTEGER},
-      reject_reson = #{record.rejectReson,jdbcType=VARCHAR},
-      memo = #{record.memo,jdbcType=VARCHAR},
-      approvetime = #{record.approvetime,jdbcType=TIMESTAMP},
-      year = #{record.year,jdbcType=VARCHAR}
+    userid = #{record.userid,jdbcType=INTEGER},
+    project_id = #{record.projectId,jdbcType=INTEGER},
+    module_id = #{record.moduleId,jdbcType=INTEGER},
+    approve_id = #{record.approveId,jdbcType=INTEGER},
+    createtime = #{record.createtime,jdbcType=TIMESTAMP},
+    title = #{record.title,jdbcType=VARCHAR},
+    message = #{record.message,jdbcType=VARCHAR},
+    departmentid = #{record.departmentid,jdbcType=INTEGER},
+    partmentid = #{record.partmentid,jdbcType=INTEGER},
+    status = #{record.status,jdbcType=INTEGER},
+    reject_reson = #{record.rejectReson,jdbcType=VARCHAR},
+    itemscore = #{record.itemscore,jdbcType=DECIMAL},
+    memo = #{record.memo,jdbcType=VARCHAR},
+    approvetime = #{record.approvetime,jdbcType=TIMESTAMP},
+    year = #{record.year,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -335,6 +347,9 @@
       <if test="rejectReson != null">
         reject_reson = #{rejectReson,jdbcType=VARCHAR},
       </if>
+      <if test="itemscore != null">
+        itemscore = #{itemscore,jdbcType=DECIMAL},
+      </if>
       <if test="memo != null">
         memo = #{memo,jdbcType=VARCHAR},
       </if>
@@ -342,7 +357,7 @@
         approvetime = #{approvetime,jdbcType=TIMESTAMP},
       </if>
       <if test="year != null">
-        year = #{year,jdbcType=VARCHAR},
+        year = #{year,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -350,19 +365,20 @@
   <update id="updateByPrimaryKey" parameterType="cn.dlbdata.dangjian.admin.dao.model.PAvantgrade">
     update p_avantgrade
     set userid = #{userid,jdbcType=INTEGER},
-      project_id = #{projectId,jdbcType=INTEGER},
-      module_id = #{moduleId,jdbcType=INTEGER},
-      approve_id = #{approveId,jdbcType=INTEGER},
-      createtime = #{createtime,jdbcType=TIMESTAMP},
-      title = #{title,jdbcType=VARCHAR},
-      message = #{message,jdbcType=VARCHAR},
-      departmentid = #{departmentid,jdbcType=INTEGER},
-      partmentid = #{partmentid,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER},
-      reject_reson = #{rejectReson,jdbcType=VARCHAR},
-      memo = #{memo,jdbcType=VARCHAR},
-      approvetime = #{approvetime,jdbcType=TIMESTAMP},
-      year = #{year,jdbcType=VARCHAR}
+    project_id = #{projectId,jdbcType=INTEGER},
+    module_id = #{moduleId,jdbcType=INTEGER},
+    approve_id = #{approveId,jdbcType=INTEGER},
+    createtime = #{createtime,jdbcType=TIMESTAMP},
+    title = #{title,jdbcType=VARCHAR},
+    message = #{message,jdbcType=VARCHAR},
+    departmentid = #{departmentid,jdbcType=INTEGER},
+    partmentid = #{partmentid,jdbcType=INTEGER},
+    status = #{status,jdbcType=INTEGER},
+    reject_reson = #{rejectReson,jdbcType=VARCHAR},
+    itemscore = #{itemscore,jdbcType=DECIMAL},
+    memo = #{memo,jdbcType=VARCHAR},
+    approvetime = #{approvetime,jdbcType=TIMESTAMP},
+    year = #{year,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -3,9 +3,11 @@ package cn.dlbdata.dangjian.admin.web.controller;
 import cn.dlbdata.dangjian.admin.dao.model.PAvantgrade;
 import cn.dlbdata.dangjian.admin.dao.model.PAvantgradeExample;
 import cn.dlbdata.dangjian.admin.dao.model.PPartymember;
+import cn.dlbdata.dangjian.admin.dao.model.PScoreParty;
 import cn.dlbdata.dangjian.admin.service.PAvantgradePictureService;
 import cn.dlbdata.dangjian.admin.service.PAvantgradeService;
 import cn.dlbdata.dangjian.admin.service.PPartymemberService;
+import cn.dlbdata.dangjian.admin.service.PScorePartyService;
 import cn.dlbdata.dangjian.admin.web.VO.DjStringUtil;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 import com.github.pagehelper.PageHelper;
@@ -30,6 +32,9 @@ public class PAvantgradeController {
     private PAvantgradeService pAvantgradeService;
     @Autowired
     private PPartymemberService pPartymemberService;
+
+    @Autowired
+    private PScorePartyService pScorePartyService;
 
 
     @RequestMapping(value="/save",method= RequestMethod.POST)
@@ -58,6 +63,7 @@ public class PAvantgradeController {
             pAvantgrade1.setTitle("获得荣誉");
             pAvantgrade1.setApproveId(leaderId);
             pAvantgrade1.setProjectId(4);
+            pAvantgrade1.setStatus(0);
             pAvantgrade1.setItemscore(5.0);
             if(pic13!=null)pAvantgrade1.setMemo(pic13);
             pAvantgrade1.setYear(Calendar.getInstance().get(Calendar.YEAR));
@@ -76,6 +82,7 @@ public class PAvantgradeController {
             pAvantgrade2.setModuleId(14);
             pAvantgrade2.setProjectId(4);
             pAvantgrade2.setItemscore(5.0);
+            pAvantgrade2.setStatus(0);
             if(pic14!=null)pAvantgrade2.setMemo(pic14);
             pAvantgrade2.setYear(Calendar.getInstance().get(Calendar.YEAR));
             callbackId2 = pAvantgradeService.insertSelective(pAvantgrade2);
@@ -91,6 +98,7 @@ public class PAvantgradeController {
             pAvantgrade3.setDepartmentid(departmentid);
             pAvantgrade3.setTitle("先锋模范");
             pAvantgrade3.setProjectId(4);
+            pAvantgrade3.setStatus(0);
             pAvantgrade3.setApproveId(leaderId);
             pAvantgrade3.setItemscore(itemscore);
             if(pic15!=null)pAvantgrade3.setMemo(pic15);
@@ -171,8 +179,39 @@ public class PAvantgradeController {
         pAvantgrade.setStatus(2);
         pAvantgrade.setApprovetime(new Date());
         if(pAvantgradeService.updateByPrimaryKeySelective(pAvantgrade)>0){
-            result.setSuccess(true);
-            result.setMsg("审批成功");
+
+            PAvantgrade pAvantgrade1 = pAvantgradeService.selectByPrimaryKey(pAvantgrade.getId());
+            //添加积分了要
+            PScoreParty pScoreParty = new  PScoreParty();
+
+            PPartymember pPartymember = pPartymemberService.selectBranchByDepartmentId(pAvantgrade1.getDepartmentid());
+            PPartymember bigLeader = pPartymemberService.selectBranchByDepartmentId();
+
+            pScoreParty.setProjectId(pAvantgrade1.getProjectId());
+            pScoreParty.setDetailId(pAvantgrade1.getModuleId());
+            pScoreParty.setScore(pAvantgrade1.getItemscore());
+
+            pScoreParty.setAdderId(pPartymember.getUserid());
+            pScoreParty.setAddTime(pAvantgrade1.getApprovetime());
+            pScoreParty.setAddId(pPartymember.getId());
+            pScoreParty.setApprovedId(pAvantgrade1.getApproveId());
+
+            pScoreParty.setYear(pAvantgrade1.getYear());
+            pScoreParty.setScoreTime(pAvantgrade1.getApprovetime());
+            pScoreParty.setAddTime(pAvantgrade1.getCreatetime());
+            pScoreParty.setStatusCd("30");
+            pScoreParty.setUserId(pPartymember.getUserid());
+            pScoreParty.setValidYn("Y");
+            int callbackId = pScorePartyService.insert(pScoreParty);
+            if(callbackId>0){
+                result.setSuccess(true);
+                result.setMsg("添加成功");
+                return result.getResult();
+            }else{
+                result.setSuccess(false);
+                result.setMsg("已经获取积分，无需重复获取");
+            }
+
         }else{
             result.setSuccess(false);
             result.setMsg("审批失败");

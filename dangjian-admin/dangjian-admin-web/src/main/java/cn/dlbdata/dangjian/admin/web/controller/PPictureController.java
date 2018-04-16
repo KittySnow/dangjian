@@ -195,6 +195,10 @@ public class PPictureController {
         }
         // 根据内容类型获取扩展名
         String fileExt = CommonUtil.getFileExt(conn.getHeaderField("Content-Type"));
+        //错误的代码 凑活一下！！！！
+        if(fileExt.isEmpty()){
+            fileExt = ".jpg";
+        }
         // 将mediaId作为文件名
         filePath = savePath + System.currentTimeMillis() + fileExt;
         BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
