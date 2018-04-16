@@ -109,7 +109,7 @@ public class PStudyController {
         ResultUtil result = new ResultUtil();
         PUser pUser = pUserService.selectByPrimaryKey(userid);
         if(pUser.getRoleid()==4){
-            result.setSuccess(false);
+            result.setSuccess(true);
             result.setMsg("您无权审批");
         }else{
             PStudy pStudy = pStudyService.selectByPrimaryKey(studyid);
@@ -121,8 +121,9 @@ public class PStudyController {
             PScoreParty pScoreParty = new PScoreParty();
             pScoreParty.setProjectId(pStudy.getProjectid());
             pScoreParty.setDetailId((pStudy.getModuleid()));
-            pScoreParty.setAddId(pStudy.getCreateUserid());
+            pScoreParty.setAddId(userid);
             pScoreParty.setAdderId(pStudy.getCreateUserid());
+            pScoreParty.setUserId(pStudy.getCreateUserid());
             pScoreParty.setApprovedId(userid);
             pScoreParty.setScoreTime(new Date());
             pScoreParty.setAddTime(new Date());
@@ -133,13 +134,15 @@ public class PStudyController {
             PScoreDetail pScoreDetail = pScoreDetailService.selectByPrimaryKey(pStudy.getModuleid());
             pScoreParty.setScore(pScoreDetail.getScore());
             //增加积分
-            if(pScorePartyService.updateScanCode(pScoreParty)>0){
+            if(pScorePartyService.insert(pScoreParty)>0){
                 //同意审核
-                pStudyService.updateByExampleSelective(pStudy,pStudyExample);
+                pStudy.setStatus(2);
+                pStudyService.updateByPrimaryKey(pStudy);
                 result.setSuccess(true);
                 result.setMsg("审核成功，积分已发放");
             }else{
-                result.setSuccess(false);
+                //pStudy.setStatus(3);拒绝
+                result.setSuccess(true);
                 result.setMsg("已经获取积分，无需重复获取");
             }
         }
@@ -212,8 +215,14 @@ public class PStudyController {
         List<JSONObject> list = new ArrayList<>();
         JSONObject json = JSON.parseObject(JSON.toJSONString(pStudy));
         PPartymember pPartymember = pPartymemberService.selectByUserId(pStudy.getCreateUserid());
+
+        PPartymember leader = pPartymemberService.selectBranchByDepartmentId(pStudy.getDepartmentid());
+
         json.put("partyname",pPartymember.getName());
         json.put("pictures", pStudyPictureList);
+
+        json.put("branch", leader.getName());
+
         list.add(json);
         result.setSuccess(true);
         result.setData(json);
