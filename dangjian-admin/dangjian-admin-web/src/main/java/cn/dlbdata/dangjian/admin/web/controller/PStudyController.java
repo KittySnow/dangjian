@@ -119,7 +119,7 @@ public class PStudyController {
             criteria.andStatusEqualTo(1);
             //获得积分
             PScoreParty pScoreParty = new PScoreParty();
-            pScoreParty.setProjectId(pStudy.getDepartmentid());
+            pScoreParty.setProjectId(pStudy.getProjectid());
             pScoreParty.setDetailId((pStudy.getModuleid()));
             pScoreParty.setAddId(pStudy.getCreateUserid());
             pScoreParty.setAdderId(pStudy.getCreateUserid());
@@ -133,7 +133,7 @@ public class PStudyController {
             PScoreDetail pScoreDetail = pScoreDetailService.selectByPrimaryKey(pStudy.getModuleid());
             pScoreParty.setScore(pScoreDetail.getScore());
             //增加积分
-            if(pScorePartyService.updateScoreCustom(pScoreParty)>0){
+            if(pScorePartyService.updateScanCode(pScoreParty)>0){
                 //同意审核
                 pStudyService.updateByExampleSelective(pStudy,pStudyExample);
                 result.setSuccess(true);

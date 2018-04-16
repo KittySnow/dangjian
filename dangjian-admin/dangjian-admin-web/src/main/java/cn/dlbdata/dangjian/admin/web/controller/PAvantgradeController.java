@@ -182,7 +182,7 @@ public class PAvantgradeController {
 
             PAvantgrade pAvantgrade1 = pAvantgradeService.selectByPrimaryKey(pAvantgrade.getId());
             //添加积分了要
-            PScoreParty pScoreParty = new  PScoreParty();
+            PScoreParty pScoreParty = new PScoreParty();
 
             PPartymember pPartymember = pPartymemberService.selectBranchByDepartmentId(pAvantgrade1.getDepartmentid());
             PPartymember bigLeader = pPartymemberService.selectBranchByDepartmentId();
@@ -202,13 +202,13 @@ public class PAvantgradeController {
             pScoreParty.setStatusCd("30");
             pScoreParty.setUserId(pPartymember.getUserid());
             pScoreParty.setValidYn("Y");
-            int callbackId = pScorePartyService.insert(pScoreParty);
+            int callbackId = pScorePartyService.updateScoreCustom(pScoreParty);
             if(callbackId>0){
                 result.setSuccess(true);
                 result.setMsg("添加成功");
                 return result.getResult();
             }else{
-                result.setSuccess(false);
+                result.setSuccess(true);
                 result.setMsg("已经获取积分，无需重复获取");
             }
 

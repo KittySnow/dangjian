@@ -111,6 +111,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.dlbdata.dangjian.admin.dao.model.PAvantgrade">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into p_avantgrade (id, userid, project_id,
     module_id, approve_id, createtime,
     title, message, departmentid,
@@ -125,6 +128,9 @@
     #{year,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PAvantgrade">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into p_avantgrade
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
