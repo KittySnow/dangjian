@@ -9,6 +9,7 @@
     <result column="age" jdbcType="INTEGER" property="age" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="idcard" jdbcType="VARCHAR" property="idcard" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="fromdepartmentid" jdbcType="INTEGER" property="fromdepartmentid" />
     <result column="bid" jdbcType="INTEGER" property="bid" />
     <result column="departmentid" jdbcType="INTEGER" property="departmentid" />
@@ -76,7 +77,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, userid, name, sex, age, phone, idcard, fromdepartmentid, bid, departmentid,
+    id, userid, name, sex, age, phone, idcard, fromdepartmentid, bid, departmentid,avatar ,
     (select departmentname from p_department d where d.departmentid = p_partymember.departmentid )as departmentname,
     (select departmentname from p_department d where d.departmentid = p_partymember.fromdepartmentid )as fromdepartmentname,
     (select sum(table1.score) from p_score_party table1  where table1.user_id = p_partymember.userid and year = (select year(now()) )) as totalscore
@@ -114,12 +115,12 @@
   <insert id="insert" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymember">
     insert into p_partymember (id, userid, name,
     sex, age, phone, idcard,
-    fromdepartmentid, bid, departmentid
-    )
+    fromdepartmentid, bid, departmentid,
+    avatar)
     values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
     #{sex,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR},
-    #{fromdepartmentid,jdbcType=INTEGER}, #{bid,jdbcType=INTEGER}, #{departmentid,jdbcType=INTEGER}
-    )
+    #{fromdepartmentid,jdbcType=INTEGER}, #{bid,jdbcType=INTEGER}, #{departmentid,jdbcType=INTEGER},
+    #{avatar,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymember">
     insert into p_partymember
@@ -154,6 +155,9 @@
       <if test="departmentid != null">
         departmentid,
       </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -185,6 +189,9 @@
       </if>
       <if test="departmentid != null">
         #{departmentid,jdbcType=INTEGER},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -227,6 +234,9 @@
       <if test="record.departmentid != null">
         departmentid = #{record.departmentid,jdbcType=INTEGER},
       </if>
+      <if test="record.avatar != null">
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -243,7 +253,8 @@
     idcard = #{record.idcard,jdbcType=VARCHAR},
     fromdepartmentid = #{record.fromdepartmentid,jdbcType=INTEGER},
     bid = #{record.bid,jdbcType=INTEGER},
-    departmentid = #{record.departmentid,jdbcType=INTEGER}
+    departmentid = #{record.departmentid,jdbcType=INTEGER},
+    avatar = #{record.avatar,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -278,20 +289,24 @@
       <if test="departmentid != null">
         departmentid = #{departmentid,jdbcType=INTEGER},
       </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymember">
     update p_partymember
     set userid = #{userid,jdbcType=INTEGER},
-    name = #{name,jdbcType=VARCHAR},
-    sex = #{sex,jdbcType=VARCHAR},
-    age = #{age,jdbcType=INTEGER},
-    phone = #{phone,jdbcType=VARCHAR},
-    idcard = #{idcard,jdbcType=VARCHAR},
-    fromdepartmentid = #{fromdepartmentid,jdbcType=INTEGER},
-    bid = #{bid,jdbcType=INTEGER},
-    departmentid = #{departmentid,jdbcType=INTEGER}
+      name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      idcard = #{idcard,jdbcType=VARCHAR},
+      fromdepartmentid = #{fromdepartmentid,jdbcType=INTEGER},
+      bid = #{bid,jdbcType=INTEGER},
+      departmentid = #{departmentid,jdbcType=INTEGER},
+      avatar = #{avatar,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 

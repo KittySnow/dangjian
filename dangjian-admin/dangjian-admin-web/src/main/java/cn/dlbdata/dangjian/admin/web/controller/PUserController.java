@@ -236,7 +236,16 @@ public class PUserController {
                     getUserInfo.setOpenid(userLoginDO.getOpenId());
                     try {
                         JSONObject jsonObject = userInfoService.userInfo(getUserInfo);
-                        loginVO.setWxInfo(jsonObject);
+                        String avatar = jsonObject.getString("headimgurl");
+                        if(avatar!=null){
+                            PUserExample pUserExample = new PUserExample();
+                            PUserExample.Criteria ct =  pUserExample.createCriteria();
+                            ct.andUseridEqualTo(pUser.getUserid());
+                            pUser.setAvatar(avatar);
+                            puserService.updateByExampleSelective(pUser,pUserExample);
+                            loginVO.setWxInfo(jsonObject);
+                        }
+
                     } catch (DangjianException e) {
                         HttpResult.failure("登陆失败，微信获取用户信息失败.");
                     }
