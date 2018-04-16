@@ -111,17 +111,29 @@ public class PPartymemberServiceImpl implements PPartymemberService {
         PUserExample.Criteria ct = pUserExample.createCriteria();
         ct.andRoleidEqualTo(3);
         ct.andDepartmentidEqualTo(departmentid);
-        PUser pUser = pUserDao.selectByExample(pUserExample).get(0);
+        List<PUser> puserList = pUserDao.selectByExample(pUserExample);
+        if(puserList!=null){
+            if(puserList.size()!=0){
+                PUser pUser = puserList.get(0);
+                PPartymemberExample pPartymemberExample = new PPartymemberExample();
+                PPartymemberExample.Criteria criteria =  pPartymemberExample.createCriteria();
+                criteria.andUseridEqualTo(pUser.getUserid());
+                List<PPartymember> pPartymemberList = this.selectByExample(pPartymemberExample);
+                if(pPartymemberList!=null){
+                    return pPartymemberList.get(0);
+                }else{
+                    return null;
+                }
 
-        PPartymemberExample pPartymemberExample = new PPartymemberExample();
-        PPartymemberExample.Criteria criteria =  pPartymemberExample.createCriteria();
-        criteria.andUseridEqualTo(pUser.getUserid());
-        List<PPartymember> pPartymemberList = this.selectByExample(pPartymemberExample);
-        if(pPartymemberList!=null){
-            return pPartymemberList.get(0);
+            }else{
+                return  null;
+            }
+
         }else{
             return null;
         }
+
+
     }
 
 

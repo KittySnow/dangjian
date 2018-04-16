@@ -169,11 +169,11 @@ public class PPartymemberController {
     }
 
 
-    //支部党员信息(先锋评定）
+    //支部党员信息
     @RequestMapping(value="/getPartymemberByDepartmentid",method= RequestMethod.GET)
     @ResponseBody
     /*
-    status:1 代表 等待审核 NULL 代表等待支部书记审核，2代表已通过
+    status:0 代表 等待领导审核 NULL 代表等待支部书记审核，1代表领导已审核
     * */
     public Map<String, Object> getPartymemberByDepartmentid(Integer departmentid,@RequestParam(required=false) Integer status){
         ResultUtil result = new ResultUtil();
@@ -181,6 +181,7 @@ public class PPartymemberController {
         PPartymemberExample.Criteria pPartymemberCriteria =  pPartymemberExample.createCriteria();
         pPartymemberCriteria.andDepartmentidEqualTo(departmentid);
         List<PPartymember> pPartymemberList = pPartymemberService.selectByExample(pPartymemberExample);
+        PPartymember leader = pPartymemberService.selectBranchByDepartmentId(departmentid);
 
         List<JSONObject> list = new ArrayList<>();
         for (PPartymember pPartymember:pPartymemberList){
@@ -193,6 +194,14 @@ public class PPartymemberController {
             ct.andYearEqualTo(Calendar.getInstance().get(Calendar.YEAR));
             List<PAvantgrade> pAvantgradeList = pAvantgradeService.selectByExample(pA);
 
+
+            if(leader!=null){
+                json.put("branchName", leader.getName());
+            }else{
+                json.put("branchName", "暂无党支书");
+            }
+
+            json.put("tempint", null);
             //NULL所有人的状态 1代表审核申请 2代表已审核
             if(status == null ){
                 if(pAvantgradeList.size()==0){
@@ -214,21 +223,26 @@ public class PPartymemberController {
 
             }else if(status==1 ||  status==0){
 
-                if(pAvantgradeList.size()!=0) {
+                if(pAvantgradeList!=null) {
+                    if(pAvantgradeList.size()!=0) {
 
-                    int temp = 0;
-                    for (PAvantgrade pAvantgrade : pAvantgradeList) {
-                        //2代表通过 3代表拒绝
-                        if (pAvantgrade.getStatus() == 2 || pAvantgrade.getStatus() == 3) {
-                            temp = 1;
+                        int temp = 0;
+                        for (PAvantgrade pAvantgrade : pAvantgradeList) {
+                            //2代表通过 3代表拒绝
+                            if (pAvantgrade.getStatus() == 2 || pAvantgrade.getStatus() == 3) {
+                                temp = 1;
+                            }
+
                         }
-                    }
 
-                    if (temp == status) {
-                        json.put("tempint", temp);
-                        list.add(json);
+                        if (temp == status) {
+                            json.put("tempint", temp);
+                            list.add(json);
+                        }
+
                     }
                 }
+
             }
 
 
