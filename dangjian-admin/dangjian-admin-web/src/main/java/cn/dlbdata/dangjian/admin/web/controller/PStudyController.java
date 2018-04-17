@@ -121,20 +121,28 @@ public class PStudyController {
             PScoreParty pScoreParty = new PScoreParty();
             pScoreParty.setProjectId(pStudy.getProjectid());
             pScoreParty.setDetailId((pStudy.getModuleid()));
-            pScoreParty.setAddId(userid);
+
+            PScoreDetail pScoreDetail = pScoreDetailService.selectByPrimaryKey(pStudy.getModuleid());
+            pScoreParty.setScore(pScoreDetail.getScore());
+
             pScoreParty.setAdderId(pStudy.getCreateUserid());
-            pScoreParty.setUserId(pStudy.getCreateUserid());
-            pScoreParty.setApprovedId(userid);
-            pScoreParty.setScoreTime(new Date());
+
+            pScoreParty.setAddId(userid);
             pScoreParty.setAddTime(new Date());
+
+            pScoreParty.setApprovedId(userid);
+
             pScoreParty.setYear(Calendar.getInstance().get(Calendar.YEAR));
+            pScoreParty.setScoreTime(new Date());
+
+            pScoreParty.setUserId(pStudy.getCreateUserid());
+
             pScoreParty.setValidYn("Y");
             pScoreParty.setStatusCd("30");
             //加的分数要找一下
-            PScoreDetail pScoreDetail = pScoreDetailService.selectByPrimaryKey(pStudy.getModuleid());
-            pScoreParty.setScore(pScoreDetail.getScore());
+
             //增加积分
-            if(pScorePartyService.insert(pScoreParty)>0){
+            if(pScorePartyService.updateScoreCustom(pScoreParty)>0){
                 //同意审核
                 pStudy.setStatus(2);
                 pStudyService.updateByPrimaryKey(pStudy);
@@ -218,6 +226,9 @@ public class PStudyController {
 
         PPartymember leader = pPartymemberService.selectBranchByDepartmentId(pStudy.getDepartmentid());
 
+        PPartymember Approval = pPartymemberService.selectByUserId(pStudy.getApprovalid());
+
+        json.put("approvalname",pPartymember.getName());
         json.put("partyname",pPartymember.getName());
         json.put("pictures", pStudyPictureList);
 

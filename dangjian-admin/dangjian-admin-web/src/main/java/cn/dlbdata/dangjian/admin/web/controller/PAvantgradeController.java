@@ -197,7 +197,7 @@ public class PAvantgradeController {
 
             pScoreParty.setYear(pAvantgrade1.getYear());
             pScoreParty.setScoreTime(pAvantgrade1.getApprovetime());
-            pScoreParty.setAddTime(pAvantgrade1.getCreatetime());
+
             pScoreParty.setStatusCd("30");
             pScoreParty.setUserId(pAvantgrade1.getUserid());
             pScoreParty.setValidYn("Y");

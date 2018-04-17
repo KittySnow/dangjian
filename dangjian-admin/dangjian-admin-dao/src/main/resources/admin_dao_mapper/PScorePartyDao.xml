@@ -412,7 +412,7 @@
             t.id,
             #{score},
             #{adderId},
-            NULL,
+            #{approvedId},
             extract(year from now()),
             NOW(),
             NOW(),
