@@ -169,7 +169,20 @@ public class PPartymemberController {
     }
 
 
-    //支部党员信息
+    //支部党员信息（组织生活扣分）
+    @RequestMapping(value="/getPartymemberByDepartmentidCleanScore",method= RequestMethod.GET)
+    @ResponseBody
+    /*
+    status:0 代表 等待领导审核 NULL 代表等待支部书记审核，1代表领导已审核
+    * */
+    public Map<String, Object> getPartymemberByDepartmentidCleanScore(Integer departmentid,@RequestParam(required=false) Integer status){
+        ResultUtil result = new ResultUtil();
+        result.setSuccess(true);
+
+        return result.getResult();
+    }
+
+    //支部党员信息（部门先锋评定）
     @RequestMapping(value="/getPartymemberByDepartmentid",method= RequestMethod.GET)
     @ResponseBody
     /*

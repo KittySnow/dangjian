@@ -208,6 +208,7 @@ public class PActiveController {
         PActiveExample example = new PActiveExample();
         PActiveExample.Criteria ct = example.createCriteria();
         ct.andActiveStatusEqualTo(1);
+        if(departmentid!=null) ct.andDepartmentidEqualTo(departmentid);
         if(all!=null && all.equals("Y")){
             ct.andStartTimeLessThanOrEqualTo(new Date());
         }
@@ -293,6 +294,7 @@ public class PActiveController {
         PActiveExample example = new PActiveExample();
         PActiveExample.Criteria ct = example.createCriteria();
         ct.andActiveStatusEqualTo(1);
+
         if(all!=null && all.equals("Y")){
             ct.andStartTimeGreaterThan(new Date());
         }
@@ -508,7 +510,7 @@ public class PActiveController {
      */
     @RequestMapping(value="/showQrCode",method= {RequestMethod.POST,RequestMethod.GET})
     public void showQrCode(Integer activeId,HttpServletResponse response){
-        String content = "http://localhost/active/approved?activeId="+activeId;
+        String content = "http://jd.dlbdata.cn/#/active/sign?activeId="+activeId;
         BufferedImage image;
         try {
             image = genPic(content);

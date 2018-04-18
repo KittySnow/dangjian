@@ -279,6 +279,8 @@ public class PScorePartyController{
         return result.getResult();
     }
 
+
+    //查找某人的分数
     @RequestMapping(value="/getSumScoreByUserId",method= {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public Map<String, Object> getSumScoreByUserId(Integer userId ,Integer year){
@@ -288,4 +290,6 @@ public class PScorePartyController{
         result.setData(dp);
         return result.getResult();
     }
+
+
 }
