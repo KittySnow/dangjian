@@ -207,10 +207,9 @@ public class PAvantgradeController {
                 result.setMsg("添加成功");
                 return result.getResult();
             }else{
-                result.setSuccess(true);
+                result.setSuccess(false);
                 result.setMsg("已经获取积分，无需重复获取");
             }
-
         }else{
             result.setSuccess(false);
             result.setMsg("审批失败");

@@ -150,7 +150,7 @@ public class PStudyController {
                 result.setMsg("审核成功，积分已发放");
             }else{
                 //pStudy.setStatus(3);拒绝
-                result.setSuccess(true);
+                result.setSuccess(false);
                 result.setMsg("已经获取积分，无需重复获取");
             }
         }

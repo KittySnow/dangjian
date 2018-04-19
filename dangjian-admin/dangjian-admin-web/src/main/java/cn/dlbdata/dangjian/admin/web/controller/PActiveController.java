@@ -510,7 +510,7 @@ public class PActiveController {
      */
     @RequestMapping(value="/showQrCode",method= {RequestMethod.POST,RequestMethod.GET})
     public void showQrCode(Integer activeId,HttpServletResponse response){
-        String content = "http://jd.dlbdata.cn/#/active/sign?activeId="+activeId;
+        String content = "http://dj.dlbdata.cn/#/active/activeSign/"+activeId;
         BufferedImage image;
         try {
             image = genPic(content);
