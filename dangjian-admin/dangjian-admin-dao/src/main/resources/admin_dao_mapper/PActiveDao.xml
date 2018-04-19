@@ -94,7 +94,7 @@
             <include refid="Example_Where_Clause"/>
         </if>
         <if test="orderByClause != null">
-            order by ${orderByClause} DESC
+            order by p_active.create_time DESC
         </if>
     </select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -365,5 +365,6 @@
         </if>
         AND (start_time BETWEEN #{startTime,jdbcType=INTEGER} and #{endTime,jdbcType=INTEGER}
         OR end_time BETWEEN #{startTime,jdbcType=INTEGER} and #{endTime,jdbcType=INTEGER})
+        order by p_active.create_time DESC
     </select>
 </mapper>
