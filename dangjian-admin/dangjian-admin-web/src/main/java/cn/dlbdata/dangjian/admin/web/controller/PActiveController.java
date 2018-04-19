@@ -56,6 +56,7 @@ public class PActiveController {
     @Autowired
     private PScoreDetailService scoreDetailService;
 
+
     /**
      * 创建活动
      * @return
@@ -135,18 +136,18 @@ public class PActiveController {
             return result.getResult();
         }
         PActiveParticipate participate = list.get(0);
-        if(!Integer.valueOf(1).equals(participate.getStatus())){
+        if(Integer.valueOf(1).equals(participate.getStatus())){
             result.setMsg("已经签到，请勿重复签到！");
             result.setSuccess(false);
             return result.getResult();
         }
-        if(!Integer.valueOf(2).equals(participate.getStatus())){
+        if(Integer.valueOf(2).equals(participate.getStatus())){
             result.setMsg("不允许签到！");
             result.setSuccess(false);
             return result.getResult();
         }
         participate.setStatus(1);
-        activeParticipateService.insert(participate);
+        activeParticipateService.insertSelective(participate);
 
         result.setMsg("签到成功");
         result.setSuccess(true);
@@ -314,6 +315,9 @@ public class PActiveController {
             PActivePictureExample picExample = new PActivePictureExample();
             PActivePictureExample.Criteria picCt = picExample.createCriteria();
             picCt.andActiveIdEqualTo(active.getId());
+
+
+
 //            PageHelper.startPage(1, 3,true);
             List<PActivePicture> picActiveList = pPictureService.selectActivePictures(picExample);
             json.put("pictures", picActiveList);
@@ -324,6 +328,63 @@ public class PActiveController {
         PageInfo<JSONObject> pageInfo=new PageInfo<JSONObject>(list);
         result.setSuccess(true);
         result.setData(pageInfo);
+        return result.getResult();
+    }
+
+
+    //查看自己参与的活动
+    @RequestMapping(value="/getParticipateActiveByUserId",method= RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getParticipateActiveByUserId(Integer userId,Integer departmentid,@RequestParam(required=false)String all){
+        ResultUtil result = new ResultUtil();
+        PActiveExample example = new PActiveExample();
+        PActiveExample.Criteria ct = example.createCriteria();
+        ct.andActiveStatusEqualTo(1);
+
+        if(all!=null && all.equals("Y")){
+            ct.andStartTimeGreaterThan(new Date());
+        }
+        if (departmentid != null) {
+            example.createCriteria().andDepartmentidEqualTo(departmentid);
+        }
+        List<PActive> pActiveList = pActiveService.selectByExample(example);
+        List<JSONObject> list = new ArrayList<>();
+        for (PActive active:pActiveList){
+            JSONObject json = JSON.parseObject(JSON.toJSONString(active));
+            PPartymember createUser = pPartymemberService.selectByUserId(active.getActiveCreatePeople());
+            if(createUser!=null){
+                json.put("activeCreatePeopleName", createUser.getName());
+            }
+            if(hasParticipate(active.getId(), userId)){
+
+                PActiveParticipateExample participateExample = new PActiveParticipateExample();
+                PActiveParticipateExample.Criteria ctp = participateExample.createCriteria();
+                ctp.andActiveIdEqualTo(active.getId());
+                ctp.andUserIdEqualTo(userId);
+                ctp.andStatusEqualTo(1);
+
+                List<PActiveParticipate> ppList =  activeParticipateService.selectByExample(participateExample);
+                if(ppList!=null){
+
+                    if(ppList.size()>0){
+
+                        PActivePictureExample picExample = new PActivePictureExample();
+                        PActivePictureExample.Criteria picCt = picExample.createCriteria();
+                        picCt.andActiveIdEqualTo(active.getId());
+//            PageHelper.startPage(1, 3,true);
+                        List<PActivePicture> picActiveList = pPictureService.selectActivePictures(picExample);
+                        json.put("pictures", picActiveList);
+                        list.add(json);
+
+                    }
+
+                }
+
+            }
+
+        }
+        result.setSuccess(true);
+        result.setData(list);
         return result.getResult();
     }
 
