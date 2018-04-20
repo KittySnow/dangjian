@@ -108,5 +108,10 @@ public class PScorePartyServiceImpl implements PScorePartyService {
     @Override
     public Double getSumScoreByUserId(Integer userId ,Integer year){
         return pScorePartyDao.getSumScoreByUserId(userId,year);
-    };
+    }
+
+    @Override
+    public List<PScoreParty> getDakDetialByDepartmentId(Integer departmentId){
+        return pScorePartyDao.getDakDetialByDepartmentId(departmentId);
+    }
 }

@@ -42,4 +42,6 @@ public interface PScorePartyService {
 
     public Double getSumScoreByUserId(Integer userId ,Integer year);
 
+    public List<PScoreParty> getDakDetialByDepartmentId(Integer departmentId);
+
 }

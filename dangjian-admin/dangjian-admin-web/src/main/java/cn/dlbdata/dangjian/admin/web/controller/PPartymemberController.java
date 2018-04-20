@@ -207,7 +207,6 @@ public class PPartymemberController {
             ct.andYearEqualTo(Calendar.getInstance().get(Calendar.YEAR));
             List<PAvantgrade> pAvantgradeList = pAvantgradeService.selectByExample(pA);
 
-
             if(leader!=null){
                 json.put("branchName", leader.getName());
             }else{
@@ -257,7 +256,6 @@ public class PPartymemberController {
                 }
 
             }
-
 
         }
         result.setSuccess(true);

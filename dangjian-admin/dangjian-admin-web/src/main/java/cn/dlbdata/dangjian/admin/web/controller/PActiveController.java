@@ -51,11 +51,15 @@ public class PActiveController {
     private PActiveService pActiveService;
     @Autowired
     private PPictureService pPictureService;
+
     @Autowired
     private PActiveParticipateService activeParticipateService;
+
     @Autowired
     private PScoreDetailService scoreDetailService;
 
+    @Autowired
+    private PScorePartyService pScorePartyService;
 
     /**
      * 创建活动
@@ -115,7 +119,8 @@ public class PActiveController {
     @ResponseBody
     public Map<String, Object> approved(Integer activeId,Integer userId){
         ResultUtil result = new ResultUtil();
-        if(pActiveService.selectByPrimaryKey(activeId)==null){
+        PActive pActive = pActiveService.selectByPrimaryKey(activeId);
+        if(pActive==null){
             result.setMsg("活动不存在！");
             result.setSuccess(false);
             return result.getResult();
@@ -130,27 +135,48 @@ public class PActiveController {
         ct.andUserIdEqualTo(userId);
         ct.andActiveIdEqualTo(activeId);
         List<PActiveParticipate> list = activeParticipateService.selectByExample(example);
-        if(list.size()==0){
+        if(list!=null){
+            if(list.size()==0){
+                result.setMsg("请先报名");
+                result.setSuccess(false);
+                return result.getResult();
+            }
+            PActiveParticipate participate = list.get(0);
+            if(Integer.valueOf(1).equals(participate.getStatus())){
+                result.setMsg("请勿重复签到！");
+                result.setSuccess(false);
+                return result.getResult();
+            }
+            if(Integer.valueOf(2).equals(participate.getStatus())){
+                result.setMsg("不允许签到！");
+                result.setSuccess(false);
+                return result.getResult();
+            }
+            participate.setStatus(1);
+            activeParticipateService.updateByPrimaryKeySelective(participate);
+
+
+            //签到成功后加积分
+            PScoreParty pScoreParty = new PScoreParty();
+            pScoreParty.setDetailId(pActive.getActiveType());
+            pScoreParty.setUserId(userId);
+            pScoreParty.setAddId(pActive.getActiveCreatePeople());
+            if (pScoreParty.getDetailId() == null || pScoreParty.getUserId() == null || pScoreParty.getAdderId() == null){
+                result.setSuccess(false);
+                result.setMsg("请求加分参数不完整");
+                return result.getResult();
+            }
+            if(pScorePartyService.updateScanCode(pScoreParty)>0){
+                result.setSuccess(true);
+                result.setMsg("签到成功,积分已发放");
+                return result.getResult();
+            }
+            result.setSuccess(true);
+            result.setMsg("签到积分已满或已发");
+        }else{
             result.setMsg("请先报名");
             result.setSuccess(false);
-            return result.getResult();
         }
-        PActiveParticipate participate = list.get(0);
-        if(Integer.valueOf(1).equals(participate.getStatus())){
-            result.setMsg("已经签到，请勿重复签到！");
-            result.setSuccess(false);
-            return result.getResult();
-        }
-        if(Integer.valueOf(2).equals(participate.getStatus())){
-            result.setMsg("不允许签到！");
-            result.setSuccess(false);
-            return result.getResult();
-        }
-        participate.setStatus(1);
-        activeParticipateService.insertSelective(participate);
-
-        result.setMsg("签到成功");
-        result.setSuccess(true);
         return result.getResult();
     }
 
@@ -192,6 +218,7 @@ public class PActiveController {
 
         result.setMsg("报名完成");
         result.setSuccess(true);
+
         return result.getResult();
     }
 
@@ -300,7 +327,7 @@ public class PActiveController {
             ct.andStartTimeGreaterThan(new Date());
         }
         if (departmentid != null) {
-            example.createCriteria().andDepartmentidEqualTo(departmentid);
+            ct.andDepartmentidEqualTo(departmentid);
         }
         PageHelper.startPage(pageNum, pageSize,true);
         List<PActive> pActiveList = pActiveService.selectByExample(example);
@@ -333,14 +360,13 @@ public class PActiveController {
 
 
     //查看自己参与的活动
-    @RequestMapping(value="/getParticipateActiveByUserId",method= RequestMethod.GET)
+    @RequestMapping(value="/getEnjoyActiveByUserId",method= RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getParticipateActiveByUserId(Integer userId,Integer departmentid,@RequestParam(required=false)String all){
+    public Map<String, Object> getEnjoyActiveByUserId(Integer userId,Integer departmentid,@RequestParam(required=false)String all){
         ResultUtil result = new ResultUtil();
         PActiveExample example = new PActiveExample();
         PActiveExample.Criteria ct = example.createCriteria();
         ct.andActiveStatusEqualTo(1);
-
         if(all!=null && all.equals("Y")){
             ct.andStartTimeGreaterThan(new Date());
         }

@@ -248,7 +248,7 @@ public class PScorePartyController{
     @ResponseBody
     public Map<String, Object> getProjectScoreByUserId(Integer userId ,Integer year){
         ResultUtil result = new ResultUtil();
-        List<PScoreParty> pScorePartyList =pScorePartyService.getProjectScoreByUserId(userId,year);
+        List<PScoreParty> pScorePartyList = pScorePartyService.getProjectScoreByUserId(userId,year);
         List<PScoreProject> pScoreProjectList = pScoreProjectService.selectByExample(new PScoreProjectExample());
 
 
@@ -288,6 +288,17 @@ public class PScorePartyController{
         Double dp = pScorePartyService.getSumScoreByUserId(userId,year);
         result.setSuccess(true);
         result.setData(dp);
+        return result.getResult();
+    }
+
+    //查找驿站生活 扣分列表显示
+    @RequestMapping(value="/getDakDetialByDepartmentId",method= {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String, Object> getDakDetialByDepartmentId(Integer departmentId){
+        ResultUtil result = new ResultUtil();
+        List<PScoreParty> pScorePartyList = pScorePartyService.getDakDetialByDepartmentId(departmentId);
+        result.setSuccess(true);
+        result.setData(pScorePartyList);
         return result.getResult();
     }
 

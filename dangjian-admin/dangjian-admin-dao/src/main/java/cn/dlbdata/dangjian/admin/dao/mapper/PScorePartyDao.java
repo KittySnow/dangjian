@@ -43,4 +43,6 @@ public interface PScorePartyDao {
 
     Double getSumScoreByUserId(@Param("userId")Integer  userId , @Param("year") Integer year);
 
+    List<PScoreParty> getDakDetialByDepartmentId(@Param("departmentId")Integer departmentId);
+
 }
