@@ -10,9 +10,6 @@ import lombok.NoArgsConstructor;
  * @date 2018/4/21 下午9:11
  * @Copyright ©2015-2035 湘豫(北京)科技有限公司. All Rights Reserved.
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class ActiveQuery extends PageQuery {
 
     /**
@@ -31,5 +28,41 @@ public class ActiveQuery extends PageQuery {
      * 项目ID
      */
     private Integer activeProjectId;
+
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public String getStartTimeYn() {
+        return startTimeYn;
+    }
+
+    public void setStartTimeYn(String startTimeYn) {
+        this.startTimeYn = startTimeYn;
+    }
+
+    public Integer getActiveStatus() {
+        return activeStatus;
+    }
+
+    public void setActiveStatus(Integer activeStatus) {
+        this.activeStatus = activeStatus;
+    }
+
+    public Integer getActiveProjectId() {
+        return activeProjectId;
+    }
+
+    public void setActiveProjectId(Integer activeProjectId) {
+        this.activeProjectId = activeProjectId;
+    }
+
+    public Integer getStart() {
+        return !this.isPage() || this.getPageNum() == null || this.getPageNum() <= 0 || this.getPageSize() == null || this.getPageSize() <= 0 ? null : ((this.getPageNum() - 1) * this.getPageSize());
+    }
 }
 
