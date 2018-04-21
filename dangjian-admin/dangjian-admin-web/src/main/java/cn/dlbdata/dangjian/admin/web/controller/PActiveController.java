@@ -63,33 +63,34 @@ public class PActiveController {
 
     /**
      * 创建活动
+     *
      * @return
      */
-    @RequestMapping(value="/create",method= RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> create(Long startTime,Long endTime,Integer activeType,Integer activeStatus,
-                                      String activeName,String activePace,Integer activeCreatePeople,Integer departmentid,
-                                      String activePrincipalPeople,String activeContext) {
+    public Map<String, Object> create(Long startTime, Long endTime, Integer activeType, Integer activeStatus,
+                                      String activeName, String activePace, Integer activeCreatePeople, String departmentid,
+                                      String activePrincipalPeople, String activeContext) {
         ResultUtil result = new ResultUtil();
-        if(startTime==null){
+        if (startTime == null) {
             result.setMsg("活动时间开始时间不能为空");
             result.setSuccess(false);
             return result.getResult();
         }
-        if(activeType==null){
+        if (activeType == null) {
             result.setMsg("请传入活动类型");
             result.setSuccess(false);
             return result.getResult();
         }
         PScoreDetail detail = scoreDetailService.selectByPrimaryKey(activeType);
-        if(detail==null){
+        if (detail == null) {
             result.setMsg("活动类型找不到！");
             result.setSuccess(false);
             return result.getResult();
         }
         PActive active = new PActive();
         active.setStartTime(new Date(startTime));
-        if(endTime!=null){
+        if (endTime != null) {
             active.setEndTime(new Date(endTime));
         }
         active.setActiveType(detail.getId());
@@ -98,10 +99,11 @@ public class PActiveController {
         active.setActiveName(activeName);
         active.setActivePace(activePace);
         active.setActiveCreatePeople(activeCreatePeople);
-        active.setDepartmentid(departmentid);
+        active.setDepartmentid(departmentid==null||"".equals(departmentid.trim())?null:Integer.valueOf(departmentid.split(",")[0].trim()));
         active.setActivePrincipalPeople(activePrincipalPeople);
         active.setActiveContext(activeContext);
         active.setCreateTime(new Date());
+        active.setDepartIds(departmentid);
         Integer id = pActiveService.insert(active);
         result.setData(id);
         result.setSuccess(true);
@@ -111,13 +113,14 @@ public class PActiveController {
 
     /**
      * 到场签名活动
+     *
      * @param activeId
      * @param userId
      * @return
      */
-    @RequestMapping(value="/approved",method= RequestMethod.GET)
+    @RequestMapping(value = "/approved", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> approved(Integer activeId,Integer userId){
+    public Map<String, Object> approved(Integer activeId, Integer userId) {
         ResultUtil result = new ResultUtil();
         PActive pActive = pActiveService.selectByPrimaryKey(activeId);
         if(pActive==null){
@@ -125,7 +128,7 @@ public class PActiveController {
             result.setSuccess(false);
             return result.getResult();
         }
-        if(pUserService.selectByPrimaryKey(userId)==null){
+        if (pUserService.selectByPrimaryKey(userId) == null) {
             result.setMsg("用户不存在！");
             result.setSuccess(false);
             return result.getResult();
@@ -182,20 +185,21 @@ public class PActiveController {
 
     /**
      * 报名活动
+     *
      * @param activeId
      * @param userId
      * @return
      */
-    @RequestMapping(value="/participate",method= RequestMethod.POST)
+    @RequestMapping(value = "/participate", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> participate(Integer activeId,Integer userId){
+    public Map<String, Object> participate(Integer activeId, Integer userId) {
         ResultUtil result = new ResultUtil();
-        if(pActiveService.selectByPrimaryKey(activeId)==null){
+        if (pActiveService.selectByPrimaryKey(activeId) == null) {
             result.setMsg("活动不存在！");
             result.setSuccess(false);
             return result.getResult();
         }
-        if(pUserService.selectByPrimaryKey(userId)==null){
+        if (pUserService.selectByPrimaryKey(userId) == null) {
             result.setMsg("用户不存在！");
             result.setSuccess(false);
             return result.getResult();
@@ -204,7 +208,7 @@ public class PActiveController {
         PActiveParticipateExample.Criteria ct = example.createCriteria();
         ct.andUserIdEqualTo(userId);
         ct.andActiveIdEqualTo(activeId);
-        if(activeParticipateService.selectByExample(example).size()>0){
+        if (activeParticipateService.selectByExample(example).size() > 0) {
             result.setMsg("请勿重复报名");
             result.setSuccess(false);
             return result.getResult();
@@ -222,47 +226,45 @@ public class PActiveController {
         return result.getResult();
     }
 
+    private void initPictures(List<Map<String,Object>> activeList) {
+        for (Map<String, Object> active : activeList) {
+            PActivePictureExample picExample = new PActivePictureExample();
+            PActivePictureExample.Criteria picCt = picExample.createCriteria();
+            picCt.andActiveIdEqualTo(Integer.valueOf(active.get("id").toString()));
+//            PageHelper.startPage(1, 3,true);
+            List<PActivePicture> picActiveList = pPictureService.selectActivePictures(picExample);
+            active.put("pictures", picActiveList);
+        }
+    }
+
     /**
-     * 查询部门活动（all 不传已经开始了）
      * @param departmentid
      * @param pageNum
      * @param pageSize
+     * @param all
      * @return
+     * @author July july_sky@foxmail.com
+     * @date 2018-04-21 21:07:10
+     * @Copyright ©2015-2035 湘豫(北京)科技有限公司. All Rights Reserved.
+     * @version 1.0
      */
-    @RequestMapping(value="/getRunningActive",method= RequestMethod.GET)
+    @RequestMapping(value = "/getRunningActive", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getRunningActive(Integer departmentid,Integer pageNum, Integer pageSize,@RequestParam(required=false)String all){
+    public Map<String, Object> getRunningActiveNew(Integer departmentid, Integer pageNum, Integer pageSize, @RequestParam(required = false) String all) {
         ResultUtil result = new ResultUtil();
-        PActiveExample example = new PActiveExample();
-        PActiveExample.Criteria ct = example.createCriteria();
-        ct.andActiveStatusEqualTo(1);
-        if(departmentid!=null) ct.andDepartmentidEqualTo(departmentid);
+        ActiveQuery activeQuery = new ActiveQuery();
+        activeQuery.setPage(true);
+        activeQuery.setPageNum(pageNum == null ? 1 : pageNum);
+        activeQuery.setPageSize(pageSize == null ? 20 : pageSize);
+
         if(all!=null && all.equals("Y")){
-            ct.andStartTimeLessThanOrEqualTo(new Date());
+            activeQuery.setStartTimeYn("Y");
         }
-        if (departmentid != null) {
-            example.createCriteria().andDepartmentidEqualTo(departmentid);
-        }
-        PageHelper.startPage(pageNum, pageSize,true);
-        List<PActive> pActiveList = pActiveService.selectByExample(example);
-        List<JSONObject> list = new ArrayList<>();
-        for (PActive active:pActiveList){
-            JSONObject json = JSON.parseObject(JSON.toJSONString(active));
-            PPartymember createUser = pPartymemberService.selectByUserId(active.getActiveCreatePeople());
-            if(createUser!=null){
-                json.put("activeCreatePeopleName", createUser.getName());
-            }
-            PActivePictureExample picExample = new PActivePictureExample();
-            PActivePictureExample.Criteria picCt = picExample.createCriteria();
-            picCt.andActiveIdEqualTo(active.getId());
-//            PageHelper.startPage(1, 3,true);
-            List<PActivePicture> picActiveList = pPictureService.selectActivePictures(picExample);
-            json.put("pictures", picActiveList);
-            list.add(json);
-        }
-        JSONArray array = new JSONArray();
-        array.addAll(pActiveList);
-        PageInfo<JSONObject> pageInfo=new PageInfo<JSONObject>(list);
+        activeQuery.setDepartmentId(departmentid);
+        activeQuery.setActiveStatus(1);
+        List<Map<String, Object>> pActiveList = pActiveService.getRunningActive(activeQuery);
+        this.initPictures(pActiveList);
+        PageInfo<Map<String, Object>> pageInfo = new PageInfo<>(pActiveList);
         result.setSuccess(true);
         result.setData(pageInfo);
         return result.getResult();
@@ -270,38 +272,22 @@ public class PActiveController {
 
 
     //查询已完成（组织生活）的活动
-    @RequestMapping(value="/getAlreadyActive",method= RequestMethod.GET)
+    @RequestMapping(value = "/getAlreadyActive", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getAlreadyActive(Integer departmentid,Integer pageNum, Integer pageSize){
+    public Map<String, Object> getAlreadyActive(Integer departmentid, Integer pageNum, Integer pageSize) {
         ResultUtil result = new ResultUtil();
-        PActiveExample example = new PActiveExample();
-        PActiveExample.Criteria ct = example.createCriteria();
-        ct.andActiveProjectIdEqualTo(2);
-        ct.andActiveStatusEqualTo(1);
-        ct.andEndTimeLessThanOrEqualTo(new Date());
-        if (departmentid != null) {
-            example.createCriteria().andDepartmentidEqualTo(departmentid);
-        }
-        PageHelper.startPage(pageNum, pageSize,true);
-        List<PActive> pActiveList = pActiveService.selectByExample(example);
-        List<JSONObject> list = new ArrayList<>();
-        for (PActive active:pActiveList){
-            JSONObject json = JSON.parseObject(JSON.toJSONString(active));
-            PPartymember createUser = pPartymemberService.selectByUserId(active.getActiveCreatePeople());
-            if(createUser!=null){
-                json.put("activeCreatePeopleName", createUser.getName());
-            }
-            PActivePictureExample picExample = new PActivePictureExample();
-            PActivePictureExample.Criteria picCt = picExample.createCriteria();
-            picCt.andActiveIdEqualTo(active.getId());
-//            PageHelper.startPage(1, 3,true);
-            List<PActivePicture> picActiveList = pPictureService.selectActivePictures(picExample);
-            json.put("pictures", picActiveList);
-            list.add(json);
-        }
-        JSONArray array = new JSONArray();
-        array.addAll(pActiveList);
-        PageInfo<JSONObject> pageInfo=new PageInfo<JSONObject>(list);
+        ActiveQuery activeQuery = new ActiveQuery();
+        activeQuery.setPage(true);
+        activeQuery.setPageNum(pageNum == null ? 1 : pageNum);
+        activeQuery.setPageSize(pageSize == null ? 20 : pageSize);
+
+        activeQuery.setStartTimeYn("Y");
+        activeQuery.setDepartmentId(departmentid);
+        activeQuery.setActiveStatus(2);
+        activeQuery.setActiveProjectId(2);
+        List<Map<String, Object>> pActiveList = pActiveService.getRunningActive(activeQuery);
+        this.initPictures(pActiveList);
+        PageInfo<Map<String, Object>> pageInfo = new PageInfo<>(pActiveList);
         result.setSuccess(true);
         result.setData(pageInfo);
         return result.getResult();
@@ -309,113 +295,47 @@ public class PActiveController {
 
     /**
      * 查询活动能看到 自己报没报名的
-     * @param userId 用户ID
+     *
+     * @param userId       用户ID
      * @param departmentid
      * @param pageNum
      * @param pageSize
      * @return
      */
-    @RequestMapping(value="/getParticipateActive",method= RequestMethod.GET)
+    @RequestMapping(value = "/getParticipateActive", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getParticipateActive(Integer userId,Integer departmentid,Integer pageNum, Integer pageSize,@RequestParam(required=false)String all){
+    public Map<String, Object> getParticipateActive(Integer userId, Integer departmentid, Integer pageNum, Integer pageSize, @RequestParam(required = false) String all) {
         ResultUtil result = new ResultUtil();
-        PActiveExample example = new PActiveExample();
-        PActiveExample.Criteria ct = example.createCriteria();
-        ct.andActiveStatusEqualTo(1);
+        ActiveQuery activeQuery = new ActiveQuery();
+        activeQuery.setPage(true);
+        activeQuery.setPageNum(pageNum == null ? 1 : pageNum);
+        activeQuery.setPageSize(pageSize == null ? 20 : pageSize);
 
         if(all!=null && all.equals("Y")){
-            ct.andStartTimeGreaterThan(new Date());
+            activeQuery.setStartTimeYn("Y");
         }
-        if (departmentid != null) {
-            ct.andDepartmentidEqualTo(departmentid);
-        }
-        PageHelper.startPage(pageNum, pageSize,true);
-        List<PActive> pActiveList = pActiveService.selectByExample(example);
-        List<JSONObject> list = new ArrayList<>();
-        for (PActive active:pActiveList){
-            JSONObject json = JSON.parseObject(JSON.toJSONString(active));
-            PPartymember createUser = pPartymemberService.selectByUserId(active.getActiveCreatePeople());
-            if(createUser!=null){
-                json.put("activeCreatePeopleName", createUser.getName());
-            }
-            json.put("signupstatus", hasParticipate(active.getId(), userId)?1:2);
+        activeQuery.setDepartmentId(departmentid);
+        activeQuery.setActiveStatus(1);
+        List<Map<String, Object>> pActiveList = pActiveService.getRunningActive(activeQuery);
+        int id = -1;
+        for (Map<String,Object> active : pActiveList) {
+            id = Integer.valueOf(active.get("id").toString());
+            active.put("signupstatus", hasParticipate(id, userId) ? 1 : 2);
             PActivePictureExample picExample = new PActivePictureExample();
             PActivePictureExample.Criteria picCt = picExample.createCriteria();
-            picCt.andActiveIdEqualTo(active.getId());
-
-
-
+            picCt.andActiveIdEqualTo(id);
 //            PageHelper.startPage(1, 3,true);
-            List<PActivePicture> picActiveList = pPictureService.selectActivePictures(picExample);
-            json.put("pictures", picActiveList);
-            list.add(json);
+            active.put("pictures", pPictureService.selectActivePictures(picExample));
         }
-        JSONArray array = new JSONArray();
-        array.addAll(pActiveList);
-        PageInfo<JSONObject> pageInfo=new PageInfo<JSONObject>(list);
+        PageInfo<Map<String, Object>> pageInfo = new PageInfo<>(pActiveList);
         result.setSuccess(true);
         result.setData(pageInfo);
         return result.getResult();
     }
 
-
-    //查看自己参与的活动
-    @RequestMapping(value="/getEnjoyActiveByUserId",method= RequestMethod.GET)
-    @ResponseBody
-    public Map<String, Object> getEnjoyActiveByUserId(Integer userId,Integer departmentid,@RequestParam(required=false)String all){
-        ResultUtil result = new ResultUtil();
-        PActiveExample example = new PActiveExample();
-        PActiveExample.Criteria ct = example.createCriteria();
-        ct.andActiveStatusEqualTo(1);
-        if(all!=null && all.equals("Y")){
-            ct.andStartTimeGreaterThan(new Date());
-        }
-        if (departmentid != null) {
-            example.createCriteria().andDepartmentidEqualTo(departmentid);
-        }
-        List<PActive> pActiveList = pActiveService.selectByExample(example);
-        List<JSONObject> list = new ArrayList<>();
-        for (PActive active:pActiveList){
-            JSONObject json = JSON.parseObject(JSON.toJSONString(active));
-            PPartymember createUser = pPartymemberService.selectByUserId(active.getActiveCreatePeople());
-            if(createUser!=null){
-                json.put("activeCreatePeopleName", createUser.getName());
-            }
-            if(hasParticipate(active.getId(), userId)){
-
-                PActiveParticipateExample participateExample = new PActiveParticipateExample();
-                PActiveParticipateExample.Criteria ctp = participateExample.createCriteria();
-                ctp.andActiveIdEqualTo(active.getId());
-                ctp.andUserIdEqualTo(userId);
-                ctp.andStatusEqualTo(1);
-
-                List<PActiveParticipate> ppList =  activeParticipateService.selectByExample(participateExample);
-                if(ppList!=null){
-
-                    if(ppList.size()>0){
-
-                        PActivePictureExample picExample = new PActivePictureExample();
-                        PActivePictureExample.Criteria picCt = picExample.createCriteria();
-                        picCt.andActiveIdEqualTo(active.getId());
-//            PageHelper.startPage(1, 3,true);
-                        List<PActivePicture> picActiveList = pPictureService.selectActivePictures(picExample);
-                        json.put("pictures", picActiveList);
-                        list.add(json);
-
-                    }
-
-                }
-
-            }
-
-        }
-        result.setSuccess(true);
-        result.setData(list);
-        return result.getResult();
-    }
-
     /**
      * 判断是否已经报名的活动
+     *
      * @param activeId
      * @param userId
      * @return
@@ -425,33 +345,33 @@ public class PActiveController {
         PActiveParticipateExample.Criteria ct = example.createCriteria();
         ct.andUserIdEqualTo(userId);
         ct.andActiveIdEqualTo(activeId);
-        if(activeParticipateService.selectByExample(example).size()>0){
+        if (activeParticipateService.selectByExample(example).size() > 0) {
             return true;
         }
         return false;
     }
 
-    @RequestMapping(value="/list",method= RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> list(Integer pageNum, Integer pageSize){
+    public Map<String, Object> list(Integer pageNum, Integer pageSize) {
         ResultUtil result = new ResultUtil();
         PageHelper.startPage(pageNum, pageSize);
         List<PActive> pActiveList = pActiveService.selectByExample(new PActiveExample());
-        PageInfo<PActive> p=new PageInfo<PActive>(pActiveList);
+        PageInfo<PActive> p = new PageInfo<PActive>(pActiveList);
         result.setSuccess(true);
         result.setData(p);
         return result.getResult();
     }
 
-    @RequestMapping(value="/deleteById",method= RequestMethod.DELETE)
+    @RequestMapping(value = "/deleteById", method = RequestMethod.DELETE)
     @ResponseBody
-    public Map<String, Object> deleteById(Integer activeid){
+    public Map<String, Object> deleteById(Integer activeid) {
         ResultUtil result = new ResultUtil();
         PActiveExample example = new PActiveExample();
-        if(pActiveService.deleteByPrimaryKey(activeid)>0){
+        if (pActiveService.deleteByPrimaryKey(activeid) > 0) {
             result.setSuccess(true);
             result.setMsg("删除成功");
-        }else{
+        } else {
             result.setMsg("删除失败");
             result.setSuccess(false);
         }
@@ -459,14 +379,14 @@ public class PActiveController {
     }
 
 
-    @RequestMapping(value="/updateById",method= RequestMethod.POST)
+    @RequestMapping(value = "/updateById", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> updateById(PActive pActive){
+    public Map<String, Object> updateById(PActive pActive) {
         ResultUtil result = new ResultUtil();
-        if(pActiveService.updateByPrimaryKey(pActive)>0){
+        if (pActiveService.updateByPrimaryKey(pActive) > 0) {
             result.setSuccess(true);
             result.setMsg("修改成功");
-        }else{
+        } else {
             result.setSuccess(false);
             result.setMsg("修改失败");
         }

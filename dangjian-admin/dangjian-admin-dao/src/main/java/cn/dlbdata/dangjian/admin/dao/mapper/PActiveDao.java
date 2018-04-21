@@ -2,10 +2,12 @@ package cn.dlbdata.dangjian.admin.dao.mapper;
 
 import cn.dlbdata.dangjian.admin.dao.model.PActive;
 import cn.dlbdata.dangjian.admin.dao.model.PActiveExample;
+import cn.dlbdata.dangjian.admin.dao.query.ActiveQuery;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface PActiveDao {
     long countByExample(PActiveExample example);
@@ -31,4 +33,6 @@ public interface PActiveDao {
     int updateByPrimaryKey(PActive record);
 
     int selectByActiveTypeAndUserParticipate(@Param("userId") Integer userId, @Param("activeType") Integer activeType,@Param("startTime") Date startTime,@Param("endTime") Date endTime);
+
+    List<Map<String,Object>> getRunningActive(ActiveQuery activeQuery);
 }

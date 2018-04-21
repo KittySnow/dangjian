@@ -16,6 +16,7 @@
         <result column="active_context" jdbcType="VARCHAR" property="activeContext"/>
         <result column="zb_message" jdbcType="VARCHAR" property="zbMessage"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="depart_ids" jdbcType="VARCHAR" property="departIds"/>
     </resultMap>
     <sql id="Example_Where_Clause">
         <where>
@@ -80,7 +81,7 @@
     <sql id="Base_Column_List">
         id, active_name, active_project_id, active_type, active_pace, active_create_people,
         departmentid, active_principal_people, active_status, start_time, end_time, active_context,
-        zb_message, create_time
+        zb_message, create_time,depart_ids
     </sql>
     <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveExample"
             resultMap="BaseResultMap">
@@ -119,12 +120,12 @@
         active_pace, active_create_people, departmentid,
         active_principal_people, active_status, start_time,
         end_time, active_context, zb_message,
-        create_time)
+        create_time,depart_ids)
         values (#{activeName,jdbcType=VARCHAR}, #{activeProjectId,jdbcType=INTEGER}, #{activeType,jdbcType=INTEGER},
         #{activePace,jdbcType=VARCHAR}, #{activeCreatePeople,jdbcType=INTEGER}, #{departmentid,jdbcType=INTEGER},
         #{activePrincipalPeople,jdbcType=VARCHAR}, #{activeStatus,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP},
         #{endTime,jdbcType=TIMESTAMP}, #{activeContext,jdbcType=VARCHAR}, #{zbMessage,jdbcType=VARCHAR},
-        #{createTime,jdbcType=TIMESTAMP})
+        #{createTime,jdbcType=TIMESTAMP},#{departIds,jdbcTypeVARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActive">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -171,6 +172,9 @@
             <if test="createTime != null">
                 create_time,
             </if>
+            <if test="departIds != null">
+                depart_ids,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="activeName != null">
@@ -211,6 +215,9 @@
             </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="departIds != null">
+                #{departIds,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -266,6 +273,9 @@
             <if test="record.createTime != null">
                 create_time = #{record.createTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="record.departIds != null">
+                depart_ids = #{record.departIds,jdbcType=VARCHAR},
+            </if>
         </set>
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
@@ -287,6 +297,7 @@
         active_context = #{record.activeContext,jdbcType=VARCHAR},
         zb_message = #{record.zbMessage,jdbcType=VARCHAR},
         create_time = #{record.createTime,jdbcType=TIMESTAMP}
+        depart_ids = #{record.departIds,jdbcType=VARCHAR}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
@@ -333,6 +344,9 @@
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="departIds != null">
+                depart_ids = #{departIds,jdbcType=VARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -351,6 +365,7 @@
             active_context          = #{activeContext,jdbcType=VARCHAR},
             zb_message              = #{zbMessage,jdbcType=VARCHAR},
             create_time             = #{createTime,jdbcType=TIMESTAMP}
+            depart_ids              = #{departIds,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
     </update>
     <select id="selectByActiveTypeAndUserParticipate" parameterType="map" resultType="java.lang.Integer">
@@ -364,5 +379,42 @@
         AND (start_time BETWEEN #{startTime,jdbcType=INTEGER} and #{endTime,jdbcType=INTEGER}
         OR end_time BETWEEN #{startTime,jdbcType=INTEGER} and #{endTime,jdbcType=INTEGER})
         order by p_active.create_time DESC
+    </select>
+
+    <select id="getRunningActive" parameterType="cn.dlbdata.dangjian.admin.dao.query.ActiveQuery" resultType="java.util.Map">
+      SELECT
+        t.id as "id",
+        t.active_name as "activeName",
+        t.active_project_id as "activeProjectId",
+        t.active_type as "activeType",
+        t.active_pace as "activePace",
+        t.active_create_people as "activeCreatePeople",
+        t.departmentid as "departmentid",
+        t.active_principal_people as "activePrincipalPeople",
+        t.active_status as "active_Status",
+        t.start_time as "startTime",
+        t.end_time as "endTime",
+        t.active_context as "active_Context",
+        t.zb_message as "zbMessage",
+        t.create_time as "createTime"
+        t.depart_ids as "departIds",
+        p.name as "activeCreatePeopleName"
+      FROM p_active t INNER JOIN p_partymember p on t.active_create_people = p.userid
+      where 1 = 1
+      <if test="departmentId != null">
+          AND find_in_set(#{departmentId},t.depart_ids) > 0
+      </if>
+      <if test="activeStatus != null">
+          AND t.active_status = #{activeStatus}
+      </if>
+      <if test="activeProjectId != null">
+          AND t.active_project_id = #{activeProjectId}
+      </if>
+      <if test="startTimeYn != null">
+          <![CDATA[ AND t.start_time <= NOW() ]]>
+      </if>
+      <if test="isPage and start != null and start > 0">
+        LIMIT #{start} OFFSET #{pageSize}
+      </if>
     </select>
 </mapper>

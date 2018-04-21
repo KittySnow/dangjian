@@ -91,6 +91,10 @@ public class PActive implements Serializable {
     private String zbMessage;
 
     private Date createTime;
+    /**
+     * 参与部门ID集合
+     */
+    private String departIds;
 
     private static final long serialVersionUID = 1L;
 
@@ -206,6 +210,14 @@ public class PActive implements Serializable {
         this.createTime = createTime;
     }
 
+    public String getDepartIds() {
+        return departIds;
+    }
+
+    public void setDepartIds(String departIds) {
+        this.departIds = departIds;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -243,19 +255,19 @@ public class PActive implements Serializable {
         }
         PActive other = (PActive) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getActiveName() == null ? other.getActiveName() == null : this.getActiveName().equals(other.getActiveName()))
-            && (this.getActiveProjectId() == null ? other.getActiveProjectId() == null : this.getActiveProjectId().equals(other.getActiveProjectId()))
-            && (this.getActiveType() == null ? other.getActiveType() == null : this.getActiveType().equals(other.getActiveType()))
-            && (this.getActivePace() == null ? other.getActivePace() == null : this.getActivePace().equals(other.getActivePace()))
-            && (this.getActiveCreatePeople() == null ? other.getActiveCreatePeople() == null : this.getActiveCreatePeople().equals(other.getActiveCreatePeople()))
-            && (this.getDepartmentid() == null ? other.getDepartmentid() == null : this.getDepartmentid().equals(other.getDepartmentid()))
-            && (this.getActivePrincipalPeople() == null ? other.getActivePrincipalPeople() == null : this.getActivePrincipalPeople().equals(other.getActivePrincipalPeople()))
-            && (this.getActiveStatus() == null ? other.getActiveStatus() == null : this.getActiveStatus().equals(other.getActiveStatus()))
-            && (this.getStartTime() == null ? other.getStartTime() == null : this.getStartTime().equals(other.getStartTime()))
-            && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()))
-            && (this.getActiveContext() == null ? other.getActiveContext() == null : this.getActiveContext().equals(other.getActiveContext()))
-            && (this.getZbMessage() == null ? other.getZbMessage() == null : this.getZbMessage().equals(other.getZbMessage()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()));
+                && (this.getActiveName() == null ? other.getActiveName() == null : this.getActiveName().equals(other.getActiveName()))
+                && (this.getActiveProjectId() == null ? other.getActiveProjectId() == null : this.getActiveProjectId().equals(other.getActiveProjectId()))
+                && (this.getActiveType() == null ? other.getActiveType() == null : this.getActiveType().equals(other.getActiveType()))
+                && (this.getActivePace() == null ? other.getActivePace() == null : this.getActivePace().equals(other.getActivePace()))
+                && (this.getActiveCreatePeople() == null ? other.getActiveCreatePeople() == null : this.getActiveCreatePeople().equals(other.getActiveCreatePeople()))
+                && (this.getDepartmentid() == null ? other.getDepartmentid() == null : this.getDepartmentid().equals(other.getDepartmentid()))
+                && (this.getActivePrincipalPeople() == null ? other.getActivePrincipalPeople() == null : this.getActivePrincipalPeople().equals(other.getActivePrincipalPeople()))
+                && (this.getActiveStatus() == null ? other.getActiveStatus() == null : this.getActiveStatus().equals(other.getActiveStatus()))
+                && (this.getStartTime() == null ? other.getStartTime() == null : this.getStartTime().equals(other.getStartTime()))
+                && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()))
+                && (this.getActiveContext() == null ? other.getActiveContext() == null : this.getActiveContext().equals(other.getActiveContext()))
+                && (this.getZbMessage() == null ? other.getZbMessage() == null : this.getZbMessage().equals(other.getZbMessage()))
+                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()));
     }
 
     @Override

@@ -6,6 +6,7 @@ import cn.dlbdata.dangjian.admin.dao.mapper.PActivePictureDao;
 import cn.dlbdata.dangjian.admin.dao.model.PActive;
 import cn.dlbdata.dangjian.admin.dao.model.PActiveExample;
 import cn.dlbdata.dangjian.admin.dao.model.PActivePicture;
+import cn.dlbdata.dangjian.admin.dao.query.ActiveQuery;
 import cn.dlbdata.dangjian.admin.service.PActiveService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 @Service("PActiveService")
@@ -93,4 +95,8 @@ public class PActiveServiceImpl implements PActiveService {
         return pActivePictureDao.insert(activePicture);
     }
 
+    @Override
+    public List<Map<String, Object>> getRunningActive(ActiveQuery activeQuery) {
+        return this.pActiveDao.getRunningActive(activeQuery);
+    }
 }

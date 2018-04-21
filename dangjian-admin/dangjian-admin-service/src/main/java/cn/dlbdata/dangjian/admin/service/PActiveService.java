@@ -3,10 +3,12 @@ package cn.dlbdata.dangjian.admin.service;
 import cn.dlbdata.dangjian.admin.dao.model.PActive;
 import cn.dlbdata.dangjian.admin.dao.model.PActiveExample;
 import cn.dlbdata.dangjian.admin.dao.model.PActivePicture;
+import cn.dlbdata.dangjian.admin.dao.query.ActiveQuery;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface PActiveService {
 
@@ -35,5 +37,7 @@ public interface PActiveService {
     public int selectByActiveTypeAndUserParticipate(Integer userId, Integer activeType, Date startTime, Date endTime);
 
     public int savePicture(PActivePicture activePicture);
+
+    List<Map<String,Object>> getRunningActive(ActiveQuery activeQuery);
 
 }
