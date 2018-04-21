@@ -125,7 +125,7 @@
         #{activePace,jdbcType=VARCHAR}, #{activeCreatePeople,jdbcType=INTEGER}, #{departmentid,jdbcType=INTEGER},
         #{activePrincipalPeople,jdbcType=VARCHAR}, #{activeStatus,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP},
         #{endTime,jdbcType=TIMESTAMP}, #{activeContext,jdbcType=VARCHAR}, #{zbMessage,jdbcType=VARCHAR},
-        #{createTime,jdbcType=TIMESTAMP},#{departIds,jdbcTypeVARCHAR})
+        #{createTime,jdbcType=TIMESTAMP},#{departIds,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActive">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
