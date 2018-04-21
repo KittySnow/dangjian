@@ -29,5 +29,7 @@ public interface PActiveParticipateService {
     public int updateByPrimaryKeySelective(PActiveParticipate pActiveParticipate);
 
     public int updateByPrimaryKey(PActiveParticipate pActiveParticipate);
+
+    public void insertList(Integer[] userIds ,Integer studyId);
     
 }
