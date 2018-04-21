@@ -21,6 +21,8 @@ public interface PPartymemberDao {
 
     List<PPartymember> selectByExample(PPartymemberExample example);
 
+    List<PPartymember> selectAll();
+
     PPartymember selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") PPartymember record, @Param("example") PPartymemberExample example);

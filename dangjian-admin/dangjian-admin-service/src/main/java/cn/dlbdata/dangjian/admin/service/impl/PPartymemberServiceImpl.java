@@ -67,6 +67,11 @@ public class PPartymemberServiceImpl implements PPartymemberService {
     }
 
     @Override
+    public List<PPartymember> selectAll() {
+        return pPartymemberDao.selectAll();
+    }
+
+    @Override
     public PPartymember selectByPrimaryKey(Integer id) {
         return pPartymemberDao.selectByPrimaryKey(id);
     }
@@ -160,6 +165,4 @@ public class PPartymemberServiceImpl implements PPartymemberService {
     public List<PPartymember> getPartymemberByDepartmentid(Integer departmentid,Integer status){
         return pPartymemberDao.getPartymemberByDepartmentid(departmentid,status);
     }
-
-
 }

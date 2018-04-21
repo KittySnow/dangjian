@@ -96,6 +96,13 @@
       order by ${orderByClause}
     </if>
   </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, userid, name, sex, age, phone, idcard, fromdepartmentid, bid, departmentid,avatar
+    from p_partymember
+    limit 1000
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

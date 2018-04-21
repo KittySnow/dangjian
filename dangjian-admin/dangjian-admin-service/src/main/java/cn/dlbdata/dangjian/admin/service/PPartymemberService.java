@@ -21,6 +21,8 @@ public interface PPartymemberService {
     
     public List<PPartymember> selectByExample(PPartymemberExample example);
 
+    public List<PPartymember> selectAll();
+
     public PPartymember selectByUserId(Integer userid);
 
     public PPartymember selectByPrimaryKey(Integer id);
