@@ -62,7 +62,7 @@ public class ActiveQuery extends PageQuery {
     }
 
     public Integer getStart() {
-        return !this.isPage() || this.getPageNum() == null || this.getPageNum() <= 0 || this.getPageSize() == null || this.getPageSize() <= 0 ? null : ((this.getPageNum() - 1) * this.getPageSize());
+        return !this.getPageYn() || this.getPageNum() == null || this.getPageNum() <= 0 || this.getPageSize() == null || this.getPageSize() <= 0 ? null : ((this.getPageNum() - 1) * this.getPageSize());
     }
 }
 

@@ -1,5 +1,6 @@
 package cn.dlbdata.dangjian.admin.dao.query;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -22,7 +23,7 @@ public class PageQuery implements Serializable {
     /**
      * 是否分页
      */
-    private boolean isPage = false;
+    private Boolean pageYn = false;
     /**
      * 起始记录
      */
@@ -44,19 +45,15 @@ public class PageQuery implements Serializable {
         this.pageSize = pageSize;
     }
 
-    public boolean getPage() {
-        return isPage;
+    public Boolean getPageYn() {
+        return pageYn;
     }
 
-    public void setPage(boolean page) {
-        isPage = page;
-    }
-
-    public boolean isPage() {
-        return isPage;
+    public void setPageYn(Boolean pageYn) {
+        this.pageYn = pageYn;
     }
 
     public Integer getStart() {
-        return !this.isPage || this.pageNum == null || this.pageNum <= 0 || this.pageSize == null || this.pageSize <= 0 ? null : ((this.pageNum - 1) * this.pageSize);
+        return !this.getPageYn() || this.pageNum == null || this.pageNum <= 0 || this.pageSize == null || this.pageSize <= 0 ? null : ((this.pageNum - 1) * this.pageSize);
     }
 }

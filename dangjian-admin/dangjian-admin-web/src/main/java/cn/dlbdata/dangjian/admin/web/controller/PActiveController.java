@@ -254,7 +254,7 @@ public class PActiveController {
     public Map<String, Object> getRunningActiveNew(Integer departmentid, Integer pageNum, Integer pageSize, @RequestParam(required = false) String all) {
         ResultUtil result = new ResultUtil();
         ActiveQuery activeQuery = new ActiveQuery();
-        activeQuery.setPage(true);
+        activeQuery.setPageYn(true);
         activeQuery.setPageNum(pageNum == null ? 1 : pageNum);
         activeQuery.setPageSize(pageSize == null ? 20 : pageSize);
 
@@ -278,7 +278,7 @@ public class PActiveController {
     public Map<String, Object> getAlreadyActive(Integer departmentid, Integer pageNum, Integer pageSize) {
         ResultUtil result = new ResultUtil();
         ActiveQuery activeQuery = new ActiveQuery();
-        activeQuery.setPage(true);
+        activeQuery.setPageYn(true);
         activeQuery.setPageNum(pageNum == null ? 1 : pageNum);
         activeQuery.setPageSize(pageSize == null ? 20 : pageSize);
 
@@ -308,7 +308,7 @@ public class PActiveController {
     public Map<String, Object> getParticipateActive(Integer userId, Integer departmentid, Integer pageNum, Integer pageSize, @RequestParam(required = false) String all) {
         ResultUtil result = new ResultUtil();
         ActiveQuery activeQuery = new ActiveQuery();
-        activeQuery.setPage(true);
+        activeQuery.setPageYn(true);
         activeQuery.setPageNum(pageNum == null ? 1 : pageNum);
         activeQuery.setPageSize(pageSize == null ? 20 : pageSize);
 

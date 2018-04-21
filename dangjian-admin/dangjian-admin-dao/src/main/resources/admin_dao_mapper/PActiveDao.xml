@@ -413,7 +413,7 @@
       <if test="startTimeYn != null">
           <![CDATA[ AND t.start_time <= NOW() ]]>
       </if>
-      <if test="isPage and start != null and start > 0">
+      <if test="start != null and start > 0">
         LIMIT #{start} OFFSET #{pageSize}
       </if>
     </select>
