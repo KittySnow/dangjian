@@ -153,17 +153,17 @@ public class PActiveController {
                 return result.getResult();
             }
             participate.setStatus(1);
-            activeParticipateService.updateByPrimaryKeySelective(participate);
 
+            activeParticipateService.updateByPrimaryKeySelective(participate);
 
             //签到成功后加积分
             PScoreParty pScoreParty = new PScoreParty();
             pScoreParty.setDetailId(pActive.getActiveType());
             pScoreParty.setUserId(userId);
-            pScoreParty.setAddId(pActive.getActiveCreatePeople());
+            pScoreParty.setAdderId(pActive.getActiveCreatePeople());
             if (pScoreParty.getDetailId() == null || pScoreParty.getUserId() == null || pScoreParty.getAdderId() == null){
                 result.setSuccess(false);
-                result.setMsg("请求加分参数不完整");
+                result.setMsg("签到成功，请求加分参数不完整");
                 return result.getResult();
             }
             if(pScorePartyService.updateScanCode(pScoreParty)>0){
@@ -172,7 +172,7 @@ public class PActiveController {
                 return result.getResult();
             }
             result.setSuccess(true);
-            result.setMsg("签到积分已满或已发");
+            result.setMsg("签到成功，该项目积分已满或已发");
         }else{
             result.setMsg("请先报名");
             result.setSuccess(false);

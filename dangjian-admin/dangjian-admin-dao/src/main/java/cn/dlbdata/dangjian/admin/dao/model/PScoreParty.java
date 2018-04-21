@@ -115,6 +115,27 @@ public class PScoreParty implements Serializable {
 
     private String detailTitle;
 
+    private String imgs;
+    private String remark;
+
+    public String getImgs() {
+        return imgs;
+    }
+
+    public void setImgs(String imgs) {
+        this.imgs = imgs;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+
+
 
     private static final long serialVersionUID = 1L;
 

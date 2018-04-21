@@ -37,6 +37,8 @@ public interface PScorePartyDao {
 
     int updateSscoreClean(PScoreParty pScoreParty);
 
+    PScoreParty isInsertRights(PScoreParty pScoreParty);
+
     int updateAudit(PScoreParty pScoreParty);
 
     List<PScoreParty> getProjectScoreByUserId(@Param("userId")Integer  userId , @Param("year") Integer year);
@@ -44,5 +46,7 @@ public interface PScorePartyDao {
     Double getSumScoreByUserId(@Param("userId")Integer  userId , @Param("year") Integer year);
 
     List<PScoreParty> getDakDetialByDepartmentId(@Param("departmentId")Integer departmentId);
+
+
 
 }

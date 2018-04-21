@@ -114,4 +114,9 @@ public class PScorePartyServiceImpl implements PScorePartyService {
     public List<PScoreParty> getDakDetialByDepartmentId(Integer departmentId){
         return pScorePartyDao.getDakDetialByDepartmentId(departmentId);
     }
+
+    @Override
+    public PScoreParty isInsertRights(PScoreParty pScoreParty){
+        return pScorePartyDao.isInsertRights(pScoreParty);
+    }
 }

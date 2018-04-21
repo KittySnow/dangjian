@@ -41,11 +41,6 @@ public class PStudyController {
     @Autowired
     private PUserService pUserService;
 
-    @Autowired
-    private PDepartmentService pDepartmentService;
-
-    @Autowired
-    private PScoreProjectService pScoreProjectService;
 
     @RequestMapping(value="/save",method=RequestMethod.POST)
     @ResponseBody
@@ -53,6 +48,7 @@ public class PStudyController {
             Long starttime,Long endtime,Integer projectid,Integer moduleid,String content,
             Integer createUserid,String picids,Integer departmentid,Integer roleid){
         ResultUtil result = new ResultUtil();
+
 
         if(starttime==null){
             result.setMsg("活动时间开始时间不能为空");
@@ -65,6 +61,21 @@ public class PStudyController {
             result.setSuccess(false);
             return result.getResult();
         }
+
+
+
+        PScoreParty pScoreParty = new PScoreParty();
+        pScoreParty.setDetailId(moduleid);
+        pScoreParty.setUserId(createUserid);
+
+        PScoreParty pScoreDetail = pScorePartyService.isInsertRights(pScoreParty);
+
+        if(pScoreDetail==null){
+            result.setMsg("您该项目提交次数已达最大值");
+            result.setSuccess(false);
+            return result.getResult();
+        }
+
 
         PStudy pStudy = new PStudy();
         pStudy.setContent(content);
@@ -255,6 +266,15 @@ public class PStudyController {
 
 
         List<JSONObject> list = new ArrayList<>();
+
+        list = this.listetPartName(list,pStudyList);
+
+        result.setSuccess(true);
+        result.setData(list);
+        return result.getResult();
+    }
+
+    public List<JSONObject> listetPartName(List<JSONObject> list,List<PStudy> pStudyList){
         if(pStudyList!=null){
             if(pStudyList.size()!=0){
                 for (PStudy pStudy:pStudyList){
@@ -268,12 +288,9 @@ public class PStudyController {
                 }
             }
         }
-
-
-        result.setSuccess(true);
-        result.setData(list);
-        return result.getResult();
+        return list;
     }
+
 
     //支部党员信息(先锋评定）
     @RequestMapping(value="/getPartymemberByDepartmentid",method= RequestMethod.GET)
@@ -297,19 +314,8 @@ public class PStudyController {
         List<PStudy> pStudyList = pStudyService.selectByExample(pA);
 
         List<JSONObject> list = new ArrayList<>();
-        if(pStudyList!=null){
-            if(pStudyList.size()!=0){
-                for (PStudy pStudy:pStudyList){
 
-                    JSONObject json = JSON.parseObject(JSON.toJSONString(pStudy));
-
-                    PPartymember pPartymember = pPartymemberService.selectByUserId(pStudy.getCreateUserid());
-                    json.put("partyname",pPartymember.getName());
-
-                    list.add(json);
-                }
-            }
-        }
+        list = this.listetPartName(list,pStudyList);
 
 
         result.setSuccess(true);

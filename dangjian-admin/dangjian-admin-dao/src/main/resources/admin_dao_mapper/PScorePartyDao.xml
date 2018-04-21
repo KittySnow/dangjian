@@ -18,6 +18,8 @@
     <result column="valid_yn" jdbcType="CHAR" property="validYn" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="status_cd" jdbcType="CHAR" property="statusCd" />
+    <result column="imgs" jdbcType="VARCHAR" property="imgs" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
 
   <sql id="Example_Where_Clause">
@@ -80,7 +82,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, project_id, detail_id, score, adder_id, approved_id, year, score_time, add_time,
-    add_id, valid_yn, user_id, status_cd,( select name from p_partymember where p_partymember.userid = approved_id ) as approved_name
+    add_id, valid_yn, user_id, status_cd, imgs, remark , ( select name from p_partymember where p_partymember.userid = approved_id ) as approved_name
   </sql>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample" resultMap="BaseResultMap">
     select
@@ -120,13 +122,13 @@
       score, adder_id, approved_id,
       year, score_time, add_time,
       add_id, valid_yn, user_id,
-      status_cd
+      status_cd, imgs, remark
       )
     values (#{projectId,jdbcType=INTEGER}, #{detailId,jdbcType=INTEGER},
       #{score,jdbcType=DECIMAL}, #{adderId,jdbcType=INTEGER}, #{approvedId,jdbcType=INTEGER},
       #{year,jdbcType=INTEGER}, #{scoreTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP},
       #{addId,jdbcType=INTEGER}, #{validYn,jdbcType=CHAR}, #{userId,jdbcType=INTEGER},
-      #{statusCd,jdbcType=CHAR}
+      #{statusCd,jdbcType=CHAR}, #{imgs,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
 
@@ -173,6 +175,12 @@
       <if test="statusCd != null">
         status_cd,
       </if>
+      <if test="imgs != null">
+        imgs,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -213,6 +221,12 @@
       </if>
       <if test="statusCd != null">
         #{statusCd,jdbcType=CHAR},
+      </if>
+      <if test="imgs != null">
+        #{imgs,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -263,6 +277,12 @@
       </if>
       <if test="record.statusCd != null">
         status_cd = #{record.statusCd,jdbcType=CHAR},
+      </if>
+      <if test="record.imgs != null">
+        imgs = #{record.imgs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -327,6 +347,12 @@
       <if test="statusCd != null">
         status_cd = #{statusCd,jdbcType=CHAR},
       </if>
+      <if test="imgs != null">
+        imgs = #{imgs,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -343,7 +369,9 @@
     add_id = #{addId,jdbcType=INTEGER},
     valid_yn = #{validYn,jdbcType=CHAR},
     user_id = #{userId,jdbcType=INTEGER},
-    status_cd = #{statusCd,jdbcType=CHAR}
+    status_cd = #{statusCd,jdbcType=CHAR},
+    imgs = #{record.imgs,jdbcType=VARCHAR},
+    remark = #{record.remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
@@ -440,6 +468,9 @@
         where id = #{id,jdbcType=INTEGER} and status_cd = '10'
     </update>
 
+
+
+
     <insert id="updateSscoreClean" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScoreParty">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
             SELECT LAST_INSERT_ID()
@@ -454,6 +485,12 @@
             score_time,
             add_time,
             add_id,
+      <if test="imgs != null">
+        imgs,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
             valid_yn,
             user_id
         )
@@ -469,6 +506,12 @@
             NOW(),
             NOW(),
             0,
+      <if test="imgs != null">
+        #{imgs,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
             'Y',
             t.user_id
         FROM p_score_party t where t.user_id = #{userId,jdbcType=INTEGER} AND t.detail_id = 5 AND t.year = extract(year from now())
@@ -501,6 +544,22 @@
 from p_score_party p INNER JOIN p_partymember u ON p.user_id = u.userid
 where p.project_id = 5 and  u.departmentid =  #{departmentId,jdbcType=INTEGER}
 GROUP BY p.user_id,u.name
+  </select>
+
+
+  <select id="isInsertRights" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScoreParty" resultMap="BaseResultMap">
+    SELECT
+    t.project_id,
+    t.id,
+    t.score
+    FROM p_score_detail t INNER JOIN p_score_project p ON t.project_id = p.id
+    WHERE t.id = #{detailId,jdbcType=INTEGER}
+    <![CDATA[
+          AND ifnull ((SELECT  sum(s.score) FROM p_score_party s where s.detail_id = t.id
+            AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now())),0) < p.score
+        ]]>
+    AND NOT EXISTS (SELECT 1 FROM p_score_party s where s.detail_id = t.id
+    AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now()) AND t.only_yn = 'Y')
   </select>
 
 

@@ -44,4 +44,6 @@ public interface PScorePartyService {
 
     public List<PScoreParty> getDakDetialByDepartmentId(Integer departmentId);
 
+    public PScoreParty isInsertRights(PScoreParty pScoreParty);
+
 }
