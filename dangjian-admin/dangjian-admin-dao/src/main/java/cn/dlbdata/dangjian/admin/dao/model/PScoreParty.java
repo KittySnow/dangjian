@@ -118,6 +118,11 @@ public class PScoreParty implements Serializable {
     private String imgs;
     private String remark;
 
+    private String adderName;
+
+
+    private static final long serialVersionUID = 1L;
+
     public String getImgs() {
         return imgs;
     }
@@ -134,10 +139,13 @@ public class PScoreParty implements Serializable {
         this.remark = remark;
     }
 
+    public String getAdderName() {
+        return adderName;
+    }
 
-
-
-    private static final long serialVersionUID = 1L;
+    public void setAdderName(String adderName) {
+        this.adderName = adderName;
+    }
 
     public Integer getId() {
         return id;

@@ -29,4 +29,6 @@ public interface PActiveParticipateDao {
     int updateByPrimaryKeySelective(PActiveParticipate record);
 
     int updateByPrimaryKey(PActiveParticipate record);
+
+    void insertList(@Param("userIds") Integer[] userIds , @Param("activeId") Integer activeId);
 }

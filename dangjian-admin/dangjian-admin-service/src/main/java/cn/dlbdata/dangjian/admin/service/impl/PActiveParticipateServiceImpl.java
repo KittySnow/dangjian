@@ -78,4 +78,9 @@ public class PActiveParticipateServiceImpl implements PActiveParticipateService 
         return pActiveParticipateDao.updateByPrimaryKey(pActiveParticipate);
     }
 
+    @Override
+    public void insertList(Integer[] userIds ,Integer activeId){
+        pActiveParticipateDao.insertList(userIds ,activeId);
+    }
+
 }

@@ -9,6 +9,7 @@
     <result column="score" jdbcType="DECIMAL" property="score" />
     <result column="typetotalscore" jdbcType="DECIMAL" property="typetotalscore" />
     <result column="adder_id" jdbcType="INTEGER" property="adderId" />
+    <result column="adder_name" jdbcType="VARCHAR" property="adderName" />
     <result column="approved_id" jdbcType="INTEGER" property="approvedId" />
     <result column="approved_name" jdbcType="VARCHAR" property="approvedName" />
     <result column="year" jdbcType="INTEGER" property="year" />
@@ -82,7 +83,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, project_id, detail_id, score, adder_id, approved_id, year, score_time, add_time,
-    add_id, valid_yn, user_id, status_cd, imgs, remark , ( select name from p_partymember where p_partymember.userid = approved_id ) as approved_name
+    add_id, valid_yn, user_id, status_cd, imgs, remark , ( select name from p_partymember where p_partymember.userid = approved_id ) as approved_name ,
+    ( select name from p_partymember where p_partymember.userid = adder_id ) as adder_name
   </sql>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample" resultMap="BaseResultMap">
     select
@@ -396,7 +398,14 @@
         t.project_id,
         t.id,
         t.score,
-        null,
+        <choose>
+          <when test="adderId != null">
+            adder_id = #{adderId,jdbcType=INTEGER},
+          </when>
+          <otherwise>
+            NULL,
+          </otherwise>
+        </choose>
         NULL,
         extract(year from now()),
         NOW(),
@@ -532,7 +541,7 @@
 
 
   <select id="getDakDetialByDepartmentId" parameterType="Map" resultMap="BaseResultMap">
-    select u.name as approved_name,
+    select u.userid as user_id, u.name as approved_name,
 	(CASE
 		WHEN (SELECT COUNT(1) FROM p_score_party sp where sp.user_id = p.user_id and sp.detail_id = 6 and sp.year = p.year) > 0 THEN 'Y'
 		ELSE 'N'
