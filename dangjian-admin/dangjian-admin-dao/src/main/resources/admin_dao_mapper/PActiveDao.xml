@@ -396,7 +396,7 @@
         t.end_time as "endTime",
         t.active_context as "active_Context",
         t.zb_message as "zbMessage",
-        t.create_time as "createTime"
+        t.create_time as "createTime",
         t.depart_ids as "departIds",
         p.name as "activeCreatePeopleName"
       FROM p_active t INNER JOIN p_partymember p on t.active_create_people = p.userid
