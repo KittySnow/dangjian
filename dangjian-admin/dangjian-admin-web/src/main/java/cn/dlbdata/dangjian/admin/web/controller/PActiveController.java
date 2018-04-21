@@ -1,6 +1,7 @@
 package cn.dlbdata.dangjian.admin.web.controller;
 
 import cn.dlbdata.dangjian.admin.dao.model.*;
+import cn.dlbdata.dangjian.admin.dao.query.ActiveQuery;
 import cn.dlbdata.dangjian.admin.service.*;
 import cn.dlbdata.dangjian.common.util.DateUtil;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
