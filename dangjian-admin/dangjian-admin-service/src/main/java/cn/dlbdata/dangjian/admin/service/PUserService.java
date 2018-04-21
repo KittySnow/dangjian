@@ -1,6 +1,7 @@
 package cn.dlbdata.dangjian.admin.service;
 
 
+import cn.dlbdata.dangjian.admin.dao.model.PPartymember;
 import cn.dlbdata.dangjian.admin.dao.model.PUser;
 import cn.dlbdata.dangjian.admin.dao.model.PUserExample;
 import org.apache.ibatis.annotations.Param;
@@ -39,4 +40,6 @@ public interface PUserService {
     public PUser findRoleid(String name);
 
     public void saveLoginUserInfo(int userId, String token, String openId);
+
+    public void genUser();
 }

@@ -1,11 +1,15 @@
 package cn.dlbdata.dangjian.admin.service.impl;
 
 import cn.dlbdata.dangjian.admin.dao.mapper.PUserDao;
+import cn.dlbdata.dangjian.admin.dao.model.PPartymember;
 import cn.dlbdata.dangjian.admin.dao.model.PUser;
 import cn.dlbdata.dangjian.admin.dao.model.PUserExample;
+import cn.dlbdata.dangjian.admin.service.PPartymemberService;
 import cn.dlbdata.dangjian.admin.service.PUserService;
 import cn.dlbdata.dangjian.common.DO.WXUserInfoDO;
 import cn.dlbdata.dangjian.common.DangjianException;
+import cn.dlbdata.dangjian.common.util.PingyinUtil;
+import cn.dlbdata.dangjian.common.util.StringUtil;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.access.GetUserInfo;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.service.UserInfoService;
 import net.sf.json.JSONObject;
@@ -23,6 +27,9 @@ public class PUserServiceImpl implements PUserService {
 
     @Autowired
     private UserInfoService userInfoService;
+
+    @Autowired
+    private PPartymemberService pPartymemberService;
 
     @Resource
     PUserDao pUserDao;
@@ -115,5 +122,30 @@ public class PUserServiceImpl implements PUserService {
         } catch (DangjianException e) {
             logger.error("Get wx userinfo error.", e);
         }*/
+    }
+
+    public void genUser() {
+        List<PPartymember> pPartymembers = pPartymemberService.selectAll();
+
+        PUser pUser = new PUser();
+
+        try {
+            for (PPartymember pPartymember : pPartymembers) {
+                String name = pPartymember.getName();
+                String pinyingName = PingyinUtil.cn2SpellNoBlank(name);
+
+                String password = StringUtil.getMD5Digest32("12345678");
+
+                pUser.setUserid(pPartymember.getId());
+                pUser.setDepartmentid(pPartymember.getDepartmentid());
+                pUser.setTel(pPartymember.getPhone());
+                pUser.setPassword(password);
+                pUser.setName(pinyingName);
+
+                insert(pUser);
+            }
+        } catch (Exception e) {
+            logger.debug("Gen User error, user has exists, continue.", e);
+        }
     }
 }

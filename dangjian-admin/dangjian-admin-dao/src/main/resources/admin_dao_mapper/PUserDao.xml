@@ -112,12 +112,19 @@
     </selectKey>
     insert into p_user (name, email, password,
     company, job, tel,
-    roleid, departmentid, openid,
-    token)
+    roleid, departmentid, openid, token
+    <if test="userid != null">
+    ,userid
+    </if>
+    )
     values (#{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
     #{company,jdbcType=VARCHAR}, #{job,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR},
     #{roleid,jdbcType=INTEGER}, #{departmentid,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR},
-    #{token,jdbcType=VARCHAR})
+    #{token,jdbcType=VARCHAR}
+    <if test="userid != null">
+    ,#{userid, jdbcType=INTEGER}
+    </if>
+    )
   </insert>
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PUser">
     <selectKey keyProperty="userid" order="AFTER" resultType="java.lang.Integer">

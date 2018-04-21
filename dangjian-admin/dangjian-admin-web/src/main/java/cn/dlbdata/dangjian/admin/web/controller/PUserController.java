@@ -7,10 +7,7 @@ import cn.dlbdata.dangjian.admin.service.PUserService;
 import cn.dlbdata.dangjian.admin.web.VO.LoginVO;
 import cn.dlbdata.dangjian.common.DO.UserLoginDO;
 import cn.dlbdata.dangjian.common.DangjianException;
-import cn.dlbdata.dangjian.common.util.CookieUtil;
-import cn.dlbdata.dangjian.common.util.HttpResult;
-import cn.dlbdata.dangjian.common.util.ResultUtil;
-import cn.dlbdata.dangjian.common.util.TokenUtil;
+import cn.dlbdata.dangjian.common.util.*;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.access.GetUserInfo;
 import cn.dlbdata.dangjian.thirdparty.mp.sdk.service.UserInfoService;
 import com.github.pagehelper.PageHelper;
@@ -188,13 +185,12 @@ public class PUserController {
     @ResponseBody
     public HttpResult tologin(@RequestBody(required = false) UserLoginDO userLoginDO,
                               HttpServletRequest request, HttpServletResponse response) {
-
         if (null == userLoginDO) {
             return HttpResult.failure("登陆失败，用户名或密码不能为空.");
         }
 
         String name = userLoginDO.getName();
-        String password = userLoginDO.getPassword();
+        String password = StringUtil.getMD5Digest32(userLoginDO.getPassword());
 
         if (null == name || name.length() <= 0 || null == password || password.length() <= 0) {
             return HttpResult.failure("登陆失败，用户名或密码不能为空.");
@@ -203,8 +199,6 @@ public class PUserController {
         try {
             // 查询用户的账号与密码
             PUser pUser = this.puserService.tologin(name, password);
-            // 查询roleid
-//            PUser pUserRole = this.puserService.findRoleid(name);
 
             // 验证通过
             if (pUser != null && pUser.getPassword().equals(password)) {
@@ -230,6 +224,7 @@ public class PUserController {
                     puserService.saveLoginUserInfo(pUser.getUserid(), token, userLoginDO.getOpenId());
 
                 }
+
                 if(pUser.getOpenid()!=null){
                     GetUserInfo getUserInfo = new GetUserInfo();
                     getUserInfo.setLang("zh_CN");
@@ -253,21 +248,21 @@ public class PUserController {
 
 
                 return HttpResult.success(loginVO);
-
             } else {
                 return HttpResult.failure("登陆失败，用户名或密码错误.");
-//                result.setSuccess(false);
-//                result.setMsg("name or password error");
             }
-
         } catch (Exception e) {
             LOGGER.error("User login error.", e);
-//            result.setSuccess(false);
-//            result.setMsg("exception error");
+
             return HttpResult.failure("登陆失败，系统错误.");
         }
+    }
 
-        //final return值
-//        return null;
+    @RequestMapping("/genUser")
+    @ResponseBody
+    public HttpResult genUser() {
+        puserService.genUser();
+
+        return HttpResult.success();
     }
 }
