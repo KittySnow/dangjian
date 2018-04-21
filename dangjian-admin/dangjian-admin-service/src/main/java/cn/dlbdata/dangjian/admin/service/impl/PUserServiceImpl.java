@@ -141,6 +141,7 @@ public class PUserServiceImpl implements PUserService {
                 pUser.setTel(pPartymember.getPhone());
                 pUser.setPassword(password);
                 pUser.setName(pinyingName);
+                pUser.setRoleid(4);
 
                 insert(pUser);
             }
