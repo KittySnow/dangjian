@@ -1,11 +1,12 @@
 package cn.dlbdata.dangjian.admin.web.controller;
 
 import cn.dlbdata.dangjian.admin.dao.model.*;
-import cn.dlbdata.dangjian.admin.service.PScoreDetailService;
-import cn.dlbdata.dangjian.admin.service.PScorePartyService;
-import cn.dlbdata.dangjian.admin.service.PScoreProjectService;
+import cn.dlbdata.dangjian.admin.service.*;
+import cn.dlbdata.dangjian.common.util.DateUtil;
 import cn.dlbdata.dangjian.common.util.HttpResult;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.api.client.util.ArrayMap;
@@ -29,6 +30,12 @@ public class PScorePartyController{
     private PScoreDetailService pScoreDetailService;
     @Autowired
     private PScoreProjectService pScoreProjectService;
+
+    @Autowired
+    private PStudyService pStudyService;
+
+    @Autowired
+    private PStudyPictureService pStudyPictureService;
 
 
     @RequestMapping(value="/save",method= RequestMethod.POST)
@@ -228,6 +235,8 @@ public class PScorePartyController{
     public Map<String, Object> getProjectScoreByUserId(Integer userId ,Integer year){
         ResultUtil result = new ResultUtil();
         List<PScoreParty> pScorePartyList = pScorePartyService.getProjectScoreByUserId(userId,year);
+
+        //七个项目列表
         List<PScoreProject> pScoreProjectList = pScoreProjectService.selectByExample(new PScoreProjectExample());
 
 
@@ -237,25 +246,66 @@ public class PScorePartyController{
             pScorePartyMap.put(p.getProjectId(),p.getTypetotalscore());;
         }
 
-        List<PScoreParty> pScoreList =  new ArrayList<>();
+
+        List<JSONObject> list = new ArrayList<>();
 
         for(int i=0;i<pScoreProjectList.size();i++){
-            PScoreParty pScoreParty = new PScoreParty();
+
+
             PScoreProject pScoreProject = pScoreProjectList.get(i);
+            PScoreParty pScoreParty = new PScoreParty();
             pScoreParty.setScore(pScoreProject.getScore());
             pScoreParty.setId(pScoreProject.getId());
             pScoreParty.setProjectName(pScoreProject.getProjectName());
+
+
             if(pScorePartyMap.get(pScoreProject.getId())!=null){
                 pScoreParty.setTotalScore(pScorePartyMap.get(pScoreProject.getId()));
             }else{
                 pScoreParty.setTotalScore(0.0);
             }
-            pScoreList.add(pScoreParty);
+
+            JSONObject json = JSON.parseObject(JSON.toJSONString(pScoreParty));
+
+            //当每个党员的项目ID为政治积分时，查找党员是否已经提交过信息（在PSTUDY表中的记录）
+            if(pScoreProject.getId()==1){
+                List<PStudy> pStudyList = this.getInfoByMyself(userId,year,2);
+                if(pStudyList!=null){
+                    json.put("info",pStudyList);
+                }
+            }
+
+            if(pScoreProject.getId()==2){
+                List<PStudy> pStudyList = this.getInfoByMyself(userId,year,4);
+                if(pStudyList!=null){
+                    json.put("info",pStudyList);
+                }
+            }
+
+            if(pScoreProject.getId()==6){
+                List<PStudy> pStudyList = this.getInfoByMyself(userId,year,8);
+                if(pStudyList!=null){
+                    json.put("info",pStudyList);
+                }
+            }
+
+            list.add(json);
         }
 
         result.setSuccess(true);
-        result.setData(pScoreList);
+        result.setData(list);
         return result.getResult();
+    }
+
+    public List<PStudy> getInfoByMyself(Integer userId,Integer year,Integer detailId){
+        PStudyExample ex =  new PStudyExample();
+        PStudyExample.Criteria ct = ex.createCriteria();
+        ct.andModuleidEqualTo(detailId);
+        ct.andCreateUseridEqualTo(userId);
+        Date startTime = DateUtil.getYearFirst(year);
+        Date endTime = DateUtil.getYearLast(year);
+        ct.andCreatetimeBetween(startTime,endTime);
+        return pStudyService.selectByExample(ex);
     }
 
 
@@ -282,6 +332,7 @@ public class PScorePartyController{
     }
 
 
+    //扣分详情页
     @RequestMapping(value="/showDakDetialByUserId",method= {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public Map<String, Object> showDakDetialByUserId(Integer userId){
@@ -302,9 +353,6 @@ public class PScorePartyController{
             result.setMsg("没有找到相关数据");
             result.setSuccess(false);
         }
-
-
-
         return result.getResult();
     }
 }
