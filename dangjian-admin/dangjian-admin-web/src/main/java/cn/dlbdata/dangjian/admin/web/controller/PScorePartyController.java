@@ -282,4 +282,29 @@ public class PScorePartyController{
     }
 
 
+    @RequestMapping(value="/showDakDetialByUserId",method= {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String, Object> showDakDetialByUserId(Integer userId){
+        ResultUtil result = new ResultUtil();
+
+        PScorePartyExample example = new PScorePartyExample();
+        PScorePartyExample.Criteria ct = example.createCriteria();
+        ct.andDetailIdEqualTo(6);
+        ct.andYearEqualTo(Calendar.getInstance().get(Calendar.YEAR));
+        ct.andUserIdEqualTo(userId);
+        List<PScoreParty> pScorePartyList= pScorePartyService.selectByExample(example);
+        if(pScorePartyList!=null){
+            if(pScorePartyList.size()!=0){
+                result.setData(pScorePartyList.get(0));
+                result.setSuccess(true);
+            }
+        }else{
+            result.setMsg("没有找到相关数据");
+            result.setSuccess(false);
+        }
+
+
+
+        return result.getResult();
+    }
 }
