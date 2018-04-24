@@ -301,7 +301,7 @@ public class PPartymemberController {
                     }
 
 
-                    //1所有人没审批中 2代表审核通过 3代表超期未加分
+                    //1所有人没审批 2代表审核通过 3代表超期未加分
                     if(pScorePartyList != null ){
 
                         if(pScorePartyList.size()!=0){

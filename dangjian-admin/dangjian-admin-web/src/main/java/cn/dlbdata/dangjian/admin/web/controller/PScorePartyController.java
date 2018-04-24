@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
@@ -166,6 +167,7 @@ public class PScorePartyController{
         return result.getResult();
     }
 
+    //不需要审核人的增加积分
     @RequestMapping(value="/scoreCustom",method= {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public Map<String, Object> updateScoreCustom(PScoreParty pScoreParty){
@@ -185,6 +187,8 @@ public class PScorePartyController{
         return result.getResult();
     }
 
+
+    //扣除积分
     @RequestMapping(value="/scoreClean",method= {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public Map<String, Object> updateSscoreClean(PScoreParty pScoreParty){
@@ -332,15 +336,19 @@ public class PScorePartyController{
     }
 
 
-    //扣分详情页
+    //扣分详情页(思想评定也同接口)
     @RequestMapping(value="/showDakDetialByUserId",method= {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
-    public Map<String, Object> showDakDetialByUserId(Integer userId){
+    public Map<String, Object> showDakDetialByUserId(Integer userId,@RequestParam(required=false) Integer detailId){
         ResultUtil result = new ResultUtil();
 
         PScorePartyExample example = new PScorePartyExample();
         PScorePartyExample.Criteria ct = example.createCriteria();
-        ct.andDetailIdEqualTo(6);
+        if(detailId==null){
+            ct.andDetailIdEqualTo(6);
+        }else{
+            ct.andDetailIdEqualTo(detailId);
+        }
         ct.andYearEqualTo(Calendar.getInstance().get(Calendar.YEAR));
         ct.andUserIdEqualTo(userId);
         List<PScoreParty> pScorePartyList= pScorePartyService.selectByExample(example);
