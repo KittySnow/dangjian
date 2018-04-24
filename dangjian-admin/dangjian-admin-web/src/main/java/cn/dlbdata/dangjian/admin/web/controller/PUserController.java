@@ -134,12 +134,13 @@ public class PUserController {
         if (null == userId) {
             return HttpResult.failure("userId不能为空");
         }
-
         PUser puser = puserService.selectByPrimaryKey(userId);
-        // 密码不能返回，置为 null
-        puser.setPassword(null);
-
-        return HttpResult.success(puser);
+        if(puser!=null){
+            puser.setPassword(null);
+            return HttpResult.success(puser);
+        }else{
+            return HttpResult.success(null);
+        }
     }
 
     /**root directory 直接访问*/
