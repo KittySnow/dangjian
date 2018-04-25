@@ -39,9 +39,18 @@ public class PScorePartyController{
     private PStudyPictureService pStudyPictureService;
 
 
+
+
+    @Autowired
+    private PPartymemberService pPartymemberService;
+
+
     @RequestMapping(value="/save",method= RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> save(PScoreParty pScoreParty){
+
+
+
         ResultUtil result = new ResultUtil();
         int callbackId = pScorePartyService.insert(pScoreParty);
         result.setData(callbackId);
@@ -170,8 +179,11 @@ public class PScorePartyController{
     //不需要审核人的增加积分
     @RequestMapping(value="/scoreCustom",method= {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
-    public Map<String, Object> updateScoreCustom(PScoreParty pScoreParty){
+    public Map<String, Object> updateScoreCustom(PScoreParty pScoreParty,@RequestParam(required=false) Long addTimes){
         ResultUtil result = new ResultUtil();
+        if(addTimes!=null){
+            pScoreParty.setAddTime(new Date(addTimes));
+        }
         if (pScoreParty.getDetailId() == null || pScoreParty.getUserId() == null || pScoreParty.getAdderId() == null || pScoreParty.getScore() == null || pScoreParty.getScore() <= 0){
             result.setSuccess(false);
             result.setMsg("请求参数不完整");
@@ -273,21 +285,21 @@ public class PScorePartyController{
 
             //当每个党员的项目ID为政治积分时，查找党员是否已经提交过信息（在PSTUDY表中的记录）
             if(pScoreProject.getId()==1){
-                List<PStudy> pStudyList = this.getInfoByMyself(userId,year,2);
+                List<JSONObject> pStudyList = this.getInfoByMyself(userId,year,2);
                 if(pStudyList!=null){
                     json.put("info",pStudyList);
                 }
             }
 
             if(pScoreProject.getId()==2){
-                List<PStudy> pStudyList = this.getInfoByMyself(userId,year,4);
+                List<JSONObject> pStudyList = this.getInfoByMyself(userId,year,4);
                 if(pStudyList!=null){
                     json.put("info",pStudyList);
                 }
             }
 
             if(pScoreProject.getId()==6){
-                List<PStudy> pStudyList = this.getInfoByMyself(userId,year,8);
+                List<JSONObject> pStudyList = this.getInfoByMyself(userId,year,8);
                 if(pStudyList!=null){
                     json.put("info",pStudyList);
                 }
@@ -301,15 +313,41 @@ public class PScorePartyController{
         return result.getResult();
     }
 
-    public List<PStudy> getInfoByMyself(Integer userId,Integer year,Integer detailId){
+    public List<JSONObject> getInfoByMyself(Integer userId,Integer year,Integer detailId){
         PStudyExample ex =  new PStudyExample();
-        PStudyExample.Criteria ct = ex.createCriteria();
-        ct.andModuleidEqualTo(detailId);
-        ct.andCreateUseridEqualTo(userId);
+        PStudyExample.Criteria ct1 = ex.createCriteria();
+        ct1.andModuleidEqualTo(detailId);
+        ct1.andCreateUseridEqualTo(userId);
         Date startTime = DateUtil.getYearFirst(year);
         Date endTime = DateUtil.getYearLast(year);
-        ct.andCreatetimeBetween(startTime,endTime);
-        return pStudyService.selectByExample(ex);
+        ct1.andCreatetimeBetween(startTime,endTime);
+
+        List<PStudy> pStudylist = pStudyService.selectByExample(ex);
+
+        List<JSONObject> list = new ArrayList<>();
+
+        for (PStudy pStudy:pStudylist) {
+            PStudyPictureExample pA = new PStudyPictureExample();
+            PStudyPictureExample.Criteria ct = pA.createCriteria();
+            ct.andStudyIdEqualTo(pStudy.getStudyid());
+            List<PStudyPicture> pStudyPictureList = pStudyPictureService.selectByExample(pA);
+            JSONObject json = JSON.parseObject(JSON.toJSONString(pStudy));
+            PPartymember pPartymember = pPartymemberService.selectByUserId(pStudy.getCreateUserid());
+
+            PPartymember leader = pPartymemberService.selectBranchByDepartmentId(pStudy.getDepartmentid());
+
+            PPartymember Approval = pPartymemberService.selectByUserId(pStudy.getApprovalid());
+
+            json.put("approvalname",pPartymember.getName());
+            json.put("partyname",pPartymember.getName());
+            json.put("pictures", pStudyPictureList);
+
+            json.put("branch", leader.getName());
+
+            list.add(json);
+        }
+
+        return list;
     }
 
 
