@@ -506,9 +506,7 @@
         SELECT
             t.project_id,
             6,
-            (sum(t.score)*-1)+ifnull((SELECT sum(s.score)*-1 from p_score_party s where s.year = t.year
-                and s.user_id = t.user_id and s.detail_id = 6
-            ),0),
+            -20,
             #{adderId,jdbcType=INTEGER},
             NULL,
             t.year,
@@ -523,7 +521,7 @@
       </if>
             'Y',
             t.user_id
-        FROM p_score_party t where t.user_id = #{userId,jdbcType=INTEGER} AND t.detail_id = 5 AND t.year = extract(year from now())
+        FROM p_score_party t where t.user_id = #{userId,jdbcType=INTEGER} AND t.detail_id = 16 AND t.year = extract(year from now())
         GROUP BY t.project_id,t.year HAVING sum(t.score) > ifnull((SELECT sum(s.score)*-1 from p_score_party s where s.year = t.year
           and s.user_id = t.user_id and s.detail_id = 6
         ),0)
@@ -551,7 +549,7 @@
 		ELSE p.score
 	END) as "typetotalscore"
 from p_score_party p INNER JOIN p_partymember u ON p.user_id = u.userid
-where p.project_id = 5 and  u.departmentid =  #{departmentId,jdbcType=INTEGER}
+where p.project_id = 16 and  u.departmentid =  #{departmentId,jdbcType=INTEGER}
 GROUP BY p.user_id,u.name
   </select>
 
