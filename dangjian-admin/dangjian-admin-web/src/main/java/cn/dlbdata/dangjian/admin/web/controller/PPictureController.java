@@ -140,6 +140,9 @@ public class PPictureController {
             try {
                 File imgFile = new File(path);
                 String thumbnailPath = path.substring(0, path.lastIndexOf(File.separator)) + File.separator + PREVFIX + imgFile.getName();
+                if(!new File(thumbnailPath).exists()){
+                    thumbnailImage(path,200,200,PREVFIX,false);
+                }
                 is = new FileInputStream(thumbnailPath);
                 response.setContentType("image/jpeg");
                 // 设置页面不缓存
