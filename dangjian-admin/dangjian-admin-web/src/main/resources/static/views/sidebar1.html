@@ -37,102 +37,39 @@
 
     <!-- SIDEBAR MENU: : style can be found in sidebar.less -->
     <ul id="menu" class="sidebar-menu">
-        <li>      <!--ng-class="{true: 'active'}[activeSmall == 'dashboard']"-->
-            <a href="#!/dashboard">
+
+        <li class="treeview">
+            <a href="#!/">
                 <i class="fa fontello-desktop-1"></i>
-                <span>后台管理</span>
+                <span class="hide-menu">用户管理</span>
+                <i class="fa fa-angle-left pull-right"></i>
             </a>
-        </li>
-        <li>   <!-- ng-class="{true: 'active'}[activeSmall == 'BimProject']" ng-if="checkMenu('BimProject')"-->
-            <a href="#!/BimProject/projectList">
-                <i class="fa fontello-desktop-1"></i>
-                <span>项目管理</span>
-            </a>
+            <ul class="treeview-menu">
+                <li><a href="#!/UserAdmin/userAdmin">用户列表</a></li>
+                <li><a href="#!/DepartmentList/departmentList">部门管理</a></li>
+                <li><a href="#!/RoleList/roleList">角色列表</a></li>
+                <li><a href="#!/FeatureList/featureList">功能列表</a></li>
+            </ul>
         </li>
 
-        <li>
-            <a href="#!/UserAdmin/userAdmin">
+        <li class="treeview">
+            <a href="#!/">
                 <i class="fa fontello-desktop-1"></i>
-                <span>用户列表</span>
+                <span class="hide-menu">党员管理</span>
+                <i class="fa fa-angle-left pull-right"></i>
             </a>
+            <ul class="treeview-menu">
+                <li><a href="#!/PartyMember/partyMember">党员列表</a></li>
+                <li><a href="#!/PartymemberDues/partymemberDues">党费历史缴纳</a></li>
+                <li><a href="#!/ScoreLevel/scoreLevel">党员积分等级分值列表</a></li>
+                <li><a href="#!/Active/active">党员活动列表</a></li>
+                <li><a href="#!/ScoreLevel/scoreLevel">党员积分等级分值列表</a></li>
+                <li><a href="#!/PartymemberScoreItem/partymemberScoreItem">党员积分明细</a></li>
+                <li><a href="#!/StudyModule/studyModule">党员自主学习</a></li>
+                <li><a href="#!/PartyScoreItem/partyScoreItem">党员积分明细</a></li>
+            </ul>
         </li>
 
-        <li>
-            <a href="#!/DepartmentList/departmentList">
-                <i class="fa fontello-desktop-1"></i>
-                <span>部门管理</span>
-            </a>
-        </li>
-
-        <li>
-            <a href="#!/RoleList/roleList">
-                <i class="fa fontello-desktop-1"></i>
-                <span>角色列表</span>
-            </a>
-        </li>
-
-        <li>
-            <a href="#!/FeatureList/featureList">
-                <i class="fa fontello-desktop-1"></i>
-                <span>功能列表</span>
-            </a>
-        </li>
-
-        <li>
-            <a href="#!/PartyMember/partyMember">
-                <i class="fa fontello-desktop-1"></i>
-                <span>党员列表</span>
-            </a>
-        </li>
-
-        <li>
-            <a href="#!/PartymemberDues/partymemberDues">
-                <i class="fa fontello-desktop-1"></i>
-                <span>党费历史缴纳</span>
-            </a>
-        </li>
-
-        <li>
-            <a href="#!/ScoreLevel/scoreLevel">
-                <i class="fa fontello-desktop-1"></i>
-                <span>党员积分等级分值列表</span>
-            </a>
-        </li>
-
-        <li>
-            <a href="#!/Active/active">
-                <i class="fa fontello-desktop-1"></i>
-                <span>党员活动列表</span>
-            </a>
-        </li>
-
-        <li>
-            <a href="#!/PartymemberScoreItem/partymemberScoreItem">
-                <i class="fa fontello-desktop-1"></i>
-                <span>党员积分明细</span>
-            </a>
-        </li>
-
-        <li>
-            <a href="#!/StudyModule/studyModule">
-                <i class="fa fontello-desktop-1"></i>
-                <span>党员自主学习</span>
-            </a>
-        </li>
-
-        <li>
-            <a href="#!/PartyScoreItem/partyScoreItem">
-                <i class="fa fontello-desktop-1"></i>
-                <span>党员积分明细</span>
-            </a>
-        </li>
-
-        <li>
-            <a href="#!/SysLog/sysLog">
-                <i class="fa fontello-desktop-1"></i>
-                <span>系统日志</span>
-            </a>
-        </li>
 
         <li class="treeview">
             <a href="#!/">
@@ -141,9 +78,10 @@
                 <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-                <li><a href="#!/WxBindAdmin/wxBindAdmin">绑定微信账号</a></li>
+                <!--<li><a href="#!/WxBindAdmin/wxBindAdmin">绑定微信账号</a></li>-->
                 <li><a href="#!/WxMenu/wxMenu">菜单生成</a></li>
                 <li><a href="#!/WxSend/wxSend">微信群发</a></li>
+                <li><a href="#!/WxSend/wxSend">微信被关注信息</a></li>
             </ul>
         </li>
         <li class="treeview">

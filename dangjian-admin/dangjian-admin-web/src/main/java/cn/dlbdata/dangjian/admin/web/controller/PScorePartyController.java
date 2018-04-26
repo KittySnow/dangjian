@@ -1,11 +1,12 @@
 package cn.dlbdata.dangjian.admin.web.controller;
 
 import cn.dlbdata.dangjian.admin.dao.model.*;
-import cn.dlbdata.dangjian.admin.service.PScoreDetailService;
-import cn.dlbdata.dangjian.admin.service.PScorePartyService;
-import cn.dlbdata.dangjian.admin.service.PScoreProjectService;
+import cn.dlbdata.dangjian.admin.service.*;
+import cn.dlbdata.dangjian.common.util.DateUtil;
 import cn.dlbdata.dangjian.common.util.HttpResult;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.api.client.util.ArrayMap;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
@@ -30,10 +32,25 @@ public class PScorePartyController{
     @Autowired
     private PScoreProjectService pScoreProjectService;
 
+    @Autowired
+    private PStudyService pStudyService;
+
+    @Autowired
+    private PStudyPictureService pStudyPictureService;
+
+
+
+
+    @Autowired
+    private PPartymemberService pPartymemberService;
+
 
     @RequestMapping(value="/save",method= RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> save(PScoreParty pScoreParty){
+
+
+
         ResultUtil result = new ResultUtil();
         int callbackId = pScorePartyService.insert(pScoreParty);
         result.setData(callbackId);
@@ -159,10 +176,14 @@ public class PScorePartyController{
         return result.getResult();
     }
 
+    //不需要审核人的增加积分
     @RequestMapping(value="/scoreCustom",method= {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
-    public Map<String, Object> updateScoreCustom(PScoreParty pScoreParty){
+    public Map<String, Object> updateScoreCustom(PScoreParty pScoreParty,@RequestParam(required=false) Long addTimes){
         ResultUtil result = new ResultUtil();
+        if(addTimes!=null){
+            pScoreParty.setAddTime(new Date(addTimes));
+        }
         if (pScoreParty.getDetailId() == null || pScoreParty.getUserId() == null || pScoreParty.getAdderId() == null || pScoreParty.getScore() == null || pScoreParty.getScore() <= 0){
             result.setSuccess(false);
             result.setMsg("请求参数不完整");
@@ -178,6 +199,8 @@ public class PScorePartyController{
         return result.getResult();
     }
 
+
+    //扣除积分
     @RequestMapping(value="/scoreClean",method= {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public Map<String, Object> updateSscoreClean(PScoreParty pScoreParty){
@@ -228,6 +251,8 @@ public class PScorePartyController{
     public Map<String, Object> getProjectScoreByUserId(Integer userId ,Integer year){
         ResultUtil result = new ResultUtil();
         List<PScoreParty> pScorePartyList = pScorePartyService.getProjectScoreByUserId(userId,year);
+
+        //七个项目列表
         List<PScoreProject> pScoreProjectList = pScoreProjectService.selectByExample(new PScoreProjectExample());
 
 
@@ -237,25 +262,92 @@ public class PScorePartyController{
             pScorePartyMap.put(p.getProjectId(),p.getTypetotalscore());;
         }
 
-        List<PScoreParty> pScoreList =  new ArrayList<>();
+
+        List<JSONObject> list = new ArrayList<>();
 
         for(int i=0;i<pScoreProjectList.size();i++){
-            PScoreParty pScoreParty = new PScoreParty();
+
+
             PScoreProject pScoreProject = pScoreProjectList.get(i);
+            PScoreParty pScoreParty = new PScoreParty();
             pScoreParty.setScore(pScoreProject.getScore());
             pScoreParty.setId(pScoreProject.getId());
             pScoreParty.setProjectName(pScoreProject.getProjectName());
+
+
             if(pScorePartyMap.get(pScoreProject.getId())!=null){
                 pScoreParty.setTotalScore(pScorePartyMap.get(pScoreProject.getId()));
             }else{
                 pScoreParty.setTotalScore(0.0);
             }
-            pScoreList.add(pScoreParty);
+
+            JSONObject json = JSON.parseObject(JSON.toJSONString(pScoreParty));
+
+            //当每个党员的项目ID为政治积分时，查找党员是否已经提交过信息（在PSTUDY表中的记录）
+            if(pScoreProject.getId()==1){
+                List<JSONObject> pStudyList = this.getInfoByMyself(userId,year,2);
+                if(pStudyList!=null){
+                    json.put("info",pStudyList);
+                }
+            }
+
+            if(pScoreProject.getId()==2){
+                List<JSONObject> pStudyList = this.getInfoByMyself(userId,year,4);
+                if(pStudyList!=null){
+                    json.put("info",pStudyList);
+                }
+            }
+
+            if(pScoreProject.getId()==6){
+                List<JSONObject> pStudyList = this.getInfoByMyself(userId,year,8);
+                if(pStudyList!=null){
+                    json.put("info",pStudyList);
+                }
+            }
+
+            list.add(json);
         }
 
         result.setSuccess(true);
-        result.setData(pScoreList);
+        result.setData(list);
         return result.getResult();
+    }
+
+    public List<JSONObject> getInfoByMyself(Integer userId,Integer year,Integer detailId){
+        PStudyExample ex =  new PStudyExample();
+        PStudyExample.Criteria ct1 = ex.createCriteria();
+        ct1.andModuleidEqualTo(detailId);
+        ct1.andCreateUseridEqualTo(userId);
+        Date startTime = DateUtil.getYearFirst(year);
+        Date endTime = DateUtil.getYearLast(year);
+        ct1.andCreatetimeBetween(startTime,endTime);
+
+        List<PStudy> pStudylist = pStudyService.selectByExample(ex);
+
+        List<JSONObject> list = new ArrayList<>();
+
+        for (PStudy pStudy:pStudylist) {
+            PStudyPictureExample pA = new PStudyPictureExample();
+            PStudyPictureExample.Criteria ct = pA.createCriteria();
+            ct.andStudyIdEqualTo(pStudy.getStudyid());
+            List<PStudyPicture> pStudyPictureList = pStudyPictureService.selectByExample(pA);
+            JSONObject json = JSON.parseObject(JSON.toJSONString(pStudy));
+            PPartymember pPartymember = pPartymemberService.selectByUserId(pStudy.getCreateUserid());
+
+            PPartymember leader = pPartymemberService.selectBranchByDepartmentId(pStudy.getDepartmentid());
+
+            PPartymember Approval = pPartymemberService.selectByUserId(pStudy.getApprovalid());
+
+            json.put("approvalname",pPartymember.getName());
+            json.put("partyname",pPartymember.getName());
+            json.put("pictures", pStudyPictureList);
+
+            json.put("branch", leader.getName());
+
+            list.add(json);
+        }
+
+        return list;
     }
 
 
@@ -282,4 +374,31 @@ public class PScorePartyController{
     }
 
 
+    //扣分详情页(思想评定也同接口)
+    @RequestMapping(value="/showDakDetialByUserId",method= {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public Map<String, Object> showDakDetialByUserId(Integer userId,@RequestParam(required=false) Integer detailId){
+        ResultUtil result = new ResultUtil();
+
+        PScorePartyExample example = new PScorePartyExample();
+        PScorePartyExample.Criteria ct = example.createCriteria();
+        if(detailId==null){
+            ct.andDetailIdEqualTo(6);
+        }else{
+            ct.andDetailIdEqualTo(detailId);
+        }
+        ct.andYearEqualTo(Calendar.getInstance().get(Calendar.YEAR));
+        ct.andUserIdEqualTo(userId);
+        List<PScoreParty> pScorePartyList= pScorePartyService.selectByExample(example);
+        if(pScorePartyList!=null){
+            if(pScorePartyList.size()!=0){
+                result.setData(pScorePartyList.get(0));
+                result.setSuccess(true);
+            }
+        }else{
+            result.setMsg("没有找到相关数据");
+            result.setSuccess(false);
+        }
+        return result.getResult();
+    }
 }

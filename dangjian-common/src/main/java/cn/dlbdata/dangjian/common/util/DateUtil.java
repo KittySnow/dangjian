@@ -46,6 +46,21 @@ public class DateUtil {
     }
 
     /**
+     * 获取某年上半年日期
+     * @param year 年份
+     * @return Date
+     */
+    public static Date getYearMiddle(int year){
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH,6);
+        calendar.set(Calendar.DATE,30);
+        Date currYearFirst = calendar.getTime();
+        return currYearFirst;
+    }
+
+    /**
      * 获取某年最后一天日期
      * @param year 年份
      * @return Date

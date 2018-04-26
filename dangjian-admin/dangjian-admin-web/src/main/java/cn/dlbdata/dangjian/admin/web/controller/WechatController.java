@@ -1,6 +1,7 @@
 package cn.dlbdata.dangjian.admin.web.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -48,9 +49,15 @@ public class WechatController {
         // 随机字符串
         String echostr = request.getParameter("echostr");
         // 通过检验signature对请求进行校验，若校验成功则原样返回echostr，表示接入成功，否则接入失败
+
+		PrintWriter out = response.getWriter();
+
         if (SignUtil.checkSignature(signature, timestamp, nonce)) {
-        	response.getWriter().print(echostr);
+			out.print(echostr);
         }
+
+		out.close();
+		out = null;
 	}
 
 	/**
@@ -72,12 +79,23 @@ public class WechatController {
 
 		Map<String, String> map = MessageUtil.parseXml(request);
         String msgType = map.get("MsgType");
-        if(MessageUtil.REQ_MESSAGE_TYPE_EVENT.equals(msgType)){
-        	logger.info("WechatController->DoPost->EventDispatcher start");
-        	response.getWriter().write(EventDispatcher.processEvent(map)); 	//进入事件处理
-        }else{
-        	logger.info("WechatController->DoPost->MsgDispatcher start");
-        	response.getWriter().write(MsgDispatcher.processMessage(map));	//进入消息处理
-        }
+
+		PrintWriter out = response.getWriter();
+
+		if(msgType!=null){
+			if(MessageUtil.REQ_MESSAGE_TYPE_EVENT.equals(msgType)){
+				logger.info("WechatController->DoPost->EventDispatcher start");
+				out.write(EventDispatcher.processEvent(map));; 	//进入事件处理
+			}else{
+				logger.info("WechatController->DoPost->MsgDispatcher start");
+				out.write(MsgDispatcher.processMessage(map));;	//进入消息处理
+			}
+		}else{
+			logger.info("微信方法失效");
+		}
+
+
+		out.close();
+		out = null;
 	}
 }

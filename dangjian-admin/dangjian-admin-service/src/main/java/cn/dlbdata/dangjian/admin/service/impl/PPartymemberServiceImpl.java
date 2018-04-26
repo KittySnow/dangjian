@@ -103,7 +103,11 @@ public class PPartymemberServiceImpl implements PPartymemberService {
         criteria.andUseridEqualTo(userid);
         List<PPartymember> pPartymemberList = this.selectByExample(pPartymemberExample);
         if(pPartymemberList!=null){
-            return pPartymemberList.get(0);
+            if(pPartymemberList.size()!=0){
+                return pPartymemberList.get(0);
+            }else {
+                return null;
+            }
         }else{
             return null;
         }

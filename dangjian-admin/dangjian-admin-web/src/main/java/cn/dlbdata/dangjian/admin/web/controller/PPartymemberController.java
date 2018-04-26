@@ -1,10 +1,8 @@
 package cn.dlbdata.dangjian.admin.web.controller;
 
 import cn.dlbdata.dangjian.admin.dao.model.*;
-import cn.dlbdata.dangjian.admin.service.PAvantgradeService;
-import cn.dlbdata.dangjian.admin.service.PDepartmentService;
-import cn.dlbdata.dangjian.admin.service.PPartymemberService;
-import cn.dlbdata.dangjian.admin.service.PUserService;
+import cn.dlbdata.dangjian.admin.service.*;
+import cn.dlbdata.dangjian.common.util.DateUtil;
 import cn.dlbdata.dangjian.common.util.ResultUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -19,10 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 @Controller
 @RequestMapping("/ppartymember")
@@ -40,6 +36,9 @@ public class PPartymemberController {
 
     @Autowired
     private PAvantgradeService pAvantgradeService;
+
+    @Autowired
+    private PScorePartyService pScorePartyService;
 
     @RequestMapping(value="/save",method= RequestMethod.POST)
     @ResponseBody
@@ -264,5 +263,87 @@ public class PPartymemberController {
     }
 
 
+    //思想考核评定
+    //支部党员信息
+    @RequestMapping(value="/getReportByDepartmentid",method= RequestMethod.GET)
+    @ResponseBody
+    /*
+    status:0 代表 等待领导审核 NULL 代表等待支部书记审核，1代表领导已审核
+    * */
+    public Map<String, Object> getReportByDepartmentid(Integer departmentid,Integer moudleId,@RequestParam(required=false) Integer status){
+        ResultUtil result = new ResultUtil();
+        PPartymemberExample pPartymemberExample = new PPartymemberExample();
+        PPartymemberExample.Criteria pPartymemberCriteria =  pPartymemberExample.createCriteria();
+        pPartymemberCriteria.andDepartmentidEqualTo(departmentid);
+        List<PPartymember> pPartymemberList = pPartymemberService.selectByExample(pPartymemberExample);
+        PPartymember leader = pPartymemberService.selectBranchByDepartmentId(departmentid);
+
+        List<JSONObject> list = new ArrayList<>();
+        if(pPartymemberList!=null){
+            if(pPartymemberList.size()!=0){
+                for (PPartymember pPartymember:pPartymemberList){
+                    JSONObject json = JSON.parseObject(JSON.toJSONString(pPartymember));
+
+                    //根据用户ID 找思想汇报审核没
+
+                    PScorePartyExample example = new PScorePartyExample();
+                    PScorePartyExample.Criteria ct = example.createCriteria();
+                    ct.andDetailIdEqualTo(moudleId);
+                    Integer year = Calendar.getInstance().get(Calendar.YEAR);
+                    ct.andYearEqualTo(Calendar.getInstance().get(Calendar.YEAR));
+                    ct.andUserIdEqualTo(pPartymember.getUserid());
+                    List<PScoreParty> pScorePartyList= pScorePartyService.selectByExample(example);
+
+                    if(leader!=null){
+                        json.put("branchName", leader.getName());
+                    }else{
+                        json.put("branchName", "暂无党支书");
+                    }
+
+
+                    //1所有人没审批 2代表审核通过 3代表超期未加分
+                    if(pScorePartyList != null ){
+
+                        if(pScorePartyList.size()!=0){
+
+                            json.put("tempint", 2);
+
+                        }else{
+                            if(moudleId==11){
+
+                                if(new Date().getTime()<DateUtil.getYearMiddle(year).getTime()){
+                                    json.put("tempint", 1);
+                                }else{
+                                    json.put("tempint", 3);
+                                }
+                            }
+
+                            if(moudleId==12){
+
+                                if(new Date().getTime()<DateUtil.getYearLast(year).getTime()){
+                                    json.put("tempint", 1);
+                                }else{
+                                    json.put("tempint", 3);
+                                }
+                            }
+                        }
+
+                    }else{
+
+                        json.put("tempint", 1);
+                    }
+
+                    list.add(json);
+
+                }
+
+            }
+
+        }
+
+        result.setSuccess(true);
+        result.setData(list);
+        return result.getResult();
+    }
 
 }

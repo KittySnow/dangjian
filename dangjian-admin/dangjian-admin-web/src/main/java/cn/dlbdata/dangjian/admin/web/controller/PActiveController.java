@@ -334,6 +334,63 @@ public class PActiveController {
         return result.getResult();
     }
 
+
+    //查看自己参与的活动
+    @RequestMapping(value="/getEnjoyActiveByUserId",method= RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getEnjoyActiveByUserId(Integer userId,@RequestParam(required=false)String all){
+        ResultUtil result = new ResultUtil();
+        PActiveExample example = new PActiveExample();
+        PActiveExample.Criteria ct = example.createCriteria();
+        ct.andActiveStatusEqualTo(1);
+        if(all!=null && all.equals("Y")){
+            ct.andStartTimeGreaterThan(new Date());
+        }
+        List<PActive> pActiveList = pActiveService.selectByExample(example);
+        List<JSONObject> list = new ArrayList<>();
+        if(pActiveList!=null){
+            if(pActiveList.size()!=0){
+                for (PActive active:pActiveList){
+                    JSONObject json = JSON.parseObject(JSON.toJSONString(active));
+                    PPartymember createUser = pPartymemberService.selectByUserId(active.getActiveCreatePeople());
+                    if(createUser!=null){
+                        json.put("activeCreatePeopleName", createUser.getName());
+                    }
+                    if(hasParticipate(active.getId(), userId)){
+
+                        PActiveParticipateExample participateExample = new PActiveParticipateExample();
+                        PActiveParticipateExample.Criteria ctp = participateExample.createCriteria();
+                        ctp.andActiveIdEqualTo(active.getId());
+                        ctp.andUserIdEqualTo(userId);
+                        ctp.andStatusEqualTo(1);
+
+                        List<PActiveParticipate> ppList =  activeParticipateService.selectByExample(participateExample);
+                        if(ppList!=null){
+
+                            if(ppList.size()>0){
+
+                                PActivePictureExample picExample = new PActivePictureExample();
+                                PActivePictureExample.Criteria picCt = picExample.createCriteria();
+                                picCt.andActiveIdEqualTo(active.getId());
+        //            PageHelper.startPage(1, 3,true);
+                                List<PActivePicture> picActiveList = pPictureService.selectActivePictures(picExample);
+                                json.put("pictures", picActiveList);
+                                list.add(json);
+
+                            }
+
+                        }
+
+                    }
+
+                }
+            }
+        }
+        result.setSuccess(true);
+        result.setData(list);
+        return result.getResult();
+    }
+
     /**
      * 判断是否已经报名的活动
      *
