@@ -199,11 +199,12 @@ public class PPartymemberController {
         for (PPartymember pPartymember:pPartymemberList){
             JSONObject json = JSON.parseObject(JSON.toJSONString(pPartymember));
 
-            //根据用虎ID 找审核没
+            //根据用户ID 找审核没
             PAvantgradeExample pA = new PAvantgradeExample();
             PAvantgradeExample.Criteria ct = pA.createCriteria();
             ct.andUseridEqualTo(pPartymember.getUserid());
             ct.andYearEqualTo(Calendar.getInstance().get(Calendar.YEAR));
+
             List<PAvantgrade> pAvantgradeList = pAvantgradeService.selectByExample(pA);
 
             if(leader!=null){
@@ -221,11 +222,16 @@ public class PPartymemberController {
 
                     int temp = 0;
 
+                    int count = 0;
                     for (PAvantgrade pAvantgrade:pAvantgradeList){
                         //2代表通过 3代表拒绝
                         if(pAvantgrade.getStatus() == 2 || pAvantgrade.getStatus() == 3 ){
-                            temp = 1;
+                            count ++;
                         }
+                    }
+                    if(count == pAvantgradeList.size() ){
+
+                        temp = 1;
                     }
                     json.put("tempint", temp);
                 }
@@ -238,12 +244,17 @@ public class PPartymemberController {
                     if(pAvantgradeList.size()!=0) {
 
                         int temp = 0;
+                        int count = 0;
                         for (PAvantgrade pAvantgrade : pAvantgradeList) {
                             //2代表通过 3代表拒绝
                             if (pAvantgrade.getStatus() == 2 || pAvantgrade.getStatus() == 3) {
-                                temp = 1;
+                                //temp = 1;
+                                count++;
                             }
 
+                        }
+                        if(count == pAvantgradeList.size() ){
+                            temp = 1;
                         }
 
                         if (temp == status) {
