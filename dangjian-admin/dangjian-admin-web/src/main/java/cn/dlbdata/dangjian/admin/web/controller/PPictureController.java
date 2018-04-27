@@ -139,7 +139,7 @@ public class PPictureController {
         try {
             try {
                 File imgFile = new File(path);
-                String thumbnailPath = path.substring(0, path.lastIndexOf(File.separator)) + File.separator + PREVFIX + imgFile.getName();
+                String thumbnailPath = PICTURE_PATH+ File.separator + PREVFIX + imgFile.getName();
                 if(!new File(thumbnailPath).exists()){
                     thumbnailImage(path,200,200,PREVFIX,false);
                 }
