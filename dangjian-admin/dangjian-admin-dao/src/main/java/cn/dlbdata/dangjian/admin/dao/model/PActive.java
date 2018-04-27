@@ -96,6 +96,18 @@ public class PActive implements Serializable {
      */
     private String departIds;
 
+
+    public String getActiveTypeName() {
+        return activeTypeName;
+    }
+
+    public void setActiveTypeName(String activeTypeName) {
+        this.activeTypeName = activeTypeName;
+    }
+
+    private String activeTypeName;
+
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {

@@ -6,6 +6,7 @@
         <result column="active_name" jdbcType="VARCHAR" property="activeName"/>
         <result column="active_project_id" jdbcType="INTEGER" property="activeProjectId"/>
         <result column="active_type" jdbcType="INTEGER" property="activeType"/>
+        <result column="active_type_name" jdbcType="VARCHAR" property="activeTypeName"/>
         <result column="active_pace" jdbcType="VARCHAR" property="activePace"/>
         <result column="active_create_people" jdbcType="INTEGER" property="activeCreatePeople"/>
         <result column="departmentid" jdbcType="INTEGER" property="departmentid"/>
@@ -81,7 +82,7 @@
     <sql id="Base_Column_List">
         id, active_name, active_project_id, active_type, active_pace, active_create_people,
         departmentid, active_principal_people, active_status, start_time, end_time, active_context,
-        zb_message, create_time,depart_ids
+        zb_message, create_time,depart_ids, (select LEFT(title, 4) from p_score_detail where active_type = p_score_detail.id) as active_type_name
     </sql>
     <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveExample"
             resultMap="BaseResultMap">
