@@ -549,7 +549,7 @@
 		ELSE p.score
 	END) as "typetotalscore"
 from p_score_party p INNER JOIN p_partymember u ON p.user_id = u.userid
-where p.project_id = 16 and  u.departmentid =  #{departmentId,jdbcType=INTEGER}
+where p.project_id = 5 and  u.departmentid =  #{departmentId,jdbcType=INTEGER}
 GROUP BY p.user_id,u.name
   </select>
 
