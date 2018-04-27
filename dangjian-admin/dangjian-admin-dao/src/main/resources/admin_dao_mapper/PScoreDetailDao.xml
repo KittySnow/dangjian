@@ -383,7 +383,7 @@
           WHEN DATE_FORMAT(now(),'%y-%m-%d') >= t.start_time THEN 'Y'
           ELSE 'N'
         END) as "beginYn",
-        t.createtime as "createTime"
+        t.create_time as "createTime"
       FROM
       p_active t
       <!--  通过的，且还在时限内的 -->
@@ -398,12 +398,12 @@
         p.id as "masId",
         'GRAND' as "type",
         'Y' as "beginYn",
-        (SELECT MAX(s.createtime) FROM p_avantgrade s WHERE s.moduleid = d.id AND s.status = 0) as "createTime"
+        (SELECT MAX(s.createtime) FROM p_avantgrade s WHERE s.module_id = d.id AND s.status = 0) as "createTime"
       FROM p_score_project p INNER JOIN p_score_detail d on p.id = d.project_id
       INNER JOIN p_user u on u.roleid = 2
       WHERE u.userid = #{userId}
       <!-- 角色为2 -->
-      AND EXISTS (SELECT 1 FROM p_avantgrade s WHERE s.moduleid = d.id AND s.status = 0)
+      AND EXISTS (SELECT 1 FROM p_avantgrade s WHERE s.module_id = d.id AND s.status = 0)
     )T ORDER BY T.createTime DESC
   </select>
 </mapper>
