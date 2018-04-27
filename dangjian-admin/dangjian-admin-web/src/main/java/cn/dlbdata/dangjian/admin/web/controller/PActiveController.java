@@ -630,7 +630,7 @@ public class PActiveController {
         hints.put(EncodeHintType.MARGIN, 1);
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         BitMatrix bitMatrix = multiFormatWriter.encode(content, BarcodeFormat.QR_CODE, qr_size, qr_size, hints);
-        BufferedImage image = toBufferedImage(bitMatrix);
+        BufferedImage image = toBufferedImage(deleteWhite(bitMatrix));
         return image;
     }
 
@@ -645,6 +645,26 @@ public class PActiveController {
             }
         }
         return image;
+    }
+
+
+    /**
+     * 删除白边
+     * */
+    private static BitMatrix deleteWhite(BitMatrix matrix) {
+        int[] rec = matrix.getEnclosingRectangle();
+        int resWidth = rec[2] + 1;
+        int resHeight = rec[3] + 1;
+
+        BitMatrix resMatrix = new BitMatrix(resWidth, resHeight);
+        resMatrix.clear();
+        for (int i = 0; i < resWidth; i++) {
+            for (int j = 0; j < resHeight; j++) {
+                if (matrix.get(i + rec[0], j + rec[1]))
+                    resMatrix.set(i, j);
+            }
+        }
+        return resMatrix;
     }
 
 
