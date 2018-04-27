@@ -386,7 +386,7 @@
       WHEN DATE_FORMAT(now(),'%y-%m-%d') >= t.start_time THEN 'Y'
       ELSE 'N'
       END) as "beginYn",
-      t.createtime as
+      t.create_time as
       "createTime"
       FROM
       p_active t
