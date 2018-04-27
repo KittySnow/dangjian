@@ -15,6 +15,8 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.google.zxing.qrcode.encoder.ByteMatrix;
+import com.google.zxing.qrcode.encoder.QRCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +28,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.OutputStream;
 import java.util.*;
+import java.util.List;
 
 /**
  * @packageName PActiveController
@@ -89,11 +93,13 @@ public class PActiveController {
             result.setSuccess(false);
             return result.getResult();
         }
+
         PActive active = new PActive();
         active.setStartTime(new Date(startTime));
         if (endTime != null) {
             active.setEndTime(new Date(endTime));
         }
+
         active.setActiveType(detail.getId());
         active.setActiveProjectId(detail.getProjectId());
         active.setActiveStatus(activeStatus);
@@ -106,6 +112,26 @@ public class PActiveController {
         active.setCreateTime(new Date());
         active.setDepartIds(departmentid);
         Integer id = pActiveService.insert(active);
+
+        /*Integer[] arr =  new Integer[]{};
+
+
+        //当前活动为驿站生活的时候不用自动报名
+        if(activeType != 5){
+            activeParticipateService.insertList( arr ,id);
+        }
+
+        PPartymemberExample pPartymemberExample = new PPartymemberExample();
+        PPartymemberExample.Criteria pPartymemberCriteria =  pPartymemberExample.createCriteria();
+        pPartymemberCriteria.andDepartmentidEqualTo(departmentid);
+        pPartymemberCriteria.andBidEqualTo(1);
+        List<PPartymember> pPartymemberList = pPartymemberService.selectByExample(pPartymemberExample);
+        for (PPartymember pPartymember:pPartymemberList){
+
+            arr.   pPartymember.getUserid();
+
+        }*/
+
         result.setData(id);
         result.setSuccess(true);
         result.setMsg("创建成功！");
@@ -620,4 +646,40 @@ public class PActiveController {
         }
         return image;
     }
+
+
+    private static BitMatrix renderResult(QRCode code, int width, int height, int quietZone) {
+        ByteMatrix input = code.getMatrix();
+        if (input == null) {
+            throw new IllegalStateException();
+        }
+        int inputWidth = input.getWidth();
+        int inputHeight = input.getHeight();
+        int qrWidth = inputWidth + (quietZone * 2);
+        int qrHeight = inputHeight + (quietZone * 2);
+        int outputWidth = Math.max(width, qrWidth);
+        int outputHeight = Math.max(height, qrHeight);
+
+        int multiple = Math.min(outputWidth / qrWidth, outputHeight / qrHeight);
+        // Padding includes both the quiet zone and the extra white pixels to accommodate the requested
+        // dimensions. For example, if input is 25x25 the QR will be 33x33 including the quiet zone.
+        // If the requested size is 200x160, the multiple will be 4, for a QR of 132x132. These will
+        // handle all the padding from 100x100 (the actual QR) up to 200x160.
+        int leftPadding = (outputWidth - (inputWidth * multiple)) / 2;
+        int topPadding = (outputHeight - (inputHeight * multiple)) / 2;
+
+        BitMatrix output = new BitMatrix(outputWidth, outputHeight);
+
+        for (int inputY = 0, outputY = topPadding; inputY < inputHeight; inputY++, outputY += multiple) {
+            // Write the contents of this row of the barcode
+            for (int inputX = 0, outputX = leftPadding; inputX < inputWidth; inputX++, outputX += multiple) {
+                if (input.get(inputX, inputY) == 1) {
+                    output.setRegion(outputX, outputY, multiple, multiple);
+                }
+            }
+        }
+
+        return output;
+    }
+
 }

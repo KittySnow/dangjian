@@ -413,7 +413,6 @@
       <if test="startTimeYn != null">
           <![CDATA[ AND t.start_time <= NOW() ]]>
       </if>
-      ORDER BY t.create_time ASC
       <if test="start != null and start > 0">
         LIMIT #{start} OFFSET #{pageSize}
       </if>
