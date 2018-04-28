@@ -1,21 +1,27 @@
 package cn.dlbdata.dangjian.admin.service.impl;
 
 
-import cn.dlbdata.dangjian.admin.dao.mapper.PActiveDao;
-import cn.dlbdata.dangjian.admin.dao.mapper.PActivePictureDao;
-import cn.dlbdata.dangjian.admin.dao.model.PActive;
-import cn.dlbdata.dangjian.admin.dao.model.PActiveExample;
-import cn.dlbdata.dangjian.admin.dao.model.PActivePicture;
-import cn.dlbdata.dangjian.admin.dao.query.ActiveQuery;
-import cn.dlbdata.dangjian.admin.service.PActiveService;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import cn.dlbdata.dangjian.admin.dao.mapper.PActiveDao;
+import cn.dlbdata.dangjian.admin.dao.mapper.PActiveParticipateDao;
+import cn.dlbdata.dangjian.admin.dao.mapper.PActivePictureDao;
+import cn.dlbdata.dangjian.admin.dao.mapper.PUserDao;
+import cn.dlbdata.dangjian.admin.dao.model.PActive;
+import cn.dlbdata.dangjian.admin.dao.model.PActiveExample;
+import cn.dlbdata.dangjian.admin.dao.model.PActivePicture;
+import cn.dlbdata.dangjian.admin.dao.model.PUser;
+import cn.dlbdata.dangjian.admin.dao.model.PUserExample;
+import cn.dlbdata.dangjian.admin.dao.query.ActiveQuery;
+import cn.dlbdata.dangjian.admin.service.PActiveService;
 
 
 @Service("PActiveService")
@@ -27,6 +33,10 @@ public class PActiveServiceImpl implements PActiveService {
     PActiveDao pActiveDao;
     @Autowired
     PActivePictureDao pActivePictureDao;
+    @Autowired
+    PUserDao pUserDao;
+    @Autowired
+    PActiveParticipateDao pActiveParticipateDao;
 
     @Override
     public long countByExample(PActiveExample example) {
@@ -46,6 +56,27 @@ public class PActiveServiceImpl implements PActiveService {
     @Override
     public int insert(PActive pActive) {
         pActiveDao.insert(pActive);
+        
+        //当前活动为驿站生活的时候不用自动报名
+        if(pActive.getActiveType() != 5 && pActive.getDepartmentid() != null)
+        {
+        		//查询对应部门下的用户
+	        PUserExample example = new PUserExample();
+	        example.createCriteria().andDepartmentidEqualTo(pActive.getDepartmentid());
+	        List<PUser> list = pUserDao.selectByExample(example);
+	        List<Integer> userIds = new ArrayList<Integer>();
+	        if(list != null)
+	        {
+	        		for(PUser u : list)
+	        		{
+	        			userIds.add(u.getUserid());
+	        		}
+	        }
+	        
+	        //批量插入到P_Active_Participate
+	        pActiveParticipateDao.insertList(userIds.toArray(new Integer[0]), pActive.getId());
+        }
+        
         return pActive.getId();
     }
     
