@@ -2,10 +2,13 @@ package cn.dlbdata.dangjian.admin.service.impl;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,11 +61,31 @@ public class PActiveServiceImpl implements PActiveService {
         pActiveDao.insert(pActive);
         
         //当前活动为驿站生活的时候不用自动报名
-        if(pActive.getActiveType() != 5 && pActive.getDepartmentid() != null)
+        if(pActive.getActiveType() != 5 && StringUtils.isNotEmpty(pActive.getDepartIds()))
         {
+        		List<Integer> deptIds = new ArrayList<>();
+        		String[] deptIdArr = pActive.getDepartIds().split(",");
+        		if(deptIdArr != null)
+        		{
+        			for(String str : deptIdArr)
+        			{
+        				Integer id = 0;
+        				try
+        				{
+        					id = Integer.parseInt(str);
+        				}
+        				catch (Exception e) {
+        					_log.error("部门ID转换失败",e);
+					}
+        				if(id > 0)
+        				{
+        					deptIds.add(id);
+        				}
+        			}
+        		}
         		//查询对应部门下的用户
 	        PUserExample example = new PUserExample();
-	        example.createCriteria().andDepartmentidEqualTo(pActive.getDepartmentid());
+	        example.createCriteria().andDepartmentidIn(deptIds);
 	        List<PUser> list = pUserDao.selectByExample(example);
 	        List<Integer> userIds = new ArrayList<Integer>();
 	        if(list != null)
