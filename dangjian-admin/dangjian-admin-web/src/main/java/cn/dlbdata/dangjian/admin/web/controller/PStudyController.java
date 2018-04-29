@@ -168,6 +168,34 @@ public class PStudyController {
         return result.getResult();
     }
 
+
+
+    @RequestMapping(value="/reject",method=RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> reject(Integer studyid,Integer userid){
+        ResultUtil result = new ResultUtil();
+        PUser pUser = pUserService.selectByPrimaryKey(userid);
+        if(pUser.getRoleid()==4){
+            result.setSuccess(true);
+            result.setMsg("您无权审批");
+        }else{
+            PStudy pStudy = pStudyService.selectByPrimaryKey(studyid);
+
+            PStudyExample pStudyExample = new PStudyExample();
+            PStudyExample.Criteria criteria =  pStudyExample.createCriteria();
+            criteria.andStatusEqualTo(1);
+
+            pStudy.setStatus(3);
+            pStudyService.updateByPrimaryKey(pStudy);
+
+            result.setSuccess(true);
+            result.setMsg("已驳回该审批");
+
+        }
+        return result.getResult();
+
+    }
+
     @RequestMapping(value="/getList",method=RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> getList(Integer pageNum, Integer pageSize){
