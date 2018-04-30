@@ -419,8 +419,14 @@
         <!-- 获得的总积分必须小于项目的总分才允许再次获取 -->
         <![CDATA[
           AND ifnull ((SELECT  sum(s.score) FROM p_score_party s where s.project_id = t.project_id
-            AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now())),0) +t.score<= p.score
+            AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now())),0) + t.score<= p.score
         ]]>
+        <!-- 如果项目的积分必须小于某模块最大值-->
+        <![CDATA[
+          AND ifnull ((SELECT  sum(s.score) FROM p_score_party s where s.detail_id = t.id
+            AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now())),0) + t.score<= t.max_score
+        ]]>
+
         <!-- 如果项目只能获取一次积分且党员已经获取过，则不再允许获取积分 -->
       AND NOT EXISTS (SELECT 1 FROM p_score_party s where s.detail_id = t.id
         AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now()) AND t.only_yn = 'Y')
@@ -442,6 +448,12 @@
             add_id,
             valid_yn,
             user_id,
+      <if test="imgs != null">
+        imgs,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
             status_cd
         )
         SELECT
@@ -456,6 +468,12 @@
             0,
             'Y',
             #{userId,jdbcType=INTEGER},
+      <if test="imgs != null">
+        #{imgs,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
             (CASE
               <![CDATA[ WHEN t.approved_role_id IS NULL OR t.approved_role_id <= 0 THEN '30' ]]>
               ELSE '10'
@@ -465,6 +483,11 @@
         <![CDATA[
           AND ifnull ((SELECT  sum(s.score) FROM p_score_party s where s.project_id = t.project_id
             AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now())),0) +t.score<= p.score
+        ]]>
+      <!-- 如果项目的积分必须小于某模块最大值-->
+        <![CDATA[
+          AND ifnull ((SELECT  sum(s.score) FROM p_score_party s where s.detail_id = #{detailId,jdbcType=INTEGER}
+            AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now())),0) + t.score<= t.max_score
         ]]>
         AND NOT EXISTS (SELECT 1 FROM p_score_party s where s.detail_id = t.id
         AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now()) AND t.only_yn = 'Y')
@@ -565,6 +588,10 @@ GROUP BY p.user_id,u.name
           AND ifnull ((SELECT  sum(s.score)+t.score FROM p_score_party s where s.detail_id = t.id
             AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now())),0) < p.score
         ]]>
+    <![CDATA[
+      AND ifnull ((SELECT  sum(s.score) FROM p_score_party s where s.detail_id = t.id
+        AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now())),0) + t.score<= t.max_score
+    ]]>
     AND NOT EXISTS (SELECT 1 FROM p_score_party s where s.detail_id = t.id
     AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now()) AND t.only_yn = 'Y')
   </select>
