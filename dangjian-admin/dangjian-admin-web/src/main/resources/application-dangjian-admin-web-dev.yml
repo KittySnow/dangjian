@@ -2,10 +2,10 @@ spring:
   profiles:
     include: thirdparty-mp-sdk-dev
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/jlyzpart?characterEncoding=utf-8&&allowMultiQueries=true&&autoReconnect=true&failOverReadOnly=false
+    url: jdbc:mysql://180.169.82.28:7125/jlyzparty?characterEncoding=utf-8&&allowMultiQueries=true&&autoReconnect=true&failOverReadOnly=false
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    password: ENC(5c0Osk6LlIJEgirFZyZj7Q==)
+    password: ENC(ETWygv0bn5NoUv2V96KGbXgPbzxqxvRz)
   thymeleaf:
     prefix: classpath:/templates/
 mybatis:
