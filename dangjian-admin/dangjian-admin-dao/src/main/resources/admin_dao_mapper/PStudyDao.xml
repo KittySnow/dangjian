@@ -7,6 +7,7 @@
     <result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="departmentid" jdbcType="INTEGER" property="departmentid" />
+  	<result column="departmentname" jdbcType="VARCHAR" property="departmentName" />
     <result column="projectid" jdbcType="INTEGER" property="projectid" />
     <result column="moduleid" jdbcType="INTEGER" property="moduleid" />
     <result column="approvalid" jdbcType="INTEGER" property="approvalid" />
@@ -14,6 +15,8 @@
     <result column="create_userid" jdbcType="INTEGER" property="createUserid" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="rejectreason" jdbcType="VARCHAR" property="rejectreason" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="partymembername" jdbcType="VARCHAR" property="partymemberName" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -74,8 +77,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    studyid, starttime, endtime, content, departmentid, projectid, moduleid, approvalid,
-    status, create_userid, createtime, rejectreason
+    ps.studyid, ps.starttime, ps.endtime, ps.content, ps.departmentid, ps.projectid, ps.moduleid, ps.approvalid,
+    ps.status, ps.create_userid, ps.createtime, ps.rejectreason, pdm.departmentname, psp.project_name, ppy.name partymembername
   </sql>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PStudyExample" resultMap="BaseResultMap">
     select
@@ -83,12 +86,15 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from p_study
+    from p_study ps
+    left join p_department pdm on pdm.departmentid = ps.departmentid
+    left join p_score_project psp on psp.id = ps.projectid
+    left join p_partymember ppy on ppy.id = ps.create_userid
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
 
-    order by p_study.createtime desc
+    order by ps.createtime desc
 
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

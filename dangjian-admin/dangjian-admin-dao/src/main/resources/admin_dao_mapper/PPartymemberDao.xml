@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="cn.dlbdata.dangjian.admin.dao.model.PPartymember">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="username" jdbcType="VARCHAR" property="userName" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="sex" jdbcType="VARCHAR" property="sex" />
     <result column="age" jdbcType="INTEGER" property="age" />
@@ -78,6 +79,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, userid, name, sex, age, phone, idcard, fromdepartmentid, bid, departmentid,avatar ,
+    (select u.name from p_user u where u.userid = p_partymember.userid )as username,
     (select departmentname from p_department d where d.departmentid = p_partymember.departmentid )as departmentname,
     (select departmentname from p_department d where d.departmentid = p_partymember.fromdepartmentid )as fromdepartmentname,
     (select sum(table1.score) from p_score_party table1  where table1.user_id = p_partymember.userid and year = (select year(now()) )) as totalscore

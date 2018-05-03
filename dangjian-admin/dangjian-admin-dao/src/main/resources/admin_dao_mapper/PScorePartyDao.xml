@@ -21,6 +21,10 @@
     <result column="status_cd" jdbcType="CHAR" property="statusCd" />
     <result column="imgs" jdbcType="VARCHAR" property="imgs" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="begin_date" jdbcType="TIMESTAMP" property="beginDate" />
+    <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
+    <result column="partyMemberName" jdbcType="VARCHAR" property="partyMemberName" />
   </resultMap>
 
   <sql id="Example_Where_Clause">
@@ -82,9 +86,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, project_id, detail_id, score, adder_id, approved_id, year, score_time, add_time,
-    add_id, valid_yn, user_id, status_cd, imgs, remark , ( select name from p_partymember where p_partymember.userid = approved_id ) as approved_name ,
-    ( select name from p_partymember where p_partymember.userid = adder_id ) as adder_name
+    p.id, p.project_id, p.detail_id, p.score, p.adder_id, p.approved_id, p.year, p.score_time, p.add_time,
+    p.add_id, p.valid_yn, p.user_id, p.status_cd, p.imgs, p.remark , pm.name approved_name,
+    ppm.name adder_name, pum.name partyMemberName,
+    ps.project_name, pd.content, pd.begin_date, pd.end_date 
   </sql>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample" resultMap="BaseResultMap">
     select
@@ -92,7 +97,12 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from p_score_party
+    from p_score_party p 
+    left join p_score_project ps on ps.id = p.project_id
+    left join p_score_detail pd on pd.id = p.detail_id
+    left join p_partymember pm on pm.userid = p.approved_id
+    left join p_partymember ppm on ppm.userid = p.adder_id
+    left join p_partymember pum on pum.id = p.user_id
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>

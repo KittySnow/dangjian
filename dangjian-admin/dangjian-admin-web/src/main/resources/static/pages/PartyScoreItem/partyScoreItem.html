@@ -8,9 +8,9 @@
             <div class="box-header">
                 <h3 class="box-title">党员获取积分明细列表</h3>
             </div>
-            <div class="box-mgr">
+            <!-- <div class="box-mgr">
                 <a class="btn btn-info" href="#!/PartyScoreItem/addPartymemberGetScoreItem">添加党员获取积分明细</a>
-            </div>
+            </div> -->
             <div class="box-body table-responsive">
                 <table id="PartyScoreItemTable" class="table table-bordered table-striped" data-unique-id="itemid">
                 </table>
@@ -27,12 +27,34 @@
             deleteAjax(row,'./ppartymembergetscoreitem/deleteById','itemid','post');
         }
     };
-
+    Date.prototype.format = function(fmt) { 
+        var o = { 
+           "M+" : this.getMonth()+1,                 //月份 
+           "d+" : this.getDate(),                    //日 
+           "h+" : this.getHours(),                   //小时 
+           "m+" : this.getMinutes(),                 //分 
+           "s+" : this.getSeconds(),                 //秒 
+           "q+" : Math.floor((this.getMonth()+3)/3), //季度 
+           "S"  : this.getMilliseconds()             //毫秒 
+       }; 
+       if(/(y+)/.test(fmt)) {
+               fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+       }
+        for(var k in o) {
+           if(new RegExp("("+ k +")").test(fmt)){
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+            }
+        }
+       return fmt; 
+   }  
 
     function PartyScoreItemStausFormatter(value,row,index) {
-        return '<a class="btn btn-info btn-sm editPartyScoreItem" href="#!/PartyScoreItem/editPartymemberGetScoreItem/'+row.itemid+'">修改</a>　<a class="btn btn-warning btn-sm delPartyScoreItem">删除</a>'
+        return '<a class="btn btn-warning btn-sm delPartyScoreItem">删除</a>'
     }
-
+    
+    function beginDate(value,row,index) {
+        return new Date(value).format("yyyy-MM-dd hh:mm:ss");
+    }
 
     $(function(){
 
@@ -45,45 +67,42 @@
                     title:'编号'
                 },
                 {
-                    field: 'partymemberid',
-                    title: '党员ID'
-                },
-                {
-                    field: 'moduleid',
-                    title: '党员积分项ID'
+                    field: 'partyMemberName',
+                    title: '党员姓名'
                 },
                 {
                     field: 'content',
                     title: '主要内容'
                 },
                 {
-                    field: 'starttime',
+                    field: 'beginDate',
+                   /*  formatter: beginDate, */
                     title: '开始时间'
                 },
                 {
-                    field: 'endtime',
+                    field: 'endDate',
                     title: '结束时间'
                 },
                 {
-                    field: 'approver',
+                    field: 'approvedName',
                     title: '审批人'
                 },
                 {
-                    field: 'projectid',
-                    title: '项目ID'
+                    field: 'projectName',
+                    title: '项目名称'
                 },
                 {
-                    field: 'getscore',
+                    field: 'score',
                     title: '获得积分'
-                },
+                }/* ,
                 {
                     title: '操作',
                     width:250,
                     formatter: PartyScoreItemStausFormatter,
                     events: actionPartyScoreItemEvents
-                }],
+                } */],
             method: 'GET',
-            url: "./ppartymembergetscoreitem/list",
+            url: "./pscoreparty/list",
             sidePagination: "server", //服务端请求
             queryParams:function (params) {
                 return {

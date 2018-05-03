@@ -81,12 +81,48 @@ public class PStudy implements Serializable {
     private Date createtime;
 
     private String rejectreason;
-
-
-
+    /**
+     * 支部名称
+     */
+    private String departmentName;
+    /**
+     * 项目名称
+     */
+    private String projectName;
+    /**
+     * 
+     */
+    private String partymemberName;
+    
     private static final long serialVersionUID = 1L;
+    
+    
 
-    public Integer getStudyid() {
+    public String getPartymemberName() {
+		return partymemberName;
+	}
+
+	public void setPartymemberName(String partymemberName) {
+		this.partymemberName = partymemberName;
+	}
+
+	public String getDepartmentName() {
+		return departmentName;
+	}
+
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public Integer getStudyid() {
         return studyid;
     }
 
@@ -200,6 +236,9 @@ public class PStudy implements Serializable {
         sb.append(", createUserid=").append(createUserid);
         sb.append(", createtime=").append(createtime);
         sb.append(", rejectreason=").append(rejectreason);
+        sb.append(", departmentName=").append(departmentName);
+        sb.append(", projectName=").append(projectName);
+        sb.append(", partymemberName=").append(partymemberName);
         sb.append("]");
         return sb.toString();
     }
@@ -226,7 +265,10 @@ public class PStudy implements Serializable {
                 && (this.getApprovalid() == null ? other.getApprovalid() == null : this.getApprovalid().equals(other.getApprovalid()))
                 && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
                 && (this.getCreateUserid() == null ? other.getCreateUserid() == null : this.getCreateUserid().equals(other.getCreateUserid()))
-                && (this.getCreatetime() == null ? other.getCreatetime() == null : this.getCreatetime().equals(other.getCreatetime()));
+                && (this.getCreatetime() == null ? other.getCreatetime() == null : this.getCreatetime().equals(other.getCreatetime()))
+                && (this.getDepartmentName() == null ? other.getDepartmentName() == null : this.getDepartmentName().equals(other.getDepartmentName()))
+                && (this.getProjectName() == null ? other.getProjectName() == null : this.getProjectName().equals(other.getProjectName()))
+                && (this.getPartymemberName() == null ? other.getPartymemberName() == null : this.getPartymemberName().equals(other.getPartymemberName()));
     }
 
     @Override
@@ -244,6 +286,9 @@ public class PStudy implements Serializable {
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getCreateUserid() == null) ? 0 : getCreateUserid().hashCode());
         result = prime * result + ((getCreatetime() == null) ? 0 : getCreatetime().hashCode());
+        result = prime * result + ((getDepartmentName() == null) ? 0 : getDepartmentName().hashCode());
+        result = prime * result + ((getProjectName() == null) ? 0 : getProjectName().hashCode());
+        result = prime * result + ((getPartymemberName() == null) ? 0 : getPartymemberName().hashCode());
         return result;
     }
 }

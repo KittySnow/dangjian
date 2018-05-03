@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class PScoreParty implements Serializable {
     /**
      * 党员积分ID
@@ -120,6 +124,57 @@ public class PScoreParty implements Serializable {
 
     private String adderName;
 
+    /**
+     * 积分明细内容
+     */
+    private String content;
+    /**
+     * 开始日期(yyyy-MM-dd HH:mm:ss)
+     *
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date beginDate;
+    /**
+     * 结束日期(yyyy-MM-dd HH:mm:ss)
+     *
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date endDate;
+    
+    private String partyMemberName;
+    
+    
+    public String getPartyMemberName() {
+		return partyMemberName;
+	}
+
+	public void setPartyMemberName(String partyMemberName) {
+		this.partyMemberName = partyMemberName;
+	}
+
+	public Date getBeginDate() {
+		return beginDate;
+	}
+
+	public void setBeginDate(Date beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
 
     private static final long serialVersionUID = 1L;
 
@@ -310,6 +365,10 @@ public class PScoreParty implements Serializable {
         sb.append(", addTime=").append(addTime);
         sb.append(", addId=").append(addId);
         sb.append(", validYn=").append(validYn);
+        sb.append(", content=").append(content);
+        sb.append(", beginDate=").append(beginDate);
+        sb.append(", endDate=").append(endDate);
+        sb.append(", partyMemberName=").append(partyMemberName);
         sb.append("]");
         return sb.toString();
     }
@@ -336,7 +395,11 @@ public class PScoreParty implements Serializable {
             && (this.getScoreTime() == null ? other.getScoreTime() == null : this.getScoreTime().equals(other.getScoreTime()))
             && (this.getAddTime() == null ? other.getAddTime() == null : this.getAddTime().equals(other.getAddTime()))
             && (this.getAddId() == null ? other.getAddId() == null : this.getAddId().equals(other.getAddId()))
-            && (this.getValidYn() == null ? other.getValidYn() == null : this.getValidYn().equals(other.getValidYn()));
+            && (this.getValidYn() == null ? other.getValidYn() == null : this.getValidYn().equals(other.getValidYn()))
+        	&& (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
+	        && (this.getBeginDate() == null ? other.getBeginDate() == null : this.getBeginDate().equals(other.getBeginDate()))
+	        && (this.getEndDate() == null ? other.getEndDate() == null : this.getEndDate().equals(other.getEndDate()))
+	        && (this.getPartyMemberName() == null ? other.getPartyMemberName() == null : this.getPartyMemberName().equals(other.getPartyMemberName()));
     }
 
     @Override
@@ -354,6 +417,10 @@ public class PScoreParty implements Serializable {
         result = prime * result + ((getAddTime() == null) ? 0 : getAddTime().hashCode());
         result = prime * result + ((getAddId() == null) ? 0 : getAddId().hashCode());
         result = prime * result + ((getValidYn() == null) ? 0 : getValidYn().hashCode());
+        result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
+        result = prime * result + ((getBeginDate() == null) ? 0 : getBeginDate().hashCode());
+        result = prime * result + ((getEndDate() == null) ? 0 : getEndDate().hashCode());
+        result = prime * result + ((getPartyMemberName() == null) ? 0 : getPartyMemberName().hashCode());
         return result;
     }
 }

@@ -86,6 +86,12 @@ public class PPartymember implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private String avatar;
+    /**
+     * 登录名
+     * 
+     * 
+     */
+    private String userName;
     public String getAvatar() {
         return avatar;
     }
@@ -210,7 +216,14 @@ public class PPartymember implements Serializable {
     public void setDepartmentid(Integer departmentid) {
         this.departmentid = departmentid;
     }
+    
+    public String getUserName() {
+        return userName;
+    }
 
+    public void setUserName(String username) {
+        this.userName = username;
+    }
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -219,6 +232,7 @@ public class PPartymember implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", userid=").append(userid);
+        sb.append(", userName=").append(userName);
         sb.append(", name=").append(name);
         sb.append(", sex=").append(sex);
         sb.append(", age=").append(age);
@@ -243,6 +257,7 @@ public class PPartymember implements Serializable {
         PPartymember other = (PPartymember) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getUserid() == null ? other.getUserid() == null : this.getUserid().equals(other.getUserid()))
+            && (this.getUserName() == null ? other.getUserName() == null : this.getUserName().equals(other.getUserName()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
             && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()))
             && (this.getAge() == null ? other.getAge() == null : this.getAge().equals(other.getAge()))
@@ -257,6 +272,7 @@ public class PPartymember implements Serializable {
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getUserid() == null) ? 0 : getUserid().hashCode());
+        result = prime * result + ((getUserName() == null) ? 0 : getUserName().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         result = prime * result + ((getSex() == null) ? 0 : getSex().hashCode());
         result = prime * result + ((getAge() == null) ? 0 : getAge().hashCode());

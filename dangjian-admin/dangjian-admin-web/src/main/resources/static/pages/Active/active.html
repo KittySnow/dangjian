@@ -27,7 +27,31 @@
             deleteAjax(row,'./pactive/deleteById','id','post');
         }
     };
-
+	
+    Date.prototype.format = function(fmt) { 
+        var o = { 
+           "M+" : this.getMonth()+1,                 //月份 
+           "d+" : this.getDate(),                    //日 
+           "h+" : this.getHours(),                   //小时 
+           "m+" : this.getMinutes(),                 //分 
+           "s+" : this.getSeconds(),                 //秒 
+           "q+" : Math.floor((this.getMonth()+3)/3), //季度 
+           "S"  : this.getMilliseconds()             //毫秒 
+       }; 
+       if(/(y+)/.test(fmt)) {
+               fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+       }
+        for(var k in o) {
+           if(new RegExp("("+ k +")").test(fmt)){
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+            }
+        }
+       return fmt; 
+   }  
+    
+    function createTime(value,row,index) {
+        return new Date(value).format("yyyy-MM-dd hh:mm:ss");
+    }
 
     function ActiveStausFormatter(value,row,index) {
         return '<a class="btn btn-info btn-sm editActive" href="#!/Active/editActive/'+row.id+'">修改</a>　<a class="btn btn-warning btn-sm delActive">删除</a>'
@@ -45,52 +69,55 @@
                     title:'编号'
                 },
                 {
-                    field: 'active_name',
+                    field: 'activeName',
                     title: '活动名称'
                 },
                 {
-                    field: 'active_project_id',
+                    field: 'activeProjectId',
                     title: '活动所属项目'
                 },
                 {
-                    field: 'active_type',
+                    field: 'activeType',
                     title: '活动类型(特殊表)'
                 },
                 {
-                    field: 'active_pace',
+                    field: 'activePace',
                     title: '活动地点'
                 },
                 {
-                    field: 'active_create_people',
+                    field: 'activeCreatePeople',
                     title: '活动发起人'
                 },
                 {
-                    field: 'active_principal_people',
+                    field: 'activePrincipalPeople',
                     title: '活动负责人'
                 },
                 {
-                    field: 'active_status',
+                    field: 'activeStatus',
                     title: '活动是否审核'
                 },
                 {
-                    field: 'start_time',
+                    field: 'startTime',
+                    formatter: createTime,
                     title: '开始时间'
                 },
                 {
-                    field: 'end_time',
+                    field: 'endTime',
+                    formatter: createTime,
                     title: '结束时间'
                 },
                 {
-                    field: 'active_context',
+                    field: 'activeContext',
                     title: '活动内容'
                 },
                 {
-                    field: 'zb_message',
+                    field: 'zbMessage',
                     title: '支部信息'
                 },
                 {
-                    field: 'create_time',
-                    title: ''
+                    field: 'createTime',
+                    formatter: createTime,
+                    title: '创建时间'
                 },
                 {
                     title: '操作',

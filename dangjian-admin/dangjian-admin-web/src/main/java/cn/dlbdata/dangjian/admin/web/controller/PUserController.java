@@ -130,17 +130,23 @@ public class PUserController {
 
     @RequestMapping(value = "/queryById", method = RequestMethod.GET)
     @ResponseBody
-    public HttpResult queryById(Integer userId) {
-        if (null == userId) {
-            return HttpResult.failure("userId不能为空");
+    public Map<String, Object> queryById(Integer userid) {
+    	ResultUtil result = new ResultUtil();
+    	if (null == userid) {
+    		result.setMsg("userid不能为空");
+    		result.setSuccess(false);
         }
-        PUser puser = puserService.selectByPrimaryKey(userId);
+        
+      
+        PUser puser = puserService.selectByPrimaryKey(userid);
         if(puser!=null){
-            puser.setPassword(null);
-            return HttpResult.success(puser);
+        	 result.setSuccess(true);
+             result.setData(puser);
         }else{
-            return HttpResult.success(null);
+        	 result.setMsg("修改失败");
+             result.setSuccess(false);
         }
+        return result.getResult();
     }
 
     /**root directory 直接访问*/

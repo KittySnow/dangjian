@@ -1,6 +1,6 @@
 <ol class="breadcrumb newcrumb">
     <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
-    <li class="active"><a href="#!/Partymember/partymember">党员信息列表</a></li>
+    <li class="active"><a href="#!/PartyMember/partyMember">党员信息列表</a></li>
 </ol>
 <div class="row">
     <div class="col-xs-12">
@@ -9,7 +9,7 @@
                 <h3 class="box-title">党员信息列表</h3>
             </div>
             <div class="box-mgr">
-                <a class="btn btn-info" href="#!/Partymember/addPartymember">添加党员信息</a>
+                <a class="btn btn-info" href="#!/PartyMember/addPartymember">添加党员信息</a>
             </div>
             <div class="box-body table-responsive">
                 <table id="PartymemberTable" class="table table-bordered table-striped" data-unique-id="id">
@@ -30,7 +30,7 @@
 
 
     function PartymemberStausFormatter(value,row,index) {
-        return '<a class="btn btn-info btn-sm editPartymember" href="#!/Partymember/editPartymember/'+row.id+'">修改</a>　<a class="btn btn-warning btn-sm delPartymember">删除</a>'
+        return '<a class="btn btn-info btn-sm editPartymember" href="#!/PartyMember/editPartymember/'+row.id+'">修改</a>　<a class="btn btn-warning btn-sm delPartymember">删除</a>'
     }
 
 
@@ -39,14 +39,14 @@
         $('#PartymemberTable').bootstrapTable({
             showHeader:true,
             columns: [
-                {
+                /* {
                     field: 'id',
                     formatter:fmtIdx,
                     title:'编号'
-                },
+                }, */
                 {
-                    field: 'userid',
-                    title: '用户id'
+                    field: 'userName',
+                    title: '用户登录名'
                 },
                 {
                     field: 'name',
@@ -61,16 +61,20 @@
                     title: '年龄'
                 },
                 {
-                    field: 'fromdepartmentid',
+                    field: 'phone',
+                    title: '手机号'
+                },
+                {
+                    field: 'totalscore',
+                    title: '积分'
+                },
+                {
+                    field: 'departmentname',
+                    title: '部门'
+                },
+                {
+                    field: 'fromdepartmentname',
                     title: '转出支部'
-                },
-                {
-                    field: 'bid',
-                    title: '积分分值表id'
-                },
-                {
-                    field: 'departmentid',
-                    title: ''
                 },
                 {
                     title: '操作',
