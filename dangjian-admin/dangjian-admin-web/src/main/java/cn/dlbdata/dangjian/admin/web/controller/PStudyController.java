@@ -112,6 +112,79 @@ public class PStudyController {
         result.setSuccess(true);
         return result.getResult();
     }
+    
+    @RequestMapping(value="/reSubmit",method=RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> reSubmit(Integer studyid,
+            Long starttime,Long endtime,Integer projectid,Integer moduleid,String content,
+            Integer createUserid,String picids,Integer departmentid,Integer roleid){
+        ResultUtil result = new ResultUtil();
+        if(studyid==null || studyid == 0){
+            result.setMsg("活动ID不存在");
+            result.setSuccess(false);
+            return result.getResult();
+        }
+
+        if(starttime==null){
+            result.setMsg("活动时间开始时间不能为空");
+            result.setSuccess(false);
+            return result.getResult();
+        }
+
+        if(endtime==null){
+            result.setMsg("活动时间结束时间不能为空");
+            result.setSuccess(false);
+            return result.getResult();
+        }
+
+        PStudy pStudy = pStudyService.selectByPrimaryKey(studyid);
+        if(pStudy == null)
+        {
+        		result.setMsg("活动不存在或已删除");
+            result.setSuccess(false);
+            return result.getResult(); 
+        }
+        
+        //删除原来的图片
+        PStudyPictureExample picExample = new PStudyPictureExample();
+        picExample.createCriteria().andStudyIdEqualTo(studyid);
+        pStudyPictureService.deleteByExample(picExample);
+        
+        //更新信息
+        pStudy.setContent(content);
+        pStudy.setCreateUserid(createUserid);
+        pStudy.setProjectid(projectid);
+        pStudy.setModuleid(moduleid);
+        pStudy.setDepartmentid(departmentid);
+        pStudy.setStatus(0);
+        pStudy.setStarttime(new Date(starttime));
+        pStudy.setEndtime(new Date(endtime));
+        pStudy.setCreatetime(new Date());
+
+        PUserExample pUserExample = new PUserExample();
+        PUserExample.Criteria criteria =  pUserExample.createCriteria();
+        criteria.andDepartmentidEqualTo(departmentid);
+        criteria.andRoleidEqualTo(roleid);
+        List<PUser> pUserList = pUserService.selectByExample(pUserExample);
+        PUser leader = pUserList.get(0);
+        pStudy.setApprovalid(leader.getUserid());
+
+        int callbackId = pStudyService.updateByPrimaryKeySelective(pStudy);
+        if(picids !=null && !picids.isEmpty()){
+            String[] picIds = picids.split(",");
+            if(picIds.length!=0){
+                Integer[] a = new Integer[picIds.length];
+                for(int i=0;i<picIds.length;i++){
+                    a[i]=Integer.parseInt(picIds[i]);
+                }
+                pStudyPictureService.insertList(a,callbackId);
+            }
+        }
+
+        result.setData(callbackId);
+        result.setSuccess(true);
+        return result.getResult();
+    }
 
 
     @RequestMapping(value="/pass",method=RequestMethod.GET)
