@@ -392,7 +392,7 @@
         </if>
         AND (start_time BETWEEN #{startTime,jdbcType=INTEGER} and #{endTime,jdbcType=INTEGER}
         OR end_time BETWEEN #{startTime,jdbcType=INTEGER} and #{endTime,jdbcType=INTEGER})
-        order by p_active.create_time DESC
+        
     </select>
 
     <select id="getRunningActive" parameterType="cn.dlbdata.dangjian.admin.dao.query.ActiveQuery" resultType="java.util.Map">
@@ -414,7 +414,7 @@
         t.depart_ids as "departIds",
         p.name as "activeCreatePeopleName"
       FROM p_active t INNER JOIN p_partymember p on t.active_create_people = p.userid
-      where 1 = 1
+      where 1 = 1 
       <if test="departmentId != null">
           AND find_in_set(#{departmentId},t.depart_ids) > 0
       </if>
@@ -427,9 +427,9 @@
       <if test="startTimeYn != null">
           <![CDATA[ AND t.start_time <= NOW() ]]>
       </if>
-      <if test="start != null and start > 0">
-        LIMIT #{start} OFFSET #{pageSize}
-      </if>
         order by t.create_time DESC
+       <if test="start != null and start > 0">
+        LIMIT #{start} , #{pageSize}
+      </if>
     </select>
 </mapper>

@@ -76,3 +76,5 @@ dangjian-thirdparty/dangjian-thirdparty-mp/dangjian-thirdparty-mp-sdk/.settings/
 dangjian-thirdparty/dangjian-thirdparty-mp/dangjian-thirdparty-mp-sdk/.settings/org.eclipse.m2e.core.prefs
 dangjian-thirdparty/dangjian-thirdparty-mp/dangjian-thirdparty-mp-sdk/.settings/org.eclipse.wst.common.component
 dangjian-thirdparty/dangjian-thirdparty-mp/dangjian-thirdparty-mp-sdk/.settings/org.eclipse.wst.common.project.facet.core.xml
+dangjian-common/.settings/org.eclipse.wst.validation.prefs
+*.prefs
