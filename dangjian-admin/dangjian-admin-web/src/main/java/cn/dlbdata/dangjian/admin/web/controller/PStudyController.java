@@ -169,7 +169,7 @@ public class PStudyController {
         PUser leader = pUserList.get(0);
         pStudy.setApprovalid(leader.getUserid());
 
-        int callbackId = pStudyService.updateByPrimaryKeySelective(pStudy);
+        pStudyService.updateByPrimaryKeySelective(pStudy);
         if(picids !=null && !picids.isEmpty()){
             String[] picIds = picids.split(",");
             if(picIds.length!=0){
@@ -177,11 +177,11 @@ public class PStudyController {
                 for(int i=0;i<picIds.length;i++){
                     a[i]=Integer.parseInt(picIds[i]);
                 }
-                pStudyPictureService.insertList(a,callbackId);
+                pStudyPictureService.insertList(a,studyid);
             }
         }
 
-        result.setData(callbackId);
+        result.setData(studyid);
         result.setSuccess(true);
         return result.getResult();
     }
