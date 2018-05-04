@@ -127,6 +127,11 @@ public class PPictureController {
     @RequestMapping(value = "/showThumbnail", method = RequestMethod.GET)
     public void showThumbnailPicture(Integer pictureId,HttpServletResponse response) {
         PPicture picture = pPictureService.selectByPrimaryKey(pictureId);
+        if(picture == null)
+        {
+	        	logger.info("picture is null" + pictureId);
+	        	return;
+        }
         String path = picture.getUrl();
         logger.info("imgPath = " + path);
         InputStream is = null;
