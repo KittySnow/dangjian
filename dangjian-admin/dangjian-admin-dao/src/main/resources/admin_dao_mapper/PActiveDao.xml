@@ -18,6 +18,9 @@
         <result column="zb_message" jdbcType="VARCHAR" property="zbMessage"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="depart_ids" jdbcType="VARCHAR" property="departIds"/>
+        <result column="project_name" jdbcType="VARCHAR" property="projectName"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="activecreatepeoplename" jdbcType="VARCHAR" property="activeCreatePeopleName"/>
     </resultMap>
     <sql id="Example_Where_Clause">
         <where>
@@ -80,9 +83,9 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-        id, active_name, active_project_id, active_type, active_pace, active_create_people,
-        departmentid, active_principal_people, active_status, start_time, end_time, active_context,
-        zb_message, create_time,depart_ids, (select LEFT(title, 4) from p_score_detail where active_type = p_score_detail.id) as active_type_name
+        pa.id, pa.active_name, pa.active_project_id, pa.active_type, pa.active_pace, pa.active_create_people,
+        pa.departmentid, pa.active_principal_people, pa.active_status, pa.start_time, pa.end_time, pa.active_context,
+        pa.zb_message, pa.create_time,pa.depart_ids, psp.project_name, psd.title, ppm.name activecreatepeoplename
     </sql>
     <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveExample"
             resultMap="BaseResultMap">
@@ -91,15 +94,25 @@
             distinct
         </if>
         <include refid="Base_Column_List"/>
-        from p_active
+        from p_active pa
+        left join p_score_project psp on psp.id = pa.active_project_id
+        left join p_score_detail psd on psd.id = pa.active_type
+        left join p_partymember ppm on ppm.userid = pa.active_create_people
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
-        order by p_active.create_time DESC
+        order by pa.create_time DESC
     </select>
+    
+    
+     <sql id="Base_Column_List_two">
+        id, active_name, active_project_id, active_type, active_pace, active_create_people,
+        departmentid, active_principal_people, active_status, start_time, end_time, active_context,
+        zb_message, create_time,depart_ids, (select LEFT(title, 4) from p_score_detail where active_type = p_score_detail.id) as active_type_name
+    </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List_two"/>
         from p_active
         where id = #{id,jdbcType=INTEGER}
     </select>

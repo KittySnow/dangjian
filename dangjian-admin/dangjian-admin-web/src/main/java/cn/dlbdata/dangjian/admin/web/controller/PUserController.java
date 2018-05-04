@@ -130,7 +130,23 @@ public class PUserController {
 
     @RequestMapping(value = "/queryById", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> queryById(Integer userid) {
+    public HttpResult queryById(Integer userId) {
+        if (null == userId) {
+            return HttpResult.failure("userId不能为空");
+        }
+        PUser puser = puserService.selectByPrimaryKey(userId);
+        if(puser!=null){
+            puser.setPassword(null);
+            return HttpResult.success(puser);
+
+        }else{
+            return HttpResult.success(null);
+        }
+    }
+    
+    @RequestMapping(value = "/queryById2", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> queryById2(Integer userid) {
     	ResultUtil result = new ResultUtil();
     	if (null == userid) {
     		result.setMsg("userid不能为空");

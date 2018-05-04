@@ -8,7 +8,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import io.swagger.models.auth.In;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,14 +18,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
 @RequestMapping("/pstudy")
 
 public class PStudyController {
-
+	private static Logger logger = LoggerFactory.getLogger(PStudyController.class);
     @Autowired
     private PStudyService pStudyService;
 
@@ -48,7 +49,6 @@ public class PStudyController {
             Long starttime,Long endtime,Integer projectid,Integer moduleid,String content,
             Integer createUserid,String picids,Integer departmentid,Integer roleid){
         ResultUtil result = new ResultUtil();
-
 
         if(starttime==null){
             result.setMsg("活动时间开始时间不能为空");
@@ -118,7 +118,10 @@ public class PStudyController {
     public Map<String, Object> reSubmit(Integer studyid,
             Long starttime,Long endtime,Integer projectid,Integer moduleid,String content,
             Integer createUserid,String picids,Integer departmentid,Integer roleid){
+        logger.info("reSubmit--studyid->"+studyid+" picids->"+picids + " roleid->"+roleid);
+        
         ResultUtil result = new ResultUtil();
+
         if(studyid==null || studyid == 0){
             result.setMsg("活动ID不存在");
             result.setSuccess(false);

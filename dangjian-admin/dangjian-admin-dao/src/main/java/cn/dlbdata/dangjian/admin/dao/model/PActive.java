@@ -95,9 +95,47 @@ public class PActive implements Serializable {
      * 参与部门ID集合
      */
     private String departIds;
+    /**
+     * 活动所属项目
+     */
+    private String projectName;
+    /**
+     * 活动类型
+     */
+    private String title;
+    
+    /**
+     * 活动发起人姓名
+     */
+    private String activeCreatePeopleName;
+    
+    
 
+    public String getActiveCreatePeopleName() {
+		return activeCreatePeopleName;
+	}
 
-    public String getActiveTypeName() {
+	public void setActiveCreatePeopleName(String activeCreatePeopleName) {
+		this.activeCreatePeopleName = activeCreatePeopleName;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getActiveTypeName() {
         return activeTypeName;
     }
 
@@ -250,6 +288,9 @@ public class PActive implements Serializable {
         sb.append(", activeContext=").append(activeContext);
         sb.append(", zbMessage=").append(zbMessage);
         sb.append(", createTime=").append(createTime);
+        sb.append(", projectName=").append(projectName);
+        sb.append(", title=").append(title);
+        sb.append(", activeCreatePeopleName=").append(activeCreatePeopleName);
         sb.append("]");
         return sb.toString();
     }
@@ -279,7 +320,10 @@ public class PActive implements Serializable {
                 && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()))
                 && (this.getActiveContext() == null ? other.getActiveContext() == null : this.getActiveContext().equals(other.getActiveContext()))
                 && (this.getZbMessage() == null ? other.getZbMessage() == null : this.getZbMessage().equals(other.getZbMessage()))
-                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()));
+                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+                && (this.getProjectName() == null ? other.getProjectName() == null : this.getProjectName().equals(other.getProjectName()))
+                && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()))
+                && (this.getActiveCreatePeopleName() == null ? other.getActiveCreatePeopleName() == null : this.getActiveCreatePeopleName().equals(other.getActiveCreatePeopleName()));
     }
 
     @Override
@@ -300,6 +344,9 @@ public class PActive implements Serializable {
         result = prime * result + ((getActiveContext() == null) ? 0 : getActiveContext().hashCode());
         result = prime * result + ((getZbMessage() == null) ? 0 : getZbMessage().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
+        result = prime * result + ((getProjectName() == null) ? 0 : getProjectName().hashCode());
+        result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
+        result = prime * result + ((getActiveCreatePeopleName() == null) ? 0 : getActiveCreatePeopleName().hashCode());
         return result;
     }
 }

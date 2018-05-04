@@ -190,7 +190,7 @@ function UserAdminEditCtrl($scope, $http, $timeout ,$routeParams) {
 
     $http({
         method: "GET",
-        url: "./puser/queryById.do?userid="+Number($scope.userid),
+        url: "./puser/queryById2.do?userid="+Number($scope.userid),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.userData = data.data;

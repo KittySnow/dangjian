@@ -50,11 +50,24 @@
    }  
     
     function createTime(value,row,index) {
-        return new Date(value).format("yyyy-MM-dd hh:mm:ss");
+        return new Date(value).format("yyyy-MM-dd hh:mm");
     }
 
     function ActiveStausFormatter(value,row,index) {
         return '<a class="btn btn-info btn-sm editActive" href="#!/Active/editActive/'+row.id+'">修改</a>　<a class="btn btn-warning btn-sm delActive">删除</a>'
+    }
+    
+    function activeStatus(value,index) {
+    	if(value == 0){
+    			value = '<span style="font-weight:bold">未审核</span>';
+    		}else if(value == 1){
+    			value='<span style="color:green">审核通过</span>';
+    		} else if(value == 2){
+    			value = '<span style="color:red">审核失败</span>';
+    		}else {
+    			value = '<span style="color:red">状态错误</span>';
+    		};
+    		return value;
     }
 
 
@@ -73,11 +86,11 @@
                     title: '活动名称'
                 },
                 {
-                    field: 'activeProjectId',
+                    field: 'projectName',
                     title: '活动所属项目'
                 },
                 {
-                    field: 'activeType',
+                    field: 'title',
                     title: '活动类型(特殊表)'
                 },
                 {
@@ -85,7 +98,11 @@
                     title: '活动地点'
                 },
                 {
-                    field: 'activeCreatePeople',
+                    field: 'activeContext',
+                    title: '活动内容'
+                },
+                {
+                    field: 'activeCreatePeopleName',
                     title: '活动发起人'
                 },
                 {
@@ -94,7 +111,17 @@
                 },
                 {
                     field: 'activeStatus',
+                    formatter: activeStatus,
                     title: '活动是否审核'
+                },
+                {
+                    field: 'zbMessage',
+                    title: '支部信息'
+                },
+                {
+                    field: 'createTime',
+                    formatter: createTime,
+                    title: '创建时间'
                 },
                 {
                     field: 'startTime',
@@ -105,19 +132,6 @@
                     field: 'endTime',
                     formatter: createTime,
                     title: '结束时间'
-                },
-                {
-                    field: 'activeContext',
-                    title: '活动内容'
-                },
-                {
-                    field: 'zbMessage',
-                    title: '支部信息'
-                },
-                {
-                    field: 'createTime',
-                    formatter: createTime,
-                    title: '创建时间'
                 },
                 {
                     title: '操作',

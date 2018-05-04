@@ -110,9 +110,15 @@
       order by p_score_party.score_time DESC
     </if>
   </select>
+  
+   <sql id="Base_Column_List_two">
+    id, project_id, detail_id, score, adder_id, approved_id, year, score_time, add_time,
+    add_id, valid_yn, user_id, status_cd, imgs, remark , ( select name from p_partymember where p_partymember.userid = approved_id ) as approved_name ,
+    ( select name from p_partymember where p_partymember.userid = adder_id ) as adder_name
+  </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List_two" />
     from p_score_party
     where id = #{id,jdbcType=INTEGER}
   </select>

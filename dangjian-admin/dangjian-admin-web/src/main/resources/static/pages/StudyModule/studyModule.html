@@ -55,11 +55,11 @@
 
     function ifstatus(value,index) {
     	if(value == 0){
-    			value = '<span style="font-weight:bold">待审核</span>';
-    		}else if(value == 1){
-    			value='<span style="color:green">通过</span>';
-    		} else if(value == 2){
-    			value = '<span style="color:red">未通过</span>';
+    			value = '<span style="font-weight:bold">等待审核</span>';
+    		}else if(value == 2){
+    			value='<span style="color:green">审核通过</span>';
+    		} else if(value == 3){
+    			value = '<span style="color:red">拒绝</span>';
     		}else {
     			value = '<span style="color:red">状态错误</span>';
     		};
@@ -76,14 +76,12 @@
                     title:'编号'
                 },
                 {
-                    field: 'starttime',
-                    formatter: createTime,
-                    title: '开始时间'
+                    field: 'projectName',
+                    title: '项目名称'
                 },
                 {
-                    field: 'endtime',
-                    formatter: createTime,
-                    title: '结束时间'
+                    field: 'title',
+                    title: '模块名称'
                 },
                 {
                     field: 'content',
@@ -92,14 +90,6 @@
                 {
                     field: 'departmentName',
                     title: '支部名称'
-                },
-                {
-                    field: 'projectName',
-                    title: '项目名称'
-                },
-                {
-                    field: 'moduleid',
-                    title: '模块ID'
                 },
                 {
                     field: 'status',
@@ -114,6 +104,16 @@
                     field: 'createtime',
                     formatter: createTime,
                     title: '创建时间'
+                },
+                {
+                    field: 'starttime',
+                    formatter: createTime,
+                    title: '开始时间'
+                },
+                {
+                    field: 'endtime',
+                    formatter: createTime,
+                    title: '结束时间'
                 }],
             method: 'GET',
             url: "./pstudy/list",

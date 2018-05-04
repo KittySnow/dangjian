@@ -65,11 +65,13 @@ public class PPictureController {
     @ResponseBody
     public Map<String, Object> upload(String mediaId, HttpServletRequest request) {
         ResultUtil result = new ResultUtil();
+        logger.info("上传图片"+mediaId);
         String path;
         try {
             path = downloadMedia(mediaId, PICTURE_PATH);
             thumbnailImage(path,200,200,PREVFIX,false);
         }catch (Exception e){
+        	logger.error("保存图片失败",e);
             result.setMsg("保存图片失败");
             result.setSuccess(false);
             return result.getResult();

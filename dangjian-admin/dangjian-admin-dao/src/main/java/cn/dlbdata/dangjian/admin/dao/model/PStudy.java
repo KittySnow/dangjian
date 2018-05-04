@@ -93,12 +93,24 @@ public class PStudy implements Serializable {
      * 
      */
     private String partymemberName;
+    /**
+     * 模块名称
+     */
+    private String title;
     
     private static final long serialVersionUID = 1L;
     
     
 
-    public String getPartymemberName() {
+    public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getPartymemberName() {
 		return partymemberName;
 	}
 
@@ -239,6 +251,7 @@ public class PStudy implements Serializable {
         sb.append(", departmentName=").append(departmentName);
         sb.append(", projectName=").append(projectName);
         sb.append(", partymemberName=").append(partymemberName);
+        sb.append(", title=").append(title);
         sb.append("]");
         return sb.toString();
     }
@@ -268,7 +281,8 @@ public class PStudy implements Serializable {
                 && (this.getCreatetime() == null ? other.getCreatetime() == null : this.getCreatetime().equals(other.getCreatetime()))
                 && (this.getDepartmentName() == null ? other.getDepartmentName() == null : this.getDepartmentName().equals(other.getDepartmentName()))
                 && (this.getProjectName() == null ? other.getProjectName() == null : this.getProjectName().equals(other.getProjectName()))
-                && (this.getPartymemberName() == null ? other.getPartymemberName() == null : this.getPartymemberName().equals(other.getPartymemberName()));
+                && (this.getPartymemberName() == null ? other.getPartymemberName() == null : this.getPartymemberName().equals(other.getPartymemberName()))
+                && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()));
     }
 
     @Override
@@ -289,6 +303,7 @@ public class PStudy implements Serializable {
         result = prime * result + ((getDepartmentName() == null) ? 0 : getDepartmentName().hashCode());
         result = prime * result + ((getProjectName() == null) ? 0 : getProjectName().hashCode());
         result = prime * result + ((getPartymemberName() == null) ? 0 : getPartymemberName().hashCode());
+        result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
         return result;
     }
 }
