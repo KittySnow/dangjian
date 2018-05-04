@@ -334,10 +334,10 @@ public class PActiveController {
     public Map<String, Object> getParticipateActive(Integer userId, Integer departmentid, Integer pageNum, Integer pageSize, @RequestParam(required = false) String all) {
         ResultUtil result = new ResultUtil();
         ActiveQuery activeQuery = new ActiveQuery();
-        activeQuery.setPageYn(true);
+        activeQuery.setPageYn(false);
         activeQuery.setPageNum(pageNum == null ? 1 : pageNum);
         activeQuery.setPageSize(pageSize == null ? 20 : pageSize);
-
+        
         if(all!=null && all.equals("Y")){
             activeQuery.setStartTimeYn("Y");
         }
@@ -354,6 +354,27 @@ public class PActiveController {
 //            PageHelper.startPage(1, 3,true);
             active.put("pictures", pPictureService.selectActivePictures(picExample));
         }
+        Collections.sort(pActiveList, new Comparator<Map<String,Object>>() {
+
+			@Override
+			public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+				if(o1 == null || o2 == null)
+				{
+					return 0;
+				}
+				Integer signupstatus1 = (Integer) o1.get("signupstatus");
+				Integer signupstatus2 = (Integer) o2.get("signupstatus");
+				if(signupstatus1 > signupstatus2)
+				{
+					return -1;
+				}
+				else if(signupstatus1 < signupstatus2)
+				{
+					return 1;
+				}
+				return 0;
+			}
+		});
         PageInfo<Map<String, Object>> pageInfo = new PageInfo<>(pActiveList);
         result.setSuccess(true);
         result.setData(pageInfo);
