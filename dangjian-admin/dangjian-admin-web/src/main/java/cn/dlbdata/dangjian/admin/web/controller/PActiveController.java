@@ -481,7 +481,17 @@ public class PActiveController {
         }
         
         PActive pActive = pActiveService.selectByPrimaryKey(activeid);
+        if(pActiveService.selectByPrimaryKey(activeid) == null) {
+        	result.setSuccess(false);
+        	result.setMsg("删除失败");
+        	return result.getResult();
+        }
         long currentTime  = System.currentTimeMillis();
+        if(pActive.getStartTime() == null) {
+             	result.setSuccess(false);
+             	result.setMsg("删除失败");
+             	return result.getResult();
+        }
         Date date =  pActive.getStartTime();
         long startTime = date.getTime();
         if( startTime >= currentTime) {
