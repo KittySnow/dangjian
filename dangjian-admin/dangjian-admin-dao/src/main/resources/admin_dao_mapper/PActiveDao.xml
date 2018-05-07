@@ -427,7 +427,7 @@
       <if test="startTimeYn != null">
           <![CDATA[ AND t.start_time <= NOW() ]]>
       </if>
-        order by t.create_time DESC
+        order by t.start_time DESC
        <if test="start != null and start > 0">
         LIMIT #{start} , #{pageSize}
       </if>
