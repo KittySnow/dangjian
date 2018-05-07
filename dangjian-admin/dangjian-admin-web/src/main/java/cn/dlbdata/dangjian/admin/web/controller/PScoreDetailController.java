@@ -153,4 +153,25 @@ public class PScoreDetailController {
         result.setData(pScoreDetailService.selectTodoList(userId));
         return result.getResult();
     }
+    /**
+     * 
+     * @param userId
+     * @return count总数
+     */
+    @RequestMapping(value = "/todoListCount", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> todoListCount(Integer userId) {
+        ResultUtil result = new ResultUtil();
+        if(userId == null)
+        {
+        	 result.setSuccess(false);
+             result.setMsg("获取总数失败");
+        }
+        int count = pScoreDetailService.selectTodoListCount(userId);
+        result.setSuccess(true);
+        result.setData(count);
+        return result.getResult();
+    }
+    
+    
 }

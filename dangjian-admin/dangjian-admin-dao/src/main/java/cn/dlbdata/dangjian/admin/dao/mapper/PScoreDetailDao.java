@@ -33,4 +33,6 @@ public interface PScoreDetailDao {
     int updateByPrimaryKey(PScoreDetail record);
 
     List<Map<String,Object>> selectTodoList(Integer userId);
+
+	int selectTodoListCount(Integer userId);
 }

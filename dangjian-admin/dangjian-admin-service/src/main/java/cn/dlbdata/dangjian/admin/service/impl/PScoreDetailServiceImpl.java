@@ -83,4 +83,10 @@ public class PScoreDetailServiceImpl implements PScoreDetailService {
     public List<Map<String, Object>> selectTodoList(Integer userId) {
         return pScoreDetailDao.selectTodoList(userId);
     }
+
+	@Override
+	public int selectTodoListCount(Integer userId) {
+		
+		return pScoreDetailDao.selectTodoListCount(userId);
+	}
 }

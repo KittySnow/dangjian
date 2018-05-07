@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -472,14 +473,30 @@ public class PActiveController {
     @ResponseBody
     public Map<String, Object> deleteById(Integer activeid) {
         ResultUtil result = new ResultUtil();
-        PActiveExample example = new PActiveExample();
-        if (pActiveService.deleteByPrimaryKey(activeid) > 0) {
-            result.setSuccess(true);
-            result.setMsg("删除成功");
-        } else {
-            result.setMsg("删除失败");
+        if(activeid == null)
+        {
+        	result.setSuccess(false);
+        	result.setMsg("删除失败");
+        	return result.getResult();
+        }
+        
+        PActive pActive = pActiveService.selectByPrimaryKey(activeid);
+        long currentTime  = System.currentTimeMillis();
+        Date date =  pActive.getStartTime();
+        long startTime = date.getTime();
+        if( startTime >= currentTime) {
+        	if (pActiveService.deleteByPrimaryKey(activeid) > 0) {
+                result.setSuccess(true);
+                result.setMsg("删除成功");
+            } else {
+                result.setMsg("删除失败");
+                result.setSuccess(false);
+            }
+        }else {
+            result.setMsg("活动已经进行，不允许删除");
             result.setSuccess(false);
         }
+        
         return result.getResult();
     }
 

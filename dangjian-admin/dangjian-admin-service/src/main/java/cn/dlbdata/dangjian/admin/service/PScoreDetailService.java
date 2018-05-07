@@ -32,4 +32,7 @@ public interface PScoreDetailService {
     public int updateByPrimaryKey(PScoreDetail pScoreDetail);
 
     List<Map<String,Object>> selectTodoList(Integer userId);
+    
+    public int selectTodoListCount(Integer userId);
+
 }
