@@ -270,6 +270,7 @@ public class PScoreDetail implements Serializable {
         sb.append(", title=").append(title);
         sb.append(", content=").append(content);
         sb.append(", score=").append(score);
+        sb.append(", maxScore=").append(maxScore);
         sb.append(", onlyYn=").append(onlyYn);
         sb.append(", actorRoleId=").append(actorRoleId);
         sb.append(", adderRoleId=").append(adderRoleId);

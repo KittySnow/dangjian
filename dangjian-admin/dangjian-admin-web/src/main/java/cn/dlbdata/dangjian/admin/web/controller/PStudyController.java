@@ -196,7 +196,7 @@ public class PStudyController {
         ResultUtil result = new ResultUtil();
         PUser pUser = pUserService.selectByPrimaryKey(userid);
         if(pUser.getRoleid()==4){
-            result.setSuccess(true);
+            result.setSuccess(false);
             result.setMsg("您无权审批");
         }else{
             PStudy pStudy = pStudyService.selectByPrimaryKey(studyid);
@@ -252,9 +252,11 @@ public class PStudyController {
                  */
                 if(pStudy.getProjectid() == 6)//公益活动
                 {
-                		//查询当前用户公益活动的总分
-	                	int year = Calendar.getInstance().get(Calendar.YEAR);
-	                	double totalScore = pScorePartyService.getSumScoreByProjectIdAndUserId(6,userid, year);
+            		//查询当前用户公益活动的总分
+                	int year = Calendar.getInstance().get(Calendar.YEAR);
+                	Double totalScore = pScorePartyService.getSumScoreByProjectIdAndUserId(6,pStudy.getCreateUserid(), year);
+                	if(totalScore != null && totalScore > 0)
+                	{
                 		//如果总分>=10分，则不处理
 	                	PScoreDetail detail = pScoreDetailService.selectByPrimaryKey(pStudy.getModuleid());
 	                	double maxScore = 0;
@@ -273,6 +275,7 @@ public class PStudyController {
 	                		pScoreParty.setScore(maxScore - totalScore);
 	                		pScorePartyService.insertSelective(pScoreParty);
 	                	}
+                	}
                 }
                 
                 //pStudy.setStatus(3);拒绝

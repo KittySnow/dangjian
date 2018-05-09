@@ -7,7 +7,7 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="score" jdbcType="DECIMAL" property="score" />
-    <result column="maxScore" jdbcType="DECIMAL" property="max_score" />
+    <result column="max_score" jdbcType="DECIMAL" property="maxScore" />
     <result column="only_yn" jdbcType="CHAR" property="onlyYn" />
     <result column="actor_role_id" jdbcType="INTEGER" property="actorRoleId" />
     <result column="adder_role_id" jdbcType="INTEGER" property="adderRoleId" />
