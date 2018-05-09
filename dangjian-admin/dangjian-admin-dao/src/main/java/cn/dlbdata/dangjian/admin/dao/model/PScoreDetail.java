@@ -111,6 +111,7 @@ public class PScoreDetail implements Serializable {
 
     private String scoreGetMethod;
     private String projectName;
+    private Double maxScore;
 
     private static final long serialVersionUID = 1L;
 
@@ -250,7 +251,15 @@ public class PScoreDetail implements Serializable {
         this.projectName = projectName;
     }
 
-    @Override
+    public Double getMaxScore() {
+		return maxScore;
+	}
+
+	public void setMaxScore(Double maxScore) {
+		this.maxScore = maxScore;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());

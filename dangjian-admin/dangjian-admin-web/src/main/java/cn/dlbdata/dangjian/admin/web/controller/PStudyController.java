@@ -245,6 +245,34 @@ public class PStudyController {
                 pStudy.setStatus(2);
                 pStudyService.updateByPrimaryKey(pStudy);
                 
+                /**
+                 * 公益活动处理满额的问题
+                 */
+                if(pStudy.getProjectid() == 6)//公益活动
+                {
+                		//查询当前用户公益活动的总分
+	                	int year = Calendar.getInstance().get(Calendar.YEAR);
+	                	double totalScore = pScorePartyService.getSumScoreByProjectIdAndUserId(6,userid, year);
+                		//如果总分>=10分，则不处理
+	                	PScoreDetail detail = pScoreDetailService.selectByPrimaryKey(pStudy.getModuleid());
+	                	double maxScore = 0;
+	                	double itemScore = 0;
+	                	if(detail != null )
+	                	{
+	                		if(detail.getMaxScore() != null)
+	                			maxScore = detail.getMaxScore();
+	                		
+	                		itemScore = detail.getScore();
+	                	}
+                		//如果总分为9分，则只加1分
+	                	double sumScore = totalScore + itemScore;
+	                	if(sumScore > maxScore && (maxScore - totalScore) > 0)
+	                	{
+	                		pScoreParty.setScore(maxScore - totalScore);
+	                		pScorePartyService.insertSelective(pScoreParty);
+	                	}
+                }
+                
                 //pStudy.setStatus(3);拒绝
                 result.setSuccess(true);
                 result.setMsg("审核成功");

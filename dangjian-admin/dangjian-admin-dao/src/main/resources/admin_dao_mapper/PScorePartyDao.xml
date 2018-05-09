@@ -581,6 +581,13 @@
   <select id="getSumScoreByUserId" parameterType="Map" resultType="java.lang.Double">
     select sum(p_score_party.score) from p_score_party where user_id=#{userId,jdbcType=INTEGER} and year=#{year,jdbcType=INTEGER};
   </select>
+  
+  <select id="getSumScoreByProjectIdAndUserId" parameterType="Map" resultType="java.lang.Double">
+    select sum(p_score_party.score) from p_score_party where user_id=#{userId,jdbcType=INTEGER} and year=#{year,jdbcType=INTEGER}
+    <if test="projectId != null">
+      and project_id=#{projectId,jdbcType=INTEGER}
+    </if>
+  </select>
 
 
   <select id="getDakDetialByDepartmentId" parameterType="Map" resultMap="BaseResultMap">
