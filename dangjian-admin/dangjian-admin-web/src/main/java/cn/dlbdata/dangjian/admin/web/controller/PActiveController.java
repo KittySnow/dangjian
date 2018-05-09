@@ -66,6 +66,9 @@ public class PActiveController {
 
     @Autowired
     private PScorePartyService pScorePartyService;
+    
+    @Autowired
+    private PDepartmentService pDepartmentService;
 
     /**
      * 创建活动
@@ -577,13 +580,60 @@ public class PActiveController {
         if(inList.size()>0){
             PPartymemberExample inUserExample = new PPartymemberExample();
             inUserExample.createCriteria().andUseridIn(inList);
+            inUserExample.setOrderByClause("departmentid");
             inUserList.addAll(pPartymemberService.selectByExample(inUserExample));
+        }
+        int inDeptartId = 0;
+        if(inUserList.size() > 0)
+        {
+        		for(int i = 0 ; i < inUserList.size(); i++ )
+        		{
+        			PPartymember p = inUserList.get(i);
+        			if(p.getDepartmentid() != inDeptartId)
+        			{
+        				inDeptartId = p.getDepartmentid();
+        				PDepartment dept = pDepartmentService.selectByPrimaryKey(inDeptartId);
+        				if(dept != null)
+        				{
+        					PPartymember tDept = new PPartymember();
+        					tDept.setId(dept.getDepartmentid());
+        					tDept.setName(dept.getDepartmentname());
+        					tDept.setUserName(dept.getDepartmentname());
+        					tDept.setUserRoleId(-1);
+        					inUserList.add(i, tDept);
+        				}
+        			}
+        		}
         }
         if(outList.size()>0){
             PPartymemberExample outUserExample = new PPartymemberExample();
             outUserExample.createCriteria().andUseridIn(outList);
+            outUserExample.setOrderByClause("departmentid");
             outUserList.addAll(pPartymemberService.selectByExample(outUserExample));
         }
+        int outDeptartId = 0;
+        if(outUserList.size() > 0)
+        {
+        		for(int i = 0 ; i < outUserList.size(); i++ )
+        		{
+        			PPartymember p = outUserList.get(i);
+        			if(p.getDepartmentid() != outDeptartId)
+        			{
+        				outDeptartId = p.getDepartmentid();
+        				PDepartment dept = pDepartmentService.selectByPrimaryKey(outDeptartId);
+        				if(dept != null)
+        				{
+        					PPartymember tDept = new PPartymember();
+        					tDept.setId(dept.getDepartmentid());
+        					tDept.setName(dept.getDepartmentname());
+        					tDept.setUserName(dept.getDepartmentname());
+        					tDept.setUserRoleId(-1);
+        					outUserList.add(i, tDept);
+        				}
+        			}
+        		}
+        }
+        
         json.put("participate", inUserList);
         json.put("notParticipate", outUserList);
 
