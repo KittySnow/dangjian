@@ -584,6 +584,7 @@ public class PActiveController {
             inUserList.addAll(pPartymemberService.selectByExample(inUserExample));
         }
         int inDeptartId = 0;
+        int inUserListCount = inUserList.size();
         if(inUserList.size() > 0)
         {
         		for(int i = 0 ; i < inUserList.size(); i++ )
@@ -612,6 +613,7 @@ public class PActiveController {
             outUserList.addAll(pPartymemberService.selectByExample(outUserExample));
         }
         int outDeptartId = 0;
+        int outUserListCount = outUserList.size();
         if(outUserList.size() > 0)
         {
         		for(int i = 0 ; i < outUserList.size(); i++ )
@@ -633,7 +635,9 @@ public class PActiveController {
         			}
         		}
         }
-        
+
+        json.put("participateCount", inUserListCount);
+        json.put("notParticipateCount", outUserListCount);
         json.put("participate", inUserList);
         json.put("notParticipate", outUserList);
 
