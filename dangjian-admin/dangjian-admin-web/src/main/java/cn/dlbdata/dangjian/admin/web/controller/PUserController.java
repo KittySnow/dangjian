@@ -14,6 +14,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -230,7 +231,7 @@ public class PUserController {
                 if (null == userAgent || userAgent.length() <= 0) {
                     userAgent = RandomStringUtils.randomAlphabetic(32);
                 }
-
+                
                 String token = TokenUtil.token(userAgent, pUser.getUserid());
 
                 LoginVO loginVO = new LoginVO();

@@ -236,9 +236,18 @@ public class PStudyController {
                 result.setSuccess(true);
                 result.setMsg("审核成功，积分已发放");
             }else{
+//                //pStudy.setStatus(3);拒绝
+//                result.setSuccess(false);
+//                result.setMsg("已经获取积分，无需重复获取");
+            		
+            		//modify by xiaowei 2018-05-09
+            		//同意审核，不增加积分
+                pStudy.setStatus(2);
+                pStudyService.updateByPrimaryKey(pStudy);
+                
                 //pStudy.setStatus(3);拒绝
-                result.setSuccess(false);
-                result.setMsg("已经获取积分，无需重复获取");
+                result.setSuccess(true);
+                result.setMsg("审核成功");
             }
         }
         return result.getResult();
