@@ -7,6 +7,7 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="maxScore" jdbcType="DECIMAL" property="max_score" />
     <result column="only_yn" jdbcType="CHAR" property="onlyYn" />
     <result column="actor_role_id" jdbcType="INTEGER" property="actorRoleId" />
     <result column="adder_role_id" jdbcType="INTEGER" property="adderRoleId" />
@@ -78,7 +79,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, project_id, title, content, score, only_yn, actor_role_id, adder_role_id, approved_role_id, 
+    id, project_id, title, content, score,max_score, only_yn, actor_role_id, adder_role_id, approved_role_id, 
     add_id, add_time, begin_date, end_date, valid_yn, score_get_method_cd
     ,(select p.project_name from p_score_project p where p.id = p_score_detail.project_id) as project_name
   </sql>
