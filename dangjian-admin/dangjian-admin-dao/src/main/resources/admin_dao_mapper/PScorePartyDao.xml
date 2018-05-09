@@ -94,34 +94,35 @@
     ppm.name adder_name, pum.name partyMemberName,
     ps.project_name, pd.content, pd.begin_date, pd.end_date 
   </sql>
-  <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample"
+          resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
-    <include refid="Base_Column_List" />
-    from p_score_party p 
+    <include refid="Base_Column_List"/>
+    from p_score_party p
     left join p_score_project ps on ps.id = p.project_id
     left join p_score_detail pd on pd.id = p.detail_id
     left join p_partymember pm on pm.userid = p.approved_id
     left join p_partymember ppm on ppm.userid = p.adder_id
     left join p_partymember pum on pum.id = p.user_id
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
     
       order by p.score_time DESC
    
   </select>
-  
-   <sql id="Base_Column_List_two">
+
+  <sql id="Base_Column_List_two">
     id, project_id, detail_id, score, adder_id, approved_id, year, score_time, add_time,
     add_id, valid_yn, user_id, status_cd, imgs, remark , ( select name from p_partymember where p_partymember.userid = approved_id ) as approved_name ,
     ( select name from p_partymember where p_partymember.userid = adder_id ) as adder_name
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List_two" />
+    <include refid="Base_Column_List_two"/>
     from p_score_party
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -132,7 +133,7 @@
   <delete id="deleteByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample">
     delete from p_score_party
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
   </delete>
   <insert id="insert" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScoreParty">
@@ -140,17 +141,17 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into p_score_party (project_id, detail_id,
-      score, adder_id, approved_id,
-      year, score_time, add_time,
-      add_id, valid_yn, user_id,
-      status_cd, imgs, remark
-      )
+    score, adder_id, approved_id,
+    year, score_time, add_time,
+    add_id, valid_yn, user_id,
+    status_cd, imgs, remark
+    )
     values (#{projectId,jdbcType=INTEGER}, #{detailId,jdbcType=INTEGER},
-      #{score,jdbcType=DECIMAL}, #{adderId,jdbcType=INTEGER}, #{approvedId,jdbcType=INTEGER},
-      #{year,jdbcType=INTEGER}, #{scoreTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP},
-      #{addId,jdbcType=INTEGER}, #{validYn,jdbcType=CHAR}, #{userId,jdbcType=INTEGER},
-      #{statusCd,jdbcType=CHAR}, #{imgs,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
-      )
+    #{score,jdbcType=DECIMAL}, #{adderId,jdbcType=INTEGER}, #{approvedId,jdbcType=INTEGER},
+    #{year,jdbcType=INTEGER}, #{scoreTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP},
+    #{addId,jdbcType=INTEGER}, #{validYn,jdbcType=CHAR}, #{userId,jdbcType=INTEGER},
+    #{statusCd,jdbcType=CHAR}, #{imgs,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+    )
   </insert>
 
 
@@ -251,10 +252,11 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample"
+          resultType="java.lang.Long">
     select count(*) from p_score_party
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
@@ -307,7 +309,7 @@
       </if>
     </set>
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
+      <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
@@ -326,7 +328,7 @@
     user_id = #{record.userId,jdbcType=INTEGER},
     status_cd = #{record.statusCd,jdbcType=CHAR}
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
+      <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScoreParty">
@@ -444,81 +446,80 @@
         <!-- 获得的总积分必须小于项目的总分才允许再次获取 -->
         <![CDATA[
           AND ifnull ((SELECT  sum(s.score) FROM p_score_party s where s.project_id = t.project_id
-            AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now())),0) + t.score<= p.score
+            AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now())),0) <  p.score
         ]]>
-        <!-- 如果项目的积分必须小于某模块最大值-->
-        <![CDATA[
+    <!-- 如果项目的积分必须小于某模块最大值-->
+    <![CDATA[
           AND ifnull ((SELECT  sum(s.score) FROM p_score_party s where s.detail_id = t.id
             AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now())),0) + t.score<= t.max_score
         ]]>
-
-        <!-- 如果项目只能获取一次积分且党员已经获取过，则不再允许获取积分 -->
-      AND NOT EXISTS (SELECT 1 FROM p_score_party s where s.detail_id = t.id
-        AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now()) AND t.only_yn = 'Y')
+    <!-- 如果项目只能获取一次积分且党员已经获取过，则不再允许获取积分 -->
+    AND NOT EXISTS (SELECT 1 FROM p_score_party s where s.detail_id = t.id
+    AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now()) AND t.only_yn = 'Y')
   </insert>
 
-    <insert id="updateScoreCustom" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScoreParty">
-        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
-        insert into p_score_party (
-            project_id,
-            detail_id,
-            score,
-            adder_id,
-            approved_id,
-            year,
-            score_time,
-            add_time,
-            add_id,
-            valid_yn,
-            user_id,
+  <insert id="updateScoreCustom" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScoreParty">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into p_score_party (
+      project_id,
+      detail_id,
+      score,
+      adder_id,
+      approved_id,
+      year,
+      score_time,
+      add_time,
+      add_id,
+      valid_yn,
+      user_id,
       <if test="imgs != null">
         imgs,
       </if>
       <if test="remark != null">
         remark,
       </if>
-            status_cd
-        )
-        SELECT
-            t.project_id,
-            t.id,
-            #{score},
-            #{adderId},
-            #{approvedId},
-            extract(year from now()),
-            NOW(),
-            NOW(),
-            0,
-            'Y',
-            #{userId,jdbcType=INTEGER},
+      status_cd
+    )
+    SELECT
+      t.project_id,
+      t.id,
+      #{score},
+      #{adderId},
+      #{approvedId},
+      extract(year from now()),
+      NOW(),
+      NOW(),
+      0,
+      'Y',
+      #{userId,jdbcType=INTEGER},
       <if test="imgs != null">
         #{imgs,jdbcType=VARCHAR},
       </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
       </if>
-            (CASE
-              <![CDATA[ WHEN t.approved_role_id IS NULL OR t.approved_role_id <= 0 THEN '30' ]]>
-              ELSE '10'
-            END )
-        FROM p_score_detail t INNER JOIN p_score_project p ON t.project_id = p.id
-        WHERE t.id = #{detailId,jdbcType=INTEGER} and t.score >= #{score} AND t.score_get_method_cd != '10'
-        <![CDATA[
+    (CASE
+      <![CDATA[ WHEN t.approved_role_id IS NULL OR t.approved_role_id <= 0 THEN '30' ]]>
+      ELSE '10'
+    END )
+    FROM p_score_detail t INNER JOIN p_score_project p ON t.project_id = p.id
+    WHERE t.id = #{detailId,jdbcType=INTEGER} and t.score >= #{score} AND t.score_get_method_cd != '10'
+    <![CDATA[
           AND ifnull ((SELECT  sum(s.score) FROM p_score_party s where s.project_id = t.project_id
             AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now())),0) +t.score<= p.score
         ]]>
-      <!-- 如果项目的积分必须小于某模块最大值-->
-        <![CDATA[
+    <!-- 如果项目的积分必须小于某模块最大值-->
+    <![CDATA[
           AND ifnull ((SELECT  sum(s.score) FROM p_score_party s where s.detail_id = #{detailId,jdbcType=INTEGER}
             AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now())),0) + t.score<= t.max_score
         ]]>
-        AND NOT EXISTS (SELECT 1 FROM p_score_party s where s.detail_id = t.id
-        AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now()) AND t.only_yn = 'Y')
-    </insert>
+    AND NOT EXISTS (SELECT 1 FROM p_score_party s where s.detail_id = t.id
+    AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now()) AND t.only_yn = 'Y')
+  </insert>
 
-    <update id="updateAudit" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScoreParty">
+  <update id="updateAudit" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScoreParty">
         update p_score_party
         set status_cd = #{statusCd},
           approved_id = #{approvedId,jdbcType=INTEGER}
@@ -526,54 +527,54 @@
     </update>
 
 
-
-
-    <insert id="updateSscoreClean" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScoreParty">
-        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
-        insert into p_score_party (
-            project_id,
-            detail_id,
-            score,
-            adder_id,
-            approved_id,
-            year,
-            score_time,
-            add_time,
-            add_id,
-      <if test="imgs != null">
-        imgs,
-      </if>
-      <if test="remark != null">
-        remark,
-      </if>
-            valid_yn,
-            user_id
-        )
-        SELECT
-            t.project_id,
-            6,
-            -20,
-            #{adderId,jdbcType=INTEGER},
-            NULL,
-            t.year,
-            NOW(),
-            NOW(),
-            0,
-      <if test="imgs != null">
-        #{imgs,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-            'Y',
-            t.user_id
-        FROM p_score_party t where t.user_id = #{userId,jdbcType=INTEGER} AND t.detail_id = 16 AND t.year = extract(year from now())
-        GROUP BY t.project_id,t.year HAVING sum(t.score) > ifnull((SELECT sum(s.score)*-1 from p_score_party s where s.year = t.year
-          and s.user_id = t.user_id and s.detail_id = 6
-        ),0)
-    </insert>
+  <insert id="updateSscoreClean" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScoreParty">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into p_score_party (
+    project_id,
+    detail_id,
+    score,
+    adder_id,
+    approved_id,
+    year,
+    score_time,
+    add_time,
+    add_id,
+    <if test="imgs != null">
+      imgs,
+    </if>
+    <if test="remark != null">
+      remark,
+    </if>
+    valid_yn,
+    user_id
+    )
+    SELECT
+    t.project_id,
+    6,
+    -20,
+    #{adderId,jdbcType=INTEGER},
+    NULL,
+    t.year,
+    NOW(),
+    NOW(),
+    0,
+    <if test="imgs != null">
+      #{imgs,jdbcType=VARCHAR},
+    </if>
+    <if test="remark != null">
+      #{remark,jdbcType=VARCHAR},
+    </if>
+    'Y',
+    t.user_id
+    FROM p_score_party t where t.user_id = #{userId,jdbcType=INTEGER} AND t.detail_id = 16 AND t.year = extract(year
+    from now())
+    GROUP BY t.project_id,t.year HAVING sum(t.score) > ifnull((SELECT sum(s.score)*-1 from p_score_party s where s.year
+    = t.year
+    and s.user_id = t.user_id and s.detail_id = 6
+    ),0)
+  </insert>
 
   <select id="getProjectScoreByUserId" parameterType="Map" resultMap="BaseResultMap">
     select p_score_party.project_id, table2.project_name, sum(p_score_party.score) as typetotalscore
@@ -583,6 +584,13 @@
 
   <select id="getSumScoreByUserId" parameterType="Map" resultType="java.lang.Double">
     select sum(p_score_party.score) from p_score_party where user_id=#{userId,jdbcType=INTEGER} and year=#{year,jdbcType=INTEGER};
+  </select>
+  
+  <select id="getSumScoreByProjectIdAndUserId" parameterType="Map" resultType="java.lang.Double">
+    select sum(p_score_party.score) from p_score_party where user_id=#{userId,jdbcType=INTEGER} and year=#{year,jdbcType=INTEGER}
+    <if test="projectId != null">
+      and project_id=#{projectId,jdbcType=INTEGER}
+    </if>
   </select>
 
 

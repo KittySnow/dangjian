@@ -119,4 +119,9 @@ public class PScorePartyServiceImpl implements PScorePartyService {
     public PScoreParty isInsertRights(PScoreParty pScoreParty){
         return pScorePartyDao.isInsertRights(pScoreParty);
     }
+
+	@Override
+	public Double getSumScoreByProjectIdAndUserId(Integer projectId, Integer userId, Integer year) {
+		return pScorePartyDao.getSumScoreByProjectIdAndUserId(projectId,userId,year);
+	}
 }

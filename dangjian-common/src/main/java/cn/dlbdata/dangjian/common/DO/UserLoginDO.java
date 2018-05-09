@@ -7,4 +7,5 @@ public class UserLoginDO {
     private String name;
     private String password;
     private String openId;
+    private Integer userType;
 }
