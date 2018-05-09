@@ -223,9 +223,11 @@ public class PStudyController {
             pScoreParty.setScoreTime(new Date());
 
             pScoreParty.setUserId(pStudy.getCreateUserid());
-
+//            审核的时候往学习表里面插入数据
             pScoreParty.setValidYn("Y");
             pScoreParty.setStatusCd("30");
+            pScoreParty.setRecordId(studyid);
+            pScoreParty.setRecordType(2);
             //加的分数要找一下
 
             //增加积分

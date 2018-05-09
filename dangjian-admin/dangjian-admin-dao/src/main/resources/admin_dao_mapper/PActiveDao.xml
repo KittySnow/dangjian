@@ -432,4 +432,43 @@
         LIMIT #{start} , #{pageSize}
       </if>
     </select>
+    
+        <select id="getRunningActiveCount" parameterType="cn.dlbdata.dangjian.admin.dao.query.ActiveQuery" resultType="java.lang.Integer">
+      SELECT
+      	count(*),
+        t.id as "id",
+        t.active_name as "activeName",
+        t.active_project_id as "activeProjectId",
+        t.active_type as "activeType",
+        t.active_pace as "activePace",
+        t.active_create_people as "activeCreatePeople",
+        t.departmentid as "departmentid",
+        t.active_principal_people as "activePrincipalPeople",
+        t.active_status as "active_Status",
+        t.start_time as "startTime",
+        t.end_time as "endTime",
+        t.active_context as "active_Context",
+        t.zb_message as "zbMessage",
+        t.create_time as "createTime",
+        t.depart_ids as "departIds",
+        p.name as "activeCreatePeopleName"
+      FROM p_active t INNER JOIN p_partymember p on t.active_create_people = p.userid
+      where 1 = 1 
+      <if test="departmentId != null">
+          AND find_in_set(#{departmentId},t.depart_ids) > 0
+      </if>
+      <if test="activeStatus != null">
+          AND t.active_status = #{activeStatus}
+      </if>
+      <if test="activeProjectId != null">
+          AND t.active_project_id = #{activeProjectId}
+      </if>
+      <if test="startTimeYn != null">
+          <![CDATA[ AND t.start_time <= NOW() ]]>
+      </if>
+        order by t.start_time DESC
+       <if test="start != null and start > 0">
+        LIMIT #{start} , #{pageSize}
+      </if>
+    </select>
 </mapper>

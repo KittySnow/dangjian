@@ -142,6 +142,9 @@ public class PScoreParty implements Serializable {
     private Date endDate;
     
     private String partyMemberName;
+    private Integer recordId;
+    private Integer recordType;
+    private String recordDesc;
     
     
     public String getPartyMemberName() {
@@ -346,9 +349,31 @@ public class PScoreParty implements Serializable {
         this.obtainScore = obtainScore;
     }
 
+    public Integer getRecordId() {
+		return recordId;
+	}
 
+	public void setRecordId(Integer recordId) {
+		this.recordId = recordId;
+	}
 
-    @Override
+	public Integer getRecordType() {
+		return recordType;
+	}
+
+	public void setRecordType(Integer recordType) {
+		this.recordType = recordType;
+	}
+
+	public String getRecordDesc() {
+		return recordDesc;
+	}
+
+	public void setRecordDesc(String recordDesc) {
+		this.recordDesc = recordDesc;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
@@ -369,6 +394,9 @@ public class PScoreParty implements Serializable {
         sb.append(", beginDate=").append(beginDate);
         sb.append(", endDate=").append(endDate);
         sb.append(", partyMemberName=").append(partyMemberName);
+        sb.append(", recordId=").append(recordId);
+        sb.append(", recordType=").append(recordType);
+        sb.append(", recordDesc=").append(recordDesc);
         sb.append("]");
         return sb.toString();
     }
@@ -399,7 +427,10 @@ public class PScoreParty implements Serializable {
         	&& (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
 	        && (this.getBeginDate() == null ? other.getBeginDate() == null : this.getBeginDate().equals(other.getBeginDate()))
 	        && (this.getEndDate() == null ? other.getEndDate() == null : this.getEndDate().equals(other.getEndDate()))
-	        && (this.getPartyMemberName() == null ? other.getPartyMemberName() == null : this.getPartyMemberName().equals(other.getPartyMemberName()));
+	        && (this.getPartyMemberName() == null ? other.getPartyMemberName() == null : this.getPartyMemberName().equals(other.getPartyMemberName()))
+        	&& (this.getRecordId() == null ? other.getRecordId() == null : this.getRecordId().equals(other.getRecordId()))
+        	&& (this.getRecordType() == null ? other.getRecordType() == null : this.getRecordType().equals(other.getRecordType()))
+        	&& (this.getRecordDesc() == null ? other.getRecordDesc() == null : this.getRecordDesc().equals(other.getRecordDesc()));
     }
 
     @Override
@@ -421,6 +452,9 @@ public class PScoreParty implements Serializable {
         result = prime * result + ((getBeginDate() == null) ? 0 : getBeginDate().hashCode());
         result = prime * result + ((getEndDate() == null) ? 0 : getEndDate().hashCode());
         result = prime * result + ((getPartyMemberName() == null) ? 0 : getPartyMemberName().hashCode());
+        result = prime * result + ((getRecordId() == null) ? 0 : getRecordId().hashCode());
+        result = prime * result + ((getRecordType() == null) ? 0 : getRecordType().hashCode());
+        result = prime * result + ((getRecordDesc() == null) ? 0 : getRecordDesc().hashCode());
         return result;
     }
 }

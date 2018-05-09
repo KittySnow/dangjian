@@ -153,4 +153,10 @@ public class PActiveServiceImpl implements PActiveService {
     public List<Map<String, Object>> getRunningActive(ActiveQuery activeQuery) {
         return this.pActiveDao.getRunningActive(activeQuery);
     }
+
+	@Override
+	public int getRunningActiveCount(ActiveQuery activeQuery) {
+		
+		return pActiveDao.getRunningActiveCount(activeQuery);
+	}
 }

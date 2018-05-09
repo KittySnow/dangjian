@@ -25,6 +25,9 @@
     <result column="begin_date" jdbcType="TIMESTAMP" property="beginDate" />
     <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
     <result column="partyMemberName" jdbcType="VARCHAR" property="partyMemberName" />
+    <result column="record_id" jdbcType="INTEGER" property="recordId" />
+    <result column="record_type" jdbcType="INTEGER" property="recordType" />
+    <result column="record_desc" jdbcType="VARCHAR" property="recordDesc" />
   </resultMap>
 
   <sql id="Example_Where_Clause">
@@ -87,7 +90,7 @@
   </sql>
   <sql id="Base_Column_List">
     p.id, p.project_id, p.detail_id, p.score, p.adder_id, p.approved_id, p.year, p.score_time, p.add_time,
-    p.add_id, p.valid_yn, p.user_id, p.status_cd, p.imgs, p.remark , pm.name approved_name,
+    p.add_id, p.valid_yn, p.user_id, p.status_cd, p.imgs, p.remark , p.record_id, p.record_type, p.record_desc , pm.name approved_name,
     ppm.name adder_name, pum.name partyMemberName,
     ps.project_name, pd.content, pd.begin_date, pd.end_date 
   </sql>
@@ -106,9 +109,9 @@
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
-      order by p_score_party.score_time DESC
-    </if>
+    
+      order by p.score_time DESC
+   
   </select>
   
    <sql id="Base_Column_List_two">
@@ -408,7 +411,10 @@
         add_time,
         add_id,
         valid_yn,
-        user_id
+        user_id,
+        record_id,
+        record_type,
+        record_desc
       )
       SELECT
         t.project_id,
@@ -428,7 +434,10 @@
         NOW(),
         0,
         'Y',
-        #{userId,jdbcType=INTEGER}
+        #{userId,jdbcType=INTEGER},
+        #{recordId,jdbcType=INTEGER},
+        #{recordType,jdbcType=INTEGER},
+        #{recordDesc,jdbcType=VARCHAR}
       FROM p_score_detail t INNER JOIN p_score_project p ON t.project_id = p.id
         <!-- 仅针对扫码添加积分的部分 -->
         WHERE t.id = #{detailId,jdbcType=INTEGER} AND t.score_get_method_cd = '10'

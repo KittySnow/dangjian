@@ -40,4 +40,5 @@ public interface PActiveService {
 
     List<Map<String,Object>> getRunningActive(ActiveQuery activeQuery);
 
+    int getRunningActiveCount(ActiveQuery activeQuery);
 }

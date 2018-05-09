@@ -141,13 +141,14 @@ public class PScorePartyController{
 
         List<PScoreParty> pScorePartyList1 = new ArrayList<PScoreParty>();
 
-        for (int i = pScorePartyList.size()-1; i>=0; i--) {
+//        for (int i = pScorePartyList.size()-1; i>=0; i--) {
+        for (int i = 0,count = pScorePartyList.size(); i<count; i++) {
             PScoreParty pScoreParty = pScorePartyList.get(i);
             pScoreParty.setDetailTitle(detailIndo.get(pScoreParty.getDetailId()));
-            pScorePartyList1.add(pScoreParty);
+//            pScorePartyList1.add(pScoreParty);
         }
         result.setSuccess(true);
-        result.setData(pScorePartyList1);
+        result.setData(pScorePartyList);
         return result.getResult();
     }
 

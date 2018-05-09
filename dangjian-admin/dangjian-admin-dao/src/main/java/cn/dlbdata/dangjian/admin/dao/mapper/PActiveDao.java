@@ -35,4 +35,6 @@ public interface PActiveDao {
     int selectByActiveTypeAndUserParticipate(@Param("userId") Integer userId, @Param("activeType") Integer activeType,@Param("startTime") Date startTime,@Param("endTime") Date endTime);
 
     List<Map<String,Object>> getRunningActive(ActiveQuery activeQuery);
+    
+    int getRunningActiveCount(ActiveQuery activeQuery);
 }

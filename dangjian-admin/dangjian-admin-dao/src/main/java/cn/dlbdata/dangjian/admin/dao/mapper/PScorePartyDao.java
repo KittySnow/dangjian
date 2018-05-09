@@ -1,12 +1,11 @@
 package cn.dlbdata.dangjian.admin.dao.mapper;
 
-import cn.dlbdata.dangjian.admin.dao.model.PScoreParty;
-import cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample;
-import cn.dlbdata.dangjian.admin.dao.model.PUser;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
+import cn.dlbdata.dangjian.admin.dao.model.PScoreParty;
+import cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample;
 @Mapper
 public interface PScorePartyDao {
     long countByExample(PScorePartyExample example);

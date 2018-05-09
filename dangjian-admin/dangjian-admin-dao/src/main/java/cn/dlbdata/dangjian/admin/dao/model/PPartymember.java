@@ -92,7 +92,18 @@ public class PPartymember implements Serializable {
      * 
      */
     private String userName;
-    public String getAvatar() {
+    
+    private Integer userRoleId;
+    
+    public Integer getUserRoleId() {
+		return userRoleId;
+	}
+
+	public void setUserRoleId(Integer userRoleId) {
+		this.userRoleId = userRoleId;
+	}
+
+	public String getAvatar() {
         return avatar;
     }
 

@@ -12,6 +12,7 @@
     <result column="idcard" jdbcType="VARCHAR" property="idcard" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="fromdepartmentid" jdbcType="INTEGER" property="fromdepartmentid" />
+    <result column="userroleid" jdbcType="INTEGER" property="userRoleId" />
     <result column="bid" jdbcType="INTEGER" property="bid" />
     <result column="departmentid" jdbcType="INTEGER" property="departmentid" />
     <result column="fromdepartmentname" jdbcType="VARCHAR" property="fromdepartmentname" />
@@ -79,7 +80,17 @@
   </sql>
   <sql id="Base_Column_List">
     id, userid, name, sex, age, phone, idcard, fromdepartmentid, bid, departmentid,avatar ,
-    (select u.name from p_user u where u.userid = p_partymember.userid )as username,
+    (select u.name username from p_user u where u.userid = p_partymember.userid )as username,
+    (select departmentname from p_department d where d.departmentid = p_partymember.departmentid )as departmentname,
+    (select departmentname from p_department d where d.departmentid = p_partymember.fromdepartmentid )as fromdepartmentname,
+    (select sum(table1.score) from p_score_party table1  where table1.user_id = p_partymember.userid and year = (select year(now()) )) as totalscore
+  </sql>
+  
+  
+    <sql id="Base_Column_List_two">
+    id, userid, name, sex, age, phone, idcard, fromdepartmentid, bid, departmentid,avatar ,
+    (select u.name username from p_user u where u.userid = p_partymember.userid )as username,
+    (select u.roleid userroleid from p_user u where u.userid = p_partymember.userid )as userroleid,
     (select departmentname from p_department d where d.departmentid = p_partymember.departmentid )as departmentname,
     (select departmentname from p_department d where d.departmentid = p_partymember.fromdepartmentid )as fromdepartmentname,
     (select sum(table1.score) from p_score_party table1  where table1.user_id = p_partymember.userid and year = (select year(now()) )) as totalscore
@@ -89,14 +100,12 @@
     <if test="distinct">
       distinct
     </if>
-    <include refid="Base_Column_List" />
-    from p_partymember
+    <include refid="Base_Column_List_two" />
+    from p_partymember 
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
+      order by userroleid  
   </select>
 
   <select id="selectAll" resultMap="BaseResultMap">

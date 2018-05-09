@@ -129,7 +129,7 @@
       <include refid="Example_Where_Clause_two" />
     </if>
 
-    order by ps.createtime desc
+    order by ps.status asc, ps.starttime desc
 
   </select>
   <sql id="Base_Column_List_two">

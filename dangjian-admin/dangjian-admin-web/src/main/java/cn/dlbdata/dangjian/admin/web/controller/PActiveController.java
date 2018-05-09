@@ -192,6 +192,9 @@ public class PActiveController {
             pScoreParty.setDetailId(pActive.getActiveType());
             pScoreParty.setUserId(userId);
             pScoreParty.setAdderId(pActive.getActiveCreatePeople());
+            pScoreParty.setRecordId(participate.getActiveId());
+            pScoreParty.setRecordType(1);
+            pScoreParty.setRecordDesc(pActive.getActiveName());
             if (pScoreParty.getDetailId() == null || pScoreParty.getUserId() == null || pScoreParty.getAdderId() == null){
                 result.setSuccess(false);
                 result.setMsg("签到成功，请求加分参数不完整");
@@ -339,9 +342,9 @@ public class PActiveController {
         activeQuery.setPageNum(pageNum == null ? 1 : pageNum);
         activeQuery.setPageSize(pageSize == null ? 20 : pageSize);
         
-        if(all!=null && all.equals("Y")){
+//        if(all!=null && all.equals("Y")){
             activeQuery.setStartTimeYn("Y");
-        }
+//        }
         activeQuery.setDepartmentId(departmentid);
         activeQuery.setActiveStatus(1);
         List<Map<String, Object>> pActiveList = pActiveService.getRunningActive(activeQuery);
@@ -379,6 +382,21 @@ public class PActiveController {
         PageInfo<Map<String, Object>> pageInfo = new PageInfo<>(pActiveList);
         result.setSuccess(true);
         result.setData(pageInfo);
+        return result.getResult();
+    }
+    
+    @RequestMapping(value = "/getParticipateActiveCount", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getParticipateActiveCount(Integer userId, Integer departmentid) {
+        ResultUtil result = new ResultUtil();
+        ActiveQuery activeQuery = new ActiveQuery();
+        activeQuery.setPageYn(false);
+       
+        activeQuery.setDepartmentId(departmentid);
+        activeQuery.setActiveStatus(1);
+        int count = pActiveService.getRunningActiveCount(activeQuery);
+       
+        result.setData(count);
         return result.getResult();
     }
 
