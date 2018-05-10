@@ -126,6 +126,21 @@ function SpaceAdminEditCtrl($scope, $http, $timeout ,$routeParams) {
 
 }
 
+function SectionListCtrl($scope, $http, $timeout ,$routeParams) {
+
+}
+
+function SectionListEditCtrl($scope, $http, $timeout ,$routeParams) {
+    $scope.departmentid = $routeParams.sectionid;
+    $http({
+        method: "GET",
+        url: "./psection/queryById.do?sectionid="+Number($scope.sectionid),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).success(function (data,status) {
+        $scope.pSection = data.data;
+    });
+}
+
 function DepartmentListCtrl($scope, $http, $timeout ,$routeParams) {
 
 }
