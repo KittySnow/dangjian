@@ -46,6 +46,7 @@ import cn.dlbdata.dangjian.admin.dao.model.PPartymember;
 import cn.dlbdata.dangjian.admin.dao.model.PPartymemberExample;
 import cn.dlbdata.dangjian.admin.dao.model.PScoreDetail;
 import cn.dlbdata.dangjian.admin.dao.model.PScoreParty;
+import cn.dlbdata.dangjian.admin.dao.model.PUser;
 import cn.dlbdata.dangjian.admin.dao.query.ActiveQuery;
 import cn.dlbdata.dangjian.admin.service.PActiveParticipateService;
 import cn.dlbdata.dangjian.admin.service.PActiveService;
@@ -183,10 +184,17 @@ public class PActiveController {
             result.setSuccess(false);
             return result.getResult();
         }
-        if (pUserService.selectByPrimaryKey(userId) == null) {
+        
+        PUser pUser = pUserService.selectByPrimaryKey(userId);
+        if (pUser == null) {
             result.setMsg("用户不存在！");
             result.setSuccess(false);
             return result.getResult();
+        }
+        if(pUser.getRoleid() != 4 ) {
+        	 result.setMsg("当前用户不能签到");
+             result.setSuccess(false);
+             return result.getResult();
         }
         PActiveParticipateExample example = new PActiveParticipateExample();
         PActiveParticipateExample.Criteria ct = example.createCriteria();
@@ -218,6 +226,7 @@ public class PActiveController {
             PScoreParty pScoreParty = new PScoreParty();
             pScoreParty.setDetailId(pActive.getActiveType());
             pScoreParty.setUserId(userId);
+            
             pScoreParty.setAdderId(pActive.getActiveCreatePeople());
             pScoreParty.setRecordId(participate.getActiveId());
             pScoreParty.setRecordType(1);
