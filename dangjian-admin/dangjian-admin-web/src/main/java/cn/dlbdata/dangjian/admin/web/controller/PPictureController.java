@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,7 +50,8 @@ import net.coobird.thumbnailator.geometry.Positions;
 public class PPictureController {
     private final Logger logger = LoggerFactory.getLogger(PPictureController.class);
 
-    private final String PICTURE_PATH = "C:\\upload\\picture";
+    @Value("${pic.rootPath}")
+    private String PICTURE_PATH = "C:\\upload\\picture";
     private final String PREVFIX = "thumbnail_";
 
     @Autowired
@@ -65,6 +67,7 @@ public class PPictureController {
     @RequestMapping(value = "/upload",method = RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> upload(String mediaId, HttpServletRequest request) {
+    		logger.info("PICTURE_PATH->"+PICTURE_PATH);
         ResultUtil result = new ResultUtil();
         logger.info("上传图片"+mediaId);
         String path;

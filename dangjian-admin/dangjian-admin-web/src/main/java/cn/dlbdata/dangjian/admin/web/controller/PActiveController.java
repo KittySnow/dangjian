@@ -1,12 +1,28 @@
 package cn.dlbdata.dangjian.admin.web.controller;
 
-import cn.dlbdata.dangjian.admin.dao.model.*;
-import cn.dlbdata.dangjian.admin.dao.query.ActiveQuery;
-import cn.dlbdata.dangjian.admin.service.*;
-import cn.dlbdata.dangjian.common.util.DateUtil;
-import cn.dlbdata.dangjian.common.util.ResultUtil;
+import java.awt.image.BufferedImage;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -17,23 +33,29 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.google.zxing.qrcode.encoder.ByteMatrix;
 import com.google.zxing.qrcode.encoder.QRCode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.List;
+import cn.dlbdata.dangjian.admin.dao.model.PActive;
+import cn.dlbdata.dangjian.admin.dao.model.PActiveExample;
+import cn.dlbdata.dangjian.admin.dao.model.PActiveParticipate;
+import cn.dlbdata.dangjian.admin.dao.model.PActiveParticipateExample;
+import cn.dlbdata.dangjian.admin.dao.model.PActivePicture;
+import cn.dlbdata.dangjian.admin.dao.model.PActivePictureExample;
+import cn.dlbdata.dangjian.admin.dao.model.PDepartment;
+import cn.dlbdata.dangjian.admin.dao.model.PPartymember;
+import cn.dlbdata.dangjian.admin.dao.model.PPartymemberExample;
+import cn.dlbdata.dangjian.admin.dao.model.PScoreDetail;
+import cn.dlbdata.dangjian.admin.dao.model.PScoreParty;
+import cn.dlbdata.dangjian.admin.dao.query.ActiveQuery;
+import cn.dlbdata.dangjian.admin.service.PActiveParticipateService;
+import cn.dlbdata.dangjian.admin.service.PActiveService;
+import cn.dlbdata.dangjian.admin.service.PDepartmentService;
+import cn.dlbdata.dangjian.admin.service.PPartymemberService;
+import cn.dlbdata.dangjian.admin.service.PPictureService;
+import cn.dlbdata.dangjian.admin.service.PScoreDetailService;
+import cn.dlbdata.dangjian.admin.service.PScorePartyService;
+import cn.dlbdata.dangjian.admin.service.PUserService;
+import cn.dlbdata.dangjian.common.util.DateUtil;
+import cn.dlbdata.dangjian.common.util.ResultUtil;
 
 /**
  * @packageName PActiveController
@@ -47,7 +69,7 @@ import java.util.List;
 @RequestMapping("/active")
 public class PActiveController {
     private static Logger _log = LoggerFactory.getLogger(PActiveController.class);
-
+    
     @Autowired
     private PPartymemberService pPartymemberService;
     @Autowired
