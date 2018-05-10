@@ -70,7 +70,7 @@
   </sql>
   <sql id="Base_Column_List">
     departmentid, departmentname, cost, people, honor, address,
-    (select A.name from p_partymember A join p_user B  on A.userid = B.userid where A.departmentid = p_department.departmentid and B.roleid = 3 ) as partyBranch
+    (select A.name from p_partymember A join p_user B  on A.userid = B.userid where A.departmentid = p_department.departmentid and B.roleid = 3 limit 1) as partyBranch
   </sql>
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PDepartmentExample" resultMap="BaseResultMap">
     select

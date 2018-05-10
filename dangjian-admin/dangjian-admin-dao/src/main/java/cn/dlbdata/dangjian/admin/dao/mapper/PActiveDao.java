@@ -37,4 +37,6 @@ public interface PActiveDao {
     List<Map<String,Object>> getRunningActive(ActiveQuery activeQuery);
     
     int getRunningActiveCount(ActiveQuery activeQuery);
+    
+    int deleteActivePicById(Integer id);
 }

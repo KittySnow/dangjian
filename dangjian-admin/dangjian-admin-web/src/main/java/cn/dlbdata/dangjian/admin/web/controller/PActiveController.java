@@ -345,9 +345,9 @@ public class PActiveController {
         activeQuery.setPageNum(pageNum == null ? 1 : pageNum);
         activeQuery.setPageSize(pageSize == null ? 20 : pageSize);
         
-//        if(all!=null && all.equals("Y")){
+        if(all!=null && all.equals("Y")){
             activeQuery.setStartTimeYn("Y");
-//        }
+        }
         activeQuery.setDepartmentId(departmentid);
         activeQuery.setActiveStatus(1);
         List<Map<String, Object>> pActiveList = pActiveService.getRunningActive(activeQuery);
@@ -382,7 +382,9 @@ public class PActiveController {
 				return 0;
 			}
 		});
+      
         PageInfo<Map<String, Object>> pageInfo = new PageInfo<>(pActiveList);
+        
         result.setSuccess(true);
         result.setData(pageInfo);
         return result.getResult();
@@ -766,6 +768,31 @@ public class PActiveController {
         }
         return image;
     }
+    
+    /**
+     * 删除活动图片接口
+     * @param id活动图片id
+     * 
+     */
+    @RequestMapping(value="/deleteActivePicById",method= RequestMethod.DELETE)
+    @ResponseBody
+    public Map<String, Object> deleteActivePicById(Integer id){
+        ResultUtil result = new ResultUtil();
+        if(id == null) {
+        	result.setMsg("删除失败");
+            result.setSuccess(false);
+        }
+        if(pActiveService.deleteActivePicById(id)>0){
+            result.setSuccess(true);
+            result.setMsg("删除成功");
+        }else{
+            result.setMsg("删除失败");
+            result.setSuccess(false);
+        }
+        return result.getResult();
+    }
+    
+    
 
 
     /**

@@ -471,4 +471,10 @@
         LIMIT #{start} , #{pageSize}
       </if>
     </select>
+    
+    
+    <delete id="deleteActivePicById" parameterType="java.lang.Integer">
+    	 delete from p_active_picture
+   		 where id = #{id,jdbcType=INTEGER}
+    </delete>
 </mapper>

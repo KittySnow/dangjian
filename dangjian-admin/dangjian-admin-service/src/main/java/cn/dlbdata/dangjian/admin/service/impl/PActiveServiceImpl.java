@@ -155,4 +155,10 @@ public class PActiveServiceImpl implements PActiveService {
 		
 		return pActiveDao.getRunningActiveCount(activeQuery);
 	}
+
+	@Override
+	public int deleteActivePicById(Integer id) {
+		
+		return pActiveDao.deleteActivePicById(id);
+	}
 }
