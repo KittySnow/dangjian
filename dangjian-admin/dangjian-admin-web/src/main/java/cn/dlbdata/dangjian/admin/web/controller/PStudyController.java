@@ -69,14 +69,14 @@ public class PStudyController {
         pScoreParty.setUserId(createUserid);
 
         PScoreParty pScoreDetail = pScorePartyService.isInsertRights(pScoreParty);
+        	if(moduleid != 8) {
+        		   if(pScoreDetail==null){
+        	            result.setMsg("您该项目提交次数已达最大值");
+        	            result.setSuccess(false);
+        	            return result.getResult();
+        	        }
 
-        if(pScoreDetail==null){
-            result.setMsg("您该项目提交次数已达最大值");
-            result.setSuccess(false);
-            return result.getResult();
-        }
-
-
+        	}
         PStudy pStudy = new PStudy();
         pStudy.setContent(content);
         pStudy.setCreateUserid(createUserid);

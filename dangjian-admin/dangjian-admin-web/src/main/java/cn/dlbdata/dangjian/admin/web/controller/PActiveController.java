@@ -383,8 +383,12 @@ public class PActiveController {
         }
         activeQuery.setDepartmentId(departmentid);
         activeQuery.setActiveStatus(1);
+        PUser pUser = pUserService.selectByPrimaryKey(userId);
         
-        activeQuery.setEndTime(new Date());
+        if(pUser != null && pUser.getRoleid() == 4) {
+        	 activeQuery.setEndTime(new Date());
+        }
+       
         List<Map<String, Object>> pActiveList = pActiveService.getRunningActive(activeQuery);
         int id = -1;
         for (Map<String,Object> active : pActiveList) {
@@ -602,7 +606,7 @@ public class PActiveController {
         PActiveParticipateExample pActiveParticipateExample = new PActiveParticipateExample();
         pActiveParticipateExample.createCriteria().andActiveIdEqualTo(activeId);
         List<PActiveParticipate> participateList = activeParticipateService.selectByExample(pActiveParticipateExample);
-
+        Map<String,List<PPartymember>> mapPartyMember = new HashMap<String, List<PPartymember>>();
         List<Integer> inList = new ArrayList<>();
         List<Integer> outList = new ArrayList<>();
         for (PActiveParticipate item:participateList){
