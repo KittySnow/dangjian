@@ -443,6 +443,9 @@
       <if test="startTimeYn != null">
           <![CDATA[ AND t.start_time <= NOW() ]]>
       </if>
+       <if test="endTime != null">
+          AND t.end_time &gt; #{endTime}
+      </if>
         order by t.start_time DESC
        <if test="start != null and start > 0">
         LIMIT #{start} , #{pageSize}
@@ -482,6 +485,9 @@
       </if>
       <if test="startTimeYn != null">
           <![CDATA[ AND t.start_time <= NOW() ]]>
+      </if>
+      <if test="endTime != null">
+          AND t.end_time &gt; #{endTime}
       </if>
         order by t.start_time DESC
        <if test="start != null and start > 0">
