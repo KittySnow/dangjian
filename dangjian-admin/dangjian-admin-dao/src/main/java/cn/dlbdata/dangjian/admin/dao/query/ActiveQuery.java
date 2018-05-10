@@ -1,5 +1,7 @@
 package cn.dlbdata.dangjian.admin.dao.query;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,8 +30,19 @@ public class ActiveQuery extends PageQuery {
      * 项目ID
      */
     private Integer activeProjectId;
+    
+    private Date endTime;
 
-    public Integer getDepartmentId() {
+ 
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
+	public Integer getDepartmentId() {
         return departmentId;
     }
 

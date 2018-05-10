@@ -351,6 +351,8 @@ public class PActiveController {
         }
         activeQuery.setDepartmentId(departmentid);
         activeQuery.setActiveStatus(1);
+        
+        activeQuery.setEndTime(new Date());
         List<Map<String, Object>> pActiveList = pActiveService.getRunningActive(activeQuery);
         int id = -1;
         for (Map<String,Object> active : pActiveList) {
@@ -400,6 +402,7 @@ public class PActiveController {
        
         activeQuery.setDepartmentId(departmentid);
         activeQuery.setActiveStatus(1);
+        activeQuery.setEndTime(new Date());
         int count = pActiveService.getRunningActiveCount(activeQuery);
        
         result.setData(count);
