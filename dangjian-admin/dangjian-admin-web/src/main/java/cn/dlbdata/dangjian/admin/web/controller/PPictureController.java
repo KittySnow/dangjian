@@ -1,16 +1,20 @@
 package cn.dlbdata.dangjian.admin.web.controller;
 
-import cn.dlbdata.dangjian.admin.dao.model.PPicture;
-import cn.dlbdata.dangjian.admin.dao.model.PPictureExample;
-import cn.dlbdata.dangjian.admin.service.PPictureService;
-import cn.dlbdata.dangjian.common.util.ResultUtil;
-import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.access.AccessTokenResponse;
-import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.access.GetaAccessTokenParam;
-import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.access.GrantType;
-import cn.dlbdata.dangjian.thirdparty.mp.sdk.service.AccessService;
-import cn.dlbdata.dangjian.thirdparty.mp.sdk.util.CommonUtil;
-import cn.dlbdata.dangjian.thirdparty.mp.sdk.util.LocalCache;
-import net.coobird.thumbnailator.Thumbnails;
+import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Date;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,13 +24,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Date;
-import java.util.Map;
+import cn.dlbdata.dangjian.admin.dao.model.PPicture;
+import cn.dlbdata.dangjian.admin.service.PPictureService;
+import cn.dlbdata.dangjian.common.util.ResultUtil;
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.access.AccessTokenResponse;
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.access.GetaAccessTokenParam;
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.model.access.GrantType;
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.service.AccessService;
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.util.CommonUtil;
+import cn.dlbdata.dangjian.thirdparty.mp.sdk.util.LocalCache;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.geometry.Positions;
 
 
 /**
@@ -178,7 +186,6 @@ public class PPictureController {
     @ResponseBody
     public Map<String, Object> deleteById(Integer id){
         ResultUtil result = new ResultUtil();
-        PPictureExample example = new PPictureExample();
         if(pPictureService.deleteByPrimaryKey(id)>0){
             result.setSuccess(true);
             result.setMsg("删除成功");
@@ -281,7 +288,9 @@ public class PPictureController {
         if(imgFile.exists()){
             try {
             	String p = imgFile.getPath();
-            	Thumbnails.of(imagePath).size(200, 300).toFile(new File(p.substring(0,p.lastIndexOf(File.separator)) + File.separator + prevfix +imgFile.getName()));  
+            	File outFile = new File(p.substring(0,p.lastIndexOf(File.separator)) + File.separator + prevfix +imgFile.getName());
+            	compressPic(imgFile,outFile);
+            //	Thumbnails.of(imagePath).size(200, 200).toFile(outFile);  
 //                // ImageIO 支持的图片类型 : [BMP, bmp, jpg, JPG, wbmp, jpeg, png, PNG, JPEG, WBMP, GIF, gif]
 //                String types = Arrays.toString(ImageIO.getReaderFormatNames());
 //                String suffix = null;
@@ -319,11 +328,35 @@ public class PPictureController {
 //                // 将图片保存在原文件夹并加上前缀
 //                ImageIO.write(bi, suffix, new File(p.substring(0,p.lastIndexOf(File.separator)) + File.separator + prevfix +imgFile.getName()));
                 logger.debug("缩略图在原路径下生成成功");
-            } catch (IOException e) {
+            } catch (Exception e) {
                 logger.error("generate thumbnail image failed.",e);
             }
         }else{
             logger.warn("the image is not exist.");
         }
+    }
+    
+    public boolean compressPic(File inputFile, File outputFile) {
+        try {
+            Thumbnails.Builder<File> fileBuilder = Thumbnails.of(inputFile).scale(1.0).outputQuality(1.0);
+            BufferedImage src = fileBuilder.asBufferedImage();
+            int height = src.getHeight();
+            int width = src.getWidth();
+            int square = width;
+            if(width > height)
+            {
+            		square = height;
+            }
+            else
+            {
+            		square = width;
+            }
+
+            Thumbnails.of(inputFile).size(200, 200).sourceRegion(Positions.CENTER, square,square).toFile(outputFile);
+            return true;
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return false;
     }
 }
