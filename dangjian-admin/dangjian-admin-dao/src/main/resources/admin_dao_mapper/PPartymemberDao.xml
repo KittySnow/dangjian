@@ -87,7 +87,7 @@
   </sql>
   
   
-    <sql id="Base_Column_List_two">
+  <sql id="Base_Column_List_two">
     id, userid, name, sex, age, phone, idcard, fromdepartmentid, bid, departmentid,avatar ,
     (select u.name username from p_user u where u.userid = p_partymember.userid )as username,
     (select u.roleid userroleid from p_user u where u.userid = p_partymember.userid )as userroleid,
@@ -95,6 +95,16 @@
     (select departmentname from p_department d where d.departmentid = p_partymember.fromdepartmentid )as fromdepartmentname,
     (select sum(table1.score) from p_score_party table1  where table1.user_id = p_partymember.userid and year = (select year(now()) )) as totalscore
   </sql>
+  
+  <sql id="Base_Column_List_three">
+    p.id, p.userid, p.name, p.sex, p.age, p.phone, p.idcard, p.fromdepartmentid, p.bid, p.departmentid,p.avatar ,
+    (select u.name username from p_user u where u.userid = p_partymember.userid )as username,
+    (select u.roleid userroleid from p_user u where u.userid = p_partymember.userid )as userroleid,
+    (select departmentname from p_department d where d.departmentid = p_partymember.departmentid )as departmentname,
+    (select departmentname from p_department d where d.departmentid = p_partymember.fromdepartmentid )as fromdepartmentname,
+    (select sum(table1.score) from p_score_party table1  where table1.user_id = p_partymember.userid and year = (select year(now()) )) as totalscore
+  </sql>
+  
   <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymemberExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -107,6 +117,7 @@
     </if>
       order by userroleid  
   </select>
+  
 
   <select id="selectAll" resultMap="BaseResultMap">
     select id, userid, name, sex, age, phone, idcard, fromdepartmentid, bid, departmentid,avatar
@@ -328,6 +339,16 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+  <select id="getPartymemberByDeptId" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List_three" />
+    from p_partymember p
+    left join p_user pu on p.userid=pu.userid where pu.roleid=4
+    <if test="departmentid != null">
+    		and p.departmentid = departmentid
+    </if>
+  </select>
+  
   <select id="getPartymemberByDepartmentid" resultMap="BaseResultMap" parameterType="Map">
     select p_partymember.id,p_partymember.userid , name, sex, age, phone, idcard, fromdepartmentid, bid, p_partymember.departmentid,
       (select departmentname from p_department d where d.departmentid = p_partymember.departmentid )as departmentname,
@@ -337,7 +358,8 @@
     left join p_avantgrade on p_avantgrade.partmentid = p_partymember.id
     where p_partymember.departmentid = #{departmentid,jdbcType=INTEGER}
     <if test="status != null">
-      and p_avantgrade.status=#{status,jdbcType=INTEGER}</if>
+      and p_avantgrade.status=#{status,jdbcType=INTEGER}
+    </if>
 
   </select>
 </mapper>

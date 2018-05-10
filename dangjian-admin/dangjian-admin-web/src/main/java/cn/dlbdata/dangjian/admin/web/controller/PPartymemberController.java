@@ -160,8 +160,7 @@ public class PPartymemberController {
         PPartymemberExample pPartymemberExample = new PPartymemberExample();
         PPartymemberExample.Criteria pPartymemberCriteria =  pPartymemberExample.createCriteria();
         pPartymemberCriteria.andDepartmentidEqualTo(departmentid);
-        List<PPartymember> pPartymemberList = pPartymemberService.selectByExample(pPartymemberExample);
-
+        List<PPartymember> pPartymemberList = pPartymemberService.getPartymemberByDeptId(departmentid);
         result.setSuccess(true);
         result.setData(pPartymemberList);
         return result.getResult();

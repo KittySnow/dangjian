@@ -292,7 +292,7 @@ public class PPictureController {
             try {
             	String p = imgFile.getPath();
             	File outFile = new File(p.substring(0,p.lastIndexOf(File.separator)) + File.separator + prevfix +imgFile.getName());
-            	compressPic(imgFile,outFile);
+            	compressPic(imgFile,outFile,w,h);
             //	Thumbnails.of(imagePath).size(200, 200).toFile(outFile);  
 //                // ImageIO 支持的图片类型 : [BMP, bmp, jpg, JPG, wbmp, jpeg, png, PNG, JPEG, WBMP, GIF, gif]
 //                String types = Arrays.toString(ImageIO.getReaderFormatNames());
@@ -339,7 +339,7 @@ public class PPictureController {
         }
     }
     
-    public boolean compressPic(File inputFile, File outputFile) {
+    public boolean compressPic(File inputFile, File outputFile,int w, int h) {
         try {
             Thumbnails.Builder<File> fileBuilder = Thumbnails.of(inputFile).scale(1.0).outputQuality(1.0);
             BufferedImage src = fileBuilder.asBufferedImage();
@@ -355,7 +355,7 @@ public class PPictureController {
             		square = width;
             }
 
-            Thumbnails.of(inputFile).size(200, 200).sourceRegion(Positions.CENTER, square,square).toFile(outputFile);
+            Thumbnails.of(inputFile).size(w, h).sourceRegion(Positions.CENTER, square,square).toFile(outputFile);
             return true;
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
