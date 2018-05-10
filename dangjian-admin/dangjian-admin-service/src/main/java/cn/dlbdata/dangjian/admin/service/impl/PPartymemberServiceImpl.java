@@ -175,4 +175,9 @@ public class PPartymemberServiceImpl implements PPartymemberService {
     public List<PPartymember> getPartymemberByDeptId(Integer departmentid){
         return pPartymemberDao.getPartymemberByDeptId(departmentid);
     }
+
+	@Override
+	public List<PPartymember> queryAreaListById() {
+		return pPartymemberDao.queryAreaListById();
+	}
 }

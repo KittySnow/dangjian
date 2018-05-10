@@ -1,0 +1,45 @@
+<ol class="breadcrumb newcrumb">
+    <li><a href="#"><span><i class="fa fontello-home-outline"></i></span>主页</a></li>
+    <li><a href="#!/SectionList/sectionList">片区列表</a></li>
+    <li class="active">编辑片区列表</li>
+</ol>
+<!-- 添加项目html -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="box ">
+            <div class="box-header">
+                <h3 class="box-title">修改片区列表</h3>
+            </div>
+            <form role="form" class="loginForm form-horizontal" action="./section/updateById" method="post" onsubmit="return validateCallback(this)"  novalidate>
+                <div class="box-bodyed">
+                <input type="hidden" name="id" value="{{pSection.id}}">
+
+                <div class="form-group">
+                    <label><span class="red">*</span>片区名称</label>
+                    <input type="text" class="form-control" name="name" placeholder="请输入片区名称" required value="{{pSection.name}}"/>
+                </div>
+                  <div class="form-group">
+                    <label><span class="red">*</span>片区书记id</label>
+                    <input type="text" class="form-control" name="secretaryId" placeholder="请输入片区书记id" required value="{{pSection.secretaryId}}"/>
+                </div>
+                  <div class="form-group">
+                    <label><span class="red">*</span>片区企业数量</label>
+                    <input type="text" class="form-control" name="enterpriseCount" placeholder="请输入片区企业数量" required value="{{pSection.enterpriseCount}}"/>
+                </div>
+                
+                <div class="form-group">
+                    <label><span class="red">*</span>片区负责人姓名</label>
+                    <input type="text" class="form-control" name="secretaryName" placeholder="请输入片区负责人姓名" required value="{{pSection.secretaryName}}"/>
+                </div>
+
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">提交</button>　
+                    <a type="btn" class="btn btn-danger" href="#!/SectionList/sectionList">返回列表</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>

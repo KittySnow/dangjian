@@ -362,4 +362,9 @@
     </if>
 
   </select>
+  
+  <select id="queryAreaListById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  	select p.id, p.name
+  	from p_partymember p, p_user u where u.userid = p.userid and u.roleid = 2
+  </select>
 </mapper>

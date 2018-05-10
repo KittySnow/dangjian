@@ -128,17 +128,27 @@ function SpaceAdminEditCtrl($scope, $http, $timeout ,$routeParams) {
 
 function SectionListCtrl($scope, $http, $timeout ,$routeParams) {
 
+    $http({
+        method: "GET",
+        url: "./ppartymember/queryAreaList.do",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).success(function (data,status) {
+        $scope.listSection = data.data;
+    });
 }
 
 function SectionListEditCtrl($scope, $http, $timeout ,$routeParams) {
-    $scope.departmentid = $routeParams.sectionid;
+    $scope.id = $routeParams.id;
+    console.log($routeParams);
+    console.log($route.current.$$route.activetab);
     $http({
         method: "GET",
-        url: "./psection/queryById.do?sectionid="+Number($scope.sectionid),
+        url: "./pSection/queryById.do?id="+Number($scope.id),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).success(function (data,status) {
         $scope.pSection = data.data;
     });
+    
 }
 
 function DepartmentListCtrl($scope, $http, $timeout ,$routeParams) {
