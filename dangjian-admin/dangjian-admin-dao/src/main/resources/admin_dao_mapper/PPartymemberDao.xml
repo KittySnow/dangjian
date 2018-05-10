@@ -340,9 +340,11 @@
   </update>
 
   <select id="getPartymemberByDeptId" parameterType="map" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List_three" />
-    from p_partymember p
+    select p.id,p.userid , p.name, sex, age, phone, idcard, fromdepartmentid, bid, p.departmentid,
+	(select departmentname from p_department d where d.departmentid = p.departmentid )as departmentname,
+	(select departmentname from p_department d where d.departmentid = p.fromdepartmentid )as fromdepartmentname,
+	(select sum(table1.score) from p_score_party table1 where table1.user_id = p.userid and year = (select year(now()) )) as totalscore 
+	from p_partymember p
     left join p_user pu on p.userid=pu.userid where pu.roleid=4
     <if test="departmentid != null">
     		and p.departmentid = departmentid
