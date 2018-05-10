@@ -23,3 +23,6 @@ pagehelper:
     reasonable: true
     supportMethodsArguments: true
     params: count=countSql
+pic: 
+  rootPath: C:\\upload\\picture
+  

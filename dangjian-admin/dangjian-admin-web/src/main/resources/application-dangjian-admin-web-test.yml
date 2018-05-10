@@ -8,3 +8,5 @@ spring:
     password: ENC(ETWygv0bn5NoUv2V96KGbXgPbzxqxvRz)
   thymeleaf:
     prefix: classpath:/templates/
+pic: 
+  rootPath: C:\\upload\\picture
