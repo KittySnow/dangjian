@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
@@ -613,25 +614,46 @@ public class PActiveController {
         }
         int inDeptartId = 0;
         int inUserListCount = inUserList.size();
+        Map<String,List<PPartymember>> inUserMap = new TreeMap<String, List<PPartymember>>();
+        
         if(inUserList.size() > 0)
         {
         		for(int i = 0 ; i < inUserList.size(); i++ )
         		{
         			PPartymember p = inUserList.get(i);
-        			if(p.getDepartmentid() != inDeptartId)
+        			List<PPartymember> list = null;
+        			if(i == 0)
         			{
-        				inDeptartId = p.getDepartmentid();
-        				PDepartment dept = pDepartmentService.selectByPrimaryKey(inDeptartId);
-        				if(dept != null)
-        				{
-        					PPartymember tDept = new PPartymember();
-        					tDept.setId(dept.getDepartmentid());
-        					tDept.setName(dept.getDepartmentname());
-        					tDept.setUserName(dept.getDepartmentname());
-        					tDept.setUserRoleId(-1);
-        					inUserList.add(i, tDept);
-        				}
+        				list = new ArrayList<PPartymember>();
+        				list.add(p);
+        				inUserMap.put(p.getDepartmentname(), list);
         			}
+        			else
+        			{
+        				list = inUserMap.get(p.getDepartmentname());
+        				if(list == null)
+            			{
+            				list = new ArrayList<PPartymember>();
+            			}
+        				list.add(p);
+
+        				inUserMap.put(p.getDepartmentname(), list);
+        			}
+        			
+//        			if(p.getDepartmentid() != inDeptartId)
+//        			{
+//        				inDeptartId = p.getDepartmentid();
+//        				PDepartment dept = pDepartmentService.selectByPrimaryKey(inDeptartId);
+//        				if(dept != null)
+//        				{
+//        					PPartymember tDept = new PPartymember();
+//        					tDept.setId(dept.getDepartmentid());
+//        					tDept.setName(dept.getDepartmentname());
+//        					tDept.setUserName(dept.getDepartmentname());
+//        					tDept.setUserRoleId(-1);
+//        					inUserList.add(i, tDept);
+//        				}
+//        			}
         		}
         }
         if(outList.size()>0){
@@ -642,32 +664,51 @@ public class PActiveController {
         }
         int outDeptartId = 0;
         int outUserListCount = outUserList.size();
+        Map<String,List<PPartymember>> outUserMap = new TreeMap<String, List<PPartymember>>();
         if(outUserList.size() > 0)
         {
         		for(int i = 0 ; i < outUserList.size(); i++ )
         		{
         			PPartymember p = outUserList.get(i);
-        			if(p.getDepartmentid() != outDeptartId)
+        			List<PPartymember> list = null;
+        			if(i == 0)
         			{
-        				outDeptartId = p.getDepartmentid();
-        				PDepartment dept = pDepartmentService.selectByPrimaryKey(outDeptartId);
-        				if(dept != null)
-        				{
-        					PPartymember tDept = new PPartymember();
-        					tDept.setId(dept.getDepartmentid());
-        					tDept.setName(dept.getDepartmentname());
-        					tDept.setUserName(dept.getDepartmentname());
-        					tDept.setUserRoleId(-1);
-        					outUserList.add(i, tDept);
-        				}
+        				list = new ArrayList<PPartymember>();
+        				list.add(p);
+        				outUserMap.put(p.getDepartmentname(), list);
         			}
+        			else
+        			{
+        				list = outUserMap.get(p.getDepartmentname());
+        				if(list == null)
+            			{
+            				list = new ArrayList<PPartymember>();
+            			}
+        				list.add(p);
+
+        				outUserMap.put(p.getDepartmentname(), list);
+        			}
+//        			if(p.getDepartmentid() != outDeptartId)
+//        			{
+//        				outDeptartId = p.getDepartmentid();
+//        				PDepartment dept = pDepartmentService.selectByPrimaryKey(outDeptartId);
+//        				if(dept != null)
+//        				{
+//        					PPartymember tDept = new PPartymember();
+//        					tDept.setId(dept.getDepartmentid());
+//        					tDept.setName(dept.getDepartmentname());
+//        					tDept.setUserName(dept.getDepartmentname());
+//        					tDept.setUserRoleId(-1);
+//        					outUserList.add(i, tDept);
+//        				}
+//        			}
         		}
         }
 
         json.put("participateCount", inUserListCount);
         json.put("notParticipateCount", outUserListCount);
-        json.put("participate", inUserList);
-        json.put("notParticipate", outUserList);
+        json.put("participate", inUserMap);
+        json.put("notParticipate", outUserMap);
 
         result.setSuccess(true);
         result.setData(json);

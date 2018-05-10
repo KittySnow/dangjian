@@ -81,7 +81,7 @@ public class EventDispatcher {
             return MessageUtil.textMessageToXml(textMessage);
         }
 
-        if (map.get("Event").equals(MessageUtil.EVENT_TYPE_VIEW)) { //自定义菜单 View 事件
+        if (MessageUtil.EVENT_TYPE_VIEW.equals(map.get("Event"))) { //自定义菜单 View 事件
         }
 
         return null;
