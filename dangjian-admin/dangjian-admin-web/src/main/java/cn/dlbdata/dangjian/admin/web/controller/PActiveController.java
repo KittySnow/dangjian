@@ -820,7 +820,7 @@ public class PActiveController {
     
     /**
      * 删除活动图片接口
-     * @param id活动图片id
+     * @param id
      * 
      */
     @RequestMapping(value="/deleteActivePicById",method= RequestMethod.DELETE)

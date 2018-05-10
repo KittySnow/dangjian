@@ -69,7 +69,7 @@ public class PStudyController {
         pScoreParty.setUserId(createUserid);
 
         PScoreParty pScoreDetail = pScorePartyService.isInsertRights(pScoreParty);
-        	if(moduleid != 8) {
+        	if(moduleid != 8 || moduleid != 2) {
         		   if(pScoreDetail==null){
         	            result.setMsg("您该项目提交次数已达最大值");
         	            result.setSuccess(false);
