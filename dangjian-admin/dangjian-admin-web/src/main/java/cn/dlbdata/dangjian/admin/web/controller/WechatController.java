@@ -82,13 +82,13 @@ public class WechatController {
 
 		PrintWriter out = response.getWriter();
 
-		if(msgType!=null){
+		if(out!= null && msgType!=null){
 			if(MessageUtil.REQ_MESSAGE_TYPE_EVENT.equals(msgType)){
 				logger.info("WechatController->DoPost->EventDispatcher start");
-				out.write(EventDispatcher.processEvent(map));; 	//进入事件处理
+				out.write(EventDispatcher.processEvent(map)); 	//进入事件处理
 			}else{
 				logger.info("WechatController->DoPost->MsgDispatcher start");
-				out.write(MsgDispatcher.processMessage(map));;	//进入消息处理
+				out.write(MsgDispatcher.processMessage(map));	//进入消息处理
 			}
 		}else{
 			logger.info("微信方法失效");
