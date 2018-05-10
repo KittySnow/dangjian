@@ -356,5 +356,21 @@ public class PPartymemberController {
         result.setData(list);
         return result.getResult();
     }
+    
+    
+    /**
+     * 查询片区负责人集合
+     * @return
+     */
+    @RequestMapping(value="/queryAreaList",method=RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> queryAreaListById(){
+        ResultUtil result = new ResultUtil();
+        List<PPartymember> listSection= pPartymemberService.queryAreaListById();
+        result.setSuccess(true);
+        result.setData(listSection);
+        return result.getResult();
+
+    }
 
 }

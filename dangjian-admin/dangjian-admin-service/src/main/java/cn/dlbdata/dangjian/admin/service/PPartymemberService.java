@@ -41,4 +41,5 @@ public interface PPartymemberService {
 
     public PPartymember selectBranchByDepartmentId();
     
+    List<PPartymember> queryAreaListById();
 }

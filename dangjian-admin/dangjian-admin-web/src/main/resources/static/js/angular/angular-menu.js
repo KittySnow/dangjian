@@ -205,12 +205,12 @@ config(['$routeProvider',
             controller: SectionListCtrl,
             activetab: 'SectionList'
         }).
-        when('/SectionList/editSection/:sectionid', {
+        when('/SectionList/editSection/:id', {
             templateUrl: 'pages/SectionList/editSection.html',
             controller: SectionListEditCtrl,
             activetab: 'SectionList'
         }).
-        when('/SectionList/departmentList', {
+        when('/DepartmentList/departmentList', {
             templateUrl: 'pages/DepartmentList/departmentList.html',
             controller: DepartmentListCtrl,
             activetab: 'DepartmentList'
