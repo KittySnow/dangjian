@@ -21,6 +21,7 @@
         <result column="project_name" jdbcType="VARCHAR" property="projectName"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="activecreatepeoplename" jdbcType="VARCHAR" property="activeCreatePeopleName"/>
+        <result column="pic_ids" jdbcType="VARCHAR" property="picIds"/>
     </resultMap>
     <sql id="Example_Where_Clause">
         <where>
@@ -85,7 +86,7 @@
     <sql id="Base_Column_List">
         pa.id, pa.active_name, pa.active_project_id, pa.active_type, pa.active_pace, pa.active_create_people,
         pa.departmentid, pa.active_principal_people, pa.active_status, pa.start_time, pa.end_time, pa.active_context,
-        pa.zb_message, pa.create_time,pa.depart_ids, psp.project_name, psd.title, ppm.name activecreatepeoplename
+        pa.zb_message, pa.create_time,pa.depart_ids, pa.pic_ids, psp.project_name, psd.title, ppm.name activecreatepeoplename
     </sql>
     <select id="selectByExample" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActiveExample"
             resultMap="BaseResultMap">
@@ -108,7 +109,7 @@
      <sql id="Base_Column_List_two">
         id, active_name, active_project_id, active_type, active_pace, active_create_people,
         departmentid, active_principal_people, active_status, start_time, end_time, active_context,
-        zb_message, create_time,depart_ids, (select LEFT(title, 4) from p_score_detail where active_type = p_score_detail.id) as active_type_name
+        zb_message, create_time,depart_ids,pic_ids, (select LEFT(title, 4) from p_score_detail where active_type = p_score_detail.id) as active_type_name
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -134,12 +135,12 @@
         active_pace, active_create_people, departmentid,
         active_principal_people, active_status, start_time,
         end_time, active_context, zb_message,
-        create_time,depart_ids)
+        create_time,depart_ids,pic_ids)
         values (#{activeName,jdbcType=VARCHAR}, #{activeProjectId,jdbcType=INTEGER}, #{activeType,jdbcType=INTEGER},
         #{activePace,jdbcType=VARCHAR}, #{activeCreatePeople,jdbcType=INTEGER}, #{departmentid,jdbcType=INTEGER},
         #{activePrincipalPeople,jdbcType=VARCHAR}, #{activeStatus,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP},
         #{endTime,jdbcType=TIMESTAMP}, #{activeContext,jdbcType=VARCHAR}, #{zbMessage,jdbcType=VARCHAR},
-        #{createTime,jdbcType=TIMESTAMP},#{departIds,jdbcType=VARCHAR})
+        #{createTime,jdbcType=TIMESTAMP},#{departIds,jdbcType=VARCHAR},#{picIds,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PActive">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -189,6 +190,9 @@
             <if test="departIds != null">
                 depart_ids,
             </if>
+            <if test="picIds != null">
+                pic_ids,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="activeName != null">
@@ -232,6 +236,9 @@
             </if>
             <if test="departIds != null">
                 #{departIds,jdbcType=VARCHAR},
+            </if>
+            <if test="picIds != null">
+                #{picIds,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -290,6 +297,9 @@
             <if test="record.departIds != null">
                 depart_ids = #{record.departIds,jdbcType=VARCHAR},
             </if>
+            <if test="record.picIds != null">
+                pic_ids = #{record.picIds,jdbcType=VARCHAR},
+            </if>
         </set>
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
@@ -310,8 +320,9 @@
         end_time = #{record.endTime,jdbcType=TIMESTAMP},
         active_context = #{record.activeContext,jdbcType=VARCHAR},
         zb_message = #{record.zbMessage,jdbcType=VARCHAR},
-        create_time = #{record.createTime,jdbcType=TIMESTAMP}
-        depart_ids = #{record.departIds,jdbcType=VARCHAR}
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        depart_ids = #{record.departIds,jdbcType=VARCHAR},
+        pic_ids = #{record.picIds,jdbcType=VARCHAR}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
@@ -361,6 +372,9 @@
             <if test="departIds != null">
                 depart_ids = #{departIds,jdbcType=VARCHAR},
             </if>
+            <if test="picIds != null">
+                pic_ids = #{picIds,jdbcType=VARCHAR}
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -378,8 +392,9 @@
             end_time                = #{endTime,jdbcType=TIMESTAMP},
             active_context          = #{activeContext,jdbcType=VARCHAR},
             zb_message              = #{zbMessage,jdbcType=VARCHAR},
-            create_time             = #{createTime,jdbcType=TIMESTAMP}
-            depart_ids              = #{departIds,jdbcType=TIMESTAMP}
+            create_time             = #{createTime,jdbcType=TIMESTAMP},
+            depart_ids              = #{departIds,jdbcType=VARCHAR},
+            pic_ids                 = #{picIds,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
     <select id="selectByActiveTypeAndUserParticipate" parameterType="map" resultType="java.lang.Integer">
@@ -412,6 +427,7 @@
         t.zb_message as "zbMessage",
         t.create_time as "createTime",
         t.depart_ids as "departIds",
+        t.pic_ids as "picIds",
         p.name as "activeCreatePeopleName"
       FROM p_active t INNER JOIN p_partymember p on t.active_create_people = p.userid
       where 1 = 1 
@@ -451,6 +467,7 @@
         t.zb_message as "zbMessage",
         t.create_time as "createTime",
         t.depart_ids as "departIds",
+        t.pic_ids as "picIds",
         p.name as "activeCreatePeopleName"
       FROM p_active t INNER JOIN p_partymember p on t.active_create_people = p.userid
       where 1 = 1 

@@ -79,7 +79,7 @@ public class PActiveController {
     @ResponseBody
     public Map<String, Object> create(Long startTime, Long endTime, Integer activeType, Integer activeStatus,
                                       String activeName, String activePace, Integer activeCreatePeople, String departmentid,
-                                      String activePrincipalPeople, String activeContext) {
+                                      String activePrincipalPeople, String activeContext,String picids) {
         ResultUtil result = new ResultUtil();
         if (startTime == null) {
             result.setMsg("活动时间开始时间不能为空");
@@ -115,6 +115,7 @@ public class PActiveController {
         active.setActiveContext(activeContext);
         active.setCreateTime(new Date());
         active.setDepartIds(departmentid);
+        active.setPicIds(picids);
         Integer id = pActiveService.insert(active);
 
         /*Integer[] arr =  new Integer[]{};

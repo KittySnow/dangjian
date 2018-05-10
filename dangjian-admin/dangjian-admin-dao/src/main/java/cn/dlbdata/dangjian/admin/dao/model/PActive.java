@@ -108,7 +108,10 @@ public class PActive implements Serializable {
      * 活动发起人姓名
      */
     private String activeCreatePeopleName;
-    
+    /**
+     * 参与部门ID集合
+     */
+    private String picIds;
     
 
     public String getActiveCreatePeopleName() {
@@ -268,7 +271,15 @@ public class PActive implements Serializable {
         this.departIds = departIds;
     }
 
-    @Override
+    public String getPicIds() {
+		return picIds;
+	}
+
+	public void setPicIds(String picIds) {
+		this.picIds = picIds;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
@@ -291,6 +302,7 @@ public class PActive implements Serializable {
         sb.append(", projectName=").append(projectName);
         sb.append(", title=").append(title);
         sb.append(", activeCreatePeopleName=").append(activeCreatePeopleName);
+        sb.append(", picIds=").append(picIds);
         sb.append("]");
         return sb.toString();
     }
