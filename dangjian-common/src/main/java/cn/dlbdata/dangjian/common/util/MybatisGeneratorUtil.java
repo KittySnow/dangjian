@@ -342,5 +342,25 @@ public class MybatisGeneratorUtil {
 		}
 		dir.delete();
 	}
-
+	
+	public static void main(String[] args) {
+		String jdbc_driver = "com.mysql.jdbc.Driver";
+		String jdbc_url = "jdbc:mysql://180.169.82.28:7125/jlyzparty";
+		String jdbc_username = "root";
+		String jdbc_password = "root";
+		String module = "";
+		String database = "";
+		String schema = "";
+		String table_prefix = "";
+		String package_name = "cn.dlbdata.dangjian.admin.dao";
+		Map<String, String> last_insert_id_tables = new HashMap<>();
+		Map<String, String> HTML_FILE_NAME = new HashMap<>();
+		Map<String, String> FILE_CH_NAME = new HashMap<>();
+		try {
+			generator(jdbc_driver, jdbc_url, jdbc_username, jdbc_password, module, database, schema, table_prefix, package_name, last_insert_id_tables, HTML_FILE_NAME, FILE_CH_NAME);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

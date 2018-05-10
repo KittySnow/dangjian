@@ -194,8 +194,23 @@ config(['$routeProvider',
             templateUrl: 'pages/UserAdmin/editUser.html',
             controller: UserAdminEditCtrl,
             activetab: 'UserAdmin'
+        })
+        .when('/SectionList/sectionList', {
+            templateUrl: 'pages/SectionList/sectionList.html',
+            controller: SectionListCtrl,
+            activetab: 'SectionList'
         }).
-        when('/DepartmentList/departmentList', {
+        when('/SectionList/addSection', {
+            templateUrl: 'pages/SectionList/addSection.html',
+            controller: SectionListCtrl,
+            activetab: 'SectionList'
+        }).
+        when('/SectionList/editSection/:sectionid', {
+            templateUrl: 'pages/SectionList/editSection.html',
+            controller: SectionListEditCtrl,
+            activetab: 'SectionList'
+        }).
+        when('/SectionList/departmentList', {
             templateUrl: 'pages/DepartmentList/departmentList.html',
             controller: DepartmentListCtrl,
             activetab: 'DepartmentList'
