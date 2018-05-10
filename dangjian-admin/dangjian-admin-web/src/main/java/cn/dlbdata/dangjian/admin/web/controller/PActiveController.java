@@ -621,7 +621,6 @@ public class PActiveController {
             inUserExample.setOrderByClause("departmentid");
             inUserList.addAll(pPartymemberService.selectByExample(inUserExample));
         }
-        int inDeptartId = 0;
         int inUserListCount = inUserList.size();
         Map<String,List<PPartymember>> inUserMap = new TreeMap<String, List<PPartymember>>();
         
@@ -648,21 +647,6 @@ public class PActiveController {
 
         				inUserMap.put(p.getDepartmentname(), list);
         			}
-        			
-//        			if(p.getDepartmentid() != inDeptartId)
-//        			{
-//        				inDeptartId = p.getDepartmentid();
-//        				PDepartment dept = pDepartmentService.selectByPrimaryKey(inDeptartId);
-//        				if(dept != null)
-//        				{
-//        					PPartymember tDept = new PPartymember();
-//        					tDept.setId(dept.getDepartmentid());
-//        					tDept.setName(dept.getDepartmentname());
-//        					tDept.setUserName(dept.getDepartmentname());
-//        					tDept.setUserRoleId(-1);
-//        					inUserList.add(i, tDept);
-//        				}
-//        			}
         		}
         }
         if(outList.size()>0){
@@ -671,7 +655,6 @@ public class PActiveController {
             outUserExample.setOrderByClause("departmentid");
             outUserList.addAll(pPartymemberService.selectByExample(outUserExample));
         }
-        int outDeptartId = 0;
         int outUserListCount = outUserList.size();
         Map<String,List<PPartymember>> outUserMap = new TreeMap<String, List<PPartymember>>();
         if(outUserList.size() > 0)
@@ -697,20 +680,6 @@ public class PActiveController {
 
         				outUserMap.put(p.getDepartmentname(), list);
         			}
-//        			if(p.getDepartmentid() != outDeptartId)
-//        			{
-//        				outDeptartId = p.getDepartmentid();
-//        				PDepartment dept = pDepartmentService.selectByPrimaryKey(outDeptartId);
-//        				if(dept != null)
-//        				{
-//        					PPartymember tDept = new PPartymember();
-//        					tDept.setId(dept.getDepartmentid());
-//        					tDept.setName(dept.getDepartmentname());
-//        					tDept.setUserName(dept.getDepartmentname());
-//        					tDept.setUserRoleId(-1);
-//        					outUserList.add(i, tDept);
-//        				}
-//        			}
         		}
         }
 
