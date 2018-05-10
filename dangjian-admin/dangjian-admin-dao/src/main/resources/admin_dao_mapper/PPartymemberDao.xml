@@ -347,7 +347,7 @@
 	from p_partymember p
     left join p_user pu on p.userid=pu.userid where pu.roleid=4
     <if test="departmentid != null">
-    		and p.departmentid = departmentid
+    		and p.departmentid = #{departmentid}
     </if>
   </select>
   
