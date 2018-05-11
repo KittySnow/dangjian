@@ -156,10 +156,6 @@ public class PUserServiceImpl implements PUserService {
 	@Override
 	public int updatePwd(PUser pUser) {
 		int count = 0;
-			
-    	if(pUser.getName() == null || pUser.getPassword() == null) {
-    		count = 1;
-    	}
     	if(pUser.getPassword().length() >= 8 && pUser.getPassword().length() <= 20) {
     		pUser.setPassword(StringUtil.getMD5Digest32(pUser.getPassword()));
     		PUser user = pUserDao.queryByNameAndPassWord(pUser);
