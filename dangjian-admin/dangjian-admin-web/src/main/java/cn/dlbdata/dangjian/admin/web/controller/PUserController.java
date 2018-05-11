@@ -289,4 +289,36 @@ public class PUserController {
 
         return HttpResult.success();
     }
+    
+    
+    /**
+     * 修改密码
+     * 
+     * 
+     */
+    @RequestMapping(value = "/updatePwd", method = RequestMethod.POST)
+    @ResponseBody
+    public  Map<String, Object> updatePwd(PUser pUser) {
+    	ResultUtil result = new ResultUtil();
+    	int count = puserService.updatePwd(pUser);
+    	if(count == 2) {
+    		result.setMsg("修改成功");
+    		result.setSuccess(true);
+    	}else if(count == 1) {
+    		result.setMsg("账号或者密码不能为空");
+    		result.setSuccess(false);
+    	}else if(count == 3){
+    		result.setMsg("账号或者密码错误");
+    		result.setSuccess(false);
+    	}else if(count == 4) {
+    		result.setMsg("");
+    		result.setSuccess(false);
+    	}else {
+    		result.setMsg("");
+    		result.setSuccess(false);
+    	}
+
+        return result.getResult();
+    
+    }
 }

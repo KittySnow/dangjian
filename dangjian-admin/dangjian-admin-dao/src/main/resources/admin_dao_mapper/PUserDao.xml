@@ -360,4 +360,13 @@
     WHERE userid  = #{userId,jdbcType=INTEGER}
   </update>
 
+  <select id="queryByNameAndPassWord" parameterType="cn.dlbdata.dangjian.admin.dao.model.PUser" resultType="cn.dlbdata.dangjian.admin.dao.model.PUser">
+  	select * from p_user where name = #{name,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+  </select>	
+  
+  <update id="updatePwd" parameterType="cn.dlbdata.dangjian.admin.dao.model.PUser">
+    UPDATE p_user
+    SET password = #{password,jdbcType=VARCHAR}
+    WHERE userid = #{userid,jdbcType=INTEGER}
+  </update>
 </mapper>
