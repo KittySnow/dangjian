@@ -74,7 +74,7 @@ public class PPictureController {
         try {
             path = downloadMedia(mediaId, PICTURE_PATH);
             logger.info("downloadMedia success");
-            thumbnailImage(path,200,200,PREVFIX,false);
+            thumbnailImage(path, 300, 300, PREVFIX, false);
             logger.info("thumbnailImage success");
         }catch (Exception e){
         	logger.error("保存图片失败",e);
