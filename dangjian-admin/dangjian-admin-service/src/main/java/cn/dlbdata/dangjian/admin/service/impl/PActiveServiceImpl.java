@@ -88,7 +88,10 @@ public class PActiveServiceImpl implements PActiveService {
 	        {
 	        		for(PUser u : list)
 	        		{
-	        			userIds.add(u.getUserid());
+	        			if(u.getRoleid() == 4)
+	        			{
+	        				userIds.add(u.getUserid());
+	        			}
 	        		}
 	        }
 	        

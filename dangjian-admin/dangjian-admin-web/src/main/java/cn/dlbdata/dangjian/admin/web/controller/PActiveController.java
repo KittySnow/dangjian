@@ -1,6 +1,7 @@
 package cn.dlbdata.dangjian.admin.web.controller;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,7 +42,6 @@ import cn.dlbdata.dangjian.admin.dao.model.PActiveParticipate;
 import cn.dlbdata.dangjian.admin.dao.model.PActiveParticipateExample;
 import cn.dlbdata.dangjian.admin.dao.model.PActivePicture;
 import cn.dlbdata.dangjian.admin.dao.model.PActivePictureExample;
-import cn.dlbdata.dangjian.admin.dao.model.PDepartment;
 import cn.dlbdata.dangjian.admin.dao.model.PPartymember;
 import cn.dlbdata.dangjian.admin.dao.model.PPartymemberExample;
 import cn.dlbdata.dangjian.admin.dao.model.PScoreDetail;
@@ -772,7 +772,9 @@ public class PActiveController {
      */
     @RequestMapping(value="/showQrCode",method= {RequestMethod.POST,RequestMethod.GET})
     public void showQrCode(Integer activeId,HttpServletResponse response){
+    		_log.info("activeId->"+activeId);
         String content = "http://dj.dlbdata.cn/#/active/activeSign/"+activeId;
+        OutputStream out = null;
         BufferedImage image;
         try {
             image = genPic(content);
@@ -781,12 +783,22 @@ public class PActiveController {
             response.setHeader("Pragma", "No-cache");
             response.setHeader("Cache-Control", "no-cache");
             response.setDateHeader("Expires", 0);
-            OutputStream out = response.getOutputStream();//取得响应输出流
+            out = response.getOutputStream();//取得响应输出流
             ImageIO.write(image, "JPEG", out);
             out.flush();
-            out.close();
         }catch (Exception e){
             _log.error(e.getMessage(), e);
+        }
+        finally
+        {
+	        	if(out != null)
+	        	{
+	        		try {
+						out.close();
+					} catch (IOException e) {
+						
+					}
+	        	}
         }
     }
 
