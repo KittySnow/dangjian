@@ -306,24 +306,27 @@ public class PUserController {
      */
     @RequestMapping(value = "/updatePwd", method = RequestMethod.POST)
     @ResponseBody
-    public  Map<String, Object> updatePwd(String name,String password,String rePassWord) {
+    public  Map<String, Object> updatePwd(@RequestBody(required = false) UserLoginDO userLoginDO) {
     	ResultUtil result = new ResultUtil();
-		if(StringUtils.isEmpty(name)) {
+		if(StringUtils.isEmpty(userLoginDO.getName())) {
 			result.setMsg("账号不能为空");
-    		result.setSuccess(false);		
+    		result.setSuccess(false);
+    		 return result.getResult();
 		 }
-		if(StringUtils.isEmpty(password)) {
+		if(StringUtils.isEmpty(userLoginDO.getPassword())) {
 			result.setMsg("密码不能为空");
-    		result.setSuccess(false);		
+    		result.setSuccess(false);	
+    		return result.getResult();
 		 }
-		if(StringUtils.isEmpty(rePassWord)) {
+		if(StringUtils.isEmpty(userLoginDO.getRePassWord())) {
 			result.setMsg("新密码不能为空");
-    		result.setSuccess(false);		
+    		result.setSuccess(false);	
+    		return result.getResult();
 		 }
     	PUser pUser = new PUser();
-    	pUser.setName(name);
-    	pUser.setPassword(password);
-    	pUser.setRePassWord(rePassWord);
+    	pUser.setName(userLoginDO.getName());
+    	pUser.setPassword(userLoginDO.getPassword());
+    	pUser.setRePassWord(userLoginDO.getRePassWord());
     	int count = puserService.updatePwd(pUser);
     	if(count == 2) {
     		result.setMsg("修改成功");

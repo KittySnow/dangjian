@@ -161,6 +161,7 @@ public class PUserServiceImpl implements PUserService {
     		PUser user = pUserDao.queryByNameAndPassWord(pUser);
     		if(user == null) {
     			count = 3;
+    			return count;
     		}
     		pUser.setUserid(user.getUserid());
     		if(user.getName().equals(pUser.getName()) && user.getPassword().equals(pUser.getPassword())) {
@@ -173,6 +174,7 @@ public class PUserServiceImpl implements PUserService {
     		}
     	}else {
     		count = 4;
+    		return count;
     	}
 		
 		return count;
