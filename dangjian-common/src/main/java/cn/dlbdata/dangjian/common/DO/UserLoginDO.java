@@ -8,4 +8,5 @@ public class UserLoginDO {
     private String password;
     private String openId;
     private Integer userType;
+    private String rePassWord;
 }

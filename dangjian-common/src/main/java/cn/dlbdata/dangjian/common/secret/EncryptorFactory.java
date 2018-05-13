@@ -37,6 +37,7 @@ public class EncryptorFactory {
     }
 
     public static void main(String[] args) {
-        System.out.print(EncryptorFactory.newStringEncryptor().decrypt("ETWygv0bn5NoUv2V96KGbXgPbzxqxvRz"));
+    	System.out.println(EncryptorFactory.newStringEncryptor().encrypt("123456"));
+        System.out.println(EncryptorFactory.newStringEncryptor().decrypt("ETWygv0bn5NoUv2V96KGbXgPbzxqxvRz"));
     }
 }
