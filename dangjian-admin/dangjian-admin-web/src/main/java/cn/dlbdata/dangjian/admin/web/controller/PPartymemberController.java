@@ -191,6 +191,8 @@ public class PPartymemberController {
         PPartymemberExample pPartymemberExample = new PPartymemberExample();
         PPartymemberExample.Criteria pPartymemberCriteria =  pPartymemberExample.createCriteria();
         pPartymemberCriteria.andDepartmentidEqualTo(departmentid);
+        //部门先锋表查询的时候去除党支书，默认查询角色为4（党员）
+        pPartymemberCriteria.andRoleidEqualTo(4);
         List<PPartymember> pPartymemberList = pPartymemberService.selectByExample(pPartymemberExample);
         PPartymember leader = pPartymemberService.selectBranchByDepartmentId(departmentid);
 
@@ -283,8 +285,11 @@ public class PPartymemberController {
     public Map<String, Object> getReportByDepartmentid(Integer departmentid,Integer moudleId,@RequestParam(required=false) Integer status){
         ResultUtil result = new ResultUtil();
         PPartymemberExample pPartymemberExample = new PPartymemberExample();
+        
         PPartymemberExample.Criteria pPartymemberCriteria =  pPartymemberExample.createCriteria();
         pPartymemberCriteria.andDepartmentidEqualTo(departmentid);
+        //思想汇报查询的时候去除党支书，默认查询角色为4（党员）
+        pPartymemberCriteria.andRoleidEqualTo(4);
         List<PPartymember> pPartymemberList = pPartymemberService.selectByExample(pPartymemberExample);
         PPartymember leader = pPartymemberService.selectBranchByDepartmentId(departmentid);
 

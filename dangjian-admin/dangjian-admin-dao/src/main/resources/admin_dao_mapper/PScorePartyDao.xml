@@ -604,7 +604,7 @@
 		WHEN (SELECT COUNT(1) FROM p_score_party sp where sp.user_id = p.user_id and sp.detail_id = 6 and sp.year = p.year) > 0 THEN 0
 		ELSE p.score
 	END) as "typetotalscore"
-from p_score_party p INNER JOIN p_partymember u ON p.user_id = u.userid
+from p_score_party p INNER JOIN p_partymember u ON p.user_id = u.userid AND u.roleid = 4
 where p.project_id = 5 and  u.departmentid =  #{departmentId,jdbcType=INTEGER}
 GROUP BY p.user_id,u.name
   </select>

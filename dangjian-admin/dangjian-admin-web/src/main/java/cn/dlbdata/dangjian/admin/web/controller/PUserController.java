@@ -223,7 +223,9 @@ public class PUserController {
         try {
             // 查询用户的账号与密码
             PUser pUser = this.puserService.tologin(name, password);
-            
+            if(pUser == null) {
+            	 return HttpResult.failure("登陆失败，用户名或密码错误.");
+            }
             //检查当前登录用户角色
             if(userLoginDO.getUserType() != null && !userLoginDO.getUserType().equals(pUser.getRoleid()) )
             {
@@ -236,9 +238,8 @@ public class PUserController {
             			return HttpResult.failure("登陆失败，请使用管理账号进行登录.");
             		}
             }
-
             // 验证通过
-            if (pUser != null && pUser.getPassword().equals(password)) {
+            if (pUser != null && pUser.getPassword().equals(password) && pUser.getName().equals(name)) {
                 // 尽量 确保 userAgent 唯一性
                 String userAgent = request.getHeader("user-agent");
                 if (null == userAgent || userAgent.length() <= 0) {
