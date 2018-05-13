@@ -223,6 +223,19 @@ public class PUserController {
         try {
             // 查询用户的账号与密码
             PUser pUser = this.puserService.tologin(name, password);
+            
+            //检查当前登录用户角色
+            if(userLoginDO.getUserType() != null && !userLoginDO.getUserType().equals(pUser.getRoleid()) )
+            {
+            		if(userLoginDO.getUserType() == 4)
+            		{
+            			return HttpResult.failure("登陆失败，请使用党员账号进行登录.");
+            		}
+            		else
+            		{
+            			return HttpResult.failure("登陆失败，请使用管理账号进行登录.");
+            		}
+            }
 
             // 验证通过
             if (pUser != null && pUser.getPassword().equals(password)) {
@@ -243,13 +256,13 @@ public class PUserController {
                 {
 	                CookieUtil.setCookie(response, "roleId", pUser.getRoleid().toString());
 	                CookieUtil.setCookie(response, "userId", pUser.getUserid().toString());
-	                CookieUtil.setCookie(response,"ptoken", token);
+	                CookieUtil.setCookie(response, "ptoken", token);
                 }
                 else
                 {
-                	CookieUtil.setCookie(response, "roleId", pUser.getRoleid().toString());
-                    CookieUtil.setCookie(response, "manageId", pUser.getUserid().toString());
-                    CookieUtil.setCookie(response,"ptoken", token);
+                		CookieUtil.setCookie(response, "roleId", pUser.getRoleid().toString());
+                		CookieUtil.setCookie(response, "manageId", pUser.getUserid().toString());
+                		CookieUtil.setCookie(response, "ptoken", token);
                 }
                 // 登陆保存 token 信息
                 if(userLoginDO.getOpenId()!= null){
