@@ -65,17 +65,20 @@ public class PActiveServiceImpl implements PActiveService {
         		{
         			for(String str : deptIdArr)
         			{
-        				Integer id = 0;
-        				try
+        				if(StringUtils.isNotEmpty(str))
         				{
-        					id = Integer.parseInt(str);
-        				}
-        				catch (Exception e) {
-        					_log.error("部门ID转换失败",e);
-					}
-        				if(id > 0)
-        				{
-        					deptIds.add(id);
+	        				Integer id = 0;
+	        				try
+	        				{
+	        					id = Integer.parseInt(str);
+	        				}
+	        				catch (Exception e) {
+	        					_log.error("部门ID转换失败",e);
+						}
+	        				if(id > 0)
+	        				{
+	        					deptIds.add(id);
+	        				}
         				}
         			}
         		}
@@ -86,10 +89,10 @@ public class PActiveServiceImpl implements PActiveService {
 	        List<Integer> userIds = new ArrayList<Integer>();
 	        if(list != null)
 	        {
-        		for(PUser u : list)
-        		{
-        			userIds.add(u.getUserid());
-        		}
+	        		for(PUser u : list)
+	        		{
+	        			userIds.add(u.getUserid());
+	        		}
 	        }
 	        
 	        //批量插入到P_Active_Participate
