@@ -19,6 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
+import static cn.dlbdata.dangjian.admin.service.util.DangjianUtil.getMD5;
+
 import java.util.List;
 
 @Service("PUserService")
@@ -149,4 +152,35 @@ public class PUserServiceImpl implements PUserService {
             logger.debug("Gen User error, user has exists, continue.", e);
         }
     }
+
+	@Override
+	public int updatePwd(PUser pUser) {
+		int count = 0;
+    	if(pUser.getPassword().length() >= 8 && pUser.getPassword().length() <= 20) {
+    		pUser.setPassword(StringUtil.getMD5Digest32(pUser.getPassword()));
+    		PUser user = pUserDao.queryByNameAndPassWord(pUser);
+    		if(user == null) {
+    			count = 3;
+    		}
+    		pUser.setUserid(user.getUserid());
+    		if(user.getName().equals(pUser.getName()) && user.getPassword().equals(pUser.getPassword())) {
+    			pUser.setPassword(StringUtil.getMD5Digest32(pUser.getRePassWord()));
+    			if(pUserDao.updatePwd(pUser) > 0) {
+    				count = 2;
+    			}
+    		}else {
+    			count = 3;
+    		}
+    	}else {
+    		count = 4;
+    	}
+		
+		return count;
+	}
+
+	@Override
+	public PUser queryByNameAndPassWord(PUser pUser) {
+		
+		return pUserDao.queryByNameAndPassWord(pUser);
+	}
 }

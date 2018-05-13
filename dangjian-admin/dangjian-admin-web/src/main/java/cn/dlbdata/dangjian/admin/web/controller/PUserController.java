@@ -239,10 +239,18 @@ public class PUserController {
                 loginVO.setRoleId(pUser.getRoleid());
                 loginVO.setUserId(pUser.getUserid());
 
-                CookieUtil.setCookie(response, "roleId", pUser.getRoleid().toString());
-                CookieUtil.setCookie(response, "userId", pUser.getUserid().toString());
-                CookieUtil.setCookie(response,"ptoken", token);
-
+                if(pUser.getRoleid() == 4)
+                {
+	                CookieUtil.setCookie(response, "roleId", pUser.getRoleid().toString());
+	                CookieUtil.setCookie(response, "userId", pUser.getUserid().toString());
+	                CookieUtil.setCookie(response,"ptoken", token);
+                }
+                else
+                {
+                	CookieUtil.setCookie(response, "roleId", pUser.getRoleid().toString());
+                    CookieUtil.setCookie(response, "manageId", pUser.getUserid().toString());
+                    CookieUtil.setCookie(response,"ptoken", token);
+                }
                 // 登陆保存 token 信息
                 if(userLoginDO.getOpenId()!= null){
                     puserService.saveLoginUserInfo(pUser.getUserid(), token, userLoginDO.getOpenId());
@@ -288,5 +296,50 @@ public class PUserController {
         puserService.genUser();
 
         return HttpResult.success();
+    }
+    
+    
+    /**
+     * 修改密码
+     * 
+     * 
+     */
+    @RequestMapping(value = "/updatePwd", method = RequestMethod.POST)
+    @ResponseBody
+    public  Map<String, Object> updatePwd(String name,String password,String rePassWord) {
+    	ResultUtil result = new ResultUtil();
+		if(StringUtils.isEmpty(name)) {
+			result.setMsg("账号不能为空");
+    		result.setSuccess(false);		
+		 }
+		if(StringUtils.isEmpty(password)) {
+			result.setMsg("密码不能为空");
+    		result.setSuccess(false);		
+		 }
+		if(StringUtils.isEmpty(rePassWord)) {
+			result.setMsg("新密码不能为空");
+    		result.setSuccess(false);		
+		 }
+    	PUser pUser = new PUser();
+    	pUser.setName(name);
+    	pUser.setPassword(password);
+    	pUser.setRePassWord(rePassWord);
+    	int count = puserService.updatePwd(pUser);
+    	if(count == 2) {
+    		result.setMsg("修改成功");
+    		result.setSuccess(true);
+    	}else if(count == 3){
+    		result.setMsg("账号或者密码错误");
+    		result.setSuccess(false);
+    	}else if(count == 4) {
+    		result.setMsg("");
+    		result.setSuccess(false);
+    	}else {
+    		result.setMsg("");
+    		result.setSuccess(false);
+    	}
+
+        return result.getResult();
+    
     }
 }

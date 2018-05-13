@@ -1,12 +1,12 @@
 package cn.dlbdata.dangjian.admin.service;
 
 
-import cn.dlbdata.dangjian.admin.dao.model.PPartymember;
-import cn.dlbdata.dangjian.admin.dao.model.PUser;
-import cn.dlbdata.dangjian.admin.dao.model.PUserExample;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
+import cn.dlbdata.dangjian.admin.dao.model.PUser;
+import cn.dlbdata.dangjian.admin.dao.model.PUserExample;
 
 public interface PUserService {
 
@@ -42,4 +42,8 @@ public interface PUserService {
     public void saveLoginUserInfo(int userId, String token, String openId);
 
     public void genUser();
+    
+    public int updatePwd(PUser pUser);
+    
+    public PUser queryByNameAndPassWord(PUser pUser); 
 }

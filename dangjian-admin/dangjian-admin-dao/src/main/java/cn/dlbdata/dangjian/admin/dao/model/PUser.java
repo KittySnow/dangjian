@@ -25,6 +25,8 @@ public class PUser implements Serializable {
      * @mbg.generated
      */
     private String password;
+    
+    private String rePassWord;
 
     private String avatar;
 
@@ -73,8 +75,18 @@ public class PUser implements Serializable {
     private Integer departmentid;
 
     private static final long serialVersionUID = 1L;
+    
+    
 
-    public Integer getUserid() {
+    public String getRePassWord() {
+		return rePassWord;
+	}
+
+	public void setRePassWord(String rePassWord) {
+		this.rePassWord = rePassWord;
+	}
+
+	public Integer getUserid() {
         return userid;
     }
 
