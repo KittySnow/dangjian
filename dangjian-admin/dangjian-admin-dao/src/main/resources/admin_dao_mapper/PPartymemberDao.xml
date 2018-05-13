@@ -19,6 +19,7 @@
     <result column="departmentname" jdbcType="VARCHAR" property="departmentname" />
     <result column="totalscore" jdbcType="DOUBLE" property="totalScore" />
     <result column="tempint" jdbcType="INTEGER" property="tempint" />
+    <result column="roleid" jdbcType="INTEGER" property="roleid" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -88,7 +89,7 @@
   
   
   <sql id="Base_Column_List_two">
-    id, userid, name, sex, age, phone, idcard, fromdepartmentid, bid, departmentid,avatar ,
+    id, userid, name, sex, age, phone, idcard, fromdepartmentid, bid, departmentid,avatar ,roleid ,
     (select u.name username from p_user u where u.userid = p_partymember.userid )as username,
     (select u.roleid userroleid from p_user u where u.userid = p_partymember.userid )as userroleid,
     (select departmentname from p_department d where d.departmentid = p_partymember.departmentid )as departmentname,
@@ -145,11 +146,11 @@
     insert into p_partymember (id, userid, name,
     sex, age, phone, idcard,
     fromdepartmentid, bid, departmentid,
-    avatar)
+    avatar, roleid)
     values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
     #{sex,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR},
     #{fromdepartmentid,jdbcType=INTEGER}, #{bid,jdbcType=INTEGER}, #{departmentid,jdbcType=INTEGER},
-    #{avatar,jdbcType=VARCHAR})
+    #{avatar,jdbcType=VARCHAR},#{roleid,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PPartymember">
     insert into p_partymember
@@ -187,6 +188,9 @@
       <if test="avatar != null">
         avatar,
       </if>
+      <if test="roleid != null">
+        roleid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -221,6 +225,9 @@
       </if>
       <if test="avatar != null">
         #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null">
+        #{roleid,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>

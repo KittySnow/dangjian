@@ -561,6 +561,11 @@ public class PPartymemberExample implements Serializable {
             addCriterion("departmentid =", value, "departmentid");
             return (Criteria) this;
         }
+        
+        public Criteria andRoleidEqualTo(Integer value) {
+            addCriterion("roleid =", value, "roleid");
+            return (Criteria) this;
+        }
 
         public Criteria andDepartmentidNotEqualTo(Integer value) {
             addCriterion("departmentid <>", value, "departmentid");

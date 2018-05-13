@@ -127,6 +127,11 @@ public class PScorePartyController{
         ResultUtil result = new ResultUtil();
         PScorePartyExample pScorePartyExample = new PScorePartyExample();
         PScorePartyExample.Criteria ct = pScorePartyExample.createCriteria();
+        if(userid == null) 
+        {
+        	 result.setSuccess(false);
+        	 return result.getResult();
+        }
         ct.andUserIdEqualTo(userid);
         ct.andYearEqualTo(year);
         List<PScoreParty> pScorePartyList = pScorePartyService.selectByExample(pScorePartyExample);
@@ -342,12 +347,17 @@ public class PScorePartyController{
             PPartymember leader = pPartymemberService.selectBranchByDepartmentId(pStudy.getDepartmentid());
 
             PPartymember Approval = pPartymemberService.selectByUserId(pStudy.getApprovalid());
-
-            json.put("approvalname",pPartymember.getName());
-            json.put("partyname",pPartymember.getName());
+            if(pPartymember != null)
+            {
+            	json.put("approvalname",pPartymember.getName());
+            	json.put("partyname",pPartymember.getName());
+            }
+            
             json.put("pictures", pStudyPictureList);
-
-            json.put("branch", leader.getName());
+            if(leader != null)
+            {
+            	json.put("branch", leader.getName());
+            }
 
             list.add(json);
         }

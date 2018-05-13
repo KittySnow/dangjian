@@ -81,15 +81,15 @@ public class PActiveServiceImpl implements PActiveService {
         		}
         		//查询对应部门下的用户
 	        PUserExample example = new PUserExample();
-	        example.createCriteria().andDepartmentidIn(deptIds);
+	        example.createCriteria().andDepartmentidIn(deptIds).andRoleidEqualTo(4);
 	        List<PUser> list = pUserDao.selectByExample(example);
 	        List<Integer> userIds = new ArrayList<Integer>();
 	        if(list != null)
 	        {
-	        		for(PUser u : list)
-	        		{
-	        			userIds.add(u.getUserid());
-	        		}
+        		for(PUser u : list)
+        		{
+        			userIds.add(u.getUserid());
+        		}
 	        }
 	        
 	        //批量插入到P_Active_Participate

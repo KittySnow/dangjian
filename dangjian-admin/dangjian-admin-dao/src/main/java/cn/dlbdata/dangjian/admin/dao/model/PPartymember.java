@@ -95,6 +95,8 @@ public class PPartymember implements Serializable {
     
     private Integer userRoleId;
     
+    private Integer roleid;
+    
     public Integer getUserRoleId() {
 		return userRoleId;
 	}
@@ -235,7 +237,17 @@ public class PPartymember implements Serializable {
     public void setUserName(String username) {
         this.userName = username;
     }
-    @Override
+    
+    
+    public Integer getRoleid() {
+		return roleid;
+	}
+
+	public void setRoleid(Integer roleid) {
+		this.roleid = roleid;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
