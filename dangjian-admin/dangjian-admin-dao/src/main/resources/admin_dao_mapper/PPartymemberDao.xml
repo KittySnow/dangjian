@@ -20,6 +20,7 @@
     <result column="totalscore" jdbcType="DOUBLE" property="totalScore" />
     <result column="tempint" jdbcType="INTEGER" property="tempint" />
     <result column="roleid" jdbcType="INTEGER" property="roleid" />
+    <result column="postId" jdbcType="INTEGER" property="postId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -347,7 +348,7 @@
   </update>
 
   <select id="getPartymemberByDeptId" parameterType="map" resultMap="BaseResultMap">
-    select p.id,p.userid , p.name, sex, age, phone, idcard, fromdepartmentid, bid, p.departmentid,
+    select p.id,p.userid , p.name, sex, age, phone, idcard, fromdepartmentid, bid, p.departmentid,p.postId,
 	(select departmentname from p_department d where d.departmentid = p.departmentid )as departmentname,
 	(select departmentname from p_department d where d.departmentid = p.fromdepartmentid )as fromdepartmentname,
 	(select sum(table1.score) from p_score_party table1 where table1.user_id = p.userid and year = (select year(now()) )) as totalscore 
@@ -356,6 +357,7 @@
     <if test="departmentid != null">
     		and p.departmentid = #{departmentid}
     </if>
+    order by p.postId DESC
   </select>
   
   <select id="getPartymemberByDepartmentid" resultMap="BaseResultMap" parameterType="Map">

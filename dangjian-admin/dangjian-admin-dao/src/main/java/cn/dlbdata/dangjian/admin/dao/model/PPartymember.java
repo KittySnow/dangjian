@@ -97,7 +97,17 @@ public class PPartymember implements Serializable {
     
     private Integer roleid;
     
-    public Integer getUserRoleId() {
+    private Integer postId;
+    
+    public Integer getPostId() {
+		return postId;
+	}
+
+	public void setPostId(Integer postId) {
+		this.postId = postId;
+	}
+
+	public Integer getUserRoleId() {
 		return userRoleId;
 	}
 
