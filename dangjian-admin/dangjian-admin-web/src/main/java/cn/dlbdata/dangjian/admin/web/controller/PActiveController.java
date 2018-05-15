@@ -3,6 +3,8 @@ package cn.dlbdata.dangjian.admin.web.controller;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -176,10 +178,11 @@ public class PActiveController {
 	 * @param activeId
 	 * @param userId
 	 * @return
+	 * @throws ParseException 
 	 */
 	@RequestMapping(value = "/approved", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> approved(Integer activeId, Integer userId) {
+	public Map<String, Object> approved(Integer activeId, Integer userId) throws ParseException {
 		ResultUtil result = new ResultUtil();
 		PActive pActive = pActiveService.selectByPrimaryKey(activeId);
 		if (pActive == null) {
@@ -240,9 +243,16 @@ public class PActiveController {
 				result.setMsg("签到成功，请求加分参数不完整");
 				return result.getResult();
 			}
-			
-			if(pActive.getActiveProjectId() == 6)//公益活动
-            {
+
+			if (pScorePartyService.updateScanCode(pScoreParty) > 0) {
+				result.setSuccess(true);
+				result.setMsg("签到成功,积分已发放");
+				return result.getResult();
+			}
+			else 
+			{
+				if(pActive.getActiveProjectId() == 6)//公益活动
+	            {
             		//查询当前用户公益活动的总分
                 	int year = Calendar.getInstance().get(Calendar.YEAR);
                 	Double totalScore = pScorePartyService.getSumScoreByProjectIdAndUserId(6,userId, year);
@@ -264,27 +274,18 @@ public class PActiveController {
 	                	if(sumScore > maxScore && (maxScore - totalScore) > 0)
 	                	{
 	                		pScoreParty.setScore(maxScore - totalScore);
+	                		pScoreParty.setProjectId(pActive.getActiveProjectId());
+	                		pScoreParty.setYear(year);
+	                		pScoreParty.setAddTime(new Date());
+	                		pScoreParty.setRecordId(pActive.getId());
+	                		pScoreParty.setRecordType(1);
+	                		pScoreParty.setRecordDesc(pActive.getActiveName());
 	                		pScorePartyService.insertSelective(pScoreParty);
 	                		result.setSuccess(true);
         					result.setMsg("签到成功,积分已发放");
         					return result.getResult();
 	                	}
-	                	else
-	                	{
-	                		if (pScorePartyService.updateScanCode(pScoreParty) > 0) {
-	        					result.setSuccess(true);
-	        					result.setMsg("签到成功,积分已发放");
-	        					return result.getResult();
-	        				}
-	                	}
                 	}
-			}
-			else
-			{
-				if (pScorePartyService.updateScanCode(pScoreParty) > 0) {
-					result.setSuccess(true);
-					result.setMsg("签到成功,积分已发放");
-					return result.getResult();
 				}
 			}
 			result.setSuccess(true);

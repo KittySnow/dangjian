@@ -144,18 +144,22 @@
     score, adder_id, approved_id,
     year, score_time, add_time,
     add_id, valid_yn, user_id,
-    status_cd, imgs, remark
+    status_cd, imgs, remark, record_id, record_type, record_desc
     )
     values (#{projectId,jdbcType=INTEGER}, #{detailId,jdbcType=INTEGER},
     #{score,jdbcType=DECIMAL}, #{adderId,jdbcType=INTEGER}, #{approvedId,jdbcType=INTEGER},
     #{year,jdbcType=INTEGER}, #{scoreTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP},
     #{addId,jdbcType=INTEGER}, #{validYn,jdbcType=CHAR}, #{userId,jdbcType=INTEGER},
-    #{statusCd,jdbcType=CHAR}, #{imgs,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+    #{statusCd,jdbcType=CHAR}, #{imgs,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+    #{recordId,jdbcType=INTEGER}, #{recordType,jdbcType=INTEGER}, #{recordDesc,jdbcType=VARCHAR}
     )
   </insert>
 
 
   <insert id="insertSelective" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScoreParty">
+	<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+		SELECT LAST_INSERT_ID()
+	</selectKey>
     insert into p_score_party
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -203,6 +207,15 @@
       <if test="remark != null">
         remark,
       </if>
+      <if test="recordId != null">
+        record_id,
+      </if>
+      <if test="recordType != null">
+        record_type,
+      </if>
+      <if test="recordDesc != null">
+        record_desc,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -249,6 +262,15 @@
       </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
+      </if>
+       <if test="recordId != null">
+         #{recordId,jdbcType=INTEGER},
+      </if>
+      <if test="recordType != null">
+          #{recordType,jdbcType=INTEGER},
+      </if>
+      <if test="recordDesc != null">
+          #{recordDesc,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -399,9 +421,6 @@
   </update>
 
   <insert id="updateScanCode" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScoreParty">
-      <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-          SELECT LAST_INSERT_ID()
-      </selectKey>
       insert into p_score_party (
         project_id,
         detail_id,
@@ -446,7 +465,7 @@
         <!-- 获得的总积分必须小于项目的总分才允许再次获取 -->
         <![CDATA[
           AND ifnull ((SELECT  sum(s.score) FROM p_score_party s where s.project_id = t.project_id
-            AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now())),0)  < p.score
+            AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now())),0)  + t.score<= p.score
         ]]>
     <!-- 如果项目的积分必须小于某模块最大值-->
     <![CDATA[
@@ -459,9 +478,6 @@
   </insert>
 
   <insert id="updateScoreCustom" parameterType="cn.dlbdata.dangjian.admin.dao.model.PScoreParty">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into p_score_party (
       project_id,
       detail_id,
