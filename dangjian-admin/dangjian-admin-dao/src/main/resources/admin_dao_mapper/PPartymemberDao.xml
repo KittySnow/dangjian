@@ -81,7 +81,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, userid, name, sex, age, phone, idcard, fromdepartmentid, bid, departmentid,avatar ,
+    id, userid, name, sex, age, phone, idcard, fromdepartmentid, bid, departmentid,avatar ,p.postId,
     (select u.name username from p_user u where u.userid = p_partymember.userid )as username,
     (select departmentname from p_department d where d.departmentid = p_partymember.departmentid )as departmentname,
     (select departmentname from p_department d where d.departmentid = p_partymember.fromdepartmentid )as fromdepartmentname,
@@ -90,7 +90,7 @@
   
   
   <sql id="Base_Column_List_two">
-    id, userid, name, sex, age, phone, idcard, fromdepartmentid, bid, departmentid,avatar ,roleid ,
+    id, userid, name, sex, age, phone, idcard, fromdepartmentid, bid, departmentid,avatar ,roleid ,postId,
     (select u.name username from p_user u where u.userid = p_partymember.userid )as username,
     (select u.roleid userroleid from p_user u where u.userid = p_partymember.userid )as userroleid,
     (select departmentname from p_department d where d.departmentid = p_partymember.departmentid )as departmentname,
@@ -99,7 +99,7 @@
   </sql>
   
   <sql id="Base_Column_List_three">
-    p.id, p.userid, p.name, p.sex, p.age, p.phone, p.idcard, p.fromdepartmentid, p.bid, p.departmentid,p.avatar ,
+    p.id, p.userid, p.name, p.sex, p.age, p.phone, p.idcard, p.fromdepartmentid, p.bid, p.departmentid,p.avatar ,p.postId,
     (select u.name username from p_user u where u.userid = p_partymember.userid )as username,
     (select u.roleid userroleid from p_user u where u.userid = p_partymember.userid )as userroleid,
     (select departmentname from p_department d where d.departmentid = p_partymember.departmentid )as departmentname,

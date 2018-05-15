@@ -684,13 +684,69 @@ public class PActiveController {
 
 		json.put("participateCount", inUserListCount);
 		json.put("notParticipateCount", outUserListCount);
+		for(Map.Entry<String, List<PPartymember>> entry : inUserMap.entrySet())
+		{
+			List<PPartymember> list = entry.getValue();
+			Collections.sort(list,new Comparator<PPartymember>() {
+				@Override
+				public int compare(PPartymember o1, PPartymember o2) {
+					if(o1 != null && o2 != null)
+					{
+						if(o1.getPostId() > o2.getPostId())
+						{
+							return -1;
+						}
+						else if(o1.getPostId() == o2.getPostId())
+						{
+							return 0;
+						}
+						else
+						{
+							return 1;
+						}
+					}
+					return 0;
+				}
+			});
+		}
 		json.put("participate", inUserMap);
+		for(Map.Entry<String, List<PPartymember>> entry : outUserMap.entrySet())
+		{
+			List<PPartymember> list = entry.getValue();
+			if(list == null || list.isEmpty())
+			{
+				continue;
+			}
+			Collections.sort(list,new Comparator<PPartymember>() {
+				@Override
+				public int compare(PPartymember o1, PPartymember o2) {
+					if(o1 != null && o2 != null)
+					{
+						if(o1.getPostId() > o2.getPostId())
+						{
+							return -1;
+						}
+						else if(o1.getPostId() == o2.getPostId())
+						{
+							return 0;
+						}
+						else
+						{
+							return 1;
+						}
+					}
+					return 0;
+				}
+			});
+		}
 		json.put("notParticipate", outUserMap);
 
 		result.setSuccess(true);
 		result.setData(json);
 		return result.getResult();
 	}
+	
+
 
 	/**
 	 * 查询年度参与次数
