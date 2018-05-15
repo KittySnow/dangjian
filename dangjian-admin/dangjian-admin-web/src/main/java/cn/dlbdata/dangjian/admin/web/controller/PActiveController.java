@@ -690,7 +690,7 @@ public class PActiveController {
 			Collections.sort(list,new Comparator<PPartymember>() {
 				@Override
 				public int compare(PPartymember o1, PPartymember o2) {
-					if(o1 != null && o2 != null)
+					if(o1 != null && o1.getPostId() != null && o2 != null && o2.getPostId() != null)
 					{
 						if(o1.getPostId() > o2.getPostId())
 						{
@@ -720,7 +720,7 @@ public class PActiveController {
 			Collections.sort(list,new Comparator<PPartymember>() {
 				@Override
 				public int compare(PPartymember o1, PPartymember o2) {
-					if(o1 != null && o2 != null)
+					if(o1 != null && o1.getPostId() != null && o2 != null && o2.getPostId() != null)
 					{
 						if(o1.getPostId() > o2.getPostId())
 						{
