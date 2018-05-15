@@ -446,7 +446,7 @@
         <!-- 获得的总积分必须小于项目的总分才允许再次获取 -->
         <![CDATA[
           AND ifnull ((SELECT  sum(s.score) FROM p_score_party s where s.project_id = t.project_id
-            AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now())),0) <  p.score
+            AND s.user_id=#{userId,jdbcType=INTEGER} AND s.year = extract(year from now())),0) + t.score <  p.score
         ]]>
     <!-- 如果项目的积分必须小于某模块最大值-->
     <![CDATA[
