@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -53,7 +52,6 @@ import cn.dlbdata.dangjian.admin.dao.model.PUser;
 import cn.dlbdata.dangjian.admin.dao.query.ActiveQuery;
 import cn.dlbdata.dangjian.admin.service.PActiveParticipateService;
 import cn.dlbdata.dangjian.admin.service.PActiveService;
-import cn.dlbdata.dangjian.admin.service.PDepartmentService;
 import cn.dlbdata.dangjian.admin.service.PPartymemberService;
 import cn.dlbdata.dangjian.admin.service.PPictureService;
 import cn.dlbdata.dangjian.admin.service.PScoreDetailService;
@@ -93,9 +91,6 @@ public class PActiveController {
 
 	@Autowired
 	private PScorePartyService pScorePartyService;
-
-	@Autowired
-	private PDepartmentService pDepartmentService;
 
 	/**
 	 * 创建活动

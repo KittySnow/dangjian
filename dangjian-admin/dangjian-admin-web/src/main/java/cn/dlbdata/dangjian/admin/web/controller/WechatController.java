@@ -98,7 +98,7 @@ public class WechatController {
 		}
 		catch(Exception e)
 		{
-			logger.error("调用微信方法出错",e)
+			logger.error("调用微信方法出错",e);
 		}
 		finally
 		{
