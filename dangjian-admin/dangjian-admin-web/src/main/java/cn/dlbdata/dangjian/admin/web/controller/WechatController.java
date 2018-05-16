@@ -82,20 +82,30 @@ public class WechatController {
 
 		PrintWriter out = response.getWriter();
 
-		if(out!= null && msgType!=null){
-			if(MessageUtil.REQ_MESSAGE_TYPE_EVENT.equals(msgType)){
-				logger.info("WechatController->DoPost->EventDispatcher start");
-				out.write(EventDispatcher.processEvent(map)); 	//进入事件处理
+		try
+		{
+			if(out!= null && msgType!=null){
+				if(MessageUtil.REQ_MESSAGE_TYPE_EVENT.equals(msgType)){
+					logger.info("WechatController->DoPost->EventDispatcher start" + msgType);
+					out.write(EventDispatcher.processEvent(map)); 	//进入事件处理
+				}else{
+					logger.info("WechatController->DoPost->MsgDispatcher start" + msgType);
+					out.write(MsgDispatcher.processMessage(map));	//进入消息处理
+				}
 			}else{
-				logger.info("WechatController->DoPost->MsgDispatcher start");
-				out.write(MsgDispatcher.processMessage(map));	//进入消息处理
+				logger.info("微信方法失效");
 			}
-		}else{
-			logger.info("微信方法失效");
 		}
-
-
-		out.close();
-		out = null;
+		catch(Exception e)
+		{
+			logger.error("调用微信方法出错",e)
+		}
+		finally
+		{
+			if(out != null)
+				out.close();
+			out = null;
+		}
+		
 	}
 }

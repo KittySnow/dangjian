@@ -18,11 +18,11 @@ import java.util.Map;
 public class MsgDispatcher {
     public static String processMessage(Map<String, String> map) throws Exception {
     	
-    	String openId = map.get("FromUserName"); //用户 openid
-    	String mPid = map.get("ToUserName");   //公众号原始 ID
-    	String content = map.get("Content");
-
-        if (map.get("MsgType").equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) { // 文本消息
+	    	String openId = map.get("FromUserName"); //用户 openid
+	    	String mPid = map.get("ToUserName");   //公众号原始 ID
+	    	String content = map.get("Content");
+	    	String msgType = map.get("MsgType");
+        if (MessageUtil.REQ_MESSAGE_TYPE_TEXT.equals(msgType)) { // 文本消息
         	TextMessage txtMsg = new TextMessage();
 			txtMsg.setToUserName(openId);
 			txtMsg.setFromUserName(mPid);
@@ -50,27 +50,27 @@ public class MsgDispatcher {
         	
         }
 
-        if (map.get("MsgType").equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) { // 图片消息
+        if (MessageUtil.REQ_MESSAGE_TYPE_IMAGE.equals(msgType)) { // 图片消息
             System.out.println("==============这是图片消息！");
         }
 
-        if (map.get("MsgType").equals(MessageUtil.REQ_MESSAGE_TYPE_LINK)) { // 链接消息
+        if (MessageUtil.REQ_MESSAGE_TYPE_LINK.equals(msgType)) { // 链接消息
             System.out.println("==============这是链接消息！");
         }
 
-        if (map.get("MsgType").equals(MessageUtil.REQ_MESSAGE_TYPE_LOCATION)) { // 位置消息
+        if (MessageUtil.REQ_MESSAGE_TYPE_LOCATION.equals(msgType)) { // 位置消息
             System.out.println("==============这是位置消息！");
         }
 
-        if (map.get("MsgType").equals(MessageUtil.REQ_MESSAGE_TYPE_VIDEO)) { // 视频消息
+        if (MessageUtil.REQ_MESSAGE_TYPE_VIDEO.equals(msgType)) { // 视频消息
             System.out.println("==============这是视频消息！");
         }
 
-        if (map.get("MsgType").equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) { // 语音消息
+        if (MessageUtil.REQ_MESSAGE_TYPE_VOICE.equals(msgType)) { // 语音消息
             System.out.println("==============这是语音消息！");
         }
 
-        return null;
+        return "";
     }
     
 }

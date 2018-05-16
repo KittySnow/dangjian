@@ -6,6 +6,8 @@ import cn.dlbdata.dangjian.thirdparty.mp.sdk.util.MessageUtil;
 import java.util.Date;
 import java.util.Map;
 
+import org.springframework.util.StringUtils;
+
 /**
  * ClassName: EventDispatcher
  * @Description: 事件消息业务分发器
@@ -16,10 +18,14 @@ import java.util.Map;
 public class EventDispatcher {
     public static String processEvent(Map<String, String> map) {
     	
-    	String openId = map.get("FromUserName"); //用户 openid
-    	String mPid = map.get("ToUserName");   //公众号原始 ID
-    	
-        if (map.get("Event").equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) { //关注事件
+	    	String openId = map.get("FromUserName"); //用户 openid
+	    	String mPid = map.get("ToUserName");   //公众号原始 ID
+	    	String event = map.get("Event");
+	    	if(StringUtils.isEmpty(event))
+	    	{
+	    		return "";
+	    	}
+        if (event.equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) { //关注事件
             TextMessage txtMsg = new TextMessage();
 			txtMsg.setToUserName(openId);
 			txtMsg.setFromUserName(mPid);
@@ -29,16 +35,16 @@ public class EventDispatcher {
 			return MessageUtil.textMessageToXml(txtMsg);
         }
 
-        if (map.get("Event").equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) { //取消关注事件
+        if (event.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) { //取消关注事件
         }
 
-        if (map.get("Event").equals(MessageUtil.EVENT_TYPE_SCAN)) { //扫描二维码事件
+        if (event.equals(MessageUtil.EVENT_TYPE_SCAN)) { //扫描二维码事件
         }
 
-        if (map.get("Event").equals(MessageUtil.EVENT_TYPE_LOCATION)) { //位置上报事件
+        if (event.equals(MessageUtil.EVENT_TYPE_LOCATION)) { //位置上报事件
         }
 
-        if (map.get("Event").equals(MessageUtil.EVENT_TYPE_CLICK)) { //自定义菜单点击事件
+        if (event.equals(MessageUtil.EVENT_TYPE_CLICK)) { //自定义菜单点击事件
 
             TextMessage textMessage = new TextMessage();
 
@@ -81,9 +87,9 @@ public class EventDispatcher {
             return MessageUtil.textMessageToXml(textMessage);
         }
 
-        if (MessageUtil.EVENT_TYPE_VIEW.equals(map.get("Event"))) { //自定义菜单 View 事件
+        if (MessageUtil.EVENT_TYPE_VIEW.equals(event)) { //自定义菜单 View 事件
         }
 
-        return null;
+        return "";
     }
 }
