@@ -126,6 +126,11 @@ public class PScoreDetailController {
     @ResponseBody
     public Map<String, Object> queryByRoleMenu(Integer roleid) {
         ResultUtil result = new ResultUtil();
+//        if( roleid == null) {
+//        	 result.setSuccess(false);
+//        	 result.setData("获取角色失败");
+//        	 return result.getResult();
+//        }
         PScoreDetailExample pScoreDetailExample = new PScoreDetailExample();
         PScoreDetailExample.Criteria criteria = pScoreDetailExample.createCriteria();
         criteria.andAdderRoleIdEqualTo(roleid);
