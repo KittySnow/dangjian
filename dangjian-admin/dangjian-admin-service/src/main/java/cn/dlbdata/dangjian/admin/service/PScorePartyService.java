@@ -2,6 +2,8 @@ package cn.dlbdata.dangjian.admin.service;
 
 import cn.dlbdata.dangjian.admin.dao.model.PScoreParty;
 import cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample;
+import cn.dlbdata.dangjian.admin.dao.vo.PScorePartyVo;
+
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -54,5 +56,7 @@ public interface PScorePartyService {
     public List<PScoreParty> getDakDetialByDepartmentId(Integer departmentId);
 
     public PScoreParty isInsertRights(PScoreParty pScoreParty);
+    
+    public List<PScorePartyVo> getScoreAndActiveList(@Param("userId") Integer userId);
 
 }

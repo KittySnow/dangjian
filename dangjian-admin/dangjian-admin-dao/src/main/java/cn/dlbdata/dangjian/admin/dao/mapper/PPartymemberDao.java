@@ -36,6 +36,8 @@ public interface PPartymemberDao {
     List<PPartymember> getPartymemberByDepartmentid(@Param("departmentid") Integer departmentid,@Param("status") Integer status);
 
     List<PPartymember> getPartymemberByDeptId(@Param("departmentid") Integer departmentid);
+    
+    public List<PPartymember> selectPartymemberByDeptId(@Param("departmentid") Integer departmentid);
 
     List<PPartymember> queryAreaListById();
 

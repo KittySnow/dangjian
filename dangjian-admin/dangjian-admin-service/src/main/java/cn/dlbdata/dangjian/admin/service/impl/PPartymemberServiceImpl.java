@@ -180,4 +180,10 @@ public class PPartymemberServiceImpl implements PPartymemberService {
 	public List<PPartymember> queryAreaListById() {
 		return pPartymemberDao.queryAreaListById();
 	}
+
+	@Override
+	public List<PPartymember> selectPartymemberByDeptId(Integer departmentid) {
+		// TODO Auto-generated method stub
+		return pPartymemberDao.selectPartymemberByDeptId(departmentid);
+	}
 }

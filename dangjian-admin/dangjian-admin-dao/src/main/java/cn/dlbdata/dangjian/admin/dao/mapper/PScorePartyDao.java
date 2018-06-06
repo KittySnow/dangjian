@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import cn.dlbdata.dangjian.admin.dao.model.PScoreParty;
 import cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample;
+import cn.dlbdata.dangjian.admin.dao.vo.PScorePartyVo;
 @Mapper
 public interface PScorePartyDao {
     long countByExample(PScorePartyExample example);
@@ -48,6 +49,6 @@ public interface PScorePartyDao {
 
     List<PScoreParty> getDakDetialByDepartmentId(@Param("departmentId")Integer departmentId);
 
-
+    List<PScorePartyVo> getScoreAndActiveList(Integer userId);
 
 }

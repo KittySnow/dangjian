@@ -1,18 +1,19 @@
 package cn.dlbdata.dangjian.admin.service.impl;
 
 
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
 import cn.dlbdata.dangjian.admin.dao.mapper.PScorePartyDao;
 import cn.dlbdata.dangjian.admin.dao.model.PScoreParty;
 import cn.dlbdata.dangjian.admin.dao.model.PScorePartyExample;
+import cn.dlbdata.dangjian.admin.dao.vo.PScorePartyVo;
 import cn.dlbdata.dangjian.admin.service.PScorePartyService;
-import org.apache.ibatis.annotations.Param;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
-import java.util.List;
 
 
 @Service("PScorePartyService")
@@ -123,5 +124,11 @@ public class PScorePartyServiceImpl implements PScorePartyService {
 	@Override
 	public Double getSumScoreByProjectIdAndUserId(Integer projectId, Integer userId, Integer year) {
 		return pScorePartyDao.getSumScoreByProjectIdAndUserId(projectId,userId,year);
+	}
+
+	@Override
+	public List<PScorePartyVo> getScoreAndActiveList(Integer userId) {
+		List<PScorePartyVo> list = pScorePartyDao.getScoreAndActiveList(userId);
+		return list;
 	}
 }

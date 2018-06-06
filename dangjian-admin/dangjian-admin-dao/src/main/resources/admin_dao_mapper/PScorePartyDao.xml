@@ -646,4 +646,23 @@ GROUP BY p.user_id,u.name
   </select>
 
 
+<resultMap id="BaseResult" type="cn.dlbdata.dangjian.admin.dao.vo.PScorePartyVo">
+    <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="score_time" jdbcType="TIMESTAMP" property="scoreTime" />
+    <result column="title"  jdbcType="VARCHAR" property="title" />
+  </resultMap>
+
+  <select id="getScoreAndActiveList" parameterType="java.lang.Integer" resultMap="BaseResult">
+  	select ps.score, ps.score_time, psd.title
+  	from p_score_party ps
+  	left join p_score_detail psd on psd.id = ps.detail_id
+  	where ps.user_id = #{userId}
+  </select>
+
+
+
+
+
+
+
 </mapper>
