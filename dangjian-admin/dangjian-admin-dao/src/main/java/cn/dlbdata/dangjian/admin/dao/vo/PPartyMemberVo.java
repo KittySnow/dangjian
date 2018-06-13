@@ -3,6 +3,8 @@ package cn.dlbdata.dangjian.admin.dao.vo;
 public class PPartyMemberVo {
 	private String name;
 	private String sex;
+	private Integer roleid;
+	private Integer postId;
 	private Float totalScore;
 	public String getName() {
 		return name;
@@ -21,5 +23,17 @@ public class PPartyMemberVo {
 	}
 	public void setTotalScore(Float totalScore) {
 		this.totalScore = totalScore;
+	}
+	public Integer getRoleid() {
+		return roleid;
+	}
+	public void setRoleid(Integer roleid) {
+		this.roleid = roleid;
+	}
+	public Integer getPostId() {
+		return postId;
+	}
+	public void setPostId(Integer postId) {
+		this.postId = postId;
 	}
 }

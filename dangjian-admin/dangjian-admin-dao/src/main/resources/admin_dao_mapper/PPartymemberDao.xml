@@ -383,10 +383,11 @@
   <resultMap id="BaseResultMapTwo" type="cn.dlbdata.dangjian.admin.dao.vo.PPartyMemberVo">
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="roleid" jdbcType="INTEGER" property="roleid" />
     <result column="totalscore" jdbcType="DOUBLE" property="totalScore" />
   </resultMap>
     <select id="selectPartymemberByDeptId" parameterType="map" resultMap="BaseResultMapTwo">
-    select  p.name, p.sex, 
+    select  p.name, p.sex, p.postId,
 	(select sum(table1.score) from p_score_party table1 where table1.user_id = p.userid and year = (select year(now()) )) as totalscore 
 	from p_partymember p
     left join p_user pu on p.userid=pu.userid where pu.roleid=4
